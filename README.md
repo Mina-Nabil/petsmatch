@@ -1,4 +1,4 @@
-# petmatch
+# petsmatch
 
 A new Flutter project.
 
