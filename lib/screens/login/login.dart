@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:page_transition/page_transition.dart';
 import 'package:petmatch/screens/basescreen.dart';
+import 'package:petmatch/screens/home/home.dart';
 import 'package:petmatch/screens/login/regTypes.dart';
 import 'package:petmatch/screens/login/sendMailCode.dart';
 import 'package:petmatch/theme/petsTheme.dart';
@@ -20,6 +21,9 @@ class LoginScreen extends StatelessWidget {
 
     void submitForm() {
       print("Submitting");
+      if(true){
+        Navigator.of(context).pushReplacement(new PageTransition(child: HomeScreen(), type: PageTransitionType.fade));
+      }
     }
 
     void signUp() {

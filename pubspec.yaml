@@ -53,6 +53,7 @@ flutter:
    - assets/images/logo.png
    - assets/images/bg.png
    - assets/images/verfMail.png
+   - assets/images/profile.png
 
   fonts:
   - family: Oregano
