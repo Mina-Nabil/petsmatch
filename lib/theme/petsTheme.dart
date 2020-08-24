@@ -14,6 +14,7 @@ class PetsTheme {
   static final Color petsPinkColor = Color.fromRGBO(114, 9, 183, 1);
   static final Color petsCyanColor = Color.fromRGBO(31, 175, 219, 1);
   static final Color petsGrayColor = Color.fromARGB(128, 69, 79, 99);
+  static final Color petsGreenColor = Color.fromRGBO(6, 214, 160, 1);
 
 
   
@@ -58,6 +59,9 @@ class PetsTheme {
   //Padding & Marging .. use initFonts before use
   static double _smallPadMarg;
   static double _smallerPadMarg;
+  static double _moreSmallPadMarg;
+  static double _smallestPadMarg;
+
   static double _meduimPadMarg;
   static double _largePadMarg;
   static double _largerPadMarg;
@@ -97,6 +101,8 @@ class PetsTheme {
         ? 8
         : (MediaQuery.of(context).size.width > smallScreenWidth) ? 5 : 3;
     _smallerPadMarg = 0.75 * _smallPadMarg;
+    _moreSmallPadMarg = 0.5 * _smallPadMarg;
+    _smallestPadMarg = 0.25 * _smallPadMarg;
     _meduimPadMarg = 1.5 * _smallPadMarg;
     _largePadMarg = 2 * _smallPadMarg;
     _largerPadMarg = 2.5 * _smallPadMarg;
@@ -146,6 +152,16 @@ class PetsTheme {
   static double getSmallerPadMarg(BuildContext context) {
     if (_smallerPadMarg == null) _initFonts(context);
     return _smallerPadMarg;
+  }
+
+  static double getMoreSmallerPadMarg(BuildContext context) {
+    if (_moreSmallPadMarg == null) _initFonts(context);
+    return _smallerPadMarg;
+  }
+
+  static double getSmallestPadMarg(BuildContext context) {
+    if (_smallestPadMarg == null) _initFonts(context);
+    return _smallestPadMarg;
   }
 
   static double getSmallPadMarg(BuildContext context) {

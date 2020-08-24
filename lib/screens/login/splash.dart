@@ -1,3 +1,5 @@
+import 'package:petmatch/screens/home/home.dart';
+
 import '../../theme/petsTheme.dart';
 import '../basescreen.dart';
 import 'login.dart';
@@ -25,7 +27,8 @@ class _SplashScreenState extends State<SplashScreen> {
       print("LOGGING IN NOW"); //function el login hna
       if (true) {
         //replace with authentication result
-        Navigator.pushReplacement(context, new PageTransition(type: PageTransitionType.fade, duration: Duration(milliseconds: 400), child: LoginScreen()));
+    
+        Navigator.pushReplacement(context, new PageTransition(type: PageTransitionType.fade, duration: Duration(milliseconds: 700), child: LoginScreen()));
       } else {
         //Navigate to home screen when done
       }
@@ -39,8 +42,6 @@ class _SplashScreenState extends State<SplashScreen> {
     return BaseScreen(
       isTopPadding: true,
       noTitle: true,
-      backGroundColor: bgColor.blue,
-      backGroundMask: bgMask.def,
       child: Container(
         child: AnimatedOpacity(
             opacity: _visible ? 1.0 : 0.0,
@@ -56,8 +57,8 @@ class _SplashScreenState extends State<SplashScreen> {
                         alignment: Alignment.center,
                         child: Hero(
                             tag: "logo",
-                            child: Image.asset(
-                              "assets/images/logo/orig.png",
+                            child: SvgPicture.asset(
+                              "assets/images/logo/orig.svg",
                               color: PetsTheme.whiteBarColor,
                             )))),
               ],

@@ -8,7 +8,7 @@ import 'package:petmatch/widgets/NavBarHolder.dart';
 enum bgColor { blue, purple, cyan, pink }
 enum bgMask { def, mating, training, walk, services }
 
-class BaseScreen extends StatelessWidget {
+class BaseScreen extends StatefulWidget {
   final Widget child;
   final Widget titleContainer;
   final bool isTopColorDark;
@@ -42,111 +42,97 @@ class BaseScreen extends StatelessWidget {
       this.isTopPadding = true,
       this.isBottomPadding = false,
       this.isLeftPadding = true,
-      this.isRightPadding = true}); //Basescreen with top left right padding
+      this.isRightPadding = true});
+  @override
+  _BaseScreenState createState() => _BaseScreenState();
+}
+
+class _BaseScreenState extends State<BaseScreen> {
+  Color bgColorRGB;
+  Container bgMaskContainer;
+  String bgMaskPath;
+  Image bgMaskImage;
+
+  @override
+  void initState() {
+    super.initState();
+
+    switch (this.widget.backGroundColor) {
+      case bgColor.blue:
+        bgColorRGB = PetsTheme.petsBgBlueColor;
+        break;
+      case bgColor.purple:
+        bgColorRGB = PetsTheme.petsBgPurpleColor;
+        break;
+      case bgColor.pink:
+        bgColorRGB = PetsTheme.petsBgPinkColor;
+        break;
+      case bgColor.cyan:
+        bgColorRGB = PetsTheme.petsBgCyanColor;
+        break;
+      default: //blue background
+        bgColorRGB = PetsTheme.petsBgBlueColor;
+    }
+
+    switch (this.widget.backGroundMask) {
+      case bgMask.def:
+        bgMaskPath = "assets/images/masks/def_blue.png";
+        break;
+      case bgMask.mating:
+        bgMaskPath = "assets/images/masks/mating.png";
+        break;
+      case bgMask.services:
+        bgMaskPath = "assets/images/masks/services.png";
+        break;
+      case bgMask.training:
+        bgMaskPath = "assets/images/masks/training.png";
+        break;
+      case bgMask.walk:
+        bgMaskPath = "assets/images/masks/walk.png";
+        break;
+    }
+
+    bgMaskImage = Image.asset(
+      bgMaskPath,
+      fit: BoxFit.cover,
+      color: bgColorRGB.withOpacity(.9),
+      colorBlendMode: BlendMode.srcOut,
+    );
+    Future.delayed(Duration.zero).then((_) {
+      precacheImage(bgMaskImage.image, context);
+    });
+  }
+
+  @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+  }
 
   @override
   Widget build(BuildContext context) {
-    double screenTopPadding = (isTopPadding) ? MediaQuery.of(context).size.height * .05 : 0;
-    double screenBottomPadding = (isBottomPadding) ? MediaQuery.of(context).size.height * .03 : 0;
-    double screenLeftPadding = (isLeftPadding) ? MediaQuery.of(context).size.width * .05 : 0;
-    double screenRightPadding = (isRightPadding) ? MediaQuery.of(context).size.width * .05 : 0;
-
-    Container bgColorContainer;
-    Container bgMaskContainer;
-
-    switch (this.backGroundColor) {
-      case bgColor.blue:
-        bgColorContainer = new Container(
-          height: MediaQuery.of(context).size.height,
-          width: MediaQuery.of(context).size.height,
-          color: PetsTheme.petsBgBlueColor,
-        );
-        break;
-      case bgColor.purple:
-        bgColorContainer = new Container(
-          height: MediaQuery.of(context).size.height,
-          width: MediaQuery.of(context).size.height,
-          color: PetsTheme.petsBgPurpleColor,
-        );
-        break;
-      case bgColor.pink:
-        bgColorContainer = new Container(
-          height: MediaQuery.of(context).size.height,
-          width: MediaQuery.of(context).size.height,
-          color: PetsTheme.petsBgPinkColor,
-        );
-        break;
-      case bgColor.cyan:
-        bgColorContainer = new Container(
-          height: MediaQuery.of(context).size.height,
-          width: MediaQuery.of(context).size.height,
-          color: PetsTheme.petsBgCyanColor,
-        );
-        break;
-      default: //blue background
-        bgColorContainer = new Container(
-          height: MediaQuery.of(context).size.height,
-          width: MediaQuery.of(context).size.height,
-          color: PetsTheme.petsBgBlueColor,
-        );
-    }
-
-    switch (this.backGroundMask) {
-      case bgMask.def:
-        bgMaskContainer = new Container(
-          height: MediaQuery.of(context).size.height,
-          width: MediaQuery.of(context).size.width,
-          child: new  Image.asset("assets/images/masks/def_blue.png", fit: BoxFit.cover, color: bgColorContainer.color.withOpacity(.9), colorBlendMode: BlendMode.srcOut, )
-        );
-        break;
-      case bgMask.mating:
-        bgMaskContainer = new Container(
-          height: MediaQuery.of(context).size.height,
-          width: MediaQuery.of(context).size.width,
-          child: new Image.asset("assets/images/masks/mating.png", fit: BoxFit.cover, color: bgColorContainer.color.withOpacity(.9), colorBlendMode: BlendMode.srcOut,)
-        );
-        break;
-      case bgMask.services:
-        bgMaskContainer = new Container(
-          height: MediaQuery.of(context).size.height,
-          width: MediaQuery.of(context).size.width,
-          child: new Image.asset("assets/images/masks/services.png", fit: BoxFit.cover, color: bgColorContainer.color.withOpacity(.9), colorBlendMode: BlendMode.srcOut,)
-        );
-        break;
-      case bgMask.training:
-        bgMaskContainer = new Container(
-          height: MediaQuery.of(context).size.height,
-          width: MediaQuery.of(context).size.width,
-          child: new Image.asset("assets/images/masks/training.png", fit: BoxFit.cover, color: bgColorContainer.color.withOpacity(.9), colorBlendMode: BlendMode.srcOut,)
-        );
-        break;
-      case bgMask.walk:
-        bgMaskContainer = new Container(
-          height: MediaQuery.of(context).size.height,
-          width: MediaQuery.of(context).size.width,
-          child: new Image.asset("assets/images/masks/walk.png", fit: BoxFit.cover, color: bgColorContainer.color.withOpacity(.9), colorBlendMode: BlendMode.srcOut,)
-        );
-        break;
-    }
+    double screenTopPadding = (widget.isTopPadding) ? MediaQuery.of(context).size.height * .05 : 0;
+    double screenBottomPadding = (widget.isBottomPadding) ? MediaQuery.of(context).size.height * .03 : 0;
+    double screenLeftPadding = (widget.isLeftPadding) ? MediaQuery.of(context).size.width * .05 : 0;
+    double screenRightPadding = (widget.isRightPadding) ? MediaQuery.of(context).size.width * .05 : 0;
 
     return Container(
         height: MediaQuery.of(context).size.height,
         width: MediaQuery.of(context).size.height,
         child: Stack(children: <Widget>[
-          bgColorContainer,
-          bgMaskContainer,
+          Container(color: bgColorRGB, height: MediaQuery.of(context).size.height, width: MediaQuery.of(context).size.width, child: bgMaskImage),
           Scaffold(
-            resizeToAvoidBottomInset: isKeyBoardChangeSize,
-            appBar: (titleContainer != null)
-                ? PreferredSize(preferredSize: Size(MediaQuery.of(context).size.width, 70), child: titleContainer)
-                : (!noTitle)
+            resizeToAvoidBottomInset: widget.isKeyBoardChangeSize,
+            appBar: (widget.titleContainer != null)
+                ? PreferredSize(preferredSize: Size(MediaQuery.of(context).size.width, 70), child: widget.titleContainer)
+                : (!widget.noTitle)
                     ? AppBar(
-                        title: (titleText != null)
-                            ? Text(this.titleText, style: (this.titleStyle) ?? TextStyle(fontFamily: "Oregano", fontSize: PetsTheme.getLargerFont(context)))
+                        title: (widget.titleText != null)
+                            ? Text(this.widget.titleText,
+                                style: (this.widget.titleStyle) ?? TextStyle(fontFamily: "Oregano", fontSize: PetsTheme.getLargerFont(context)))
                             : Text(""),
 
-                        centerTitle: titleCenter,
-                        bottom: (subTitle) ?? subTitle,
+                        centerTitle: widget.titleCenter,
+                        bottom: (widget.subTitle) ?? widget.subTitle,
                         backgroundColor: PetsTheme.darkBgColor, // status bar color,
                         brightness: Brightness.dark, // status text bar color
                       )
@@ -155,7 +141,7 @@ class BaseScreen extends StatelessWidget {
                         child: AppBar(
                           elevation: 0,
                           backgroundColor: Colors.transparent, // status bar color,
-                          brightness: (this.isTopColorDark) ? Brightness.light : Brightness.dark,
+                          brightness: (this.widget.isTopColorDark) ? Brightness.light : Brightness.dark,
                         )),
             backgroundColor: Colors.transparent,
             body: Container(
@@ -163,8 +149,8 @@ class BaseScreen extends StatelessWidget {
                 color: Colors.transparent,
                 height: MediaQuery.of(context).size.height,
                 width: MediaQuery.of(context).size.width,
-                child: child ?? child),
-            bottomNavigationBar: (isNavBar) ? NavBarHolder() : null,
+                child: widget.child ?? widget.child),
+            bottomNavigationBar: (widget.isNavBar) ? NavBarHolder() : null,
           ),
         ]));
   }
