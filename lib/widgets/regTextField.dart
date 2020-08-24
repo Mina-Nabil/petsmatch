@@ -49,14 +49,14 @@ class RegTextField extends StatelessWidget {
     return null;
   }
 
-  void snackBarThis(context, message){
+  void snackBarThis(context, message) {
     Scaffold.of(context).showSnackBar(SnackBar(
-        content: Text(
-          message,
-          style: TextStyle(fontFamily: "Segoe"),
-        ),
-        duration: Duration(milliseconds: 500),
-      ));
+      content: Text(
+        message,
+        style: TextStyle(fontFamily: "Segoe"),
+      ),
+      duration: Duration(milliseconds: 500),
+    ));
   }
 
   @override
@@ -64,44 +64,36 @@ class RegTextField extends StatelessWidget {
     return Container(
       alignment: Alignment.topLeft,
       margin: EdgeInsets.only(top: PetsTheme.getLargePadMarg(context)),
-      constraints:
-          BoxConstraints(maxWidth: fieldsWidth, maxHeight: maxFieldHeight, minHeight: minFieldHeight),
+      constraints: BoxConstraints(maxWidth: fieldsWidth, maxHeight: maxFieldHeight, minHeight: minFieldHeight),
       child: Wrap(
         alignment: WrapAlignment.start,
         children: <Widget>[
-          Text(label,
-              style: TextStyle(
-                  fontSize: PetsTheme.getLargeFont(context),
-                  fontFamily: "Oregano")),
+          Padding(
+            padding: EdgeInsets.only(left: PetsTheme.getMeduimPadMarg(context)),
+            child: Text(label, style: TextStyle(fontSize: PetsTheme.getLargeFont(context), fontFamily: "Oregano")),
+          ),
           Row(
             mainAxisSize: MainAxisSize.max,
             mainAxisAlignment: MainAxisAlignment.start,
             children: <Widget>[
               Expanded(
                   child: Container(
-                      margin: EdgeInsets.symmetric(
-                          vertical: PetsTheme.getSmallerPadMarg(context)),
-                      
+                      margin: EdgeInsets.symmetric(vertical: PetsTheme.getSmallerPadMarg(context)),
                       child: Padding(
-                          padding: EdgeInsets.only(
-                              left: PetsTheme.getMeduimPadMarg(context)),
+                          padding: EdgeInsets.only(left: PetsTheme.getMeduimPadMarg(context)),
                           child: TextFormField(
                             controller: _controller,
                             obscureText: obscureText,
                             maxLines: maxLines,
                             minLines: minLines,
-                            validator: (this.isRequired)
-                                ? (value) => validatorFunc(context, value)
-                                : (value) => null,
-                            decoration:
-                                InputDecoration(
-                                  filled: true,
-                                  fillColor: PetsTheme.fieldsBackGroundColor,
-                                  border: InputBorder.none,
-                                ),
-                            style: TextStyle(
-                                fontFamily: "Segoe",
-                                fontSize: PetsTheme.getLargeFont(context)),
+                            validator: (this.isRequired) ? (value) => validatorFunc(context, value) : (value) => null,
+                            decoration: InputDecoration(
+                              filled: true,
+                              fillColor: PetsTheme.fieldsBackGroundColor,
+                              border: OutlineInputBorder(borderRadius: BorderRadius.circular(5), borderSide: BorderSide(color: Colors.black, width: 2)),
+                              enabledBorder: OutlineInputBorder(borderRadius: BorderRadius.circular(5), borderSide: BorderSide(color: PetsTheme.darkBgColor, width: 2)),
+                            ),
+                            style: TextStyle(fontFamily: "Segoe", fontSize: PetsTheme.getLargeFont(context)),
                           )))),
             ],
           )

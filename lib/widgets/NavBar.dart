@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import '../theme/petsTheme.dart';
 import 'dart:ui' as ui;
 
 import 'package:flutter/services.dart' show rootBundle;
@@ -6,7 +7,7 @@ import 'package:flutter/painting.dart' show decodeImageFromList;
 
 class NavBar extends CustomPainter {
   static final Paint _barPainter = new Paint()
-    ..color = Color.fromRGBO(1, 87, 155, 1)
+    ..color = PetsTheme.whiteBarColor
     ..style = PaintingStyle.fill;
 
   static final Paint _barStroker = new Paint()
@@ -15,7 +16,7 @@ class NavBar extends CustomPainter {
     ..style = PaintingStyle.stroke;
 
   static final Paint _pawPainter = new Paint()
-    ..color = Color.fromRGBO(96, 87, 92, 1)
+    ..color = PetsTheme.pawColor
     ..style = PaintingStyle.fill;
 
   static final Paint _imgPainter = new Paint();
@@ -24,8 +25,9 @@ class NavBar extends CustomPainter {
 
   double scale;
   bool expanded;
+  double _barHeight;  
 
-  NavBar(this.scale, this.expanded);
+  NavBar(this.scale, this._barHeight, this.expanded);
 
   @override
   void paint(Canvas canvas, Size size) async {
@@ -40,7 +42,7 @@ class NavBar extends CustomPainter {
     // final double _barHeight = (shiftScale * (_bar1WidthEnd - _bar1WidthStart)) + _bar1WidthStart;
 
     ///bar dimensions
-    final double _barHeight = 1 - .23716;
+ 
 
     //first bar rect width
     final double _bar1WidthStart = .405;
@@ -142,15 +144,7 @@ class NavBar extends CustomPainter {
       ..lineTo(0, topHeight);
     canvas.drawPath(path, _barPainter);
     canvas.drawPath(path, _barStroker);
-    ui.Image tmp = await loadImageAsset("assets/images/profile.png");
-
-    final double navBar1CenterX = .2;
-    final double navBar2CenterX = .4;
-    final double navBar3CenterX = .6;
-    final double navBar4CenterX = .8;
-    final double navBarYCenter  = _barHeight + ((1 - _barHeight)/2);
     
-    canvas.drawImageNine( tmp, Rect.fromCenter(center: Offset(navBar1CenterX*size.width, navBarYCenter)), Rect.fromCenter(center: Offset(navBar1CenterX*size.width, navBarYCenter)), _imgPainter);
 
     //paw ovals dimensions
     final double paw2XCenterStart = .45;

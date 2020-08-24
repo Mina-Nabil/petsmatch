@@ -38,6 +38,8 @@ dependencies:
   # Pick Image from library or camera
   image_picker: ^0.6.3+4
 
+  # load svg icons
+  flutter_svg: ^0.18.0
 
 dev_dependencies:
   flutter_test:
@@ -50,10 +52,21 @@ dev_dependencies:
 # The following section is specific to Flutter.
 flutter:
   assets:
+  # masks
+   - assets/images/masks/def_blue.png
+   - assets/images/masks/mating.png
+   - assets/images/masks/services.png
+   - assets/images/masks/training.png
+   - assets/images/masks/walk.png
+  #logo
+   - assets/images/logo/orig.svg
+   - assets/images/logo/orig.png
+   
    - assets/images/logo.png
    - assets/images/bg.png
    - assets/images/verfMail.png
    - assets/images/profile.png
+   - assets/images/event.png
 
   fonts:
   - family: Oregano
@@ -68,6 +81,45 @@ flutter:
     fonts:
       - asset: assets/fonts/Segoe-UI.ttf
         style: normal
+
+  - family: Roboto
+    fonts:
+      - asset: assets/fonts/Roboto/Roboto-Thin.ttf
+        style: normal
+        weight: 100
+      - asset: assets/fonts/Roboto/Roboto-ThinItalic.ttf
+        style: italic
+        weight: 100
+      - asset: assets/fonts/Roboto/Roboto-Light.ttf
+        style: normal
+        weight: 300
+      - asset: assets/fonts/Roboto/Roboto-LightItalic.ttf
+        style: italic
+        weight: 300
+      - asset: assets/fonts/Roboto/Roboto-Regular.ttf
+        style: normal
+        weight: 400
+      - asset: assets/fonts/Roboto/Roboto-Italic.ttf
+        style: italic
+        weight: 400
+      - asset: assets/fonts/Roboto/Roboto-Medium.ttf
+        style: normal
+        weight: 500
+      - asset: assets/fonts/Roboto/Roboto-MediumItalic.ttf
+        style: italic
+        weight: 500
+      - asset: assets/fonts/Roboto/Roboto-Bold.ttf
+        style: normal
+        weight: 700
+      - asset: assets/fonts/Roboto/Roboto-BoldItalic.ttf
+        style: italic
+        weight: 700
+      - asset: assets/fonts/Roboto/Roboto-Black.ttf
+        style: normal
+        weight: 900
+      - asset: assets/fonts/Roboto/Roboto-BlackItalic.ttf
+        style: italic
+        weight: 900
 
   # The following line ensures that the Material Icons font is
   # included with your application, so that you can use the icons in

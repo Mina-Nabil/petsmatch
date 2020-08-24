@@ -8,11 +8,38 @@ class PetsTheme {
   static final double smallScreenHeight = 600;
 
   //Colors
+  
+  static final Color petsBlueColor = Color.fromRGBO(61, 107, 255, 1);
+  static final Color petsPurpleColor = Color.fromRGBO(47, 8, 151, 1);
+  static final Color petsPinkColor = Color.fromRGBO(114, 9, 183, 1);
+  static final Color petsCyanColor = Color.fromRGBO(31, 175, 219, 1);
+  static final Color petsGrayColor = Color.fromARGB(128, 69, 79, 99);
+
+
+  
+  static final Color petsBgBlueColor = petsBlueColor.withOpacity(.6);
+  static final Color petsBgPurpleColor = petsPurpleColor.withOpacity(.6);
+  static final Color petsBgPinkColor = petsPinkColor.withOpacity(.6);
+  static final Color petsBgCyanColor = petsCyanColor.withOpacity(.6);
+  static final Color whiteBarColor = Color.fromRGBO(249, 250, 255, 1);
+
+
+// old design color
+  @deprecated 
+  static final Color pawColor = Color.fromRGBO(61, 107, 255, 1);
+  @deprecated 
   static final Color bgColor = Color.fromRGBO(126, 229, 255, 1);
+  @deprecated 
+  static final Color cyan = Color.fromRGBO(180, 240, 255, 1);
+  @deprecated 
   static final Color darkBgColor = Color.fromRGBO(42, 46, 67, 1);
+  @deprecated 
   static final Color fieldsBackGroundColor = Color.fromRGBO(204, 245, 255, .6);
+  @deprecated 
   static final Color hintColor =  Color.fromRGBO(121, 132, 142, .52);
+  @deprecated 
   static final Color fbBlue = Color.fromRGBO(60, 102, 196, 1);
+  @deprecated 
   static final Color googleRed = Color.fromRGBO(207, 67, 50, 1);
 
   //Font init .. use initFont before use

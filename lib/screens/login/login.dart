@@ -1,6 +1,8 @@
+import 'dart:developer';
 import 'dart:ui';
 
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/svg.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:page_transition/page_transition.dart';
 import 'package:petmatch/screens/basescreen.dart';
@@ -9,33 +11,46 @@ import 'package:petmatch/screens/login/regTypes.dart';
 import 'package:petmatch/screens/login/sendMailCode.dart';
 import 'package:petmatch/theme/petsTheme.dart';
 
-class LoginScreen extends StatelessWidget {
+class LoginScreen extends StatefulWidget {
+  @override
+  _LoginScreenState createState() => _LoginScreenState();
+}
+
+class _LoginScreenState extends State<LoginScreen> {
+  //form controllers
+  final TextEditingController _emailController = TextEditingController();
+  final TextEditingController _passwordController = TextEditingController();
+  bool obscureTextFlag = true;
   @override
   Widget build(BuildContext context) {
     //some dimensions
     final double fieldsWidth = MediaQuery.of(context).size.width * .7;
+    final double boxRadius = MediaQuery.of(context).size.width * .075;
+    final double logoMaxHeight = 0.1 * MediaQuery.of(context).size.height;
 
-    //form controllers
-    final TextEditingController _emailController = TextEditingController();
-    final TextEditingController _passwordController = TextEditingController();
+    void _togglePW() {
+      print("GET HENAA");
+      setState(() {
+        obscureTextFlag = !obscureTextFlag;
+      });
+      print(obscureTextFlag);
+    }
 
     void submitForm() {
       print("Submitting");
-      if(true){
+      if (true) {
         Navigator.of(context).pushReplacement(new PageTransition(child: HomeScreen(), type: PageTransitionType.fade));
       }
     }
 
     void signUp() {
       print("SignUp Aho");
-      Navigator.of(context).push(PageTransition(
-          type: PageTransitionType.fade, child: RegTypesScreen()));
+      Navigator.of(context).push(PageTransition(type: PageTransitionType.fade, child: RegTypesScreen()));
     }
 
     void forgotPass() {
       print("Forget Pass");
-      Navigator.of(context).push(PageTransition(
-          type: PageTransitionType.fade, child: VerifyMailCodeScreen()));
+      Navigator.of(context).push(PageTransition(type: PageTransitionType.fade, child: VerifyMailCodeScreen()));
     }
 
     void fbLogin() {
@@ -47,11 +62,14 @@ class LoginScreen extends StatelessWidget {
     }
 
     return BaseScreen(
+      isRightPadding: false,
+      isLeftPadding: false,
+      isBottomPadding: false,
       noTitle: true,
       child: SingleChildScrollView(
         child: Container(
           width: MediaQuery.of(context).size.width,
-          height: MediaQuery.of(context).size.height*.9,
+          height: MediaQuery.of(context).size.height,
           child: Column(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             crossAxisAlignment: CrossAxisAlignment.center,
@@ -66,113 +84,133 @@ class LoginScreen extends StatelessWidget {
               //Logo space // 3 flex
               Flexible(
                   fit: FlexFit.loose,
-                  flex: 3,
+                  flex: 4,
                   child: Container(
                       alignment: Alignment.bottomCenter,
-                      child: Image.asset("assets/images/logo.png"))),
+                      constraints: BoxConstraints(maxHeight: logoMaxHeight),
+                      child: Hero(
+                          tag: "logo",
+                          child: Image.asset(
+                            "assets/images/logo/orig.png",
+                            color: PetsTheme.whiteBarColor,
+                          )))),
               //Title Petmatch // 2 flex
               Flexible(
                 fit: FlexFit.tight,
-                flex: 2,
+                flex: 4,
                 child: Container(
-                  alignment: Alignment.topCenter,
-                  child: Text(
-                    "PetMatch",
-                    style: TextStyle(
-                        fontFamily: "Oregano",
-                        fontSize: PetsTheme.getVeryLargeFont(context)),
+                  alignment: Alignment.center,
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                    children: [
+                      Text(
+                        "Welcome to PetMatch!",
+                        style: TextStyle(
+                            fontFamily: "Roboto", color: PetsTheme.whiteBarColor, fontWeight: FontWeight.bold, fontSize: PetsTheme.getMuchLargerFont(context)),
+                      ),
+                      Text(
+                        "All Pets, One Place",
+                        style: TextStyle(
+                            fontFamily: "Roboto", color: PetsTheme.whiteBarColor, fontWeight: FontWeight.normal, fontSize: PetsTheme.getLargeFont(context)),
+                      ),
+                    ],
                   ),
                 ),
               ),
               //Login form fields // 4 flex
               Flexible(
-                  flex: 4,
+                  flex: 21,
                   fit: FlexFit.tight,
                   child: Container(
                       alignment: Alignment.centerLeft,
-                      constraints: BoxConstraints(
-                          maxHeight: MediaQuery.of(context).size.height * .5),
-                      margin: EdgeInsets.only(
-                          left: MediaQuery.of(context).size.width * .10),
+                      width: MediaQuery.of(context).size.width,
+                      decoration: BoxDecoration(
+                          color: PetsTheme.whiteBarColor,
+                          borderRadius: BorderRadius.only(topLeft: Radius.circular(boxRadius), topRight: Radius.circular(boxRadius))),
                       child: Column(
                           mainAxisSize: MainAxisSize.max,
-                          mainAxisAlignment: MainAxisAlignment.spaceAround,
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           crossAxisAlignment: CrossAxisAlignment.center,
                           children: <Widget>[
                             Flexible(
                               flex: 1,
+                              child: Container(),
+                            ),
+                            //Sign In Titile
+                            Flexible(
+                              flex: 2,
+                              child: Container(
+                                alignment: Alignment.center,
+                                child: Text(
+                                  "Sign in to continue",
+                                  style: TextStyle(
+                                      color: PetsTheme.petsBlueColor,
+                                      fontFamily: "Roboto",
+                                      fontWeight: FontWeight.bold,
+                                      fontSize: PetsTheme.getMuchLargerFont(context)),
+                                ),
+                              ),
+                            ),
+                            Flexible(
+                              flex: 3,
                               child: Row(
-                                mainAxisAlignment: MainAxisAlignment.start,
+                                mainAxisAlignment: MainAxisAlignment.center,
                                 children: <Widget>[
                                   Container(
-                                    constraints:
-                                        BoxConstraints(maxWidth: fieldsWidth),
-                                    margin: EdgeInsets.only(
-                                        bottom: PetsTheme.getSmallerPadMarg(
-                                            context)),
-                                    color: PetsTheme.fieldsBackGroundColor,
+                                    constraints: BoxConstraints(maxWidth: fieldsWidth),
+                                    margin: EdgeInsets.only(bottom: PetsTheme.getSmallerPadMarg(context)),
                                     child: Padding(
-                                        padding: EdgeInsets.only(
-                                            left: PetsTheme.getMeduimPadMarg(
-                                                context)),
+                                        padding: EdgeInsets.only(left: PetsTheme.getMeduimPadMarg(context)),
                                         child: TextFormField(
                                           decoration: InputDecoration(
-                                              border: InputBorder.none,
-                                              hintText: "E-mail",
-                                              hintStyle: TextStyle(
-                                                  fontFamily: "Segoe",
-                                                  fontSize: 16,
-                                                  color: PetsTheme.hintColor)),
+                                              hintText: "E-mail", hintStyle: TextStyle(fontFamily: "Segoe", fontSize: 16, color: PetsTheme.petsGrayColor)),
                                           controller: _emailController,
-                                          style: TextStyle(
-                                              fontFamily: "Segoe",
-                                              fontSize: 16),
+                                          style: TextStyle(fontFamily: "Segoe", fontSize: 16),
                                         )),
                                   ),
                                 ],
                               ),
                             ),
                             Flexible(
-                              flex: 1,
+                              flex: 3,
                               child: Row(
-                                mainAxisAlignment: MainAxisAlignment.start,
+                                mainAxisAlignment: MainAxisAlignment.center,
                                 mainAxisSize: MainAxisSize.max,
                                 children: <Widget>[
                                   Container(
                                     width: fieldsWidth,
-                                    margin: EdgeInsets.only(
-                                        top:
-                                            PetsTheme.getSmallPadMarg(context)),
-                                    color: PetsTheme.fieldsBackGroundColor,
+                                    margin: EdgeInsets.only(top: PetsTheme.getSmallPadMarg(context)),
                                     child: Padding(
-                                        padding: EdgeInsets.only(
-                                            left: PetsTheme.getLargePadMarg(
-                                                context)),
-                                        child: TextFormField(
-                                          decoration: InputDecoration(
-                                              border: InputBorder.none,
-                                              hintText: "Password",
-                                              hintStyle: TextStyle(
-                                                  fontFamily: "Segoe",
-                                                  fontSize: 16,
-                                                  color: PetsTheme.hintColor)),
-                                          obscureText: true,
-                                          controller: _passwordController,
-                                          style: TextStyle(
-                                              fontFamily: "Segoe",
-                                              fontSize: 16),
+                                        padding: EdgeInsets.only(left: PetsTheme.getLargePadMarg(context)),
+                                        child: Stack(
+                                          fit: StackFit.loose,
+                                          alignment: Alignment.centerRight,
+                                          children: [
+                                            TextFormField(
+                                              decoration: InputDecoration(
+                                                  hintText: "Password",
+                                                  hintStyle: TextStyle(fontFamily: "Segoe", fontSize: 16, color: PetsTheme.petsGrayColor)),
+                                              obscureText: obscureTextFlag,
+                                              controller: _passwordController,
+                                              style: TextStyle(fontFamily: "Segoe", fontSize: 16),
+                                            ),
+                                            SizedBox(
+                                              child: ButtonTheme(
+                                                  padding: EdgeInsets.all(0), //adds padding inside the button
+                                                  materialTapTargetSize: MaterialTapTargetSize.shrinkWrap, //limits the touch area to the button area
+                                                  minWidth: 0, //wraps child's width
+                                                  height: 0, //wraps child's height
+                                                  child: FlatButton(
+                                                    child: Icon(
+                                                      FontAwesomeIcons.solidEye,
+                                                      color: PetsTheme.petsGrayColor,
+                                                    ),
+                                                    onPressed: _togglePW,
+                                                  )),
+                                            ),
+                                          ],
                                         )),
                                   ),
-                                  Expanded(
-                                      child: FlatButton(
-                                    padding: EdgeInsets.all(0),
-                                    child: Container(
-                                      margin: EdgeInsets.all(0),
-                                      child:
-                                          FaIcon(FontAwesomeIcons.chevronRight),
-                                    ),
-                                    onPressed: submitForm,
-                                  )),
                                 ],
                               ),
                             ),
@@ -180,13 +218,10 @@ class LoginScreen extends StatelessWidget {
                               fit: FlexFit.loose,
                               flex: 1,
                               child: Container(
-                                margin: EdgeInsets.only(
-                                    right: MediaQuery.of(context).size.width *
-                                        .10),
+                                margin: EdgeInsets.only(right: MediaQuery.of(context).size.width * .10),
                                 child: Row(
                                   mainAxisSize: MainAxisSize.max,
-                                  mainAxisAlignment:
-                                      MainAxisAlignment.spaceBetween,
+                                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                   children: <Widget>[
                                     Expanded(
                                       child: Container(
@@ -196,11 +231,7 @@ class LoginScreen extends StatelessWidget {
                                           padding: EdgeInsets.all(0),
                                           child: Text(
                                             "Sign Up",
-                                            style: TextStyle(
-                                                fontFamily: "Oregano",
-                                                fontSize:
-                                                    PetsTheme.getLargeFont(
-                                                        context)),
+                                            style: TextStyle(fontFamily: "Oregano", fontSize: PetsTheme.getLargeFont(context)),
                                           ),
                                         ),
                                       ),
@@ -213,11 +244,7 @@ class LoginScreen extends StatelessWidget {
                                           padding: EdgeInsets.all(0),
                                           child: Text(
                                             "Forgot ur Password?",
-                                            style: TextStyle(
-                                                fontFamily: "Oregano",
-                                                fontSize:
-                                                    PetsTheme.getLargeFont(
-                                                        context)),
+                                            style: TextStyle(fontFamily: "Oregano", fontSize: PetsTheme.getLargeFont(context)),
                                           ),
                                         ),
                                       ),
@@ -228,117 +255,6 @@ class LoginScreen extends StatelessWidget {
                             )
                           ]))),
               //spacing 1 flex
-              Flexible(flex: 1, child: Container()),
-              // fb login 4
-              Flexible(
-                flex: 4,
-                fit: FlexFit.tight,
-                child: Container(
-                  alignment: Alignment.center,
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.start,
-                    children: <Widget>[
-                      Flexible(
-                        flex: 3,
-                        child: Container(
-                          color: PetsTheme.fbBlue,
-                          width: MediaQuery.of(context).size.width * .6,
-                          margin: EdgeInsets.symmetric(
-                              vertical: PetsTheme.getSmallerPadMarg(context)),
-                          child: FlatButton(
-                            onPressed: fbLogin,
-                            splashColor: Colors.blueAccent,
-                            padding: EdgeInsets.all(0),
-                            child: Row(
-                              mainAxisSize: MainAxisSize.max,
-                              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                              children: <Widget>[
-                                Flexible(
-                                  fit: FlexFit.loose,
-                                  flex: 3,
-                                  child: Container(
-                                    margin: EdgeInsets.all(
-                                        PetsTheme.getMeduimPadMarg(context)),
-                                    child: FaIcon(
-                                      FontAwesomeIcons.facebookF,
-                                      color: Colors.white,
-                                      size:
-                                          PetsTheme.getMuchLargerFont(context),
-                                    ),
-                                  ),
-                                ),
-                                Flexible(
-                                  flex: 6,
-                                  fit: FlexFit.loose,
-                                  child: Container(
-                                    child: Text(
-                                      "Login with Facebook",
-                                      textAlign: TextAlign.right,
-                                      style: TextStyle(
-                                          fontFamily: "Segeo",
-                                          color: Colors.white,
-                                          fontSize:
-                                              PetsTheme.getSmallFont(context)),
-                                    ),
-                                  ),
-                                )
-                              ],
-                            ),
-                          ),
-                        ),
-                      ),
-                      Flexible(
-                        flex: 3,
-                        child: Container(
-                          color: PetsTheme.googleRed,
-                          width: MediaQuery.of(context).size.width * .6,
-                          child: FlatButton(
-                            onPressed: googleLogin,
-                            splashColor: Colors.redAccent,
-                            padding: EdgeInsets.all(0),
-                            child: Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                              children: <Widget>[
-                                Flexible(
-                                  flex: 3,
-                                  child: Container(
-                                      margin: EdgeInsets.all(
-                                          PetsTheme.getMeduimPadMarg(context)),
-                                      child: FaIcon(
-                                        FontAwesomeIcons.googlePlusG,
-                                        color: Colors.white,
-                                        size: PetsTheme.getMuchLargerFont(
-                                            context),
-                                      )),
-                                ),
-                                Flexible(
-                                    flex: 7,
-                                    child: Container(
-                                      child: Text(
-                                        "Login with Google+",
-                                        textAlign: TextAlign.left,
-                                        style: TextStyle(
-                                            fontFamily: "Segeo",
-                                            color: Colors.white,
-                                            fontSize: PetsTheme.getSmallFont(
-                                                context)),
-                                      ),
-                                    ))
-                              ],
-                            ),
-                          ),
-                        ),
-                      )
-                    ],
-                  ),
-                ),
-              ),
-              // spacing 1 flex
-              Flexible(
-                flex: 1,
-                fit: FlexFit.loose,
-                child: Container(),
-              )
             ],
           ),
         ),
