@@ -64,6 +64,10 @@ flutter:
    - assets/images/icons/twoPaws.svg
    - assets/images/icons/google.svg
    - assets/images/icons/fb.svg
+   - assets/images/icons/registration/petOwnerType.svg
+   - assets/images/icons/registration/vetType.svg
+   - assets/images/icons/registration/storeType.svg
+   - assets/images/icons/registration/trainerType.svg
 
    - assets/images/logo.png
    - assets/images/bg.png

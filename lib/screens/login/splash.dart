@@ -1,5 +1,3 @@
-import 'package:petmatch/screens/home/home.dart';
-
 import '../../theme/petsTheme.dart';
 import '../basescreen.dart';
 import 'login.dart';
@@ -28,7 +26,7 @@ class _SplashScreenState extends State<SplashScreen> {
       if (true) {
         //replace with authentication result
     
-        Navigator.pushReplacement(context, new PageTransition(type: PageTransitionType.fade, duration: Duration(milliseconds: 700), child: LoginScreen()));
+        Navigator.pushReplacement(context, new PageTransition(type: PageTransitionType.fade, duration: Duration(milliseconds: 1200), child: LoginScreen()));
       } else {
         //Navigate to home screen when done
       }
