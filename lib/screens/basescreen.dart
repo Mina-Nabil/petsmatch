@@ -63,7 +63,7 @@ class _BaseScreenState extends State<BaseScreen> {
   @override
   void initState() {
     super.initState();
-
+    //Adjust text color and background color
     switch (this.widget.backGroundColor) {
       case bgColor.blue:
         bgColorRGB = PetsTheme.petsBgBlueColor;
@@ -79,6 +79,7 @@ class _BaseScreenState extends State<BaseScreen> {
         break;
       default: //blue background
         bgColorRGB = PetsTheme.petsBgBlueColor;
+        break;
     }
 
     switch (this.widget.backGroundMask) {

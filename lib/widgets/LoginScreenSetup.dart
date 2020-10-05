@@ -11,10 +11,12 @@ class LoginScreenSetup extends StatelessWidget {
   final String topbarSubtitle;
   final String formTitle;
   final String formSubtitle;
-  Color textColor;
   final bgColor backgroundColor;
   final bgMask backgroundMask;
   final bool isSmallTopArea;
+  final bool isBottomScrollable;
+  final bool smalFormTitle;
+  final Alignment formTitleAlignment;
 
   LoginScreenSetup(
       {@required this.formTitle,
@@ -25,19 +27,25 @@ class LoginScreenSetup extends StatelessWidget {
       this.backgroundColor = bgColor.blue,
       this.backgroundMask = bgMask.def,
       this.isSmallTopArea = false,
+      this.smalFormTitle = false,
+      this.isBottomScrollable = false,
+      this.formTitleAlignment = Alignment.center,
       this.topbarSubtitle = ''}) {
-    switch (backgroundColor) {
+    switch (this.backgroundColor) {
       case bgColor.blue:
-        textColor = PetsTheme.petsBlueColor;
-        break;
-      case bgColor.pink:
-        textColor = PetsTheme.petsPinkColor;
-        break;
-      case bgColor.cyan:
-        textColor = PetsTheme.petsCyanColor;
+        PetsTheme.currentMainColor = PetsTheme.petsBlueColor;
         break;
       case bgColor.purple:
-        textColor = PetsTheme.petsPurpleColor;
+        PetsTheme.currentMainColor = PetsTheme.petsPurpleColor;
+        break;
+      case bgColor.pink:
+        PetsTheme.currentMainColor = PetsTheme.petsPinkColor;
+        break;
+      case bgColor.cyan:
+        PetsTheme.currentMainColor = PetsTheme.petsCyanColor;
+        break;
+      default: //blue background
+        PetsTheme.currentMainColor = PetsTheme.petsBlueColor;
         break;
     }
   }
@@ -67,9 +75,11 @@ class LoginScreenSetup extends StatelessWidget {
               constraints: BoxConstraints(maxHeight: logoMaxHeight),
               child: Hero(
                   tag: "logo",
-                  child: SvgPicture.asset(
-                    "assets/images/logo/orig.svg",
-                    color: PetsTheme.whiteBarColor,
+                  child: SizedBox(
+                    child: SvgPicture.asset(
+                      "assets/images/logo/orig.svg",
+                      color: PetsTheme.whiteBarColor,
+                    ),
                   ))));
       topAreaWidgets.add(logoWidget);
     }
@@ -81,16 +91,26 @@ class LoginScreenSetup extends StatelessWidget {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
           children: [
-            Text(
-              this.topbarTitle,
-              style:
-                  TextStyle(fontFamily: "Roboto", color: PetsTheme.whiteBarColor, fontWeight: FontWeight.bold, fontSize: PetsTheme.getMuchLargerFont(context)),
+            Flexible(
+              flex: 2,
+              child: FittedBox(
+                child: Text(
+                  this.topbarTitle,
+                  style: TextStyle(
+                      fontFamily: "Roboto", color: PetsTheme.whiteBarColor, fontWeight: FontWeight.bold, fontSize: PetsTheme.getMuchLargerFont(context)),
+                ),
+              ),
             ),
             (this.topbarSubtitle != '')
-                ? Text(
-                    this.topbarSubtitle,
-                    style: TextStyle(
-                        fontFamily: "Roboto", color: PetsTheme.whiteBarColor, fontWeight: FontWeight.normal, fontSize: PetsTheme.getLargeFont(context)),
+                ? Flexible(
+                    flex: 1,
+                    child: FittedBox(
+                      child: Text(
+                        this.topbarSubtitle,
+                        style: TextStyle(
+                            fontFamily: "Roboto", color: PetsTheme.whiteBarColor, fontWeight: FontWeight.normal, fontSize: PetsTheme.getLargeFont(context)),
+                      ),
+                    ),
                   )
                 : Container(),
           ],
@@ -99,7 +119,7 @@ class LoginScreenSetup extends StatelessWidget {
     );
     topAreaWidgets.add(topTitleWidget);
 
-    List<Widget> mainBottomAreaWidgets = [
+    List<Widget> formTitleAreaWidgets = [
       Flexible(
         flex: 1,
         child: Container(),
@@ -107,10 +127,16 @@ class LoginScreenSetup extends StatelessWidget {
       Flexible(
         flex: formTitleFlex,
         child: Container(
-          alignment: Alignment.center,
-          child: Text(
-            this.formTitle,
-            style: TextStyle(color: this.textColor, fontFamily: "Roboto", fontWeight: FontWeight.bold, fontSize: PetsTheme.getMuchLargerFont(context)),
+          alignment: formTitleAlignment,
+          child: FittedBox(
+            child: Text(
+              this.formTitle,
+              style: TextStyle(
+                  color: PetsTheme.currentMainColor,
+                  fontFamily: "Roboto",
+                  fontWeight: FontWeight.bold,
+                  fontSize: (!this.smalFormTitle) ? PetsTheme.getMuchLargerFont(context) : PetsTheme.getMeduimFont(context)),
+            ),
           ),
         ),
       ),
@@ -121,13 +147,16 @@ class LoginScreenSetup extends StatelessWidget {
         flex: formSubtitleFlex,
         child: Container(
           alignment: Alignment.center,
-          child: Text(
-            this.formSubtitle,
-            style: TextStyle(color: this.textColor, fontFamily: "Roboto", fontWeight: FontWeight.normal, fontSize: PetsTheme.getLargerFont(context)),
+          child: FittedBox(
+            child: Text(
+              this.formSubtitle,
+              style:
+                  TextStyle(color: PetsTheme.currentMainColor, fontFamily: "Roboto", fontWeight: FontWeight.normal, fontSize: PetsTheme.getMeduimFont(context)),
+            ),
           ),
         ),
       );
-      mainBottomAreaWidgets.add(formSubtitleWidget);
+      formTitleAreaWidgets.add(formSubtitleWidget);
     }
 
     Widget bottomAreaRootWidget = Container(
@@ -139,10 +168,18 @@ class LoginScreenSetup extends StatelessWidget {
               flex: 4,
               child: Container(
                 child: Column(
-                  children: mainBottomAreaWidgets,
+                  children: formTitleAreaWidgets,
                 ),
               )),
-          Flexible(flex: 17, child: Container(child: formWidget)),
+          Flexible(
+              flex: 17,
+              child: (!isBottomScrollable)
+                  ? Container(child: formWidget)
+                  : SingleChildScrollView(
+                      child: Container(
+                        child: formWidget,
+                      ),
+                    )),
         ],
       ),
     );
@@ -162,6 +199,7 @@ class LoginScreenSetup extends StatelessWidget {
       //Configurations
       screenBgColor: this.backgroundColor,
       screenBgMask: this.backgroundMask,
+      isSmallTop: this.isSmallTopArea,
     );
   }
 }

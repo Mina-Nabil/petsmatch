@@ -14,7 +14,9 @@ class PetsTheme {
   static final Color petsPinkColor = Color.fromRGBO(114, 9, 183, 1);
   static final Color petsCyanColor = Color.fromRGBO(31, 175, 219, 1);
   static final Color petsGrayColor = Color.fromARGB(128, 69, 79, 99);
+  static final Color petsHintGrayColor = Color.fromRGBO(69, 79, 99, 0.5);
   static final Color petsGreenColor = Color.fromRGBO(6, 214, 160, 1);
+  static Color currentMainColor = petsBlueColor;
 
   static final Color petsBgBlueColor = petsBlueColor.withOpacity(.6);
   static final Color petsBgPurpleColor = petsPurpleColor.withOpacity(.6);

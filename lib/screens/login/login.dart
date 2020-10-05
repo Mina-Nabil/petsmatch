@@ -10,7 +10,7 @@ import 'package:petmatch/screens/login/regTypes.dart';
 import 'package:petmatch/screens/login/sendMailCode.dart';
 import 'package:petmatch/theme/petsTheme.dart';
 import 'package:petmatch/widgets/LoginScreenSetup.dart';
-import 'package:petmatch/widgets/LoginSubmitButton.dart';
+import 'package:petmatch/widgets/SubmitButton.dart';
 
 class LoginScreen extends StatefulWidget {
   @override
@@ -166,7 +166,7 @@ class _LoginScreenState extends State<LoginScreen> {
             Flexible(
               flex: 2,
               fit: FlexFit.tight,
-              child: LoginSubmitButton(fieldsWidth: fieldsWidth, callBackFunction: signUp,),
+              child: SubmitButton(fieldsWidth: fieldsWidth, callBackFunction: signUp,),
             ),
             //Other sign in options
             Flexible(

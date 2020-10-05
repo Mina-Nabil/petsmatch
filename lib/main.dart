@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:petmatch/screens/login/ownerReg.dart';
 import 'package:petmatch/screens/login/splash.dart';
 import 'package:petmatch/theme/petsTheme.dart';
 

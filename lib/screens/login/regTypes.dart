@@ -27,6 +27,7 @@ class _RegTypesScreenState extends State<RegTypesScreen> {
         //refreshing page in case it is popped up
         .then((value) => setState(() {
               allTypes = {userType.owner: false, userType.store: false, userType.trainer: false, userType.vet: false};
+              PetsTheme.currentMainColor = PetsTheme.petsBlueColor;
             }));
   }
 

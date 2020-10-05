@@ -9,7 +9,8 @@ class CommonScreenSetup extends StatelessWidget {
   final bgColor screenBgColor;
   final bgMask screenBgMask;
 
-  CommonScreenSetup(this._topWidget, this._bottomWidget, {this.isSmallTop = false, this.screenBgColor=bgColor.blue, this.screenBgMask=bgMask.def});
+  CommonScreenSetup(this._topWidget, this._bottomWidget,
+      {this.isSmallTop = false, this.screenBgColor = bgColor.blue, this.screenBgMask = bgMask.def});
 
   @override
   Widget build(BuildContext context) {
@@ -19,8 +20,8 @@ class CommonScreenSetup extends StatelessWidget {
     int bottomAreaFlex = 23;
 
     if (isSmallTop) {
-      topAreaFlex = 6;
-      bottomAreaFlex = 26;
+      topAreaFlex = 4;
+      bottomAreaFlex = 28;
     }
 
     return BaseScreen(
@@ -57,10 +58,11 @@ class CommonScreenSetup extends StatelessWidget {
                       //Bottom Widget Area
                       Flexible(
                           flex: bottomAreaFlex,
-                          fit: FlexFit.tight,
+                          fit: FlexFit.loose,
                           child: Container(
                             alignment: Alignment.centerLeft,
-                            width: MediaQuery.of(context).size.width,
+                            width: double.infinity,
+                            height: double.infinity,
                             margin: EdgeInsets.symmetric(horizontal: PetsTheme.getSmallestPadMarg(context)),
                             decoration: BoxDecoration(
                                 color: PetsTheme.whiteBarColor,

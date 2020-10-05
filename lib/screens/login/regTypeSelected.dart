@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:page_transition/page_transition.dart';
 import 'package:petmatch/screens/basescreen.dart';
+import 'package:petmatch/screens/login/ownerRegistration.dart';
 import 'package:petmatch/settings/paths.dart';
 import 'package:petmatch/theme/petsTheme.dart';
 import 'package:petmatch/widgets/LoginScreenSetup.dart';
-import 'package:petmatch/widgets/LoginSubmitButton.dart';
+import 'package:petmatch/widgets/SubmitButton.dart';
 import 'package:petmatch/widgets/RegistrationTypeIcon.dart';
 
 enum userType { owner, trainer, store, vet }
@@ -50,6 +52,13 @@ class RegTypeSelectedScreen extends StatelessWidget {
         iconCaption = "Store";
         break;
     }
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    void signUp() {
+      Navigator.push(context, new PageTransition(type: PageTransitionType.fade, duration: Duration(milliseconds: 500), child: OwnerRegistrationScreen()));
+    }
 
     selectedTypeRow = Column(
       mainAxisSize: MainAxisSize.max,
@@ -61,18 +70,13 @@ class RegTypeSelectedScreen extends StatelessWidget {
           flex: 2,
           fit: FlexFit.loose,
           child: Container(
-              child: LoginSubmitButton(
-                callBackFunction: signUp,
-              )),
+              child: SubmitButton(
+            callBackFunction: signUp,
+          )),
         ),
       ],
     );
-  }
 
-  void signUp() {}
-
-  @override
-  Widget build(BuildContext context) {
     return LoginScreenSetup(
       backgroundColor: screenBgColor,
       formTitle: "Sign up as",

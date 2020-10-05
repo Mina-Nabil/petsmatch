@@ -4,15 +4,17 @@ import 'package:flutter_svg/svg.dart';
 import 'package:petmatch/settings/paths.dart';
 import 'package:petmatch/theme/petsTheme.dart';
 
-class LoginSubmitButton extends StatelessWidget {
-  LoginSubmitButton({
+class SkipButton extends StatelessWidget {
+  SkipButton({
     Key key,
     @required this.callBackFunction,
-    this.fieldsWidth=null,
+    this.buttonText="Skip",
+    this.fieldsWidth,
   }) : super(key: key);
 
   double fieldsWidth;
   final Function callBackFunction;
+  final String buttonText;
 
   @override
   Widget build(BuildContext context) {
@@ -23,9 +25,9 @@ class LoginSubmitButton extends StatelessWidget {
     return Container(
       alignment: Alignment.center,
       width: fieldsWidth,
-
+      margin: EdgeInsets.all(PetsTheme.getLargerPadMarg(context)),
       constraints: BoxConstraints(maxWidth: fieldsWidth, maxHeight: MediaQuery.of(context).size.height*0.07),
-      decoration: BoxDecoration(color: PetsTheme.petsGreenColor, borderRadius: BorderRadius.circular(PetsTheme.getMuchLargerFont(context))),
+      decoration: BoxDecoration(color: PetsTheme.whiteBarColor, border: Border.all(color: PetsTheme.petsBlueColor), borderRadius: BorderRadius.circular(PetsTheme.getMuchLargerFont(context))),
       child: FlatButton(
         onPressed: callBackFunction,
         child: Row(
@@ -35,21 +37,11 @@ class LoginSubmitButton extends StatelessWidget {
           children: [
             Flexible(
                 flex: 1,
-                child: Container(
-                  margin: EdgeInsets.symmetric(horizontal: PetsTheme.getSmallPadMarg(context)),
-                  child: SizedBox(
-                      child: SvgPicture.asset(
-                    Paths.twoPaws_icon_file,
-                    color: PetsTheme.whiteBarColor,
-                  )),
-                )),
-            Flexible(
-                flex: 1,
-                child: SizedBox(
+                child: FittedBox(
                   child: Text(
-                    "Let's go",
+                    buttonText,
                     style:
-                        TextStyle(color: Colors.white, fontFamily: "Roboto", fontWeight: FontWeight.w500, fontSize: PetsTheme.getSmallFont(context)),
+                        TextStyle(color: PetsTheme.currentMainColor, fontFamily: "Roboto", fontWeight: FontWeight.w500, fontSize: PetsTheme.getSmallFont(context)),
                   ),
                 )),
           ],
