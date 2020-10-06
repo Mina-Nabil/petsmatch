@@ -23,6 +23,37 @@ class SubmitButton extends StatelessWidget {
       fieldsWidth = MediaQuery.of(context).size.width * .7;
     }
 
+    List<Widget> rowChildren = [];
+    if (this.isShowPaws)
+      rowChildren.add(Flexible(
+        flex: 2,
+        fit: FlexFit.tight,
+        child: Container(
+          padding: EdgeInsets.all(PetsTheme.getMeduimPadMarg(context)),
+          alignment: Alignment.centerRight,
+          child: SizedBox(
+              child: SvgPicture.asset(
+            Paths.twoPaws_icon_file,
+            color: PetsTheme.whiteBarColor,
+          )),
+        ),
+      ));
+
+    rowChildren.add(Flexible(
+      flex: 2,
+      fit: FlexFit.tight,
+      child: Container(
+        padding: EdgeInsets.symmetric(vertical: PetsTheme.getMeduimPadMarg(context)),
+        alignment: (this.isShowPaws) ? Alignment.centerLeft : Alignment.center,
+        child: SizedBox(
+          child: Text(
+            buttonText,
+            style: TextStyle(color: Colors.white, fontFamily: "Roboto", fontWeight: FontWeight.w500, fontSize: PetsTheme.getSmallFont(context)),
+          ),
+        ),
+      ),
+    ));
+
     return Container(
       alignment: Alignment.center,
       width: fieldsWidth,
@@ -36,37 +67,7 @@ class SubmitButton extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.center,
           mainAxisSize: MainAxisSize.max,
           crossAxisAlignment: CrossAxisAlignment.center,
-          children: [
-            (isShowPaws)
-                ? Flexible(
-                    flex: 2,
-                    fit: FlexFit.tight,
-                    child: Container(
-                      padding: EdgeInsets.all(PetsTheme.getMeduimPadMarg(context)),
-                      alignment: Alignment.centerRight,
-                      child: SizedBox(
-                          child: SvgPicture.asset(
-                        Paths.twoPaws_icon_file,
-                        color: PetsTheme.whiteBarColor,
-                      )),
-                    ),
-                  )
-                : Flexible(flex: 2, fit: FlexFit.tight, child: Container()),
-            Flexible(
-              flex: 3,
-              fit: FlexFit.tight,
-              child: Container(
-                padding: EdgeInsets.all(PetsTheme.getMeduimPadMarg(context)),
-                alignment: Alignment.centerLeft,
-                child: SizedBox(
-                  child: Text(
-                    buttonText,
-                    style: TextStyle(color: Colors.white, fontFamily: "Roboto", fontWeight: FontWeight.w500, fontSize: PetsTheme.getSmallFont(context)),
-                  ),
-                ),
-              ),
-            ),
-          ],
+          children: rowChildren,
         ),
       ),
     );

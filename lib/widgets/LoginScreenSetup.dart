@@ -177,6 +177,8 @@ class LoginScreenSetup extends StatelessWidget {
                   ? Container(child: formWidget)
                   : SingleChildScrollView(
                       child: Container(
+                        //  height: MediaQuery.of(context).size.height,
+                        constraints: BoxConstraints(maxHeight: MediaQuery.of(context).size.height*4),
                         child: formWidget,
                       ),
                     )),

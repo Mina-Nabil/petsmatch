@@ -77,9 +77,7 @@ class RegTextField extends StatelessWidget {
               Expanded(
                   child: Container(
                       // margin: EdgeInsets.symmetric(vertical: PetsTheme.getSmallerPadMarg(context)),
-                      child: Padding(
-                          padding: EdgeInsets.only(left: PetsTheme.getMeduimPadMarg(context)),
-                          child: TextFormField(                     
+                      child:  TextFormField(                     
                             controller: _controller,
                             obscureText: obscureText,
                             maxLines: maxLines,
@@ -87,9 +85,10 @@ class RegTextField extends StatelessWidget {
                             validator: (this.isRequired) ? (value) => validatorFunc(context, value) : (value) => null,
                             decoration: InputDecoration(
                               focusColor: PetsTheme.currentMainColor,
+                              enabledBorder: UnderlineInputBorder(borderSide: BorderSide(color: PetsTheme.petsBordersGrayColor)),
                               hintText: label, hintStyle: TextStyle(color: PetsTheme.petsHintGrayColor, fontSize: PetsTheme.getSmallFont(context))),
-                            style: TextStyle(fontFamily: "Segoe", fontSize: PetsTheme.getLargeFont(context)),
-                          )))),
+                            style: TextStyle(fontFamily: "Roboto", fontSize: PetsTheme.getLargeFont(context)),
+                          ))),
             ],
           )
         ],

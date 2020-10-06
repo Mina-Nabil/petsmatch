@@ -1,6 +1,8 @@
+import 'dart:developer';
 import 'dart:ui';
 
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:page_transition/page_transition.dart';
@@ -22,7 +24,30 @@ class _LoginScreenState extends State<LoginScreen> {
   final TextEditingController _emailController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
   bool obscureTextFlag = true;
-  Color obscureTextColor = PetsTheme.petsGrayColor;
+  Color obscureTextColor = PetsTheme.petsTextGrayColor;
+
+  @override
+  void initState() {
+    // blocking change in screen orientation
+    super.initState();
+    SystemChrome.setPreferredOrientations([
+      DeviceOrientation.portraitUp,
+      DeviceOrientation.portraitDown,
+    ]);
+  }
+
+  @override
+  void deactivate() {
+    log("GEET HNA");
+    SystemChrome.setPreferredOrientations([
+      DeviceOrientation.landscapeRight,
+      DeviceOrientation.landscapeLeft,
+      DeviceOrientation.portraitUp,
+      DeviceOrientation.portraitDown,
+    ]);
+    super.deactivate();
+  }
+
   @override
   Widget build(BuildContext context) {
     //some dimensions
@@ -33,7 +58,7 @@ class _LoginScreenState extends State<LoginScreen> {
       setState(() {
         obscureTextFlag = !obscureTextFlag;
         if (obscureTextFlag)
-          obscureTextColor = PetsTheme.petsGrayColor;
+          obscureTextColor = PetsTheme.petsTextGrayColor;
         else
           obscureTextColor = PetsTheme.petsBgBlueColor;
       });
@@ -90,7 +115,7 @@ class _LoginScreenState extends State<LoginScreen> {
                         padding: EdgeInsets.only(left: PetsTheme.getMeduimPadMarg(context)),
                         child: TextFormField(
                           decoration:
-                              InputDecoration(hintText: "E-mail", hintStyle: TextStyle(fontFamily: "Segoe", fontSize: 16, color: PetsTheme.petsGrayColor)),
+                              InputDecoration(hintText: "E-mail", hintStyle: TextStyle(fontFamily: "Segoe", fontSize: 16, color: PetsTheme.petsTextGrayColor)),
                           controller: _emailController,
                           style: TextStyle(fontFamily: "Segoe", fontSize: 16),
                         )),
@@ -120,7 +145,7 @@ class _LoginScreenState extends State<LoginScreen> {
                               children: [
                                 TextFormField(
                                   decoration: InputDecoration(
-                                      hintText: "Password", hintStyle: TextStyle(fontFamily: "Segoe", fontSize: 16, color: PetsTheme.petsGrayColor)),
+                                      hintText: "Password", hintStyle: TextStyle(fontFamily: "Segoe", fontSize: 16, color: PetsTheme.petsTextGrayColor)),
                                   obscureText: obscureTextFlag,
                                   controller: _passwordController,
                                   style: TextStyle(fontFamily: "Segoe", fontSize: 16),
@@ -156,7 +181,8 @@ class _LoginScreenState extends State<LoginScreen> {
                       child: SizedBox(
                         child: Text(
                           "Forgot password?",
-                          style: TextStyle(fontFamily: "Roboto", fontSize: PetsTheme.getSmallFont(context), color: PetsTheme.petsGrayColor.withOpacity(0.5)),
+                          style:
+                              TextStyle(fontFamily: "Roboto", fontSize: PetsTheme.getSmallFont(context), color: PetsTheme.petsTextGrayColor.withOpacity(0.5)),
                         ),
                       ))
                 ],
@@ -166,7 +192,10 @@ class _LoginScreenState extends State<LoginScreen> {
             Flexible(
               flex: 2,
               fit: FlexFit.tight,
-              child: SubmitButton(fieldsWidth: fieldsWidth, callBackFunction: signUp,),
+              child: SubmitButton(
+                fieldsWidth: fieldsWidth,
+                callBackFunction: signUp,
+              ),
             ),
             //Other sign in options
             Flexible(
@@ -224,4 +253,3 @@ class _LoginScreenState extends State<LoginScreen> {
         ));
   }
 }
-

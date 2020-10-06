@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:petmatch/screens/basescreen.dart';
 import 'package:petmatch/theme/petsTheme.dart';
 import 'package:petmatch/widgets/LabelledFormField.dart';
 import 'package:petmatch/widgets/LoginScreenSetup.dart';
@@ -7,17 +8,20 @@ import 'package:petmatch/widgets/SkipButton.dart';
 import 'package:petmatch/widgets/SubmitButton.dart';
 import 'package:petmatch/widgets/regTextField.dart';
 
-class OwnerRegistrationScreen extends StatefulWidget {
+class TrainerRegistrationScreen extends StatefulWidget {
   @override
-  _OwnerRegistrationScreenState createState() => _OwnerRegistrationScreenState();
+  _TrainerRegistrationScreenState createState() => _TrainerRegistrationScreenState();
 }
 
-class _OwnerRegistrationScreenState extends State<OwnerRegistrationScreen> {
+class _TrainerRegistrationScreenState extends State<TrainerRegistrationScreen> {
   final TextEditingController _firstNameController = new TextEditingController();
   final TextEditingController _lastNameController = new TextEditingController();
   final TextEditingController _emailController = new TextEditingController();
   final TextEditingController _passwordNameController = new TextEditingController();
   final TextEditingController _confirmPasswordNameController = new TextEditingController();
+  final TextEditingController _yearsExpController = new TextEditingController();
+  final TextEditingController _relatedOrgController = new TextEditingController();
+  final TextEditingController _aboutController = new TextEditingController();
 
   DateTime birthDate = null;
 
@@ -42,6 +46,7 @@ class _OwnerRegistrationScreenState extends State<OwnerRegistrationScreen> {
       isSmallTopArea: true,
       smalFormTitle: true,
       isBottomScrollable: true,
+      backgroundColor: bgColor.purple,
       formTitleAlignment: Alignment.centerLeft,
       formWidget: Column(
         mainAxisSize: MainAxisSize.min,
@@ -144,16 +149,75 @@ class _OwnerRegistrationScreenState extends State<OwnerRegistrationScreen> {
                 onChanged: citySelected,
                 items: [
                   DropdownMenuItem(
-                    child: Text("Cairo"),
+                    child: Text(
+                      "Cairo",
+                      style: TextStyle(fontFamily: "Roboto"),
+                    ),
                   ),
                   DropdownMenuItem(
-                    child: Text("Alex"),
+                    child: Text(
+                      "Alex",
+                      style: TextStyle(fontFamily: "Roboto"),
+                    ),
                   ),
                   DropdownMenuItem(
-                    child: Text("Giza"),
+                    child: Text(
+                      "Giza",
+                      style: TextStyle(fontFamily: "Roboto"),
+                    ),
                   ),
                 ],
               )),
+          LabelledFormField(
+              label: "Training Type",
+              fieldHeight: maxFieldHeight,
+              width: fieldsWidth,
+              childField: DropdownButtonFormField(
+                decoration: InputDecoration(enabledBorder: UnderlineInputBorder(borderSide: BorderSide(color: PetsTheme.petsBordersGrayColor))),
+                style: TextStyle(fontFamily: "Roboto", color: Colors.black, fontSize: PetsTheme.getLargeFont(context)),
+                onChanged: citySelected,
+                items: [
+                  DropdownMenuItem(
+                    child: Text(
+                      "Protection",
+                      style: TextStyle(fontFamily: "Roboto"),
+                    ),
+                  ),
+                  DropdownMenuItem(
+                    child: Text(
+                      "Orders",
+                      style: TextStyle(fontFamily: "Roboto"),
+                    ),
+                  ),
+                  DropdownMenuItem(
+                    child: Text(
+                      "Bulking",
+                      style: TextStyle(fontFamily: "Roboto"),
+                    ),
+                  ),
+                ],
+              )),
+          RegTextField(
+            label: "Years of Experience",
+            maxFieldHeight: maxFieldHeight,
+            minFieldHeight: minFieldHeight,
+            controller: _yearsExpController,
+            fieldsWidth: fieldsWidth,
+          ),
+          RegTextField(
+            label: "Related Organization",
+            maxFieldHeight: maxFieldHeight,
+            minFieldHeight: minFieldHeight,
+            controller: _relatedOrgController,
+            fieldsWidth: fieldsWidth,
+          ),
+          RegTextField(
+            label: "About",
+            maxFieldHeight: maxFieldHeight,
+            minFieldHeight: minFieldHeight,
+            controller: _aboutController,
+            fieldsWidth: fieldsWidth,
+          ),
 
           SubmitButton(
             callBackFunction: null,

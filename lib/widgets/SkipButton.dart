@@ -27,7 +27,7 @@ class SkipButton extends StatelessWidget {
       width: fieldsWidth,
       margin: EdgeInsets.all(PetsTheme.getLargerPadMarg(context)),
       constraints: BoxConstraints(maxWidth: fieldsWidth, maxHeight: MediaQuery.of(context).size.height*0.07),
-      decoration: BoxDecoration(color: PetsTheme.whiteBarColor, border: Border.all(color: PetsTheme.petsBlueColor), borderRadius: BorderRadius.circular(PetsTheme.getMuchLargerFont(context))),
+      decoration: BoxDecoration(color: PetsTheme.whiteBarColor, border: Border.all(color: PetsTheme.currentMainColor), borderRadius: BorderRadius.circular(PetsTheme.getMuchLargerFont(context))),
       child: FlatButton(
         onPressed: callBackFunction,
         child: Row(

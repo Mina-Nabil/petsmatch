@@ -148,7 +148,7 @@ class _BaseScreenState extends State<BaseScreen> {
 
     return Container(
         height: MediaQuery.of(context).size.height,
-        width: MediaQuery.of(context).size.height,
+        width: MediaQuery.of(context).size.width,
         child: Stack(children: <Widget>[
           Container(color: bgColorRGB, height: MediaQuery.of(context).size.height, width: MediaQuery.of(context).size.width, child: bgMaskImage),
           Scaffold(
@@ -156,6 +156,8 @@ class _BaseScreenState extends State<BaseScreen> {
             appBar: appBar,
             backgroundColor: Colors.transparent,
             body: Container(
+                height: MediaQuery.of(context).size.height,
+                width: MediaQuery.of(context).size.width,
                 padding: EdgeInsets.only(top: screenTopPadding, left: screenLeftPadding, right: screenRightPadding, bottom: screenBottomPadding),
                 color: Colors.transparent,
                 constraints:

@@ -2,6 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:page_transition/page_transition.dart';
 import 'package:petmatch/screens/basescreen.dart';
 import 'package:petmatch/screens/login/ownerRegistration.dart';
+import 'package:petmatch/screens/login/storeRegistration.dart';
+import 'package:petmatch/screens/login/trainerRegistration.dart';
+import 'package:petmatch/screens/login/vetRegistration.dart';
 import 'package:petmatch/settings/paths.dart';
 import 'package:petmatch/theme/petsTheme.dart';
 import 'package:petmatch/widgets/LoginScreenSetup.dart';
@@ -57,7 +60,20 @@ class RegTypeSelectedScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     void signUp() {
-      Navigator.push(context, new PageTransition(type: PageTransitionType.fade, duration: Duration(milliseconds: 500), child: OwnerRegistrationScreen()));
+      switch (selectedType) {
+        case userType.owner:
+          Navigator.push(context, new PageTransition(type: PageTransitionType.fade, duration: Duration(milliseconds: 500), child: OwnerRegistrationScreen()));
+          break;
+        case userType.trainer:
+          Navigator.push(context, new PageTransition(type: PageTransitionType.fade, duration: Duration(milliseconds: 500), child: TrainerRegistrationScreen()));
+          break;
+        case userType.vet:
+          Navigator.push(context, new PageTransition(type: PageTransitionType.fade, duration: Duration(milliseconds: 500), child: VetRegistrationScreen()));
+          break;
+        case userType.store:
+          Navigator.push(context, new PageTransition(type: PageTransitionType.fade, duration: Duration(milliseconds: 500), child: StoreRegistrationScreen()));
+          break;
+      }
     }
 
     selectedTypeRow = Column(

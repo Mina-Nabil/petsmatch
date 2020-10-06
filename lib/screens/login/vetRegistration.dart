@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:petmatch/screens/basescreen.dart';
 import 'package:petmatch/theme/petsTheme.dart';
 import 'package:petmatch/widgets/LabelledFormField.dart';
 import 'package:petmatch/widgets/LoginScreenSetup.dart';
@@ -7,12 +8,12 @@ import 'package:petmatch/widgets/SkipButton.dart';
 import 'package:petmatch/widgets/SubmitButton.dart';
 import 'package:petmatch/widgets/regTextField.dart';
 
-class OwnerRegistrationScreen extends StatefulWidget {
+class VetRegistrationScreen extends StatefulWidget {
   @override
-  _OwnerRegistrationScreenState createState() => _OwnerRegistrationScreenState();
+  _VetRegistrationScreenState createState() => _VetRegistrationScreenState();
 }
 
-class _OwnerRegistrationScreenState extends State<OwnerRegistrationScreen> {
+class _VetRegistrationScreenState extends State<VetRegistrationScreen> {
   final TextEditingController _firstNameController = new TextEditingController();
   final TextEditingController _lastNameController = new TextEditingController();
   final TextEditingController _emailController = new TextEditingController();
@@ -42,6 +43,7 @@ class _OwnerRegistrationScreenState extends State<OwnerRegistrationScreen> {
       isSmallTopArea: true,
       smalFormTitle: true,
       isBottomScrollable: true,
+      backgroundColor: bgColor.cyan,
       formTitleAlignment: Alignment.centerLeft,
       formWidget: Column(
         mainAxisSize: MainAxisSize.min,
