@@ -9,6 +9,12 @@ enum bgColor { blue, purple, cyan, pink }
 enum bgMask { def, mating, training, walk, services }
 
 class BaseScreen extends StatefulWidget {
+  ////SCREEN DEFAULTS
+  static final topPaddingPercentage = 0.05;
+  static final bottomPaddingPercentage = 0.03;
+  static final rightPaddingPercentage = 0.05;
+  static final leftPaddingPercentage = 0.05;
+
   final Widget child;
   final Widget titleContainer;
   final bool isTopColorDark;
@@ -43,6 +49,7 @@ class BaseScreen extends StatefulWidget {
       this.isBottomPadding = false,
       this.isLeftPadding = true,
       this.isRightPadding = true});
+
   @override
   _BaseScreenState createState() => _BaseScreenState();
 }
@@ -56,7 +63,7 @@ class _BaseScreenState extends State<BaseScreen> {
   @override
   void initState() {
     super.initState();
-
+    //Adjust text color and background color
     switch (this.widget.backGroundColor) {
       case bgColor.blue:
         bgColorRGB = PetsTheme.petsBgBlueColor;
@@ -72,6 +79,7 @@ class _BaseScreenState extends State<BaseScreen> {
         break;
       default: //blue background
         bgColorRGB = PetsTheme.petsBgBlueColor;
+        break;
     }
 
     switch (this.widget.backGroundMask) {
@@ -110,45 +118,50 @@ class _BaseScreenState extends State<BaseScreen> {
 
   @override
   Widget build(BuildContext context) {
-    double screenTopPadding = (widget.isTopPadding) ? MediaQuery.of(context).size.height * .05 : 0;
-    double screenBottomPadding = (widget.isBottomPadding) ? MediaQuery.of(context).size.height * .03 : 0;
-    double screenLeftPadding = (widget.isLeftPadding) ? MediaQuery.of(context).size.width * .05 : 0;
-    double screenRightPadding = (widget.isRightPadding) ? MediaQuery.of(context).size.width * .05 : 0;
+    double screenTopPadding = (widget.isTopPadding) ? MediaQuery.of(context).size.height * BaseScreen.topPaddingPercentage : 0;
+    double screenBottomPadding = (widget.isBottomPadding) ? MediaQuery.of(context).size.height * BaseScreen.bottomPaddingPercentage : 0;
+    double screenLeftPadding = (widget.isLeftPadding) ? MediaQuery.of(context).size.width * BaseScreen.leftPaddingPercentage : 0;
+    double screenRightPadding = (widget.isRightPadding) ? MediaQuery.of(context).size.width * BaseScreen.rightPaddingPercentage : 0;
+
+    PreferredSizeWidget appBar = (widget.titleContainer != null)
+        ? PreferredSize(preferredSize: Size(MediaQuery.of(context).size.width, 70), child: widget.titleContainer)
+        : (!widget.noTitle)
+            ? AppBar(
+                elevation: 0.0,
+                title: (widget.titleText != null)
+                    ? Text(this.widget.titleText,
+                        style: (this.widget.titleStyle) ?? TextStyle(fontFamily: "Oregano", fontSize: PetsTheme.getLargerFont(context)))
+                    : Text(""),
+
+                centerTitle: widget.titleCenter,
+                bottom: (widget.subTitle) ?? widget.subTitle,
+                backgroundColor: Colors.transparent, // status bar color,
+                brightness: (this.widget.isTopColorDark) ? Brightness.light : Brightness.dark, // status text bar color
+              )
+            : PreferredSize(
+                preferredSize: Size(0, 0),
+                child: AppBar(
+                  elevation: 0,
+                  backgroundColor: Colors.transparent, // status bar color,
+                  brightness: (this.widget.isTopColorDark) ? Brightness.light : Brightness.dark,
+                ));
 
     return Container(
         height: MediaQuery.of(context).size.height,
-        width: MediaQuery.of(context).size.height,
+        width: MediaQuery.of(context).size.width,
         child: Stack(children: <Widget>[
           Container(color: bgColorRGB, height: MediaQuery.of(context).size.height, width: MediaQuery.of(context).size.width, child: bgMaskImage),
           Scaffold(
             resizeToAvoidBottomInset: widget.isKeyBoardChangeSize,
-            appBar: (widget.titleContainer != null)
-                ? PreferredSize(preferredSize: Size(MediaQuery.of(context).size.width, 70), child: widget.titleContainer)
-                : (!widget.noTitle)
-                    ? AppBar(
-                        title: (widget.titleText != null)
-                            ? Text(this.widget.titleText,
-                                style: (this.widget.titleStyle) ?? TextStyle(fontFamily: "Oregano", fontSize: PetsTheme.getLargerFont(context)))
-                            : Text(""),
-
-                        centerTitle: widget.titleCenter,
-                        bottom: (widget.subTitle) ?? widget.subTitle,
-                        backgroundColor: PetsTheme.darkBgColor, // status bar color,
-                        brightness: Brightness.dark, // status text bar color
-                      )
-                    : PreferredSize(
-                        preferredSize: Size(0, 0),
-                        child: AppBar(
-                          elevation: 0,
-                          backgroundColor: Colors.transparent, // status bar color,
-                          brightness: (this.widget.isTopColorDark) ? Brightness.light : Brightness.dark,
-                        )),
+            appBar: appBar,
             backgroundColor: Colors.transparent,
             body: Container(
-                padding: EdgeInsets.only(top: screenTopPadding, left: screenLeftPadding, right: screenRightPadding, bottom: screenBottomPadding),
-                color: Colors.transparent,
                 height: MediaQuery.of(context).size.height,
                 width: MediaQuery.of(context).size.width,
+                padding: EdgeInsets.only(top: screenTopPadding, left: screenLeftPadding, right: screenRightPadding, bottom: screenBottomPadding),
+                color: Colors.transparent,
+                constraints:
+                    BoxConstraints(maxHeight: MediaQuery.of(context).size.height - appBar.preferredSize.height, maxWidth: MediaQuery.of(context).size.width),
                 child: widget.child ?? widget.child),
             bottomNavigationBar: (widget.isNavBar) ? NavBarHolder() : null,
           ),

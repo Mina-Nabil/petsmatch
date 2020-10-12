@@ -8,39 +8,41 @@ class PetsTheme {
   static final double smallScreenHeight = 600;
 
   //Colors
-  
+
   static final Color petsBlueColor = Color.fromRGBO(61, 107, 255, 1);
   static final Color petsPurpleColor = Color.fromRGBO(47, 8, 151, 1);
   static final Color petsPinkColor = Color.fromRGBO(114, 9, 183, 1);
   static final Color petsCyanColor = Color.fromRGBO(31, 175, 219, 1);
-  static final Color petsGrayColor = Color.fromARGB(128, 69, 79, 99);
+  static final Color petsTextGrayColor = Color.fromARGB(128, 69, 79, 99);
+  static final Color petsBordersGrayColor = Color.fromRGBO(112, 112, 112, 0.5);
+  static final Color petsHintGrayColor = Color.fromRGBO(69, 79, 99, 0.5);
   static final Color petsGreenColor = Color.fromRGBO(6, 214, 160, 1);
+  static Color currentMainColor = petsBlueColor;
 
-
-  
   static final Color petsBgBlueColor = petsBlueColor.withOpacity(.6);
   static final Color petsBgPurpleColor = petsPurpleColor.withOpacity(.6);
   static final Color petsBgPinkColor = petsPinkColor.withOpacity(.6);
   static final Color petsBgCyanColor = petsCyanColor.withOpacity(.6);
   static final Color whiteBarColor = Color.fromRGBO(249, 250, 255, 1);
 
+  static final Color blackTextColor = Color.fromRGBO(69, 79, 99, 1);
 
 // old design color
-  @deprecated 
+  @deprecated
   static final Color pawColor = Color.fromRGBO(61, 107, 255, 1);
-  @deprecated 
+  @deprecated
   static final Color bgColor = Color.fromRGBO(126, 229, 255, 1);
-  @deprecated 
+  @deprecated
   static final Color cyan = Color.fromRGBO(180, 240, 255, 1);
-  @deprecated 
+  @deprecated
   static final Color darkBgColor = Color.fromRGBO(42, 46, 67, 1);
-  @deprecated 
+  @deprecated
   static final Color fieldsBackGroundColor = Color.fromRGBO(204, 245, 255, .6);
-  @deprecated 
-  static final Color hintColor =  Color.fromRGBO(121, 132, 142, .52);
-  @deprecated 
+  @deprecated
+  static final Color hintColor = Color.fromRGBO(121, 132, 142, .52);
+  @deprecated
   static final Color fbBlue = Color.fromRGBO(60, 102, 196, 1);
-  @deprecated 
+  @deprecated
   static final Color googleRed = Color.fromRGBO(207, 67, 50, 1);
 
   //Font init .. use initFont before use
@@ -66,40 +68,23 @@ class PetsTheme {
   static double _largePadMarg;
   static double _largerPadMarg;
   static double _muchLargerPadMarg;
+  static double _largestPadMarg;
 
   static void _initFonts(BuildContext context) {
     //Font init
-    _smallIconSize =
-        (MediaQuery.of(context).size.width > bigScreenWidth) ? 50 : 40;
+    _smallIconSize = (MediaQuery.of(context).size.width > bigScreenWidth) ? 50 : 40;
 
-    _veryLargeFont = (MediaQuery.of(context).size.width > bigScreenWidth &&
-            MediaQuery.of(context).size.height > bigScreenHeight)
-        ? 50
-        : 35;
+    _veryLargeFont = (MediaQuery.of(context).size.width > bigScreenWidth && MediaQuery.of(context).size.height > bigScreenHeight) ? 50 : 35;
 
-    _largerFont = (MediaQuery.of(context).size.width > bigScreenWidth)
-        ? 24
-        : (MediaQuery.of(context).size.width > smallScreenWidth) ? 21 : 18;
-    _evenMuchLargerFont = (MediaQuery.of(context).size.width > bigScreenWidth)
-        ? 32
-        : (MediaQuery.of(context).size.width > smallScreenWidth) ? 27 : 24;
-    _muchLargerFont = (MediaQuery.of(context).size.width > bigScreenWidth)
-        ? 26
-        : (MediaQuery.of(context).size.width > smallScreenWidth) ? 24 : 22;
-    _largeFont = (MediaQuery.of(context).size.width > bigScreenWidth)
-        ? 20
-        : (MediaQuery.of(context).size.width > smallScreenWidth) ? 18 : 17;
-    _meduimFont = (MediaQuery.of(context).size.width > bigScreenWidth)
-        ? 16
-        : (MediaQuery.of(context).size.width > smallScreenWidth) ? 14 : 12;
-    _smallFont = (MediaQuery.of(context).size.width > bigScreenWidth)
-        ? 13
-        : (MediaQuery.of(context).size.width > smallScreenWidth) ? 13 : 10;
+    _largerFont = (MediaQuery.of(context).size.width > bigScreenWidth) ? 24 : (MediaQuery.of(context).size.width > smallScreenWidth) ? 21 : 18;
+    _evenMuchLargerFont = (MediaQuery.of(context).size.width > bigScreenWidth) ? 32 : (MediaQuery.of(context).size.width > smallScreenWidth) ? 27 : 24;
+    _muchLargerFont = (MediaQuery.of(context).size.width > bigScreenWidth) ? 26 : (MediaQuery.of(context).size.width > smallScreenWidth) ? 24 : 22;
+    _largeFont = (MediaQuery.of(context).size.width > bigScreenWidth) ? 20 : (MediaQuery.of(context).size.width > smallScreenWidth) ? 18 : 17;
+    _meduimFont = (MediaQuery.of(context).size.width > bigScreenWidth) ? 16 : (MediaQuery.of(context).size.width > smallScreenWidth) ? 14 : 12;
+    _smallFont = (MediaQuery.of(context).size.width > bigScreenWidth) ? 13 : (MediaQuery.of(context).size.width > smallScreenWidth) ? 13 : 10;
 
     //Padding & Marging Init
-    _smallPadMarg = (MediaQuery.of(context).size.width > bigScreenWidth)
-        ? 8
-        : (MediaQuery.of(context).size.width > smallScreenWidth) ? 5 : 3;
+    _smallPadMarg = (MediaQuery.of(context).size.width > bigScreenWidth) ? 7 : (MediaQuery.of(context).size.width > smallScreenWidth) ? 5 : 3;
     _smallerPadMarg = 0.75 * _smallPadMarg;
     _moreSmallPadMarg = 0.5 * _smallPadMarg;
     _smallestPadMarg = 0.25 * _smallPadMarg;
@@ -107,6 +92,7 @@ class PetsTheme {
     _largePadMarg = 2 * _smallPadMarg;
     _largerPadMarg = 2.5 * _smallPadMarg;
     _muchLargerPadMarg = 3.5 * _smallPadMarg;
+    _largestPadMarg = 5 * _smallPadMarg;
   }
 
   static double getVeryLargeFont(BuildContext context) {
@@ -187,5 +173,10 @@ class PetsTheme {
   static double getMuchLargerPadMarg(BuildContext context) {
     if (_muchLargerPadMarg == null) _initFonts(context);
     return _muchLargerPadMarg;
+  }
+
+  static double getLargestPadMarg(BuildContext context) {
+    if (_largestPadMarg == null) _initFonts(context);
+    return _largestPadMarg;
   }
 }

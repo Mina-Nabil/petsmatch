@@ -1,152 +1,102 @@
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
 import 'package:page_transition/page_transition.dart';
-import 'package:petmatch/screens/basescreen.dart';
-import 'package:petmatch/screens/login/ownerReg.dart';
-import 'package:petmatch/screens/login/trainerReg.dart';
+import 'package:petmatch/screens/login/regTypeSelected.dart';
+import 'package:petmatch/settings/paths.dart';
 import 'package:petmatch/theme/petsTheme.dart';
+import 'package:petmatch/widgets/LoginScreenSetup.dart';
+import 'package:petmatch/widgets/RegistrationTypeIcon.dart';
 
-class RegTypesScreen extends StatelessWidget {
-  double fieldWidthRatio = .8;
-  double fieldMinHeightRatio = .075;
-  double fieldMaxHeightRatio = .1;
+class RegTypesScreen extends StatefulWidget {
+  @override
+  _RegTypesScreenState createState() => _RegTypesScreenState();
+}
+
+class _RegTypesScreenState extends State<RegTypesScreen> {
+  Map<userType, bool> allTypes;
+
+  void selectType(context, userType type) {
+    setState(() {
+      allTypes.forEach((key, value) {
+        if (key != type) allTypes[key] = true;
+      });
+    });
+
+    Navigator.push(context, new PageTransition(type: PageTransitionType.fade, duration: Duration(milliseconds: 500), child: RegTypeSelectedScreen(type)))
+        //refreshing page in case it is popped up
+        .then((value) => setState(() {
+              allTypes = {userType.owner: false, userType.store: false, userType.trainer: false, userType.vet: false};
+              PetsTheme.currentMainColor = PetsTheme.petsBlueColor;
+            }));
+  }
+
+  @override
+  void initState() {
+    allTypes = {userType.owner: false, userType.store: false, userType.trainer: false, userType.vet: false};
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
-    return BaseScreen(
-        noTitle: true,
-        child: SingleChildScrollView(
-            child: Container(
-                width: MediaQuery.of(context).size.width,
-                height: MediaQuery.of(context).size.height * .9,
-                child: Column(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    mainAxisSize: MainAxisSize.max,
-                    children: <Widget>[
-                      //Empty space at the top // 1flex
-                      Flexible(
-                        fit: FlexFit.tight,
-                        flex: 1,
-                        child: Container(),
-                      ),
-                      //Logo space // 3flex
-                      Flexible(
-                          fit: FlexFit.tight,
-                          flex: 3,
-                          child: Container(
-                              alignment: Alignment.bottomCenter,
-                              child: Image.asset("assets/images/logo.png"))),
+    Row typesButtonsRow = Row(
+      mainAxisSize: MainAxisSize.min,
+      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Flexible(
+            flex: 1,
+            child: FlatButton(
+                splashColor: Colors.transparent,
+                highlightColor: Colors.transparent,
+                padding: EdgeInsets.all(0),
+                onPressed: () => selectType(context, userType.owner),
+                child: RegistrationTypeButton(
+                  Paths.owner_icon_file,
+                  "Pet Owner",
+                  PetsTheme.petsBlueColor,
+                  PetsTheme.petsBgBlueColor,
+                  isHidden: allTypes[userType.owner],
+                ))),
+        Flexible(
+            flex: 1,
+            child: FlatButton(
+                splashColor: Colors.transparent,
+                highlightColor: Colors.transparent,
+                padding: EdgeInsets.all(0),
+                onPressed: () => selectType(context, userType.trainer),
+                child: RegistrationTypeButton(Paths.trainer_icon_file, "Trainer", PetsTheme.petsPurpleColor, PetsTheme.petsBgPurpleColor,
+                    isHidden: allTypes[userType.trainer]))),
+        Flexible(
+            flex: 1,
+            child: FlatButton(
+                splashColor: Colors.transparent,
+                highlightColor: Colors.transparent,
+                padding: EdgeInsets.all(0),
+                onPressed: () => selectType(context, userType.vet),
+                child:
+                    RegistrationTypeButton(Paths.vet_icon_file, "Vet", PetsTheme.petsCyanColor, PetsTheme.petsBgCyanColor, isHidden: allTypes[userType.vet]))),
+        Flexible(
+            flex: 1,
+            child: FlatButton(
+                splashColor: Colors.transparent,
+                highlightColor: Colors.transparent,
+                padding: EdgeInsets.all(0),
+                onPressed: () => selectType(context, userType.store),
+                child: RegistrationTypeButton(Paths.store_icon_file, "Store", PetsTheme.petsPinkColor, PetsTheme.petsBgPinkColor,
+                    isHidden: allTypes[userType.store]))),
+      ],
+    );
 
-                      //Title Petmatch // 2flex
-                      Flexible(
-                        fit: FlexFit.tight,
-                        flex: 2,
-                        child: Container(
-                          alignment: Alignment.topCenter,
-                          child: Text(
-                            "PetMatch",
-                            style: TextStyle(
-                                fontFamily: "Oregano",
-                                fontSize: PetsTheme.getVeryLargeFont(context)),
-                          ),
-                        ),
-                      ),
-                      // Title 2 flex
-                      Flexible(
-                        fit: FlexFit.tight,
-                        flex: 2,
-                        child: Container(
-                          width: MediaQuery.of(context).size.width,
-                          margin: EdgeInsets.all(
-                              PetsTheme.getLargePadMarg(context)),
-                          child: Text(
-                            "Register as:",
-                            style: TextStyle(
-                                fontFamily: "Oregano",
-                                fontSize:
-                                    PetsTheme.getEvenMuchLargerFont(context)),
-                          ),
-                        ),
-                      ),
-                      // buttons 6 flex
-                      Flexible(
-                        flex: 6,
-                        fit: FlexFit.tight,
-                        child: Container(
-                          alignment: Alignment.topCenter,
-                          width: MediaQuery.of(context).size.width,
-                          height: MediaQuery.of(context).size.height,
-                          child: Wrap(
-                            children: <Widget>[
-                              buildTypeContainer(
-                                  context,
-                                  "Pet Owner / Lover",
-                                  () => Navigator.of(context).push(
-                                      PageTransition(
-                                          type: PageTransitionType.fade,
-                                          child: OwnerRegScreen()))),
-                              buildTypeContainer(
-                                  context,
-                                  "Trainer",
-                                  () => Navigator.of(context).push(
-                                      PageTransition(
-                                          type: PageTransitionType.fade,
-                                          child: TrainerRegScreen()))),
-                            ],
-                          ),
-                        ),
-                      ),
-                      //back button 2 flex
-                      Flexible(
-                          flex: 2,
-                          fit: FlexFit.loose,
-                          child: FlatButton(
-                            padding: EdgeInsets.all(0),
-                            onPressed: () => Navigator.pop(context),
-                            child: Container(
-                              width: MediaQuery.of(context).size.width,
-                              padding: EdgeInsets.all(
-                                  PetsTheme.getSmallPadMarg(context)),
-                              alignment: Alignment.bottomLeft,
-                              child: Container(
-                                alignment: Alignment.center,
-                                width: MediaQuery.of(context).size.width / 3,
-                                decoration: BoxDecoration(
-                                    borderRadius: BorderRadius.circular(50),
-                                    color: PetsTheme.fieldsBackGroundColor),
-                                child: Text("Back",
-                                    style: TextStyle(
-                                        fontFamily: "Oregano",
-                                        fontSize: PetsTheme.getMuchLargerFont(
-                                            context))),
-                              ),
-                            ),
-                          ))
-                    ]))));
-  }
-
-  Widget buildTypeContainer(
-      BuildContext context, String title, Function onPressed) {
-    return FlatButton(
-      padding: EdgeInsets.all(0),
-      onPressed: onPressed,
-      child: Container(
-        alignment: Alignment.center,
-        margin:
-            EdgeInsets.symmetric(vertical: PetsTheme.getSmallPadMarg(context)),
-        constraints: BoxConstraints(
-            minHeight: MediaQuery.of(context).size.height * fieldMinHeightRatio,
-            maxHeight:
-                MediaQuery.of(context).size.height * fieldMaxHeightRatio),
-        width: MediaQuery.of(context).size.width * fieldWidthRatio,
-        decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(50),
-            color: PetsTheme.fieldsBackGroundColor),
-        child: Text(title,
-            style: TextStyle(
-                fontFamily: "Oregano",
-                fontSize: PetsTheme.getEvenMuchLargerFont(context))),
-      ),
+    return LoginScreenSetup(
+      formTitle: "Sign up as",
+      showLogo: true,
+      formWidget: Column (children: [
+        Flexible(flex: 2, child: typesButtonsRow),
+        Flexible(flex: 3, child: Container(),)
+      ]),
+      topbarTitle: "Welcome to Petmatch",
+      topbarSubtitle: "All Pets, One Place...",
     );
   }
 }

@@ -4,6 +4,7 @@ import 'package:validators/validators.dart';
 import 'package:validators/sanitizers.dart';
 
 class RegTextField extends StatelessWidget {
+
   const RegTextField({
     Key key,
     @required this.fieldsWidth,
@@ -61,40 +62,33 @@ class RegTextField extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    
     return Container(
       alignment: Alignment.topLeft,
-      margin: EdgeInsets.only(top: PetsTheme.getLargePadMarg(context)),
+      // margin: EdgeInsets.only(top: PetsTheme.getLargePadMarg(context)),
       constraints: BoxConstraints(maxWidth: fieldsWidth, maxHeight: maxFieldHeight, minHeight: minFieldHeight),
       child: Wrap(
         alignment: WrapAlignment.start,
         children: <Widget>[
-          Padding(
-            padding: EdgeInsets.only(left: PetsTheme.getMeduimPadMarg(context)),
-            child: Text(label, style: TextStyle(fontSize: PetsTheme.getLargeFont(context), fontFamily: "Oregano")),
-          ),
           Row(
             mainAxisSize: MainAxisSize.max,
             mainAxisAlignment: MainAxisAlignment.start,
             children: <Widget>[
               Expanded(
                   child: Container(
-                      margin: EdgeInsets.symmetric(vertical: PetsTheme.getSmallerPadMarg(context)),
-                      child: Padding(
-                          padding: EdgeInsets.only(left: PetsTheme.getMeduimPadMarg(context)),
-                          child: TextFormField(
+                      // margin: EdgeInsets.symmetric(vertical: PetsTheme.getSmallerPadMarg(context)),
+                      child:  TextFormField(                     
                             controller: _controller,
                             obscureText: obscureText,
                             maxLines: maxLines,
                             minLines: minLines,
                             validator: (this.isRequired) ? (value) => validatorFunc(context, value) : (value) => null,
                             decoration: InputDecoration(
-                              filled: true,
-                              fillColor: PetsTheme.fieldsBackGroundColor,
-                              border: OutlineInputBorder(borderRadius: BorderRadius.circular(5), borderSide: BorderSide(color: Colors.black, width: 2)),
-                              enabledBorder: OutlineInputBorder(borderRadius: BorderRadius.circular(5), borderSide: BorderSide(color: PetsTheme.darkBgColor, width: 2)),
-                            ),
-                            style: TextStyle(fontFamily: "Segoe", fontSize: PetsTheme.getLargeFont(context)),
-                          )))),
+                              focusColor: PetsTheme.currentMainColor,
+                              enabledBorder: UnderlineInputBorder(borderSide: BorderSide(color: PetsTheme.petsBordersGrayColor)),
+                              hintText: label, hintStyle: TextStyle(color: PetsTheme.petsHintGrayColor, fontSize: PetsTheme.getSmallFont(context))),
+                            style: TextStyle(fontFamily: "Roboto", fontSize: PetsTheme.getLargeFont(context)),
+                          ))),
             ],
           )
         ],
