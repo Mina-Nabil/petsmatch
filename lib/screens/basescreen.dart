@@ -1,5 +1,6 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:petmatch/theme/petsTheme.dart';
 import 'package:petmatch/widgets/NavBar.dart';
 import 'package:petmatch/widgets/NavBarHolder.dart';
@@ -31,6 +32,7 @@ class BaseScreen extends StatefulWidget {
   final bool titleCenter;
   final bool isNavBar;
   final PreferredSizeWidget subTitle;
+  final bool isPortraitLock;
 
   BaseScreen(
       {this.child,
@@ -44,6 +46,7 @@ class BaseScreen extends StatefulWidget {
       this.isTopColorDark = false,
       this.isKeyBoardChangeSize = false,
       this.isNavBar = false,
+      this.isPortraitLock = false,
       this.titleCenter = true,
       this.isTopPadding = true,
       this.isBottomPadding = false,
@@ -109,6 +112,19 @@ class _BaseScreenState extends State<BaseScreen> {
     Future.delayed(Duration.zero).then((_) {
       precacheImage(bgMaskImage.image, context);
     });
+
+    if (widget.isPortraitLock)
+      SystemChrome.setPreferredOrientations([
+        DeviceOrientation.portraitUp,
+        DeviceOrientation.portraitDown,
+      ]);
+    else
+      SystemChrome.setPreferredOrientations([
+        DeviceOrientation.landscapeRight,
+        DeviceOrientation.landscapeLeft,
+        DeviceOrientation.portraitUp,
+        DeviceOrientation.portraitDown,
+      ]);
   }
 
   @override

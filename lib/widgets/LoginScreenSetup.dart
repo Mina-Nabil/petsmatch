@@ -17,6 +17,7 @@ class LoginScreenSetup extends StatelessWidget {
   final bool isBottomScrollable;
   final bool smalFormTitle;
   final Alignment formTitleAlignment;
+  final bool isPortraitLock;
 
   LoginScreenSetup(
       {@required this.formTitle,
@@ -28,6 +29,7 @@ class LoginScreenSetup extends StatelessWidget {
       this.backgroundMask = bgMask.def,
       this.isSmallTopArea = false,
       this.smalFormTitle = false,
+      this.isPortraitLock = false,
       this.isBottomScrollable = false,
       this.formTitleAlignment = Alignment.center,
       this.topbarSubtitle = ''}) {
@@ -202,6 +204,7 @@ class LoginScreenSetup extends StatelessWidget {
       screenBgColor: this.backgroundColor,
       screenBgMask: this.backgroundMask,
       isSmallTop: this.isSmallTopArea,
+      isPortraitLock: isPortraitLock,
     );
   }
 }

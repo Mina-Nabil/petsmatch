@@ -37,18 +37,6 @@ class _LoginScreenState extends State<LoginScreen> {
   }
 
   @override
-  void deactivate() {
-    log("GEET HNA");
-    SystemChrome.setPreferredOrientations([
-      DeviceOrientation.landscapeRight,
-      DeviceOrientation.landscapeLeft,
-      DeviceOrientation.portraitUp,
-      DeviceOrientation.portraitDown,
-    ]);
-    super.deactivate();
-  }
-
-  @override
   Widget build(BuildContext context) {
     //some dimensions
     final double fieldsWidth = MediaQuery.of(context).size.width * .7;
@@ -74,7 +62,7 @@ class _LoginScreenState extends State<LoginScreen> {
 
     void signUp() {
       print("SignUp Aho");
-      Navigator.of(context).push(PageTransition(type: PageTransitionType.fade, child: RegTypesScreen()));
+      Navigator.of(context).push(PageTransition(type: PageTransitionType.fade, child: RegTypesScreen())).timeout(Duration.zero);
     }
 
     void forgotPass() {
@@ -94,6 +82,7 @@ class _LoginScreenState extends State<LoginScreen> {
         backgroundColor: bgColor.blue,
         isSmallTopArea: false,
         showLogo: true,
+        isPortraitLock: true,
         topbarSubtitle: "All Pets, One Place...",
         formTitle: "Welcome to PetMatch!",
         topbarTitle: "Welcome to PetMatch",
