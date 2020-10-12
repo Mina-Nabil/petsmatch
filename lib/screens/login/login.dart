@@ -7,6 +7,7 @@ import 'package:flutter_svg/svg.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:page_transition/page_transition.dart';
 import 'package:petmatch/screens/basescreen.dart';
+import 'package:petmatch/screens/home/Search.dart';
 import 'package:petmatch/screens/home/home.dart';
 import 'package:petmatch/screens/login/regTypes.dart';
 import 'package:petmatch/screens/login/sendMailCode.dart';
@@ -215,9 +216,15 @@ class _LoginScreenState extends State<LoginScreen> {
                                     width: 50,
                                     decoration: BoxDecoration(color: PetsTheme.fbBlue, shape: BoxShape.circle),
                                     child: SizedBox.expand(
-                                        child: Icon(
-                                      FontAwesomeIcons.facebookF,
-                                      color: Colors.white,
+                                        child: FlatButton(
+                                      padding: EdgeInsets.all(0),
+                                      onPressed: () => {
+                                        Navigator.of(context).push(PageTransition(child: SearchScreen(), type: PageTransitionType.fade))
+                                      },
+                                      child: Icon(
+                                        FontAwesomeIcons.facebookF,
+                                        color: Colors.white,
+                                      ),
                                     )))),
                             Flexible(
                                 flex: 1,
