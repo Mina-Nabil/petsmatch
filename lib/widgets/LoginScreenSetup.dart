@@ -17,12 +17,14 @@ class LoginScreenSetup extends StatelessWidget {
   final bool isBottomScrollable;
   final bool smalFormTitle;
   final Alignment formTitleAlignment;
+  final TextAlign formTitleTextAlignment;
   final bool isPortraitLock;
 
   LoginScreenSetup(
-      {@required this.formTitle,
+      {
       @required this.topbarTitle,
       @required this.formWidget,
+      this.formTitle = '',
       this.formSubtitle = '',
       this.showLogo = true,
       this.backgroundColor = bgColor.blue,
@@ -32,6 +34,7 @@ class LoginScreenSetup extends StatelessWidget {
       this.isPortraitLock = false,
       this.isBottomScrollable = false,
       this.formTitleAlignment = Alignment.center,
+      this.formTitleTextAlignment = TextAlign.center,
       this.topbarSubtitle = ''}) {
     switch (this.backgroundColor) {
       case bgColor.blue:
@@ -60,11 +63,16 @@ class LoginScreenSetup extends StatelessWidget {
     int formTitleFlex = 3;
     int formSubtitleFlex = 0;
     bool isFormSubtitle = false;
+    bool isFormTitle = false;
 
     if (this.formSubtitle != '') {
       formTitleFlex = 2;
       formTitleFlex = 4;
       isFormSubtitle = true;
+    }
+
+    if(this.formTitle != '') {
+      isFormTitle = true;
     }
 
     List<Widget> topAreaWidgets = [];
@@ -99,14 +107,14 @@ class LoginScreenSetup extends StatelessWidget {
                 child: Text(
                   this.topbarTitle,
                   style: TextStyle(
-                      fontFamily: "Roboto", color: PetsTheme.whiteBarColor, fontWeight: FontWeight.bold, fontSize: PetsTheme.getMuchLargerFont(context)),
+                      fontFamily: "Roboto", color: PetsTheme.whiteBarColor, fontWeight: FontWeight.bold, fontSize: PetsTheme.getEvenMuchLargerFont(context)),
                 ),
               ),
             ),
             (this.topbarSubtitle != '')
                 ? Flexible(
                     flex: 1,
-                    child: FittedBox(
+                    child: SizedBox(
                       child: Text(
                         this.topbarSubtitle,
                         style: TextStyle(
@@ -126,13 +134,16 @@ class LoginScreenSetup extends StatelessWidget {
         flex: 1,
         child: Container(),
       ),
+      (isFormTitle) ? 
       Flexible(
         flex: formTitleFlex,
         child: Container(
           alignment: formTitleAlignment,
-          child: FittedBox(
+          child: SizedBox(
             child: Text(
               this.formTitle,
+              textAlign: formTitleTextAlignment,
+              overflow: TextOverflow.clip,
               style: TextStyle(
                   color: PetsTheme.currentMainColor,
                   fontFamily: "Roboto",
@@ -141,7 +152,7 @@ class LoginScreenSetup extends StatelessWidget {
             ),
           ),
         ),
-      ),
+      ) :  Container(),
     ];
 
     if (isFormSubtitle) {

@@ -1,5 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:page_transition/page_transition.dart';
+import 'package:petmatch/screens/login/setUserPhoto.dart';
 import 'package:petmatch/theme/petsTheme.dart';
 import 'package:petmatch/widgets/LabelledFormField.dart';
 import 'package:petmatch/widgets/LoginScreenSetup.dart';
@@ -156,7 +158,7 @@ class _OwnerRegistrationScreenState extends State<OwnerRegistrationScreen> {
               )),
 
           SubmitButton(
-            callBackFunction: null,
+            callBackFunction: () => Navigator.of(context).push(new PageTransition(child: SetUserPhotoScreen(), type: PageTransitionType.fade)),
             buttonText: "Next",
             isShowPaws: false,
           ),

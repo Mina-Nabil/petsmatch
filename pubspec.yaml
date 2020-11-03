@@ -32,20 +32,25 @@ dependencies:
   # For forms validation
   validators: ^2.0.0+1
 
-  # app logo
-  flutter_launcher_icons: "^0.7.3"
+
   
   # Pick Image from library or camera
-  image_picker: ^0.6.3+4
+  image_picker: ^0.6.7+12 
+  image_cropper: ^1.3.1
 
   # load svg icons
   flutter_svg: ^0.18.0
 
 dev_dependencies:
+  # app logo
+  flutter_launcher_icons: "^0.8.0"
   flutter_test:
     sdk: flutter
 
-
+flutter_icons:
+  android: "launcher_icon"
+  ios: true
+  image_path: "assets/images/logo/orig.png"
 # For information on the generic Dart part of this file, see the
 # following page: https://dart.dev/tools/pub/pubspec
 
@@ -68,12 +73,13 @@ flutter:
    - assets/images/icons/registration/vetType.svg
    - assets/images/icons/registration/storeType.svg
    - assets/images/icons/registration/trainerType.svg
+   - assets/images/icons/registration/camera.svg
+   - assets/images/icons/registration/gallery.svg
+   - assets/images/icons/registration/verfMail.svg
 
-   - assets/images/logo.png
-   - assets/images/bg.png
-   - assets/images/verfMail.png
-   - assets/images/profile.png
-   - assets/images/event.png
+  #custom
+   - assets/images/custom/congrats.png
+   - assets/images/custom/congratsx2.png
 
   fonts:
   - family: Oregano

@@ -162,25 +162,28 @@ class _BaseScreenState extends State<BaseScreen> {
                   brightness: (this.widget.isTopColorDark) ? Brightness.light : Brightness.dark,
                 ));
 
+    List<Widget> stackWidgets = [
+      Container(color: bgColorRGB, height: MediaQuery.of(context).size.height, width: MediaQuery.of(context).size.width, child: bgMaskImage),
+      Scaffold(
+        resizeToAvoidBottomInset: widget.isKeyBoardChangeSize,
+        appBar: appBar,
+        backgroundColor: Colors.transparent,
+        body: Container(
+            height: MediaQuery.of(context).size.height,
+            width: MediaQuery.of(context).size.width,
+            padding: EdgeInsets.only(top: screenTopPadding, left: screenLeftPadding, right: screenRightPadding, bottom: screenBottomPadding),
+            color: Colors.transparent,
+            constraints:
+                BoxConstraints(maxHeight: MediaQuery.of(context).size.height - appBar.preferredSize.height, maxWidth: MediaQuery.of(context).size.width),
+            child: widget.child ?? widget.child),
+      ),
+    ];
+
+    if (widget.isNavBar) stackWidgets.add(NavBarHolder());
+
     return Container(
         height: MediaQuery.of(context).size.height,
         width: MediaQuery.of(context).size.width,
-        child: Stack(children: <Widget>[
-          Container(color: bgColorRGB, height: MediaQuery.of(context).size.height, width: MediaQuery.of(context).size.width, child: bgMaskImage),
-          Scaffold(
-            resizeToAvoidBottomInset: widget.isKeyBoardChangeSize,
-            appBar: appBar,
-            backgroundColor: Colors.transparent,
-            body: Container(
-                height: MediaQuery.of(context).size.height,
-                width: MediaQuery.of(context).size.width,
-                padding: EdgeInsets.only(top: screenTopPadding, left: screenLeftPadding, right: screenRightPadding, bottom: screenBottomPadding),
-                color: Colors.transparent,
-                constraints:
-                    BoxConstraints(maxHeight: MediaQuery.of(context).size.height - appBar.preferredSize.height, maxWidth: MediaQuery.of(context).size.width),
-                child: widget.child ?? widget.child),
-            bottomNavigationBar: (widget.isNavBar) ? NavBarHolder() : null,
-          ),
-        ]));
+        child: Stack(alignment: Alignment.bottomCenter, children: stackWidgets));
   }
 }

@@ -7,11 +7,12 @@ class CommonScreenSetup extends StatelessWidget {
   final Widget _bottomWidget;
   final bool isSmallTop;
   final bool isPortraitLock;
+  final bool isNavBar;
   final bgColor screenBgColor;
   final bgMask screenBgMask;
 
   CommonScreenSetup(this._topWidget, this._bottomWidget,
-      {this.isSmallTop = false, this.screenBgColor = bgColor.blue, this.screenBgMask = bgMask.def, this.isPortraitLock=false});
+      {this.isSmallTop = false, this.screenBgColor = bgColor.blue, this.screenBgMask = bgMask.def, this.isPortraitLock=false, this.isNavBar=false});
 
   @override
   Widget build(BuildContext context) {
@@ -34,6 +35,7 @@ class CommonScreenSetup extends StatelessWidget {
       isKeyBoardChangeSize: true,
       noTitle: false,
       isTopColorDark: false,
+      isNavBar: this.isNavBar,
       backGroundColor: screenBgColor,
       backGroundMask: screenBgMask,
       child: LayoutBuilder(

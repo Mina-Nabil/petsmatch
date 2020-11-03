@@ -65,35 +65,4 @@ class RegistrationTypeButton extends StatelessWidget {
   }
 }
 
-///Custom Hero animation
-///
 
-class CustomRectTween extends RectTween {
-  CustomRectTween({this.a, this.b}) : super(begin: a, end: b);
-  final Rect a;
-  final Rect b;
-
-  @override
-  Rect lerp( double t) {
-    assert(t != null);
-    if (a == null && b == null) return null;
-    if (a == null) return Rect.fromLTRB(b.left * t, b.top * t, b.right * t, b.bottom * t);
-    if (b == null) {
-      final double k = 1.0 - t;
-      return Rect.fromLTRB(a.left * k, a.top * k, a.right * k, a.bottom * k);
-    }
-    return Rect.fromLTRB(
-      lerpDouble(a.left, b.left, t),
-      lerpDouble(a.top, b.top, t),
-      lerpDouble(a.right, b.right, t),
-      lerpDouble(a.bottom, b.bottom, t),
-    );
-  }
-
-  double lerpDouble(num a, num b, double t) {
-    if (a == null && b == null) return null;
-    a ??= 0.0;
-    b ??= 0.0;
-    return a + (b - a) * t;
-  }
-}

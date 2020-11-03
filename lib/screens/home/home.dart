@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:petmatch/screens/basescreen.dart';
+import 'package:petmatch/widgets/CommonScreenSetup.dart';
 
 class HomeScreen extends StatefulWidget {
   @override
@@ -9,8 +10,9 @@ class HomeScreen extends StatefulWidget {
 class _HomeScreenState extends State<HomeScreen> {
   @override
   Widget build(BuildContext context) {
-    return BaseScreen(
-      noTitle: true,
+    return CommonScreenSetup(
+      Container(),
+      Container(),
       isNavBar: true,
     );
   }

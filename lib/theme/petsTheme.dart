@@ -2,30 +2,30 @@ import 'package:flutter/material.dart';
 
 class PetsTheme {
   //Big Screen Size -- for font customization
-  static final double bigScreenWidth = 400;
-  static final double smallScreenWidth = 320;
-  static final double bigScreenHeight = 800;
-  static final double smallScreenHeight = 600;
+  static const double bigScreenWidth = 400;
+  static const double smallScreenWidth = 320;
+  static const double bigScreenHeight = 800;
+  static const double smallScreenHeight = 600;
 
   //Colors
 
-  static final Color petsBlueColor = Color.fromRGBO(61, 107, 255, 1);
-  static final Color petsPurpleColor = Color.fromRGBO(47, 8, 151, 1);
-  static final Color petsPinkColor = Color.fromRGBO(114, 9, 183, 1);
-  static final Color petsCyanColor = Color.fromRGBO(31, 175, 219, 1);
-  static final Color petsTextGrayColor = Color.fromARGB(128, 69, 79, 99);
-  static final Color petsBordersGrayColor = Color.fromRGBO(112, 112, 112, 0.5);
-  static final Color petsHintGrayColor = Color.fromRGBO(69, 79, 99, 0.5);
-  static final Color petsGreenColor = Color.fromRGBO(6, 214, 160, 1);
+  static const Color petsBlueColor = Color.fromRGBO(61, 107, 255, 1);
+  static const Color petsPurpleColor = Color.fromRGBO(47, 8, 151, 1);
+  static const Color petsPinkColor = Color.fromRGBO(114, 9, 183, 1);
+  static const Color petsCyanColor = Color.fromRGBO(31, 175, 219, 1);
+  static const Color petsTextGrayColor = Color.fromARGB(128, 69, 79, 99);
+  static const Color petsBordersGrayColor = Color.fromRGBO(112, 112, 112, 0.5);
+  static const Color petsHintGrayColor = Color.fromRGBO(69, 79, 99, 0.5);
+  static const Color petsGreenColor = Color.fromRGBO(6, 214, 160, 1);
   static Color currentMainColor = petsBlueColor;
 
   static final Color petsBgBlueColor = petsBlueColor.withOpacity(.6);
   static final Color petsBgPurpleColor = petsPurpleColor.withOpacity(.6);
   static final Color petsBgPinkColor = petsPinkColor.withOpacity(.6);
   static final Color petsBgCyanColor = petsCyanColor.withOpacity(.6);
-  static final Color whiteBarColor = Color.fromRGBO(249, 250, 255, 1);
+  static const Color whiteBarColor = Color.fromRGBO(249, 250, 255, 1);
 
-  static final Color blackTextColor = Color.fromRGBO(69, 79, 99, 1);
+  static const Color blackTextColor = Color.fromRGBO(69, 79, 99, 1);
 
 // old design color
   @deprecated
@@ -74,11 +74,10 @@ class PetsTheme {
     //Font init
     _smallIconSize = (MediaQuery.of(context).size.width > bigScreenWidth) ? 50 : 40;
 
-    _veryLargeFont = (MediaQuery.of(context).size.width > bigScreenWidth && MediaQuery.of(context).size.height > bigScreenHeight) ? 50 : 35;
-
-    _largerFont = (MediaQuery.of(context).size.width > bigScreenWidth) ? 24 : (MediaQuery.of(context).size.width > smallScreenWidth) ? 21 : 18;
+    _veryLargeFont = (MediaQuery.of(context).size.width > bigScreenWidth) ? 50 : (MediaQuery.of(context).size.width > smallScreenWidth) ? 44 : 35;
     _evenMuchLargerFont = (MediaQuery.of(context).size.width > bigScreenWidth) ? 32 : (MediaQuery.of(context).size.width > smallScreenWidth) ? 27 : 24;
     _muchLargerFont = (MediaQuery.of(context).size.width > bigScreenWidth) ? 26 : (MediaQuery.of(context).size.width > smallScreenWidth) ? 24 : 22;
+    _largerFont = (MediaQuery.of(context).size.width > bigScreenWidth) ? 24 : (MediaQuery.of(context).size.width > smallScreenWidth) ? 21 : 18;
     _largeFont = (MediaQuery.of(context).size.width > bigScreenWidth) ? 20 : (MediaQuery.of(context).size.width > smallScreenWidth) ? 18 : 17;
     _meduimFont = (MediaQuery.of(context).size.width > bigScreenWidth) ? 16 : (MediaQuery.of(context).size.width > smallScreenWidth) ? 14 : 12;
     _smallFont = (MediaQuery.of(context).size.width > bigScreenWidth) ? 13 : (MediaQuery.of(context).size.width > smallScreenWidth) ? 13 : 10;

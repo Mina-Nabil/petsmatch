@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:petmatch/settings/paths.dart';
 import 'package:petmatch/theme/petsTheme.dart';
+import 'package:petmatch/widgets/PetsButton.dart';
 
 class SubmitButton extends StatelessWidget {
   SubmitButton({
@@ -20,56 +21,22 @@ class SubmitButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     if (fieldsWidth == null) {
-      fieldsWidth = MediaQuery.of(context).size.width * .7;
+      fieldsWidth = MediaQuery.of(context).size.width * .8;
     }
 
-    List<Widget> rowChildren = [];
-    if (this.isShowPaws)
-      rowChildren.add(Flexible(
-        flex: 2,
-        fit: FlexFit.tight,
-        child: Container(
-          padding: EdgeInsets.all(PetsTheme.getMeduimPadMarg(context)),
-          alignment: Alignment.centerRight,
-          child: SizedBox(
-              child: SvgPicture.asset(
-            Paths.twoPaws_icon_file,
-            color: PetsTheme.whiteBarColor,
-          )),
-        ),
-      ));
-
-    rowChildren.add(Flexible(
-      flex: 2,
-      fit: FlexFit.tight,
-      child: Container(
-        padding: EdgeInsets.symmetric(vertical: PetsTheme.getMeduimPadMarg(context)),
-        alignment: (this.isShowPaws) ? Alignment.centerLeft : Alignment.center,
-        child: SizedBox(
-          child: Text(
-            buttonText,
-            style: TextStyle(color: Colors.white, fontFamily: "Roboto", fontWeight: FontWeight.w500, fontSize: PetsTheme.getSmallFont(context)),
-          ),
-        ),
-      ),
-    ));
-
-    return Container(
-      alignment: Alignment.center,
-      width: fieldsWidth,
-      height: MediaQuery.of(context).size.height * 0.07,
-      margin: EdgeInsets.all(PetsTheme.getSmallerPadMarg(context)),
-      constraints: BoxConstraints(maxWidth: fieldsWidth, maxHeight: MediaQuery.of(context).size.height * 0.07),
-      decoration: BoxDecoration(color: PetsTheme.petsGreenColor, borderRadius: BorderRadius.circular(PetsTheme.getMuchLargerFont(context))),
-      child: FlatButton(
-        onPressed: callBackFunction,
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.center,
-          mainAxisSize: MainAxisSize.max,
-          crossAxisAlignment: CrossAxisAlignment.center,
-          children: rowChildren,
-        ),
-      ),
+    return PetsButton(
+      callBackFunction: callBackFunction,
+      buttonText: buttonText,
+      isBorder: false,
+      fieldsWidth: this.fieldsWidth,
+      bgColor: PetsTheme.petsGreenColor,
+      textColor: Colors.white,
+      trailingWidget: (isShowPaws)
+          ? SvgPicture.asset(
+              Paths.twoPaws_icon_file,
+              color: PetsTheme.whiteBarColor,
+            )
+          : null,
     );
   }
 }
