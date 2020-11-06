@@ -6,6 +6,7 @@ import 'package:flutter_svg/svg.dart';
 import 'package:image_cropper/image_cropper.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:page_transition/page_transition.dart';
+import 'package:petmatch/screens/basescreen.dart';
 import 'package:petmatch/screens/login/VerifyMail.dart';
 import 'package:petmatch/settings/paths.dart';
 import 'package:petmatch/theme/petsTheme.dart';
@@ -50,7 +51,7 @@ class _SetUserPhotoScreenState extends State<SetUserPhotoScreen> {
   }
 
   submitPhoto(){
-        Navigator.push(context, new PageTransition(type: PageTransitionType.fade, duration: Duration(milliseconds: 1200), child: VerifyMailScreen()));
+        Navigator.push(context, new PageTransition(type: PageTransitionType.fade, duration: Duration(milliseconds: 500), child: VerifyMailScreen()));
   }
 
   @override
@@ -63,7 +64,7 @@ class _SetUserPhotoScreenState extends State<SetUserPhotoScreen> {
         height: double.infinity,
         decoration: BoxDecoration(
           shape: BoxShape.circle,
-          color: PetsTheme.petsBgBlueColor.withOpacity(.2),
+          color: PetsTheme.currentMainColor.withOpacity(.2),
         ),
         child: Container(
           child: FractionallySizedBox(
@@ -71,7 +72,7 @@ class _SetUserPhotoScreenState extends State<SetUserPhotoScreen> {
             widthFactor: 0.65,
             child: SvgPicture.asset(
               Paths.owner_icon_file,
-              color: PetsTheme.petsBlueColor,
+              color: PetsTheme.currentMainColor,
             ),
           ),
         ));
@@ -84,6 +85,7 @@ class _SetUserPhotoScreenState extends State<SetUserPhotoScreen> {
           isSmallTopArea: true,
           smalFormTitle: true,
           isBottomScrollable: false,
+          backgroundColor: bgColor.main,
           formTitleAlignment: Alignment.centerLeft,
           formWidget: Column(
             mainAxisSize: MainAxisSize.max,
@@ -108,9 +110,10 @@ class _SetUserPhotoScreenState extends State<SetUserPhotoScreen> {
                         buttonText: "Take a Photo",
                         isBorder: true,
                         fieldsWidth: MediaQuery.of(context).size.width * 0.35,
+                        textColor: PetsTheme.currentMainColor,
                         trailingWidget: SvgPicture.asset(
                           Paths.camera_icon_file,
-                          color: PetsTheme.petsBlueColor,
+                          color: PetsTheme.currentMainColor,
                         ),
                         isFullWidth: true,
                       ),
@@ -119,9 +122,10 @@ class _SetUserPhotoScreenState extends State<SetUserPhotoScreen> {
                         buttonText: "Open My Gallery",
                         isBorder: true,
                         fieldsWidth: MediaQuery.of(context).size.width * 0.35,
+                        textColor: PetsTheme.currentMainColor,
                         trailingWidget: SvgPicture.asset(
                           Paths.gallery_icon_file,
-                          color: PetsTheme.petsBlueColor,
+                          color: PetsTheme.currentMainColor,
                         ),
                         isFullWidth: true,
                       ),
@@ -150,7 +154,7 @@ class _SetUserPhotoScreenState extends State<SetUserPhotoScreen> {
                 color: Colors.white,
                 height: MediaQuery.of(context).size.height,
                 child: Center(
-                  child: CircularProgressIndicator(),
+                  child: CircularProgressIndicator(backgroundColor: PetsTheme.currentMainColor,),
                 ))
             : Container()
       ],

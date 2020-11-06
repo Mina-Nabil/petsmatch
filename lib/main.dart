@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:page_transition/page_transition.dart';
 import 'package:petmatch/screens/home/home.dart';
 import 'package:petmatch/screens/login/splash.dart';
-import 'package:petmatch/theme/petsTheme.dart';
 
 void main() => runApp(MyApp());
 

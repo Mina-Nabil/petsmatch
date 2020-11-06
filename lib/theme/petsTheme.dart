@@ -1,5 +1,9 @@
 import 'package:flutter/material.dart';
 
+//Declaring background mask and colors enums
+enum bgColor { blue, purple, cyan, pink, main }
+enum bgMask { def, mating, training, walk, services }
+
 class PetsTheme {
   //Big Screen Size -- for font customization
   static const double bigScreenWidth = 400;
@@ -17,21 +21,19 @@ class PetsTheme {
   static const Color petsBordersGrayColor = Color.fromRGBO(112, 112, 112, 0.5);
   static const Color petsHintGrayColor = Color.fromRGBO(69, 79, 99, 0.5);
   static const Color petsGreenColor = Color.fromRGBO(6, 214, 160, 1);
-  static Color currentMainColor = petsBlueColor;
+  static Color _currentMainColor = petsBlueColor;
 
   static final Color petsBgBlueColor = petsBlueColor.withOpacity(.6);
   static final Color petsBgPurpleColor = petsPurpleColor.withOpacity(.6);
   static final Color petsBgPinkColor = petsPinkColor.withOpacity(.6);
   static final Color petsBgCyanColor = petsCyanColor.withOpacity(.6);
   static const Color whiteBarColor = Color.fromRGBO(249, 250, 255, 1);
+  static Color _currentBgMainColor = petsBlueColor;
+
 
   static const Color blackTextColor = Color.fromRGBO(69, 79, 99, 1);
 
 // old design color
-  @deprecated
-  static final Color pawColor = Color.fromRGBO(61, 107, 255, 1);
-  @deprecated
-  static final Color bgColor = Color.fromRGBO(126, 229, 255, 1);
   @deprecated
   static final Color cyan = Color.fromRGBO(180, 240, 255, 1);
   @deprecated
@@ -177,5 +179,40 @@ class PetsTheme {
   static double getLargestPadMarg(BuildContext context) {
     if (_largestPadMarg == null) _initFonts(context);
     return _largestPadMarg;
+  }
+
+  static get currentMainColor{
+    return _currentMainColor;
+  }
+
+  static Color get currentBgMainColor{
+    return _currentBgMainColor;
+  }
+
+  static set currentMainColor(bgColor color){
+    switch (color) {
+      case bgColor.blue:
+        _currentMainColor = PetsTheme.petsBlueColor;
+        _currentBgMainColor = PetsTheme.petsBgBlueColor;
+        break;
+      case bgColor.purple:
+        _currentMainColor = PetsTheme.petsPurpleColor;
+        _currentBgMainColor = PetsTheme.petsBgPurpleColor;
+        break;
+      case bgColor.pink:
+        _currentMainColor = PetsTheme.petsPinkColor;
+        _currentBgMainColor = PetsTheme.petsBgPinkColor;
+        break;
+      case bgColor.cyan:
+        _currentMainColor = PetsTheme.petsCyanColor;
+        _currentBgMainColor = PetsTheme.petsBgCyanColor;
+        break;
+      case bgColor.main: //current main background
+
+        break;
+      default: //no change in main
+
+        break;
+    }
   }
 }

@@ -16,7 +16,7 @@ class NavBar extends CustomPainter {
     ..style = PaintingStyle.stroke;
 
   static final Paint _pawPainter = new Paint()
-    ..color = PetsTheme.pawColor
+    ..color = PetsTheme.currentMainColor
     ..style = PaintingStyle.fill;
 
   static final Paint _imgPainter = new Paint();
@@ -126,7 +126,7 @@ class NavBar extends CustomPainter {
       ..quadraticBezierTo(_pawQuad2X1 * size.width, _pawQuad2Y1 * size.height, _pawQuad2EndX * size.width, _topPawY * size.height)
       ..quadraticBezierTo(size.width / 2, minTop * size.height, _pawQuad1StartX * size.width, _topPawY * size.height);
 
-    canvas.drawShadow(paw, Colors.black, 2, false);
+    canvas.drawShadow(paw.shift(new Offset(5, 0)), Colors.black, 2, false);
     canvas.drawShadow(paw, Colors.black, 3.5, false);
     canvas.drawPath(paw, _pawPainter);
 
@@ -190,19 +190,19 @@ class NavBar extends CustomPainter {
     Rect paw3 = Rect.fromCenter(center: Offset(paw3XCenter * size.width, topPawCenterY * size.height), width: topPawWidth * size.width, height: topPawHeight * size.height);
     Rect paw4 = Rect.fromCenter(center: Offset(paw4XCenter * size.width, botPawCenterY * size.height), width: botPawWidth * size.width, height: botPawHeight * size.height);
 
-    canvas.drawShadow(new Path()..addOval(paw2), Colors.black.withOpacity((scale > .3 ? scale : 0)), 2 , false);
+    canvas.drawShadow((new Path()..addOval(paw2)).shift(new Offset(2, 0)), Colors.black.withOpacity((scale > .3 ? scale : 0)), 2 , false);
     canvas.drawShadow(new Path()..addOval(paw2), Colors.black.withOpacity((scale > .3 ? scale : 0)), 3.5, false);
     canvas.drawOval(paw2, _pawOvalsPainter);
 
-    canvas.drawShadow(new Path()..addOval(paw3), Colors.black.withOpacity((scale > .3 ? scale : 0)), 2, false);
+    canvas.drawShadow((new Path()..addOval(paw3)).shift(new Offset(2, 0)), Colors.black.withOpacity((scale > .3 ? scale : 0)), 2, false);
     canvas.drawShadow(new Path()..addOval(paw3), Colors.black.withOpacity((scale > .5 ? scale : 0)), 3.5, false);
     canvas.drawOval(paw3, _pawOvalsPainter);
 
-    canvas.drawShadow(new Path()..addOval(paw1), Colors.black.withOpacity((scale > .3 ? scale : 0)), 2, false);
+    canvas.drawShadow((new Path()..addOval(paw1)).shift(new Offset(2, 0)), Colors.black.withOpacity((scale > .3 ? scale : 0)), 2, false);
     canvas.drawShadow(new Path()..addOval(paw1), Colors.black.withOpacity((scale > .3 ? scale : 0)), 3.5, false);
     canvas.drawOval(paw1, _pawOvalsPainter);
 
-    canvas.drawShadow(new Path()..addOval(paw4), Colors.black.withOpacity((scale > .3 ? scale : 0)), 2, false);
+    canvas.drawShadow((new Path()..addOval(paw4)).shift(new Offset(2, 0)), Colors.black.withOpacity((scale > .3 ? scale : 0)), 2, false);
     canvas.drawShadow(new Path()..addOval(paw4), Colors.black.withOpacity((scale > .3 ? scale : 0)), 3.5, false);
     canvas.drawOval(paw4, _pawOvalsPainter);
   }

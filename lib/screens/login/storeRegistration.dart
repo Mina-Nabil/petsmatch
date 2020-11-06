@@ -1,6 +1,8 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:page_transition/page_transition.dart';
 import 'package:petmatch/screens/basescreen.dart';
+import 'package:petmatch/screens/login/setUserPhoto.dart';
 import 'package:petmatch/theme/petsTheme.dart';
 import 'package:petmatch/widgets/LabelledFormField.dart';
 import 'package:petmatch/widgets/LoginScreenSetup.dart';
@@ -21,7 +23,17 @@ class _StoreRegistrationScreenState extends State<StoreRegistrationScreen> {
   final TextEditingController _confirmPasswordNameController = new TextEditingController();
 
   DateTime birthDate = null;
+//Submit Form Function
+  void submitForm() {
+    print("Submit aho");
+    setState(() {
+      //if(_formKey.currentState.validate()){
+        Navigator.of(context).push(PageTransition(child: SetUserPhotoScreen(), type: PageTransitionType.fade));
+      //}
+      
 
+    });
+  }
   setDate(newDate) {
     birthDate = newDate;
   }
@@ -158,7 +170,7 @@ class _StoreRegistrationScreenState extends State<StoreRegistrationScreen> {
               )),
 
           SubmitButton(
-            callBackFunction: null,
+            callBackFunction: submitForm,
             buttonText: "Next",
             isShowPaws: false,
           ),

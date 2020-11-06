@@ -4,11 +4,6 @@ import 'package:petmatch/theme/petsTheme.dart';
 import 'package:petmatch/widgets/NavBar.dart';
 
 class NavBarHolder extends StatefulWidget {
-  @override
-  _NavBarHolderState createState() => _NavBarHolderState();
-}
-
-class _NavBarHolderState extends State<NavBarHolder> with SingleTickerProviderStateMixin {
   //original scale
   static final double navBarHeight = .355;
   static final double navBarMargin = .01;
@@ -21,8 +16,17 @@ class _NavBarHolderState extends State<NavBarHolder> with SingleTickerProviderSt
   static final double pawBegin = 0;
   static final double pawEnd = 1;
 
-  bool expanded = false;
+  //paw circles ratio
+  static final double xStart = 0.4;
+  static final double xEnd = 0.6;
+  static final double xExpandedStart = 0.2;
+  static final double xExpandedEnd = 0.8;
+  static bool expanded = false;
+  @override
+  _NavBarHolderState createState() => _NavBarHolderState();
+}
 
+class _NavBarHolderState extends State<NavBarHolder> with SingleTickerProviderStateMixin {
   ///animations
   Animation<double> _pawScale;
 
@@ -32,7 +36,7 @@ class _NavBarHolderState extends State<NavBarHolder> with SingleTickerProviderSt
   void initState() {
     super.initState();
     _pawController = new AnimationController(vsync: this, duration: Duration(milliseconds: 200));
-    _pawScale = Tween<double>(begin: 0, end: 1).animate(CurvedAnimation(parent: _pawController, curve: Curves.linear));
+    _pawScale = Tween<double>(begin: NavBarHolder.pawBegin, end: NavBarHolder.pawEnd).animate(CurvedAnimation(parent: _pawController, curve: Curves.linear));
   }
 
   @override
@@ -40,47 +44,44 @@ class _NavBarHolderState extends State<NavBarHolder> with SingleTickerProviderSt
     return AnimatedBuilder(
       animation: _pawScale,
       builder: (context, child) {
-        return GestureDetector(
-          onTapUp: navTapHandle,
-          child: Container(
-            height: MediaQuery.of(context).size.height * navBarHeight,
-            margin: EdgeInsets.only(top: MediaQuery.of(context).size.height * navBarMargin),
-            child: Stack(
-              alignment: Alignment.bottomCenter,
-              children: <Widget>[
-                CustomPaint(
-                  painter: NavBar(_pawScale.value, navBarInnerHeightPos, expanded),
-                  child: Container(),
-                ),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                  mainAxisSize: MainAxisSize.max,
-                  crossAxisAlignment: CrossAxisAlignment.end,
-                  children: <Widget>[
-                    Flexible(
-                      flex: 2,
-                      child: getNavButtonIconContainer(FontAwesomeIcons.solidUserCircle, _pawScale.value * -1 + 1, isPage: true),
-                    ),
-                    Flexible(
-                      flex: 2,
-                      child: getNavButtonIconContainer(FontAwesomeIcons.calendarCheck, _pawScale.value * -1 + 1),
-                    ),
-                    Flexible(
-                      flex: 3,
-                      child: Container(),
-                    ),
-                    Flexible(
-                      flex: 2,
-                      child: getNavButtonIconContainer(FontAwesomeIcons.shoppingBasket, _pawScale.value * -1 + 1),
-                    ),
-                    Flexible(
-                      flex: 2,
-                      child: getNavButtonIconContainer(FontAwesomeIcons.cog, _pawScale.value * -1 + 1),
-                    ),
-                  ],
-                )
-              ],
-            ),
+        return Container(
+          height: MediaQuery.of(context).size.height * NavBarHolder.navBarHeight,
+          margin: EdgeInsets.only(top: MediaQuery.of(context).size.height * NavBarHolder.navBarMargin),
+          child: Stack(
+            alignment: Alignment.bottomCenter,
+            children: <Widget>[
+              CustomPaint(
+                painter: NavBar(_pawScale.value, NavBarHolder.navBarInnerHeightPos, NavBarHolder.expanded),
+                child: GestureDetector(behavior: HitTestBehavior.opaque, onTapUp: navTapHandle),
+              ),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                mainAxisSize: MainAxisSize.max,
+                crossAxisAlignment: CrossAxisAlignment.end,
+                children: <Widget>[
+                  Flexible(
+                    flex: 2,
+                    child: getNavButtonIconContainer(FontAwesomeIcons.solidUserCircle, _pawScale.value * -1 + 1, isPage: true),
+                  ),
+                  Flexible(
+                    flex: 2,
+                    child: getNavButtonIconContainer(FontAwesomeIcons.calendarCheck, _pawScale.value * -1 + 1),
+                  ),
+                  Flexible(
+                    flex: 3,
+                    child: Container(),
+                  ),
+                  Flexible(
+                    flex: 2,
+                    child: getNavButtonIconContainer(FontAwesomeIcons.shoppingBasket, _pawScale.value * -1 + 1),
+                  ),
+                  Flexible(
+                    flex: 2,
+                    child: getNavButtonIconContainer(FontAwesomeIcons.cog, _pawScale.value * -1 + 1),
+                  ),
+                ],
+              )
+            ],
           ),
         );
       },
@@ -91,9 +92,9 @@ class _NavBarHolderState extends State<NavBarHolder> with SingleTickerProviderSt
     return Opacity(
       opacity: opacity,
       child: Container(
-        padding: EdgeInsets.all(navBarButtonPadding * MediaQuery.of(context).size.height),
-        margin: EdgeInsets.only(bottom: navBarButtonPadding / 2 * MediaQuery.of(context).size.height),
-        height: navBarContainerHeight * MediaQuery.of(context).size.height,
+        padding: EdgeInsets.all(NavBarHolder.navBarButtonPadding * MediaQuery.of(context).size.height),
+        margin: EdgeInsets.only(bottom: NavBarHolder.navBarButtonPadding / 2 * MediaQuery.of(context).size.height),
+        height: NavBarHolder.navBarContainerHeight * MediaQuery.of(context).size.height,
         alignment: Alignment.center,
         child: Image.asset(
           imgPath,
@@ -103,13 +104,13 @@ class _NavBarHolderState extends State<NavBarHolder> with SingleTickerProviderSt
     );
   }
 
-  Widget getNavButtonIconContainer(IconData icon, opacity, {bool isPage=false}) {
+  Widget getNavButtonIconContainer(IconData icon, opacity, {bool isPage = false}) {
     return Opacity(
       opacity: opacity,
       child: Container(
-        padding: EdgeInsets.all(navBarButtonPadding * MediaQuery.of(context).size.height),
-        margin: EdgeInsets.only(bottom: navBarButtonPadding / 2 * MediaQuery.of(context).size.height),
-        height: navBarContainerHeight * MediaQuery.of(context).size.height,
+        padding: EdgeInsets.all(NavBarHolder.navBarButtonPadding * MediaQuery.of(context).size.height),
+        margin: EdgeInsets.only(bottom: NavBarHolder.navBarButtonPadding / 2 * MediaQuery.of(context).size.height),
+        height: NavBarHolder.navBarContainerHeight * MediaQuery.of(context).size.height,
         alignment: Alignment.center,
         child: FittedBox(
             child: Padding(
@@ -124,28 +125,30 @@ class _NavBarHolderState extends State<NavBarHolder> with SingleTickerProviderSt
   }
 
   bool _itIsHome(TapUpDetails upDetails) {
-    double firstLimit = MediaQuery.of(context).size.width * .4;
-    double endLimit = MediaQuery.of(context).size.width * .6;
-    return (upDetails.localPosition.dx > firstLimit && upDetails.localPosition.dx < endLimit);
+    double firstLimit = MediaQuery.of(context).size.width * NavBarHolder.xStart;
+    double endLimit = MediaQuery.of(context).size.width * NavBarHolder.xEnd;
+    double expanedFirstLimit = MediaQuery.of(context).size.width * NavBarHolder.xExpandedStart;
+    double expandedEndLimit = MediaQuery.of(context).size.width * NavBarHolder.xExpandedEnd;
+    return ((upDetails.localPosition.dx > firstLimit && upDetails.localPosition.dx < endLimit && !NavBarHolder.expanded) ||
+        (upDetails.localPosition.dx > expanedFirstLimit && upDetails.localPosition.dx < expandedEndLimit && NavBarHolder.expanded));
   }
 
   void shrinkPaw() {
     _pawController.reverse();
     setState(() {
-      print(_pawScale.value);
-      expanded = false;
+      NavBarHolder.expanded = false;
     });
   }
 
   void expandPaw() {
     _pawController.forward();
     setState(() {
-      expanded = true;
+      NavBarHolder.expanded = true;
     });
   }
 
   void togglePaw() {
-    if (expanded)
+    if (NavBarHolder.expanded)
       shrinkPaw();
     else
       expandPaw();
@@ -153,7 +156,6 @@ class _NavBarHolderState extends State<NavBarHolder> with SingleTickerProviderSt
 
   void navTapHandle(TapUpDetails upDetails) {
     if (_itIsHome(upDetails)) {
-      print("msh batogle ?!");
       togglePaw();
     }
   }

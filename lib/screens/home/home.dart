@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:petmatch/screens/basescreen.dart';
+import 'package:petmatch/theme/petsTheme.dart';
 import 'package:petmatch/widgets/CommonScreenSetup.dart';
+import 'package:petmatch/widgets/PetsButton.dart';
 
 class HomeScreen extends StatefulWidget {
   @override
@@ -12,8 +14,19 @@ class _HomeScreenState extends State<HomeScreen> {
   Widget build(BuildContext context) {
     return CommonScreenSetup(
       Container(),
-      Container(),
+      ListView(children: [
+       GestureDetector(behavior: HitTestBehavior.translucent, child: PetsButton(callBackFunction: () => print("First Button"), buttonText: "1", isBorder: false, bgColor: PetsTheme.currentMainColor, textColor: Colors.white)),
+        PetsButton(callBackFunction: () => print("First Button"), buttonText: "1", isBorder: false, bgColor: PetsTheme.currentMainColor,textColor: Colors.white,),
+        PetsButton(callBackFunction: () => print("First Button"), buttonText: "1", isBorder: false, bgColor: PetsTheme.currentMainColor,textColor: Colors.white,),
+        PetsButton(callBackFunction: () => print("First Button"), buttonText: "1", isBorder: false, bgColor: PetsTheme.currentMainColor,textColor: Colors.white,),
+        PetsButton(callBackFunction: () => print("First Button"), buttonText: "1", isBorder: false, bgColor: PetsTheme.currentMainColor,textColor: Colors.white,),
+        PetsButton(callBackFunction: () => print("First Button"), buttonText: "1", isBorder: false, bgColor: PetsTheme.currentMainColor,textColor: Colors.white,),
+        PetsButton(callBackFunction: () => print("First Button"), buttonText: "1", isBorder: false, bgColor: PetsTheme.currentMainColor,textColor: Colors.white,),
+        PetsButton(callBackFunction: () => print("First Button"), buttonText: "1", isBorder: false, bgColor: PetsTheme.currentMainColor,textColor: Colors.white,),
+        PetsButton(callBackFunction: () => print("First Button"), buttonText: "1", isBorder: false, bgColor: PetsTheme.currentMainColor,textColor: Colors.white,),
+      ],),
       isNavBar: true,
+      isSmallTop: true,
     );
   }
 }

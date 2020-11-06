@@ -38,6 +38,8 @@ class _SplashScreenState extends State<SplashScreen> {
   Widget build(BuildContext context) {
     //Padding & Marging Init
     return BaseScreen(
+      backGroundColor: bgColor.blue,
+      backGroundMask: bgMask.def,
       isTopPadding: true,
       noTitle: true,
       child: Container(

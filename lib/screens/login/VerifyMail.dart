@@ -42,7 +42,7 @@ class VerifyMailScreen extends StatelessWidget {
             callBackFunction: () => Navigator.of(context).pushReplacement(new PageTransition(child: CongratsScreen(), type: PageTransitionType.upToDown, duration: Duration(milliseconds: 800))),
             buttonText: "Done",
             isBorder: false,
-            bgColor: PetsTheme.petsBlueColor,
+            bgColor: PetsTheme.currentMainColor,
             textColor: Colors.white),
         Flexible(child: Container(), flex: 2)
       ],

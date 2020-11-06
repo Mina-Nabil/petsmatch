@@ -27,7 +27,7 @@ class _RegTypesScreenState extends State<RegTypesScreen> {
         //refreshing page in case it is popped up
         .then((value) => setState(() {
               allTypes = {userType.owner: false, userType.store: false, userType.trainer: false, userType.vet: false};
-              PetsTheme.currentMainColor = PetsTheme.petsBlueColor;
+              PetsTheme.currentMainColor = bgColor.blue;
             }));
   }
 
@@ -54,8 +54,6 @@ class _RegTypesScreenState extends State<RegTypesScreen> {
                 child: RegistrationTypeButton(
                   Paths.owner_icon_file,
                   "Pet Owner",
-                  PetsTheme.petsBlueColor,
-                  PetsTheme.petsBgBlueColor,
                   isHidden: allTypes[userType.owner],
                 ))),
         Flexible(
@@ -65,7 +63,7 @@ class _RegTypesScreenState extends State<RegTypesScreen> {
                 highlightColor: Colors.transparent,
                 padding: EdgeInsets.all(0),
                 onPressed: () => selectType(context, userType.trainer),
-                child: RegistrationTypeButton(Paths.trainer_icon_file, "Trainer", PetsTheme.petsPurpleColor, PetsTheme.petsBgPurpleColor,
+                child: RegistrationTypeButton(Paths.trainer_icon_file, "Trainer", userTypeSelected: userType.trainer,
                     isHidden: allTypes[userType.trainer]))),
         Flexible(
             flex: 1,
@@ -75,7 +73,7 @@ class _RegTypesScreenState extends State<RegTypesScreen> {
                 padding: EdgeInsets.all(0),
                 onPressed: () => selectType(context, userType.vet),
                 child:
-                    RegistrationTypeButton(Paths.vet_icon_file, "Vet", PetsTheme.petsCyanColor, PetsTheme.petsBgCyanColor, isHidden: allTypes[userType.vet]))),
+                    RegistrationTypeButton(Paths.vet_icon_file, "Vet",  userTypeSelected: userType.vet,isHidden: allTypes[userType.vet]))),
         Flexible(
             flex: 1,
             child: FlatButton(
@@ -83,7 +81,7 @@ class _RegTypesScreenState extends State<RegTypesScreen> {
                 highlightColor: Colors.transparent,
                 padding: EdgeInsets.all(0),
                 onPressed: () => selectType(context, userType.store),
-                child: RegistrationTypeButton(Paths.store_icon_file, "Store", PetsTheme.petsPinkColor, PetsTheme.petsBgPinkColor,
+                child: RegistrationTypeButton(Paths.store_icon_file, "Store", userTypeSelected: userType.store,
                     isHidden: allTypes[userType.store]))),
       ],
     );

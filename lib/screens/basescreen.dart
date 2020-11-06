@@ -1,13 +1,12 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/rendering.dart';
 import 'package:flutter/services.dart';
 import 'package:petmatch/theme/petsTheme.dart';
-import 'package:petmatch/widgets/NavBar.dart';
 import 'package:petmatch/widgets/NavBarHolder.dart';
+import 'package:flutter/gestures.dart';
 
-//Declaring background mask and colors enums
-enum bgColor { blue, purple, cyan, pink }
-enum bgMask { def, mating, training, walk, services }
+
 
 class BaseScreen extends StatefulWidget {
   ////SCREEN DEFAULTS
@@ -33,14 +32,13 @@ class BaseScreen extends StatefulWidget {
   final bool isNavBar;
   final PreferredSizeWidget subTitle;
   final bool isPortraitLock;
-
   BaseScreen(
       {this.child,
       this.titleText,
       this.titleStyle,
       this.subTitle,
       this.titleContainer,
-      this.backGroundColor = bgColor.blue,
+      this.backGroundColor = bgColor.main,
       this.backGroundMask = bgMask.def,
       this.noTitle = false,
       this.isTopColorDark = false,
@@ -58,7 +56,7 @@ class BaseScreen extends StatefulWidget {
 }
 
 class _BaseScreenState extends State<BaseScreen> {
-  Color bgColorRGB;
+
   Container bgMaskContainer;
   String bgMaskPath;
   Image bgMaskImage;
@@ -66,24 +64,7 @@ class _BaseScreenState extends State<BaseScreen> {
   @override
   void initState() {
     super.initState();
-    //Adjust text color and background color
-    switch (this.widget.backGroundColor) {
-      case bgColor.blue:
-        bgColorRGB = PetsTheme.petsBgBlueColor;
-        break;
-      case bgColor.purple:
-        bgColorRGB = PetsTheme.petsBgPurpleColor;
-        break;
-      case bgColor.pink:
-        bgColorRGB = PetsTheme.petsBgPinkColor;
-        break;
-      case bgColor.cyan:
-        bgColorRGB = PetsTheme.petsBgCyanColor;
-        break;
-      default: //blue background
-        bgColorRGB = PetsTheme.petsBgBlueColor;
-        break;
-    }
+  
 
     switch (this.widget.backGroundMask) {
       case bgMask.def:
@@ -106,7 +87,7 @@ class _BaseScreenState extends State<BaseScreen> {
     bgMaskImage = Image.asset(
       bgMaskPath,
       fit: BoxFit.cover,
-      color: bgColorRGB.withOpacity(.9),
+      color: PetsTheme.currentBgMainColor.withOpacity(1.0),
       colorBlendMode: BlendMode.srcOut,
     );
     Future.delayed(Duration.zero).then((_) {
@@ -163,7 +144,7 @@ class _BaseScreenState extends State<BaseScreen> {
                 ));
 
     List<Widget> stackWidgets = [
-      Container(color: bgColorRGB, height: MediaQuery.of(context).size.height, width: MediaQuery.of(context).size.width, child: bgMaskImage),
+      Container(color: PetsTheme.currentBgMainColor, height: MediaQuery.of(context).size.height, width: MediaQuery.of(context).size.width, child: bgMaskImage),
       Scaffold(
         resizeToAvoidBottomInset: widget.isKeyBoardChangeSize,
         appBar: appBar,
@@ -184,6 +165,114 @@ class _BaseScreenState extends State<BaseScreen> {
     return Container(
         height: MediaQuery.of(context).size.height,
         width: MediaQuery.of(context).size.width,
-        child: Stack(alignment: Alignment.bottomCenter, children: stackWidgets));
+        child: CustomStack(alignment: Alignment.bottomCenter, children: stackWidgets, isNavBar: widget.isNavBar));
+  }
+}
+
+class CustomStack extends Stack {
+  final bool isNavBar;
+
+  CustomStack({alignment, children, this.isNavBar = false}) : super(children: children, alignment: alignment);
+
+  @override
+  CustomRenderStack createRenderObject(BuildContext context) {
+    return CustomRenderStack(
+        alignment: alignment,
+        textDirection: textDirection ?? Directionality.of(context),
+        fit: fit,
+        isNavBar: isNavBar,
+        screenSize: MediaQuery.of(context).size);
+  }
+}
+
+class CustomRenderStack extends RenderStack {
+  CustomRenderStack({alignment, textDirection, fit, overflow, this.isNavBar, this.screenSize})
+      : super(alignment: alignment, textDirection: textDirection, fit: fit);
+
+  bool isNavBar;
+  Size screenSize;
+
+  bool isRealNavArea(Size size, Offset position) {
+    //checks whether the hit is in the real nav buttons or no
+    if (position.dy > size.height * (1 - NavBarHolder.navBarContainerHeight) && !NavBarHolder.expanded) {
+      // if bottom nav bar{
+      print("ana fl awel");
+      return true;
+    }
+    double firstLimit = size.width * NavBarHolder.xStart;
+    double endLimit = size.width * NavBarHolder.xEnd;
+    double expandedFirstLimit = size.width * NavBarHolder.xExpandedStart;
+    double expandedEndLimit = size.width * NavBarHolder.xExpandedEnd;
+    if (position.dx > expandedFirstLimit &&
+        position.dx < expandedEndLimit &&
+        NavBarHolder.expanded &&
+        (position.dy > size.height * (1 - NavBarHolder.navBarHeight))) {
+      print("Ana hena");
+      return true;
+    }
+    if (position.dx > firstLimit &&
+        position.dx < endLimit &&
+        !NavBarHolder.expanded &&
+        (position.dy > size.height * (1 - 1.5 * NavBarHolder.navBarContainerHeight))) {
+      print("ANa henak");
+      return true;
+    }
+    return false;
+  }
+
+  bool isNavArea(Size size, Offset position) {
+    //checks whether the hit is in the whole Nav Contaier Area or no
+
+    if (position.dy > size.height * (1 - NavBarHolder.navBarHeight)) //hit under the bar
+    {
+      print("Ana Nav");
+      return true;
+    } else {
+      print("Ana Msh Nav");
+      return false;
+    }
+  }
+
+  bool isLayersPassed(int currentLayer) {
+    const layersMax = 0;
+    print(currentLayer);
+    return (currentLayer > layersMax);
+  }
+
+  @override
+  bool hitTestChildren(BoxHitTestResult result, {Offset position}) {
+    int layers = 0;
+
+    RenderBox child = lastChild;
+    while (child != null) {
+      final StackParentData childParentData = child.parentData as StackParentData;
+      final bool isHit = result.addWithPaintOffset(
+        offset: childParentData.offset,
+        position: position,
+        hitTest: (BoxHitTestResult result, Offset transformed) {
+          assert(transformed == position - childParentData.offset);
+          // return child.hitTest(result, position: transformed);
+          if (!isNavBar) {
+            return child.hitTest(result, position: transformed);
+          } else if (isNavArea(size, position)) {
+            if (isRealNavArea(size, position)) {
+              print("Bas real");
+              return child.hitTest(result, position: transformed);
+            } else if (!isLayersPassed(layers++)) {
+              print("Lsa msh Passed");
+              return false;
+            } else {
+              print("Passed");
+              return child.hitTest(result, position: transformed);
+            }
+          } else {
+            return child.hitTest(result, position: transformed);
+          }
+        },
+      );
+      if (isHit) return true;
+      child = childParentData.previousSibling;
+    }
+    return false;
   }
 }

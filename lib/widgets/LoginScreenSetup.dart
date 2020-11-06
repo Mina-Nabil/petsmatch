@@ -27,7 +27,7 @@ class LoginScreenSetup extends StatelessWidget {
       this.formTitle = '',
       this.formSubtitle = '',
       this.showLogo = true,
-      this.backgroundColor = bgColor.blue,
+      this.backgroundColor = bgColor.main,
       this.backgroundMask = bgMask.def,
       this.isSmallTopArea = false,
       this.smalFormTitle = false,
@@ -35,25 +35,7 @@ class LoginScreenSetup extends StatelessWidget {
       this.isBottomScrollable = false,
       this.formTitleAlignment = Alignment.center,
       this.formTitleTextAlignment = TextAlign.center,
-      this.topbarSubtitle = ''}) {
-    switch (this.backgroundColor) {
-      case bgColor.blue:
-        PetsTheme.currentMainColor = PetsTheme.petsBlueColor;
-        break;
-      case bgColor.purple:
-        PetsTheme.currentMainColor = PetsTheme.petsPurpleColor;
-        break;
-      case bgColor.pink:
-        PetsTheme.currentMainColor = PetsTheme.petsPinkColor;
-        break;
-      case bgColor.cyan:
-        PetsTheme.currentMainColor = PetsTheme.petsCyanColor;
-        break;
-      default: //blue background
-        PetsTheme.currentMainColor = PetsTheme.petsBlueColor;
-        break;
-    }
-  }
+      this.topbarSubtitle = ''}) ;
   @override
   Widget build(BuildContext context) {
     //Screen dimentions

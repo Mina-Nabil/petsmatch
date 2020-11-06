@@ -12,11 +12,13 @@ class CommonScreenSetup extends StatelessWidget {
   final bgMask screenBgMask;
 
   CommonScreenSetup(this._topWidget, this._bottomWidget,
-      {this.isSmallTop = false, this.screenBgColor = bgColor.blue, this.screenBgMask = bgMask.def, this.isPortraitLock=false, this.isNavBar=false});
+      {this.isSmallTop = false, this.screenBgColor = bgColor.main, this.screenBgMask = bgMask.def, this.isPortraitLock=false, this.isNavBar=false}){
+        PetsTheme.currentMainColor = this.screenBgColor;
+      }
 
   @override
   Widget build(BuildContext context) {
-    final double boxRadius = MediaQuery.of(context).size.width * .075;
+    final double boxRadius = MediaQuery.of(context).size.width * .15;
 
     int topAreaFlex = 9;
     int bottomAreaFlex = 23;
@@ -71,7 +73,9 @@ class CommonScreenSetup extends StatelessWidget {
                             decoration: BoxDecoration(
                                 color: PetsTheme.whiteBarColor,
                                 borderRadius: BorderRadius.only(topLeft: Radius.circular(boxRadius), topRight: Radius.circular(boxRadius))),
-                            child: _bottomWidget,
+                            child: ClipRRect(    
+                              borderRadius: BorderRadius.only(topLeft: Radius.circular(boxRadius), topRight: Radius.circular(boxRadius)),
+                              child: _bottomWidget)
                           ))
                     ],
                   )));

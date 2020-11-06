@@ -17,9 +17,6 @@ class RegTypeSelectedScreen extends StatelessWidget {
   final userType selectedType;
 
   String iconPath;
-  Color iconBgColor;
-  bgColor screenBgColor;
-  Color iconColor;
   String iconCaption;
 
   Column selectedTypeRow;
@@ -27,34 +24,27 @@ class RegTypeSelectedScreen extends StatelessWidget {
   RegTypeSelectedScreen(this.selectedType) {
     switch (this.selectedType) {
       case userType.owner:
-        iconBgColor = PetsTheme.petsBgBlueColor;
-        screenBgColor = bgColor.blue;
-        iconColor = PetsTheme.petsBlueColor;
         iconPath = Paths.owner_icon_file;
         iconCaption = "Pet Owner";
+        PetsTheme.currentMainColor = bgColor.blue;
         break;
       case userType.trainer:
-        iconBgColor = PetsTheme.petsBgPurpleColor;
-        screenBgColor = bgColor.purple;
-        iconColor = PetsTheme.petsPurpleColor;
         iconPath = Paths.trainer_icon_file;
         iconCaption = "Trainer";
+         PetsTheme.currentMainColor = bgColor.purple;
         break;
       case userType.vet:
-        iconBgColor = PetsTheme.petsBgCyanColor;
-        screenBgColor = bgColor.cyan;
-        iconColor = PetsTheme.petsCyanColor;
         iconPath = Paths.vet_icon_file;
         iconCaption = "Vet";
+         PetsTheme.currentMainColor = bgColor.cyan;
         break;
       case userType.store:
-        iconBgColor = PetsTheme.petsBgPinkColor;
-        screenBgColor = bgColor.pink;
-        iconColor = PetsTheme.petsPinkColor;
         iconPath = Paths.store_icon_file;
         iconCaption = "Store";
+         PetsTheme.currentMainColor = bgColor.pink;
         break;
     }
+
   }
 
   @override
@@ -81,7 +71,7 @@ class RegTypeSelectedScreen extends StatelessWidget {
       mainAxisAlignment: MainAxisAlignment.start,
       // mainAxisAlignment: MainAxisAlignment.spaceEvenly,
       children: [
-        Flexible(flex: 3, fit: FlexFit.loose, child: RegistrationTypeButton(iconPath, iconCaption, iconColor, iconBgColor)),
+        Flexible(flex: 3, fit: FlexFit.loose, child: RegistrationTypeButton(iconPath, iconCaption)),
         Flexible(
           flex: 2,
           fit: FlexFit.loose,
@@ -94,7 +84,6 @@ class RegTypeSelectedScreen extends StatelessWidget {
     );
 
     return LoginScreenSetup(
-      backgroundColor: screenBgColor,
       formTitle: "Sign up as",
       showLogo: true,
       formWidget: selectedTypeRow,
