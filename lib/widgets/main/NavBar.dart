@@ -1,9 +1,12 @@
+
 import 'package:flutter/material.dart';
-import '../theme/petsTheme.dart';
+import '../../theme/petsTheme.dart';
 import 'dart:ui' as ui;
 
-import 'package:flutter/services.dart' show rootBundle;
 import 'package:flutter/painting.dart' show decodeImageFromList;
+
+import 'dart:async';
+import 'package:flutter/services.dart' show rootBundle;
 
 class NavBar extends CustomPainter {
   static final Paint _barPainter = new Paint()
@@ -15,19 +18,24 @@ class NavBar extends CustomPainter {
     ..strokeWidth = 2
     ..style = PaintingStyle.stroke;
 
-  static final Paint _pawPainter = new Paint()
+  Paint _pawPainter = new Paint()
     ..color = PetsTheme.currentMainColor
     ..style = PaintingStyle.fill;
 
-  static final Paint _imgPainter = new Paint();
-
-  Paint _pawOvalsPainter;
+  Paint _imagesPainter = new Paint()
+    ..color = Colors.white
+    ..style = PaintingStyle.fill;
 
   double scale;
   bool expanded;
-  double _barHeight;  
+  double _barHeight;
 
-  NavBar(this.scale, this._barHeight, this.expanded);
+  final ui.Image serviceImage;
+  final ui.Image trainingImage;
+  final ui.Image walkingImage;
+  final ui.Image matingImage;
+
+  NavBar(this.scale, this._barHeight, this.expanded, this.serviceImage, this.trainingImage, this.walkingImage, this.matingImage);
 
   @override
   void paint(Canvas canvas, Size size) async {
@@ -42,7 +50,6 @@ class NavBar extends CustomPainter {
     // final double _barHeight = (shiftScale * (_bar1WidthEnd - _bar1WidthStart)) + _bar1WidthStart;
 
     ///bar dimensions
- 
 
     //first bar rect width
     final double _bar1WidthStart = .405;
@@ -119,6 +126,8 @@ class NavBar extends CustomPainter {
     final double topHeight = _barHeight * size.height;
     final double actualBar1Width = _bar1Width * size.width;
 
+    final double pawImageRatio = 0.65;
+
     Path paw = new Path()
       ..moveTo(_pawQuad1StartX * size.width, _topPawY * size.height)
       ..quadraticBezierTo(_pawQuad1X1 * size.width, _pawQuad1Y1 * size.height, _pawQuad1EndX * size.width, _botPawY * size.height)
@@ -144,7 +153,6 @@ class NavBar extends CustomPainter {
       ..lineTo(0, topHeight);
     canvas.drawPath(path, _barPainter);
     canvas.drawPath(path, _barStroker);
-    
 
     //paw ovals dimensions
     final double paw2XCenterStart = .45;
@@ -181,39 +189,51 @@ class NavBar extends CustomPainter {
     final double botPawHeightEnd = .1049;
     final double botPawHeight = (scale * (botPawHeightEnd - botPawHeightStart) + botPawHeightStart) / .355;
 
-    _pawOvalsPainter = new Paint()
-      ..color = Color.fromRGBO(96, 87, 92, (scale > .3 ? scale : 0))
-      ..style = PaintingStyle.fill;
+    Offset paw1Offset = Offset(paw1XCenter * size.width, botPawCenterY * size.height);
+    Offset paw2Offset = Offset(paw2XCenter * size.width, topPawCenterY * size.height);
+    Offset paw3Offset = Offset(paw3XCenter * size.width, topPawCenterY * size.height);
+    Offset paw4Offset = Offset(paw4XCenter * size.width, botPawCenterY * size.height);
 
-    Rect paw1 = Rect.fromCenter(center: Offset(paw1XCenter * size.width, botPawCenterY * size.height), width: botPawWidth * size.width, height: botPawHeight * size.height);
-    Rect paw2 = Rect.fromCenter(center: Offset(paw2XCenter * size.width, topPawCenterY * size.height), width: topPawWidth * size.width, height: topPawHeight * size.height);
-    Rect paw3 = Rect.fromCenter(center: Offset(paw3XCenter * size.width, topPawCenterY * size.height), width: topPawWidth * size.width, height: topPawHeight * size.height);
-    Rect paw4 = Rect.fromCenter(center: Offset(paw4XCenter * size.width, botPawCenterY * size.height), width: botPawWidth * size.width, height: botPawHeight * size.height);
+    Rect paw1 = Rect.fromCenter(center: paw1Offset, width: botPawWidth * size.width, height: botPawHeight * size.height);
+    Rect paw2 = Rect.fromCenter(center: paw2Offset, width: topPawWidth * size.width, height: topPawHeight * size.height);
+    Rect paw3 = Rect.fromCenter(center: paw3Offset, width: topPawWidth * size.width, height: topPawHeight * size.height);
+    Rect paw4 = Rect.fromCenter(center: paw4Offset, width: botPawWidth * size.width, height: botPawHeight * size.height);
+    Rect paw1Image = Rect.fromCenter(center: paw1Offset, width: botPawWidth * size.width * pawImageRatio, height: botPawHeight * size.height * pawImageRatio);
+    Rect paw2Image = Rect.fromCenter(center: paw2Offset, width: topPawWidth * size.width * pawImageRatio, height: topPawHeight * size.height * pawImageRatio);
+    Rect paw3Image = Rect.fromCenter(center: paw3Offset, width: topPawWidth * size.width * pawImageRatio, height: topPawHeight * size.height * pawImageRatio);
+    Rect paw4Image = Rect.fromCenter(center: paw4Offset, width: botPawWidth * size.width * pawImageRatio, height: botPawHeight * size.height * pawImageRatio);
 
-    canvas.drawShadow((new Path()..addOval(paw2)).shift(new Offset(2, 0)), Colors.black.withOpacity((scale > .3 ? scale : 0)), 2 , false);
+    canvas.drawShadow((new Path()..addOval(paw2)).shift(new Offset(2, 0)), Colors.black.withOpacity((scale > .3 ? scale : 0)), 2, false);
     canvas.drawShadow(new Path()..addOval(paw2), Colors.black.withOpacity((scale > .3 ? scale : 0)), 3.5, false);
-    canvas.drawOval(paw2, _pawOvalsPainter);
+    canvas.drawOval(paw2, _pawPainter);
 
     canvas.drawShadow((new Path()..addOval(paw3)).shift(new Offset(2, 0)), Colors.black.withOpacity((scale > .3 ? scale : 0)), 2, false);
     canvas.drawShadow(new Path()..addOval(paw3), Colors.black.withOpacity((scale > .5 ? scale : 0)), 3.5, false);
-    canvas.drawOval(paw3, _pawOvalsPainter);
+    canvas.drawOval(paw3, _pawPainter);
 
     canvas.drawShadow((new Path()..addOval(paw1)).shift(new Offset(2, 0)), Colors.black.withOpacity((scale > .3 ? scale : 0)), 2, false);
     canvas.drawShadow(new Path()..addOval(paw1), Colors.black.withOpacity((scale > .3 ? scale : 0)), 3.5, false);
-    canvas.drawOval(paw1, _pawOvalsPainter);
+    canvas.drawOval(paw1, _pawPainter);
 
     canvas.drawShadow((new Path()..addOval(paw4)).shift(new Offset(2, 0)), Colors.black.withOpacity((scale > .3 ? scale : 0)), 2, false);
     canvas.drawShadow(new Path()..addOval(paw4), Colors.black.withOpacity((scale > .3 ? scale : 0)), 3.5, false);
-    canvas.drawOval(paw4, _pawOvalsPainter);
+    canvas.drawOval(paw4, _pawPainter);
+
+    canvas.drawImageNine(serviceImage, paw1, paw1Image, _imagesPainter..color = (scale > .3) ? Colors.white : Colors.transparent);
+    canvas.drawImageNine(trainingImage, paw2, paw2Image, _imagesPainter);
+    canvas.drawImageNine(matingImage, paw3, paw3Image, _imagesPainter);
+    canvas.drawImageNine(walkingImage, paw4, paw4Image, _imagesPainter);
+
+    
   }
 
   @override
   bool shouldRepaint(NavBar oldDelegate) {
-    return (oldDelegate.scale != scale || oldDelegate.expanded != expanded);
+    return (oldDelegate.scale != scale || oldDelegate.expanded != expanded || oldDelegate._pawPainter.color != _pawPainter.color);
   }
 
   Future<ui.Image> loadImageAsset(String assetName) async {
-  final data = await rootBundle.load(assetName);
-  return decodeImageFromList(data.buffer.asUint8List());
-}
+    final data = await rootBundle.load(assetName);
+    return decodeImageFromList(data.buffer.asUint8List());
+  }
 }

@@ -10,10 +10,10 @@ import 'package:petmatch/screens/basescreen.dart';
 import 'package:petmatch/screens/login/VerifyMail.dart';
 import 'package:petmatch/settings/paths.dart';
 import 'package:petmatch/theme/petsTheme.dart';
-import 'package:petmatch/widgets/LoginScreenSetup.dart';
-import 'package:petmatch/widgets/PetsButton.dart';
-import 'package:petmatch/widgets/SkipButton.dart';
-import 'package:petmatch/widgets/SubmitButton.dart';
+import 'package:petmatch/widgets/screens/LoginScreenSetup.dart';
+import 'package:petmatch/widgets/buttons/PetsButton.dart';
+import 'package:petmatch/widgets/buttons/SkipButton.dart';
+import 'package:petmatch/widgets/buttons/SubmitButton.dart';
 
 class SetUserPhotoScreen extends StatefulWidget {
   @override

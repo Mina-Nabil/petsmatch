@@ -12,8 +12,8 @@ import 'package:petmatch/screens/home/home.dart';
 import 'package:petmatch/screens/login/regTypes.dart';
 import 'package:petmatch/screens/login/sendMailCode.dart';
 import 'package:petmatch/theme/petsTheme.dart';
-import 'package:petmatch/widgets/LoginScreenSetup.dart';
-import 'package:petmatch/widgets/SubmitButton.dart';
+import 'package:petmatch/widgets/screens/LoginScreenSetup.dart';
+import 'package:petmatch/widgets/buttons/SubmitButton.dart';
 
 class LoginScreen extends StatefulWidget {
   @override
@@ -73,6 +73,9 @@ class _LoginScreenState extends State<LoginScreen> {
 
     void fbLogin() {
       print("FB Login");
+       if (true) {
+        Navigator.of(context).pushReplacement(new PageTransition(child: HomeScreen(), type: PageTransitionType.fade));
+      }
     }
 
     void googleLogin() {
@@ -218,9 +221,7 @@ class _LoginScreenState extends State<LoginScreen> {
                                     child: SizedBox.expand(
                                         child: FlatButton(
                                       padding: EdgeInsets.all(0),
-                                      onPressed: () => {
-                                        Navigator.of(context).push(PageTransition(child: SearchScreen(), type: PageTransitionType.fade))
-                                      },
+                                      onPressed: fbLogin,
                                       child: Icon(
                                         FontAwesomeIcons.facebookF,
                                         color: Colors.white,

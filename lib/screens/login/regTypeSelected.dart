@@ -7,9 +7,9 @@ import 'package:petmatch/screens/login/trainerRegistration.dart';
 import 'package:petmatch/screens/login/vetRegistration.dart';
 import 'package:petmatch/settings/paths.dart';
 import 'package:petmatch/theme/petsTheme.dart';
-import 'package:petmatch/widgets/LoginScreenSetup.dart';
-import 'package:petmatch/widgets/SubmitButton.dart';
-import 'package:petmatch/widgets/RegistrationTypeIcon.dart';
+import 'package:petmatch/widgets/screens/LoginScreenSetup.dart';
+import 'package:petmatch/widgets/buttons/SubmitButton.dart';
+import 'package:petmatch/widgets/buttons/RegistrationTypeIcon.dart';
 
 enum userType { owner, trainer, store, vet }
 

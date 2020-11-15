@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import '../theme/petsTheme.dart';
+import '../../theme/petsTheme.dart';
 import 'package:validators/validators.dart';
 import 'package:validators/sanitizers.dart';
 

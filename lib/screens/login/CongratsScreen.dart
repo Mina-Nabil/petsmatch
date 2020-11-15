@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:page_transition/page_transition.dart';
 import 'package:petmatch/screens/home/home.dart';
 import 'package:petmatch/theme/petsTheme.dart';
-import 'package:petmatch/widgets/PetsButton.dart';
+import 'package:petmatch/widgets/buttons/PetsButton.dart';
 
 class CongratsScreen extends StatelessWidget {
   @override

@@ -1,9 +1,10 @@
-import 'package:flutter/foundation.dart';
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter/services.dart';
 import 'package:petmatch/theme/petsTheme.dart';
-import 'package:petmatch/widgets/NavBarHolder.dart';
+import 'package:petmatch/widgets/main/NavBarHolder.dart';
 import 'package:flutter/gestures.dart';
 
 

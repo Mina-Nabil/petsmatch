@@ -76,6 +76,17 @@ flutter:
    - assets/images/icons/registration/camera.svg
    - assets/images/icons/registration/gallery.svg
    - assets/images/icons/registration/verfMail.svg
+   - assets/images/icons/main/search.svg
+   - assets/images/icons/main/userPlaceholder.png
+   - assets/images/icons/pages/mating.png
+   - assets/images/icons/pages/servicesx1.png
+   - assets/images/icons/pages/servicesx2.png
+   - assets/images/icons/pages/training.png
+   - assets/images/icons/pages/walking.png
+   - assets/images/icons/pages/mating.svg
+   - assets/images/icons/pages/stores.svg
+   - assets/images/icons/pages/training.svg
+   - assets/images/icons/pages/walking.svg
 
   #custom
    - assets/images/custom/congrats.png

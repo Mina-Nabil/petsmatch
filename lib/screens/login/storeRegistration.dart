@@ -4,11 +4,11 @@ import 'package:page_transition/page_transition.dart';
 import 'package:petmatch/screens/basescreen.dart';
 import 'package:petmatch/screens/login/setUserPhoto.dart';
 import 'package:petmatch/theme/petsTheme.dart';
-import 'package:petmatch/widgets/LabelledFormField.dart';
-import 'package:petmatch/widgets/LoginScreenSetup.dart';
-import 'package:petmatch/widgets/SkipButton.dart';
-import 'package:petmatch/widgets/SubmitButton.dart';
-import 'package:petmatch/widgets/regTextField.dart';
+import 'package:petmatch/widgets/form/LabelledFormField.dart';
+import 'package:petmatch/widgets/screens/LoginScreenSetup.dart';
+import 'package:petmatch/widgets/buttons/SkipButton.dart';
+import 'package:petmatch/widgets/buttons/SubmitButton.dart';
+import 'package:petmatch/widgets/form/regTextField.dart';
 
 class StoreRegistrationScreen extends StatefulWidget {
   @override

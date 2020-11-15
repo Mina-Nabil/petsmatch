@@ -5,8 +5,8 @@ import 'package:page_transition/page_transition.dart';
 import 'package:petmatch/screens/login/regTypeSelected.dart';
 import 'package:petmatch/settings/paths.dart';
 import 'package:petmatch/theme/petsTheme.dart';
-import 'package:petmatch/widgets/LoginScreenSetup.dart';
-import 'package:petmatch/widgets/RegistrationTypeIcon.dart';
+import 'package:petmatch/widgets/screens/LoginScreenSetup.dart';
+import 'package:petmatch/widgets/buttons/RegistrationTypeIcon.dart';
 
 class RegTypesScreen extends StatefulWidget {
   @override

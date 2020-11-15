@@ -4,8 +4,8 @@ import 'package:page_transition/page_transition.dart';
 import 'package:petmatch/screens/login/CongratsScreen.dart';
 import 'package:petmatch/settings/paths.dart';
 import 'package:petmatch/theme/petsTheme.dart';
-import 'package:petmatch/widgets/LoginScreenSetup.dart';
-import 'package:petmatch/widgets/PetsButton.dart';
+import 'package:petmatch/widgets/screens/LoginScreenSetup.dart';
+import 'package:petmatch/widgets/buttons/PetsButton.dart';
 
 class VerifyMailScreen extends StatelessWidget {
   @override

@@ -8,11 +8,12 @@ class CommonScreenSetup extends StatelessWidget {
   final bool isSmallTop;
   final bool isPortraitLock;
   final bool isNavBar;
+  final bool isTitle;
   final bgColor screenBgColor;
   final bgMask screenBgMask;
 
   CommonScreenSetup(this._topWidget, this._bottomWidget,
-      {this.isSmallTop = false, this.screenBgColor = bgColor.main, this.screenBgMask = bgMask.def, this.isPortraitLock=false, this.isNavBar=false}){
+      {this.isSmallTop = false, this.screenBgColor = bgColor.main, this.screenBgMask = bgMask.def, this.isPortraitLock=false, this.isNavBar=false, this.isTitle=true}){
         PetsTheme.currentMainColor = this.screenBgColor;
       }
 
@@ -35,7 +36,7 @@ class CommonScreenSetup extends StatelessWidget {
       isBottomPadding: false,
       isTopPadding: false,
       isKeyBoardChangeSize: true,
-      noTitle: false,
+      noTitle: !isTitle,
       isTopColorDark: false,
       isNavBar: this.isNavBar,
       backGroundColor: screenBgColor,
@@ -57,9 +58,6 @@ class CommonScreenSetup extends StatelessWidget {
                         flex: topAreaFlex,
                         child: _topWidget,
                       ),
-
-                      //Spacing in the middle - 1 flex
-                      Flexible(child: Container(), flex: 1),
 
                       //Bottom Widget Area
                       Flexible(
