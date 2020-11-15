@@ -158,7 +158,7 @@ class _NavBarHolderState extends State<NavBarHolder> with SingleTickerProviderSt
                 padding: EdgeInsets.all(PetsTheme.getMuchLargerPadMarg(context)),
                 child: FaIcon(
                   icon,
-                  color: (isPage) ? PetsTheme.cyan : PetsTheme.cyan.withOpacity(.4),
+                  color: (isPage) ? PetsTheme.currentMainColor : PetsTheme.petsHintGrayColor,
                   size: 100,
                 ))),
       ),

@@ -1,4 +1,3 @@
-
 import 'package:flutter/material.dart';
 import '../../theme/petsTheme.dart';
 import 'dart:ui' as ui;
@@ -10,13 +9,13 @@ import 'package:flutter/services.dart' show rootBundle;
 
 class NavBar extends CustomPainter {
   static final Paint _barPainter = new Paint()
-    ..color = PetsTheme.whiteBarColor
+    ..color = PetsTheme.petsTextGrayColor
     ..style = PaintingStyle.fill;
 
-  static final Paint _barStroker = new Paint()
-    ..color = Color.fromRGBO(0, 84, 150, 1)
-    ..strokeWidth = 2
-    ..style = PaintingStyle.stroke;
+  // static final Paint _barStroker = new Paint()
+  //   ..color = Color.fromRGBO(0, 84, 150, 1)
+  //   ..strokeWidth = 2
+  //   ..style = PaintingStyle.stroke;
 
   Paint _pawPainter = new Paint()
     ..color = PetsTheme.currentMainColor
@@ -96,8 +95,8 @@ class NavBar extends CustomPainter {
     final double _topPawYEnd = .616;
     final double _topPawY = (scale * (_topPawYEnd - _topPawYStart) + _topPawYStart);
 
-    final double _pawQuad1X1Start = .36;
-    final double _pawQuad1X1End = .24;
+    final double _pawQuad1X1Start = .37;
+    final double _pawQuad1X1End = .23;
     final double _pawQuad1X1 = (scale * (_pawQuad1X1End - _pawQuad1X1Start) + _pawQuad1X1Start);
 
     final double _pawQuad1Y1Start = .896;
@@ -128,6 +127,20 @@ class NavBar extends CustomPainter {
 
     final double pawImageRatio = 0.65;
 
+    Path bar = new Path()
+      ..moveTo(0, topHeight)
+      // ..lineTo(actualBar1Width, topHeight)
+      // ..arcToPoint(new Offset(_arc1X * size.width, _arc1Y * size.height),
+      //     radius: Radius.elliptical(_arc1RadiusX * size.width, _arc1RadiusY * size.height), clockwise: false)
+      // ..quadraticBezierTo(_quadCenterX * size.width, _quadCenterY * size.height, _arc2X * size.width, _arc2Y * size.height)
+      // ..arcToPoint(new Offset(_arc3X * size.width, _arc3Y * size.height),
+      //     radius: Radius.elliptical(_arc1RadiusX * size.width, _arc1RadiusY * size.height), clockwise: false)
+      ..lineTo(size.width, topHeight)
+      ..lineTo(size.width, size.height)
+      ..lineTo(0, size.height)
+      ..lineTo(0, topHeight);
+    canvas.drawPath(bar, _barPainter);
+    // canvas.drawPath(bar, _barStroker);
     Path paw = new Path()
       ..moveTo(_pawQuad1StartX * size.width, _topPawY * size.height)
       ..quadraticBezierTo(_pawQuad1X1 * size.width, _pawQuad1Y1 * size.height, _pawQuad1EndX * size.width, _botPawY * size.height)
@@ -135,24 +148,10 @@ class NavBar extends CustomPainter {
       ..quadraticBezierTo(_pawQuad2X1 * size.width, _pawQuad2Y1 * size.height, _pawQuad2EndX * size.width, _topPawY * size.height)
       ..quadraticBezierTo(size.width / 2, minTop * size.height, _pawQuad1StartX * size.width, _topPawY * size.height);
 
-    canvas.drawShadow(paw.shift(new Offset(5, 0)), Colors.black, 2, false);
-    canvas.drawShadow(paw, Colors.black, 3.5, false);
+    // canvas.drawShadow(paw.shift(new Offset(5, 0)), Colors.black, 2, false);
+    // canvas.drawShadow(paw, Colors.black, 3.5, false);
     canvas.drawPath(paw, _pawPainter);
 
-    Path path = new Path()
-      ..moveTo(0, topHeight)
-      ..lineTo(actualBar1Width, topHeight)
-      ..arcToPoint(new Offset(_arc1X * size.width, _arc1Y * size.height),
-          radius: Radius.elliptical(_arc1RadiusX * size.width, _arc1RadiusY * size.height), clockwise: false)
-      ..quadraticBezierTo(_quadCenterX * size.width, _quadCenterY * size.height, _arc2X * size.width, _arc2Y * size.height)
-      ..arcToPoint(new Offset(_arc3X * size.width, _arc3Y * size.height),
-          radius: Radius.elliptical(_arc1RadiusX * size.width, _arc1RadiusY * size.height), clockwise: false)
-      ..lineTo(size.width, topHeight)
-      ..lineTo(size.width, size.height)
-      ..lineTo(0, size.height)
-      ..lineTo(0, topHeight);
-    canvas.drawPath(path, _barPainter);
-    canvas.drawPath(path, _barStroker);
 
     //paw ovals dimensions
     final double paw2XCenterStart = .45;
@@ -193,38 +192,37 @@ class NavBar extends CustomPainter {
     Offset paw2Offset = Offset(paw2XCenter * size.width, topPawCenterY * size.height);
     Offset paw3Offset = Offset(paw3XCenter * size.width, topPawCenterY * size.height);
     Offset paw4Offset = Offset(paw4XCenter * size.width, botPawCenterY * size.height);
+    if (scale > .3) {
+      Rect paw1 = Rect.fromCenter(center: paw1Offset, width: botPawWidth * size.width, height: botPawHeight * size.height);
+      Rect paw2 = Rect.fromCenter(center: paw2Offset, width: topPawWidth * size.width, height: topPawHeight * size.height);
+      Rect paw3 = Rect.fromCenter(center: paw3Offset, width: topPawWidth * size.width, height: topPawHeight * size.height);
+      Rect paw4 = Rect.fromCenter(center: paw4Offset, width: botPawWidth * size.width, height: botPawHeight * size.height);
+      Rect paw1Image = Rect.fromCenter(center: paw1Offset, width: botPawWidth * size.width * pawImageRatio, height: botPawHeight * size.height * pawImageRatio);
+      Rect paw2Image = Rect.fromCenter(center: paw2Offset, width: topPawWidth * size.width * pawImageRatio, height: topPawHeight * size.height * pawImageRatio);
+      Rect paw3Image = Rect.fromCenter(center: paw3Offset, width: topPawWidth * size.width * pawImageRatio, height: topPawHeight * size.height * pawImageRatio);
+      Rect paw4Image = Rect.fromCenter(center: paw4Offset, width: botPawWidth * size.width * pawImageRatio, height: botPawHeight * size.height * pawImageRatio);
 
-    Rect paw1 = Rect.fromCenter(center: paw1Offset, width: botPawWidth * size.width, height: botPawHeight * size.height);
-    Rect paw2 = Rect.fromCenter(center: paw2Offset, width: topPawWidth * size.width, height: topPawHeight * size.height);
-    Rect paw3 = Rect.fromCenter(center: paw3Offset, width: topPawWidth * size.width, height: topPawHeight * size.height);
-    Rect paw4 = Rect.fromCenter(center: paw4Offset, width: botPawWidth * size.width, height: botPawHeight * size.height);
-    Rect paw1Image = Rect.fromCenter(center: paw1Offset, width: botPawWidth * size.width * pawImageRatio, height: botPawHeight * size.height * pawImageRatio);
-    Rect paw2Image = Rect.fromCenter(center: paw2Offset, width: topPawWidth * size.width * pawImageRatio, height: topPawHeight * size.height * pawImageRatio);
-    Rect paw3Image = Rect.fromCenter(center: paw3Offset, width: topPawWidth * size.width * pawImageRatio, height: topPawHeight * size.height * pawImageRatio);
-    Rect paw4Image = Rect.fromCenter(center: paw4Offset, width: botPawWidth * size.width * pawImageRatio, height: botPawHeight * size.height * pawImageRatio);
+      // canvas.drawShadow((new Path()..addOval(paw2)).shift(new Offset(2, 0)), Colors.black.withOpacity((scale > .3 ? scale : 0)), 2, false);
+      canvas.drawShadow(new Path()..addOval(paw2), Colors.black.withOpacity((scale > .3 ? scale : 0)), 3.5, false);
+      canvas.drawOval(paw2, _pawPainter);
 
-    canvas.drawShadow((new Path()..addOval(paw2)).shift(new Offset(2, 0)), Colors.black.withOpacity((scale > .3 ? scale : 0)), 2, false);
-    canvas.drawShadow(new Path()..addOval(paw2), Colors.black.withOpacity((scale > .3 ? scale : 0)), 3.5, false);
-    canvas.drawOval(paw2, _pawPainter);
+      // canvas.drawShadow((new Path()..addOval(paw3)).shift(new Offset(2, 0)), Colors.black.withOpacity((scale > .3 ? scale : 0)), 2, false);
+      canvas.drawShadow(new Path()..addOval(paw3), Colors.black.withOpacity((scale > .5 ? scale : 0)), 3.5, false);
+      canvas.drawOval(paw3, _pawPainter);
 
-    canvas.drawShadow((new Path()..addOval(paw3)).shift(new Offset(2, 0)), Colors.black.withOpacity((scale > .3 ? scale : 0)), 2, false);
-    canvas.drawShadow(new Path()..addOval(paw3), Colors.black.withOpacity((scale > .5 ? scale : 0)), 3.5, false);
-    canvas.drawOval(paw3, _pawPainter);
+      // canvas.drawShadow((new Path()..addOval(paw1)).shift(new Offset(2, 0)), Colors.black.withOpacity((scale > .3 ? scale : 0)), 2, false);
+      canvas.drawShadow(new Path()..addOval(paw1), Colors.black.withOpacity((scale > .3 ? scale : 0)), 3.5, false);
+      canvas.drawOval(paw1, _pawPainter);
 
-    canvas.drawShadow((new Path()..addOval(paw1)).shift(new Offset(2, 0)), Colors.black.withOpacity((scale > .3 ? scale : 0)), 2, false);
-    canvas.drawShadow(new Path()..addOval(paw1), Colors.black.withOpacity((scale > .3 ? scale : 0)), 3.5, false);
-    canvas.drawOval(paw1, _pawPainter);
+      // canvas.drawShadow((new Path()..addOval(paw4)).shift(new Offset(2, 0)), Colors.black.withOpacity((scale > .3 ? scale : 0)), 2, false);
+      canvas.drawShadow(new Path()..addOval(paw4), Colors.black.withOpacity((scale > .3 ? scale : 0)), 3.5, false);
+      canvas.drawOval(paw4, _pawPainter);
 
-    canvas.drawShadow((new Path()..addOval(paw4)).shift(new Offset(2, 0)), Colors.black.withOpacity((scale > .3 ? scale : 0)), 2, false);
-    canvas.drawShadow(new Path()..addOval(paw4), Colors.black.withOpacity((scale > .3 ? scale : 0)), 3.5, false);
-    canvas.drawOval(paw4, _pawPainter);
-
-    canvas.drawImageNine(serviceImage, paw1, paw1Image, _imagesPainter..color = (scale > .3) ? Colors.white : Colors.transparent);
-    canvas.drawImageNine(trainingImage, paw2, paw2Image, _imagesPainter);
-    canvas.drawImageNine(matingImage, paw3, paw3Image, _imagesPainter);
-    canvas.drawImageNine(walkingImage, paw4, paw4Image, _imagesPainter);
-
-    
+      canvas.drawImageNine(serviceImage, paw1, paw1Image, _imagesPainter..color = (scale > .3) ? Colors.white : Colors.transparent);
+      canvas.drawImageNine(trainingImage, paw2, paw2Image, _imagesPainter);
+      canvas.drawImageNine(matingImage, paw3, paw3Image, _imagesPainter);
+      canvas.drawImageNine(walkingImage, paw4, paw4Image, _imagesPainter);
+    }
   }
 
   @override
