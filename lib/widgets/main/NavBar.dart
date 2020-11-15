@@ -55,32 +55,32 @@ class NavBar extends CustomPainter {
     final double _bar1WidthEnd = .322;
     final double _bar1Width = (scale * (_bar1WidthEnd - _bar1WidthStart)) + _bar1WidthStart; //Animated top bar width
 
-    final double _arc1XStart = .4675;
-    final double _arc1XEnd = .43;
-    final double _arc1X = (scale * (_arc1XEnd - _arc1XStart) + _arc1XStart);
+    // final double _arc1XStart = .4675;
+    // final double _arc1XEnd = .43;
+    // final double _arc1X = (scale * (_arc1XEnd - _arc1XStart) + _arc1XStart);
 
-    final double _arc1YStart = .87295;
-    final double _arc1YEnd = .932;
-    final double _arc1Y = (scale * (_arc1YEnd - _arc1YStart) + _arc1YStart);
+    // final double _arc1YStart = .87295;
+    // final double _arc1YEnd = .932;
+    // final double _arc1Y = (scale * (_arc1YEnd - _arc1YStart) + _arc1YStart);
 
-    final double _arc1RadiusXStart = 0.00137333333;
-    final double _arc1RadiusXEnd = 0.0014333333;
-    final double _arc1RadiusX = (scale * (_arc1RadiusXEnd - _arc1RadiusXStart) + _arc1RadiusXStart);
+    // final double _arc1RadiusXStart = 0.00137333333;
+    // final double _arc1RadiusXEnd = 0.0014333333;
+    // final double _arc1RadiusX = (scale * (_arc1RadiusXEnd - _arc1RadiusXStart) + _arc1RadiusXStart);
 
-    final double _arc1RadiusYStart = 0.00213333333;
-    final double _arc1RadiusYEnd = 0.00213333333;
-    final double _arc1RadiusY = (scale * (_arc1RadiusYEnd - _arc1RadiusYStart) + _arc1RadiusYStart);
+    // final double _arc1RadiusYStart = 0.00213333333;
+    // final double _arc1RadiusYEnd = 0.00213333333;
+    // final double _arc1RadiusY = (scale * (_arc1RadiusYEnd - _arc1RadiusYStart) + _arc1RadiusYStart);
 
     final double _quadCenterX = .5; //No need for animation =)
 
-    final double _quadCemterYStart = .85;
-    final double _quadCenterYEnd = .87;
-    final double _quadCenterY = (scale * (_quadCenterYEnd - _quadCemterYStart) + _quadCemterYStart);
+    // final double _quadCemterYStart = .85;
+    // final double _quadCenterYEnd = .87;
+    // final double _quadCenterY = (scale * (_quadCenterYEnd - _quadCemterYStart) + _quadCemterYStart);
 
-    final double _arc2X = 1 - _arc1X; //TBA -- Derived
-    final double _arc2Y = _arc1Y; //TBA -- Derived
-    final double _arc3X = 1 - _bar1Width;
-    final double _arc3Y = _barHeight;
+    // final double _arc2X = 1 - _arc1X; //TBA -- Derived
+    // final double _arc2Y = _arc1Y; //TBA -- Derived
+    // final double _arc3X = 1 - _bar1Width;
+    // final double _arc3Y = _barHeight;
 
     ///paw dimensions
     final double minTopStart = .582;
@@ -177,7 +177,7 @@ class NavBar extends CustomPainter {
     final double topPawWidth = scale * (topPawWidthEnd - topPawWidthStart) + topPawWidthStart;
 
     final double topPawHeightStart = 0.0364317841 / 2;
-    final double topPawHeightEnd = 0.1364317841;
+    final double topPawHeightEnd = 0.1064317841;
     final double topPawHeight = (((scale * (topPawHeightEnd - topPawHeightStart) + topPawHeightStart)) / .355);
 
     final double botPawWidthStart = .03;
