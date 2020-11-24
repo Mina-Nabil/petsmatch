@@ -108,7 +108,7 @@ class _TrainerRegistrationScreenState extends State<TrainerRegistrationScreen> {
               width: fieldsWidth,
               childField: DropdownButtonFormField(
                 decoration: InputDecoration(enabledBorder: UnderlineInputBorder(borderSide: BorderSide(color: PetsTheme.petsBordersGrayColor))),
-                style: TextStyle(fontFamily: "Roboto", color: Colors.black, fontSize: PetsTheme.getLargeFont(context)),
+                style: TextStyle(fontFamily: "Roboto", color: Colors.black, fontSize: PetsTheme.getLargeFont()),
                 onChanged: citySelected,
                 items: [
                   DropdownMenuItem(
@@ -139,7 +139,7 @@ class _TrainerRegistrationScreenState extends State<TrainerRegistrationScreen> {
               width: fieldsWidth,
               childField: DropdownButtonFormField(
                 decoration: InputDecoration(enabledBorder: UnderlineInputBorder(borderSide: BorderSide(color: PetsTheme.petsBordersGrayColor))),
-                style: TextStyle(fontFamily: "Roboto", color: Colors.black, fontSize: PetsTheme.getLargeFont(context)),
+                style: TextStyle(fontFamily: "Roboto", color: Colors.black, fontSize: PetsTheme.getLargeFont()),
                 onChanged: citySelected,
                 items: [
                   DropdownMenuItem(
@@ -159,7 +159,7 @@ class _TrainerRegistrationScreenState extends State<TrainerRegistrationScreen> {
               width: fieldsWidth,
               childField: DropdownButtonFormField(
                 decoration: InputDecoration(enabledBorder: UnderlineInputBorder(borderSide: BorderSide(color: PetsTheme.petsBordersGrayColor))),
-                style: TextStyle(fontFamily: "Roboto", color: Colors.black, fontSize: PetsTheme.getLargeFont(context)),
+                style: TextStyle(fontFamily: "Roboto", color: Colors.black, fontSize: PetsTheme.getLargeFont()),
                 onChanged: citySelected,
                 items: [
                   DropdownMenuItem(
@@ -188,7 +188,7 @@ class _TrainerRegistrationScreenState extends State<TrainerRegistrationScreen> {
               width: fieldsWidth,
               childField: DropdownButtonFormField(
                 decoration: InputDecoration(enabledBorder: UnderlineInputBorder(borderSide: BorderSide(color: PetsTheme.petsBordersGrayColor))),
-                style: TextStyle(fontFamily: "Roboto", color: Colors.black, fontSize: PetsTheme.getLargeFont(context)),
+                style: TextStyle(fontFamily: "Roboto", color: Colors.black, fontSize: PetsTheme.getLargeFont()),
                 onChanged: citySelected,
                 items: [
                   DropdownMenuItem(

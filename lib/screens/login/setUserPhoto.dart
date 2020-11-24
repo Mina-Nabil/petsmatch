@@ -59,7 +59,7 @@ class _SetUserPhotoScreenState extends State<SetUserPhotoScreen> {
     double photoDiameterRatio = 0.4;
 
     var imagePlaceholder = Container(
-        margin: EdgeInsets.symmetric(horizontal: PetsTheme.getMuchLargerPadMarg(context)),
+        margin: EdgeInsets.symmetric(horizontal: PetsTheme.getMuchLargerPadMarg()),
         width: MediaQuery.of(context).size.width * photoDiameterRatio,
         height: double.infinity,
         decoration: BoxDecoration(

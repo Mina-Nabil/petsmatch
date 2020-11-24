@@ -22,6 +22,15 @@ class Paths {
   static const String training_icon_svg_file = "assets/images/icons/pages/training.svg";
   static const String walking_icon_svg_file = "assets/images/icons/pages/walking.svg";
 
+  static const String home_icon_svg_file = "assets/images/icons/pages/home.svg";
+  static const String notification_icon_svg_file = "assets/images/icons/pages/notifications.svg";
+  static const String chat_icon_svg_file = "assets/images/icons/pages/chat.svg";
+  static const String more_icon_svg_file = "assets/images/icons/pages/more.svg";
+
+  static const String video_icon_svg = "assets/images/icons/main/camera.svg";
+  static const String gallery_icon_svg = "assets/images/icons/main/gallery.svg";
+  static const String location_icon_svg = "assets/images/icons/main/location.svg";
+
   //image files paths
 
 }

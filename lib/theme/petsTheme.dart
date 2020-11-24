@@ -5,11 +5,29 @@ enum bgColor { blue, purple, cyan, pink, main }
 enum bgMask { def, mating, training, walk, services }
 
 class PetsTheme {
+  static PetsTheme _theme;
+
   //Big Screen Size -- for font customization
   static const double bigScreenWidth = 400;
   static const double smallScreenWidth = 320;
   static const double bigScreenHeight = 800;
   static const double smallScreenHeight = 600;
+
+  static BuildContext _context;
+
+  PetsTheme._(_context);
+
+  static void initTheme(BuildContext context) {
+    _context = context;
+    _initFonts(_context);
+  }
+
+  static PetsTheme getTheme() {
+    if (_context == null)
+      return null;
+    else
+      return _theme;
+  }
 
   //Colors
 
@@ -21,15 +39,21 @@ class PetsTheme {
   static const Color petsBordersGrayColor = Color.fromRGBO(112, 112, 112, 0.5);
   static const Color petsHintGrayColor = Color.fromRGBO(69, 79, 99, 0.5);
   static const Color petsGreenColor = Color.fromRGBO(6, 214, 160, 1);
+  static const Color petsGrayIconColor = Color.fromARGB(51, 15, 19, 39);
+  static final Color petsRedColor = Color.fromARGB(255, 255,0,110);
   static Color _currentMainColor = petsBlueColor;
 
   static final Color petsBgBlueColor = petsBlueColor.withOpacity(.6);
   static final Color petsBgPurpleColor = petsPurpleColor.withOpacity(.6);
   static final Color petsBgPinkColor = petsPinkColor.withOpacity(.6);
   static final Color petsBgCyanColor = petsCyanColor.withOpacity(.6);
+  static final Color petsWhiteBg = Color.fromARGB(255, 246, 246, 246);
+  static final Color petsRedBg = Color.fromARGB(25, 255,0,110);
+  static final Color petsGreenBg = Color.fromARGB(25, 6,214,160);
+  static final Color petsBlueBg = Color.fromARGB(25, 61,107,255);
+
   static const Color whiteBarColor = Color.fromRGBO(249, 250, 255, 1);
   static Color _currentBgMainColor = petsBlueColor;
-
 
   static const Color blackTextColor = Color.fromRGBO(69, 79, 99, 1);
 
@@ -72,20 +96,63 @@ class PetsTheme {
   static double _muchLargerPadMarg;
   static double _largestPadMarg;
 
+  //Navbar ratio
+  static double _navbarHeightRatio;
+  static double _navbarInnerHeightRatio;
+
   static void _initFonts(BuildContext context) {
     //Font init
     _smallIconSize = (MediaQuery.of(context).size.width > bigScreenWidth) ? 50 : 40;
 
-    _veryLargeFont = (MediaQuery.of(context).size.width > bigScreenWidth) ? 50 : (MediaQuery.of(context).size.width > smallScreenWidth) ? 44 : 35;
-    _evenMuchLargerFont = (MediaQuery.of(context).size.width > bigScreenWidth) ? 32 : (MediaQuery.of(context).size.width > smallScreenWidth) ? 27 : 24;
-    _muchLargerFont = (MediaQuery.of(context).size.width > bigScreenWidth) ? 26 : (MediaQuery.of(context).size.width > smallScreenWidth) ? 24 : 22;
-    _largerFont = (MediaQuery.of(context).size.width > bigScreenWidth) ? 24 : (MediaQuery.of(context).size.width > smallScreenWidth) ? 21 : 18;
-    _largeFont = (MediaQuery.of(context).size.width > bigScreenWidth) ? 20 : (MediaQuery.of(context).size.width > smallScreenWidth) ? 18 : 17;
-    _meduimFont = (MediaQuery.of(context).size.width > bigScreenWidth) ? 16 : (MediaQuery.of(context).size.width > smallScreenWidth) ? 14 : 12;
-    _smallFont = (MediaQuery.of(context).size.width > bigScreenWidth) ? 13 : (MediaQuery.of(context).size.width > smallScreenWidth) ? 13 : 10;
+    _veryLargeFont = (MediaQuery.of(context).size.width > bigScreenWidth)
+        ? 50
+        : (MediaQuery.of(context).size.width > smallScreenWidth)
+            ? 44
+            : 35;
+    _evenMuchLargerFont = (MediaQuery.of(context).size.width > bigScreenWidth)
+        ? 32
+        : (MediaQuery.of(context).size.width > smallScreenWidth)
+            ? 27
+            : 24;
+    _muchLargerFont = (MediaQuery.of(context).size.width > bigScreenWidth)
+        ? 26
+        : (MediaQuery.of(context).size.width > smallScreenWidth)
+            ? 24
+            : 22;
+    _largerFont = (MediaQuery.of(context).size.width > bigScreenWidth)
+        ? 24
+        : (MediaQuery.of(context).size.width > smallScreenWidth)
+            ? 21
+            : 18;
+    _largeFont = (MediaQuery.of(context).size.width > bigScreenWidth)
+        ? 20
+        : (MediaQuery.of(context).size.width > smallScreenWidth)
+            ? 18
+            : 17;
+    _meduimFont = (MediaQuery.of(context).size.width > bigScreenWidth)
+        ? 16
+        : (MediaQuery.of(context).size.width > smallScreenWidth)
+            ? 14
+            : 12;
+    _smallFont = (MediaQuery.of(context).size.width > bigScreenWidth)
+        ? 13
+        : (MediaQuery.of(context).size.width > smallScreenWidth)
+            ? 13
+            : 10;
+    _navbarHeightRatio = (MediaQuery.of(context).size.height > bigScreenHeight)
+        ? .20
+        : (MediaQuery.of(context).size.height > smallScreenHeight)
+            ? .22
+            : .25;
+    
+    _navbarInnerHeightRatio = 0.3;
 
     //Padding & Marging Init
-    _smallPadMarg = (MediaQuery.of(context).size.width > bigScreenWidth) ? 7 : (MediaQuery.of(context).size.width > smallScreenWidth) ? 5 : 3;
+    _smallPadMarg = (MediaQuery.of(context).size.width > bigScreenWidth)
+        ? 7
+        : (MediaQuery.of(context).size.width > smallScreenWidth)
+            ? 5
+            : 3;
     _smallerPadMarg = 0.75 * _smallPadMarg;
     _moreSmallPadMarg = 0.5 * _smallPadMarg;
     _smallestPadMarg = 0.25 * _smallPadMarg;
@@ -96,100 +163,110 @@ class PetsTheme {
     _largestPadMarg = 5 * _smallPadMarg;
   }
 
-  static double getVeryLargeFont(BuildContext context) {
-    if (_veryLargeFont == null) _initFonts(context);
+  static double getVeryLargeFont() {
+    assert(_context != null);
     return _veryLargeFont;
   }
 
-  static double getEvenMuchLargerFont(BuildContext context) {
-    if (_evenMuchLargerFont == null) _initFonts(context);
+  static double getEvenMuchLargerFont() {
+    assert(_context != null);
     return _evenMuchLargerFont;
   }
 
-  static double getMuchLargerFont(BuildContext context) {
-    if (_muchLargerFont == null) _initFonts(context);
+  static double getMuchLargerFont() {
+    assert(_context != null);
     return _muchLargerFont;
   }
 
-  static double getLargerFont(BuildContext context) {
-    if (_largerFont == null) _initFonts(context);
+  static double getLargerFont() {
+    assert(_context != null);
     return _largerFont;
   }
 
-  static double getLargeFont(BuildContext context) {
-    if (_largeFont == null) _initFonts(context);
+  static double getLargeFont() {
+    assert(_context != null);
     return _largeFont;
   }
 
-  static double getMeduimFont(BuildContext context) {
-    if (_meduimFont == null) _initFonts(context);
+  static double getMeduimFont() {
+    assert(_context != null);
     return _meduimFont;
   }
 
-  static double getSmallFont(BuildContext context) {
-    if (_smallFont == null) _initFonts(context);
+  static double getSmallFont() {
+    assert(_context != null);
     return _smallFont;
   }
 
-  static double getSmallIconSize(BuildContext context) {
-    if (_smallIconSize == null) _initFonts(context);
+  static double getSmallIconSize() {
+    assert(_context != null);
     return _smallIconSize;
   }
 
-  static double getSmallerPadMarg(BuildContext context) {
-    if (_smallerPadMarg == null) _initFonts(context);
+  static double getSmallerPadMarg() {
+    assert(_context != null);
     return _smallerPadMarg;
   }
 
-  static double getMoreSmallerPadMarg(BuildContext context) {
-    if (_moreSmallPadMarg == null) _initFonts(context);
+  static double getMoreSmallerPadMarg() {
+    assert(_context != null);
     return _smallerPadMarg;
   }
 
-  static double getSmallestPadMarg(BuildContext context) {
-    if (_smallestPadMarg == null) _initFonts(context);
+  static double getSmallestPadMarg() {
+    assert(_context != null);
     return _smallestPadMarg;
   }
 
-  static double getSmallPadMarg(BuildContext context) {
-    if (_smallPadMarg == null) _initFonts(context);
+  static double getSmallPadMarg() {
+    assert(_context != null);
     return _smallPadMarg;
   }
 
-  static double getMeduimPadMarg(BuildContext context) {
-    if (_meduimPadMarg == null) _initFonts(context);
+  static double getMeduimPadMarg() {
+    assert(_context != null);
     return _meduimPadMarg;
   }
 
-  static double getLargePadMarg(BuildContext context) {
-    if (_largePadMarg == null) _initFonts(context);
+  static double getLargePadMarg() {
+    assert(_context != null);
     return _largePadMarg;
   }
 
-  static double getLargerPadMarg(BuildContext context) {
-    if (_largerPadMarg == null) _initFonts(context);
+  static double getLargerPadMarg() {
+    assert(_context != null);
     return _largerPadMarg;
   }
 
-  static double getMuchLargerPadMarg(BuildContext context) {
-    if (_muchLargerPadMarg == null) _initFonts(context);
+  static double getMuchLargerPadMarg() {
+    assert(_context != null);
     return _muchLargerPadMarg;
   }
 
-  static double getLargestPadMarg(BuildContext context) {
-    if (_largestPadMarg == null) _initFonts(context);
+  static double getLargestPadMarg() {
+    assert(_context != null);
     return _largestPadMarg;
   }
 
-  static get currentMainColor{
+  static double getNavBarHeight() {
+    assert(_context != null);
+    return _navbarHeightRatio;
+  }
+
+  static double getNavBarInnerHeight() {
+    assert(_context != null);
+    return _navbarInnerHeightRatio;
+  }
+
+  static get currentMainColor {
     return _currentMainColor;
   }
 
-  static Color get currentBgMainColor{
+  static Color get currentBgMainColor {
     return _currentBgMainColor;
   }
 
-  static set currentMainColor(bgColor color){
+  static set currentMainColor(bgColor color) {
     switch (color) {
       case bgColor.blue:
         _currentMainColor = PetsTheme.petsBlueColor;

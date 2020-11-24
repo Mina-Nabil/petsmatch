@@ -31,7 +31,7 @@ class VerifyMailCodeScreen extends StatelessWidget {
               child: Text(
                 "A code has been sent to your mail",
                 style: TextStyle(
-                    fontSize: PetsTheme.getMuchLargerFont(context),
+                    fontSize: PetsTheme.getMuchLargerFont(),
                     fontFamily: "Oregano"),
               ),
             ),
@@ -41,7 +41,7 @@ class VerifyMailCodeScreen extends StatelessWidget {
             flex: 3,
             child: Container(
               margin:
-                  EdgeInsets.only(left: PetsTheme.getLargerPadMarg(context)),
+                  EdgeInsets.only(left: PetsTheme.getLargerPadMarg()),
               alignment: Alignment.center,
               child: Image.asset(
                 "assets/images/verfMail.png",
@@ -58,13 +58,13 @@ class VerifyMailCodeScreen extends StatelessWidget {
             fit: FlexFit.loose,
             child: Container(
               alignment: Alignment.topLeft,
-              margin: EdgeInsets.only(top: PetsTheme.getLargePadMarg(context)),
+              margin: EdgeInsets.only(top: PetsTheme.getLargePadMarg()),
               child: Wrap(
                 alignment: WrapAlignment.start,
                 children: <Widget>[
                   Text("Please enter the code",
                       style: TextStyle(
-                          fontSize: PetsTheme.getLargeFont(context),
+                          fontSize: PetsTheme.getLargeFont(),
                           fontFamily: "Oregano")),
                   Row(
                     mainAxisSize: MainAxisSize.max,
@@ -73,11 +73,11 @@ class VerifyMailCodeScreen extends StatelessWidget {
                       Container(
                           constraints: BoxConstraints(maxWidth: fieldsWidth),
                           margin: EdgeInsets.symmetric(
-                              vertical: PetsTheme.getSmallerPadMarg(context)),
+                              vertical: PetsTheme.getSmallerPadMarg()),
                           color: PetsTheme.fieldsBackGroundColor,
                           child: Padding(
                               padding: EdgeInsets.only(
-                                  left: PetsTheme.getMeduimPadMarg(context)),
+                                  left: PetsTheme.getMeduimPadMarg()),
                               child: TextFormField(
                                 decoration: InputDecoration(
                                     border: InputBorder.none,
@@ -85,11 +85,11 @@ class VerifyMailCodeScreen extends StatelessWidget {
                                     hintStyle: TextStyle(
                                         fontFamily: "Segoe",
                                         fontSize:
-                                            PetsTheme.getLargeFont(context),
+                                            PetsTheme.getLargeFont(),
                                         color: PetsTheme.hintColor)),
                                 style: TextStyle(
                                     fontFamily: "Segoe",
-                                    fontSize: PetsTheme.getLargeFont(context)),
+                                    fontSize: PetsTheme.getLargeFont()),
                               ))),
                       Expanded(
                         child: FlatButton(

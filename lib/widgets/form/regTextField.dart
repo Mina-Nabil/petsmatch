@@ -86,8 +86,8 @@ class RegTextField extends StatelessWidget {
                             decoration: InputDecoration(
                               focusColor: PetsTheme.currentMainColor,
                               enabledBorder: UnderlineInputBorder(borderSide: BorderSide(color: PetsTheme.petsBordersGrayColor)),
-                              hintText: label, hintStyle: TextStyle(color: PetsTheme.petsHintGrayColor, fontSize: PetsTheme.getSmallFont(context))),
-                            style: TextStyle(fontFamily: "Roboto", fontSize: PetsTheme.getLargeFont(context)),
+                              hintText: label, hintStyle: TextStyle(color: PetsTheme.petsHintGrayColor, fontSize: PetsTheme.getSmallFont())),
+                            style: TextStyle(fontFamily: "Roboto", fontSize: PetsTheme.getLargeFont()),
                           ))),
             ],
           )

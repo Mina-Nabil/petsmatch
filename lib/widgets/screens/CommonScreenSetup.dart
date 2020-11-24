@@ -13,13 +13,18 @@ class CommonScreenSetup extends StatelessWidget {
   final bgMask screenBgMask;
 
   CommonScreenSetup(this._topWidget, this._bottomWidget,
-      {this.isSmallTop = false, this.screenBgColor = bgColor.main, this.screenBgMask = bgMask.def, this.isPortraitLock=false, this.isNavBar=false, this.isTitle=true}){
-        PetsTheme.currentMainColor = this.screenBgColor;
-      }
+      {this.isSmallTop = false,
+      this.screenBgColor = bgColor.main,
+      this.screenBgMask = bgMask.def,
+      this.isPortraitLock = false,
+      this.isNavBar = false,
+      this.isTitle = true}) {
+    PetsTheme.currentMainColor = this.screenBgColor;
+  }
 
   @override
   Widget build(BuildContext context) {
-    final double boxRadius = MediaQuery.of(context).size.width * .15;
+    final double boxRadius = MediaQuery.of(context).size.width * .05;
 
     int topAreaFlex = 9;
     int bottomAreaFlex = 23;
@@ -64,17 +69,16 @@ class CommonScreenSetup extends StatelessWidget {
                           flex: bottomAreaFlex,
                           fit: FlexFit.loose,
                           child: Container(
-                            alignment: Alignment.centerLeft,
-                            width: double.infinity,
-                            height: double.infinity,
-                            margin: EdgeInsets.symmetric(horizontal: PetsTheme.getSmallestPadMarg(context)),
-                            decoration: BoxDecoration(
-                                color: PetsTheme.whiteBarColor,
-                                borderRadius: BorderRadius.only(topLeft: Radius.circular(boxRadius), topRight: Radius.circular(boxRadius))),
-                            child: ClipRRect(    
-                              borderRadius: BorderRadius.only(topLeft: Radius.circular(boxRadius), topRight: Radius.circular(boxRadius)),
-                              child: _bottomWidget)
-                          ))
+                              alignment: Alignment.centerLeft,
+                              width: double.infinity,
+                              height: double.infinity,
+                              margin: EdgeInsets.symmetric(horizontal: PetsTheme.getSmallestPadMarg()),
+                              decoration: BoxDecoration(
+                                  color: PetsTheme.petsWhiteBg,
+                                  borderRadius: BorderRadius.only(topLeft: Radius.circular(boxRadius), topRight: Radius.circular(boxRadius))),
+                              child: ClipRRect(
+                                  borderRadius: BorderRadius.only(topLeft: Radius.circular(boxRadius), topRight: Radius.circular(boxRadius)),
+                                  child: _bottomWidget)))
                     ],
                   )));
         },

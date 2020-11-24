@@ -25,7 +25,7 @@ class VerifyMailScreen extends StatelessWidget {
                 "check your email and verify your account to continue",
                 overflow: TextOverflow.clip,
                 textAlign: TextAlign.center,
-                style: TextStyle(fontSize: PetsTheme.getSmallFont(context), fontFamily: "Roboto", color: PetsTheme.petsTextGrayColor.withAlpha(255)),
+                style: TextStyle(fontSize: PetsTheme.getSmallFont(), fontFamily: "Roboto", color: PetsTheme.petsTextGrayColor.withAlpha(255)),
               ),
             )),
         Flexible(

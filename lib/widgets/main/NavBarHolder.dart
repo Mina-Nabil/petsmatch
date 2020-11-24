@@ -4,7 +4,6 @@ import 'dart:typed_data';
 
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:petmatch/settings/paths.dart';
 import 'package:petmatch/theme/petsTheme.dart';
 import 'package:petmatch/widgets/main/NavBar.dart';
@@ -12,12 +11,10 @@ import 'package:flutter_svg/flutter_svg.dart';
 
 class NavBarHolder extends StatefulWidget {
   //original scale
-  static final double navBarHeight = .355;
   static final double navBarMargin = .01;
 
-  static final double navBarInnerHeight = .23716;
-  static final double navBarInnerHeightPos = 1 - .23716;
-  static final double navBarContainerHeight = navBarInnerHeight * navBarHeight;
+  static final double navBarInnerHeightPos = 1 - PetsTheme.getNavBarInnerHeight();
+  static final double navBarContainerHeight = PetsTheme.getNavBarInnerHeight() * PetsTheme.getNavBarHeight();
   static final double navBarButtonPadding = .01;
 
   static final double pawBegin = 0;
@@ -69,7 +66,7 @@ class _NavBarHolderState extends State<NavBarHolder> with SingleTickerProviderSt
     return completer.future;
   }
 
-  Future<ui.Image> loadSvgImage(String path,  {dimensions=120.0}) async {
+  Future<ui.Image> loadSvgImage(String path, {dimensions = 120.0}) async {
     double imageDimension = dimensions;
     String rawSvg = await rootBundle.loadString(path);
     DrawableRoot drawableSvg = await svg.fromSvgString(rawSvg, rawSvg);
@@ -83,7 +80,7 @@ class _NavBarHolderState extends State<NavBarHolder> with SingleTickerProviderSt
       animation: _pawScale,
       builder: (context, child) {
         return Container(
-          height: MediaQuery.of(context).size.height * NavBarHolder.navBarHeight,
+          height: MediaQuery.of(context).size.height * PetsTheme.getNavBarHeight(),
           margin: EdgeInsets.only(top: MediaQuery.of(context).size.height * NavBarHolder.navBarMargin),
           child: Stack(
             alignment: Alignment.bottomCenter,
@@ -102,11 +99,11 @@ class _NavBarHolderState extends State<NavBarHolder> with SingleTickerProviderSt
                 children: <Widget>[
                   Flexible(
                     flex: 2,
-                    child: getNavButtonIconContainer(FontAwesomeIcons.solidUserCircle, _pawScale.value * -1 + 1, isPage: true),
+                    child: getNavButtonIconContainer(Paths.home_icon_svg_file, _pawScale.value * -1 + 1, isPage: true),
                   ),
                   Flexible(
                     flex: 2,
-                    child: getNavButtonIconContainer(FontAwesomeIcons.calendarCheck, _pawScale.value * -1 + 1),
+                    child: getNavButtonIconContainer(Paths.notification_icon_svg_file, _pawScale.value * -1 + 1),
                   ),
                   Flexible(
                     flex: 3,
@@ -114,11 +111,11 @@ class _NavBarHolderState extends State<NavBarHolder> with SingleTickerProviderSt
                   ),
                   Flexible(
                     flex: 2,
-                    child: getNavButtonIconContainer(FontAwesomeIcons.shoppingBasket, _pawScale.value * -1 + 1),
+                    child: getNavButtonIconContainer(Paths.chat_icon_svg_file, _pawScale.value * -1 + 1),
                   ),
                   Flexible(
                     flex: 2,
-                    child: getNavButtonIconContainer(FontAwesomeIcons.cog, _pawScale.value * -1 + 1),
+                    child: getNavButtonIconContainer(Paths.more_icon_svg_file, _pawScale.value * -1 + 1),
                   ),
                 ],
               )
@@ -145,22 +142,17 @@ class _NavBarHolderState extends State<NavBarHolder> with SingleTickerProviderSt
     );
   }
 
-  Widget getNavButtonIconContainer(IconData icon, opacity, {bool isPage = false}) {
+  Widget getNavButtonIconContainer(String icon, opacity, {bool isPage = false}) {
     return Opacity(
       opacity: opacity,
       child: Container(
-        padding: EdgeInsets.all(NavBarHolder.navBarButtonPadding * MediaQuery.of(context).size.height),
-        margin: EdgeInsets.only(bottom: NavBarHolder.navBarButtonPadding / 2 * MediaQuery.of(context).size.height),
         height: NavBarHolder.navBarContainerHeight * MediaQuery.of(context).size.height,
+        width: MediaQuery.of(context).size.width/4,
         alignment: Alignment.center,
-        child: FittedBox(
-            child: Padding(
-                padding: EdgeInsets.all(PetsTheme.getMuchLargerPadMarg(context)),
-                child: FaIcon(
+        child: SvgPicture.asset(
                   icon,
-                  color: (isPage) ? PetsTheme.currentMainColor : PetsTheme.petsHintGrayColor,
-                  size: 100,
-                ))),
+                  color: (isPage) ? PetsTheme.currentMainColor : PetsTheme.petsGrayIconColor,
+                ),
       ),
     );
   }

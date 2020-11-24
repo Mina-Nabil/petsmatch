@@ -103,7 +103,7 @@ class _StoreRegistrationScreenState extends State<StoreRegistrationScreen> {
               width: fieldsWidth,
               childField: DropdownButtonFormField(
                 decoration: InputDecoration(enabledBorder: UnderlineInputBorder(borderSide: BorderSide(color: PetsTheme.petsBordersGrayColor))),
-                style: TextStyle(fontFamily: "Roboto", color: Colors.black, fontSize: PetsTheme.getLargeFont(context)),
+                style: TextStyle(fontFamily: "Roboto", color: Colors.black, fontSize: PetsTheme.getLargeFont()),
                 onChanged: citySelected,
                 items: [
                   DropdownMenuItem(
@@ -134,7 +134,7 @@ class _StoreRegistrationScreenState extends State<StoreRegistrationScreen> {
               width: fieldsWidth,
               childField: DropdownButtonFormField(
                 decoration: InputDecoration(enabledBorder: UnderlineInputBorder(borderSide: BorderSide(color: PetsTheme.petsBordersGrayColor))),
-                style: TextStyle(fontFamily: "Roboto", color: Colors.black, fontSize: PetsTheme.getLargeFont(context)),
+                style: TextStyle(fontFamily: "Roboto", color: Colors.black, fontSize: PetsTheme.getLargeFont()),
                 onChanged: citySelected,
                 items: [
                   DropdownMenuItem(
@@ -154,7 +154,7 @@ class _StoreRegistrationScreenState extends State<StoreRegistrationScreen> {
               width: fieldsWidth,
               childField: DropdownButtonFormField(
                 decoration: InputDecoration(enabledBorder: UnderlineInputBorder(borderSide: BorderSide(color: PetsTheme.petsBordersGrayColor))),
-                style: TextStyle(fontFamily: "Roboto", color: Colors.black, fontSize: PetsTheme.getLargeFont(context)),
+                style: TextStyle(fontFamily: "Roboto", color: Colors.black, fontSize: PetsTheme.getLargeFont()),
                 onChanged: citySelected,
                 items: [
                   DropdownMenuItem(

@@ -1,26 +1,31 @@
 import 'package:flutter/material.dart';
 import 'package:petmatch/models/Pet.dart';
+import 'package:petmatch/models/Profile.dart';
 
-class User {
-  String _name;
+class User extends Profile {
   String _email;
-  String _image;
 
-  List<Pet>  _pets = [];
+  List<Pet> _pets = [];
 
+  User(
+    name,
+    image,
+    this._email,
+  ){
+    super.name=name;
+    super.image=image;
+  }
 
-  User(this._name, this._email, this._image);
-
-  void addPet(Pet pet){
+  void addPet(Pet pet) {
     _pets.add(pet);
   }
 
-  void addAllPet(List<Pet> pets){
+  void addAllPet(List<Pet> pets) {
     _pets.addAll(pets);
   }
 
   String get name {
-    return _name;
+    return super.name;
   }
 
   String get email {
@@ -28,10 +33,20 @@ class User {
   }
 
   String get image {
-    return _image;
+    return super.image;
   }
 
   List<Pet> get pets {
     return _pets;
+  }
+
+  @override
+  set image(String _image) {
+    image = _image;
+  }
+
+  @override
+  set name(String _name) {
+    name = _name;
   }
 }

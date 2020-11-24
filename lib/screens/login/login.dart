@@ -73,13 +73,16 @@ class _LoginScreenState extends State<LoginScreen> {
 
     void fbLogin() {
       print("FB Login");
-       if (true) {
+      if (true) {
         Navigator.of(context).pushReplacement(new PageTransition(child: HomeScreen(), type: PageTransitionType.fade));
       }
     }
 
     void googleLogin() {
       print("Google");
+      if (true) {
+        Navigator.of(context).pushReplacement(new PageTransition(child: SearchScreen(), type: PageTransitionType.fade));
+      }
     }
 
     return LoginScreenSetup(
@@ -103,9 +106,9 @@ class _LoginScreenState extends State<LoginScreen> {
                 children: <Widget>[
                   Container(
                     constraints: BoxConstraints(maxWidth: fieldsWidth),
-                    margin: EdgeInsets.only(bottom: PetsTheme.getSmallerPadMarg(context)),
+                    margin: EdgeInsets.only(bottom: PetsTheme.getSmallerPadMarg()),
                     child: Padding(
-                        padding: EdgeInsets.only(left: PetsTheme.getMeduimPadMarg(context)),
+                        padding: EdgeInsets.only(left: PetsTheme.getMeduimPadMarg()),
                         child: TextFormField(
                           decoration:
                               InputDecoration(hintText: "E-mail", hintStyle: TextStyle(fontFamily: "Segoe", fontSize: 16, color: PetsTheme.petsTextGrayColor)),
@@ -129,9 +132,9 @@ class _LoginScreenState extends State<LoginScreen> {
                     children: <Widget>[
                       Container(
                         width: fieldsWidth,
-                        margin: EdgeInsets.only(top: PetsTheme.getSmallPadMarg(context)),
+                        margin: EdgeInsets.only(top: PetsTheme.getSmallPadMarg()),
                         child: Padding(
-                            padding: EdgeInsets.only(left: PetsTheme.getLargePadMarg(context)),
+                            padding: EdgeInsets.only(left: PetsTheme.getLargePadMarg()),
                             child: Stack(
                               fit: StackFit.loose,
                               alignment: Alignment.centerRight,
@@ -145,7 +148,7 @@ class _LoginScreenState extends State<LoginScreen> {
                                 ),
                                 SizedBox(
                                   child: ButtonTheme(
-                                      padding: EdgeInsets.all(PetsTheme.getSmallerPadMarg(context)), //adds padding inside the button
+                                      padding: EdgeInsets.all(PetsTheme.getSmallerPadMarg()), //adds padding inside the button
 
                                       materialTapTargetSize: MaterialTapTargetSize.shrinkWrap, //limits the touch area to the button area
                                       minWidth: 0, //wraps child's width
@@ -169,13 +172,13 @@ class _LoginScreenState extends State<LoginScreen> {
                   ),
                   Container(
                       width: fieldsWidth,
-                      margin: EdgeInsets.only(top: PetsTheme.getMeduimPadMarg(context)),
+                      margin: EdgeInsets.only(top: PetsTheme.getMeduimPadMarg()),
                       alignment: Alignment.centerRight,
                       child: SizedBox(
                         child: Text(
                           "Forgot password?",
                           style:
-                              TextStyle(fontFamily: "Roboto", fontSize: PetsTheme.getSmallFont(context), color: PetsTheme.petsTextGrayColor.withOpacity(0.5)),
+                              TextStyle(fontFamily: "Roboto", fontSize: PetsTheme.getSmallFont(), color: PetsTheme.petsTextGrayColor.withOpacity(0.5)),
                         ),
                       ))
                 ],
@@ -203,13 +206,13 @@ class _LoginScreenState extends State<LoginScreen> {
                             child: SizedBox(
                           child: Text(
                             "Sign in with",
-                            style: TextStyle(fontFamily: "Roboto", fontSize: PetsTheme.getSmallFont(context)),
+                            style: TextStyle(fontFamily: "Roboto", fontSize: PetsTheme.getSmallFont()),
                           ),
                         ))),
                     Flexible(
                       flex: 2,
                       child: Container(
-                        margin: EdgeInsets.symmetric(vertical: PetsTheme.getLargerPadMarg(context)),
+                        margin: EdgeInsets.symmetric(vertical: PetsTheme.getLargerPadMarg()),
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                           children: [
@@ -236,9 +239,13 @@ class _LoginScreenState extends State<LoginScreen> {
                                       shape: BoxShape.circle,
                                     ),
                                     child: SizedBox.expand(
-                                        child: Icon(
-                                      FontAwesomeIcons.googlePlusG,
-                                      color: Colors.white,
+                                        child: FlatButton(
+                                      padding: EdgeInsets.all(0),
+                                      onPressed: googleLogin,
+                                      child: Icon(
+                                        FontAwesomeIcons.googlePlusG,
+                                        color: Colors.white,
+                                      ),
                                     )))),
                           ],
                         ),

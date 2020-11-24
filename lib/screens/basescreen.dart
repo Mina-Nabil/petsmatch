@@ -7,8 +7,6 @@ import 'package:petmatch/theme/petsTheme.dart';
 import 'package:petmatch/widgets/main/NavBarHolder.dart';
 import 'package:flutter/gestures.dart';
 
-
-
 class BaseScreen extends StatefulWidget {
   ////SCREEN DEFAULTS
   static final topPaddingPercentage = 0.05;
@@ -57,7 +55,6 @@ class BaseScreen extends StatefulWidget {
 }
 
 class _BaseScreenState extends State<BaseScreen> {
-
   Container bgMaskContainer;
   String bgMaskPath;
   Image bgMaskImage;
@@ -65,7 +62,6 @@ class _BaseScreenState extends State<BaseScreen> {
   @override
   void initState() {
     super.initState();
-  
 
     switch (this.widget.backGroundMask) {
       case bgMask.def:
@@ -127,8 +123,7 @@ class _BaseScreenState extends State<BaseScreen> {
             ? AppBar(
                 elevation: 0.0,
                 title: (widget.titleText != null)
-                    ? Text(this.widget.titleText,
-                        style: (this.widget.titleStyle) ?? TextStyle(fontFamily: "Oregano", fontSize: PetsTheme.getLargerFont(context)))
+                    ? Text(this.widget.titleText, style: (this.widget.titleStyle) ?? TextStyle(fontFamily: "Oregano", fontSize: PetsTheme.getLargerFont()))
                     : Text(""),
 
                 centerTitle: widget.titleCenter,
@@ -161,12 +156,20 @@ class _BaseScreenState extends State<BaseScreen> {
       ),
     ];
 
-    if (widget.isNavBar) stackWidgets.add(NavBarHolder());
+    if (widget.isNavBar) {
+      stackWidgets.add(Container(
+        color: PetsTheme.whiteBarColor,
+        alignment: Alignment.bottomCenter,
+        height: MediaQuery.of(context).size.height * PetsTheme.getNavBarHeight() * PetsTheme.getNavBarInnerHeight() 
+      ));
+      stackWidgets.add(SafeArea(child: NavBarHolder()));
+    }
 
     return Container(
-        height: MediaQuery.of(context).size.height,
-        width: MediaQuery.of(context).size.width,
-        child: CustomStack(alignment: Alignment.bottomCenter, children: stackWidgets, isNavBar: widget.isNavBar));
+      height: MediaQuery.of(context).size.height,
+      width: MediaQuery.of(context).size.width,
+      child: CustomStack(alignment: Alignment.bottomCenter, children: stackWidgets, isNavBar: widget.isNavBar),
+    );
   }
 }
 
@@ -197,7 +200,6 @@ class CustomRenderStack extends RenderStack {
     //checks whether the hit is in the real nav buttons or no
     if (position.dy > size.height * (1 - NavBarHolder.navBarContainerHeight) && !NavBarHolder.expanded) {
       // if bottom nav bar{
-      print("ana fl awel");
       return true;
     }
     double firstLimit = size.width * NavBarHolder.xStart;
@@ -207,15 +209,13 @@ class CustomRenderStack extends RenderStack {
     if (position.dx > expandedFirstLimit &&
         position.dx < expandedEndLimit &&
         NavBarHolder.expanded &&
-        (position.dy > size.height * (1 - NavBarHolder.navBarHeight))) {
-      print("Ana hena");
+        (position.dy > size.height * (1 - PetsTheme.getNavBarHeight()))) {
       return true;
     }
     if (position.dx > firstLimit &&
         position.dx < endLimit &&
         !NavBarHolder.expanded &&
         (position.dy > size.height * (1 - 1.5 * NavBarHolder.navBarContainerHeight))) {
-      print("ANa henak");
       return true;
     }
     return false;
@@ -224,12 +224,10 @@ class CustomRenderStack extends RenderStack {
   bool isNavArea(Size size, Offset position) {
     //checks whether the hit is in the whole Nav Contaier Area or no
 
-    if (position.dy > size.height * (1 - NavBarHolder.navBarHeight)) //hit under the bar
+    if (position.dy > size.height * (1 - PetsTheme.getNavBarHeight())) //hit under the bar
     {
-      print("Ana Nav");
       return true;
     } else {
-      print("Ana Msh Nav");
       return false;
     }
   }
@@ -257,13 +255,10 @@ class CustomRenderStack extends RenderStack {
             return child.hitTest(result, position: transformed);
           } else if (isNavArea(size, position)) {
             if (isRealNavArea(size, position)) {
-              print("Bas real");
               return child.hitTest(result, position: transformed);
             } else if (!isLayersPassed(layers++)) {
-              print("Lsa msh Passed");
               return false;
             } else {
-              print("Passed");
               return child.hitTest(result, position: transformed);
             }
           } else {

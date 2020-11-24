@@ -14,7 +14,7 @@ description: A new Flutter project.
 version: 1.0.0+1
 
 environment:
-  sdk: ">=2.1.0 <3.0.0"
+  sdk: ">=2.3.0 <3.0.0"
 
 dependencies:
   flutter:
@@ -77,6 +77,9 @@ flutter:
    - assets/images/icons/registration/gallery.svg
    - assets/images/icons/registration/verfMail.svg
    - assets/images/icons/main/search.svg
+   - assets/images/icons/main/camera.svg
+   - assets/images/icons/main/gallery.svg
+   - assets/images/icons/main/location.svg
    - assets/images/icons/main/userPlaceholder.png
    - assets/images/icons/pages/mating.png
    - assets/images/icons/pages/servicesx1.png
@@ -87,6 +90,10 @@ flutter:
    - assets/images/icons/pages/stores.svg
    - assets/images/icons/pages/training.svg
    - assets/images/icons/pages/walking.svg
+   - assets/images/icons/pages/home.svg
+   - assets/images/icons/pages/notifications.svg
+   - assets/images/icons/pages/chat.svg
+   - assets/images/icons/pages/more.svg
 
   #custom
    - assets/images/custom/congrats.png

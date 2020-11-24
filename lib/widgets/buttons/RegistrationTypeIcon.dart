@@ -51,7 +51,7 @@ class RegistrationTypeButton extends StatelessWidget {
               flex: 2,
               child: Container(
                 margin: EdgeInsets.only(
-                    top: PetsTheme.getMuchLargerPadMarg(context), left: PetsTheme.getMeduimPadMarg(context), right: PetsTheme.getMeduimPadMarg(context)),
+                    top: PetsTheme.getMuchLargerPadMarg(), left: PetsTheme.getMeduimPadMarg(), right: PetsTheme.getMeduimPadMarg()),
                 width: double.infinity,
                 height: double.infinity,
                 decoration: BoxDecoration(
@@ -73,7 +73,7 @@ class RegistrationTypeButton extends StatelessWidget {
             Flexible(
                 flex: 1,
                 child: Container(
-                  margin: EdgeInsetsDirectional.only(top: PetsTheme.getLargePadMarg(context)),
+                  margin: EdgeInsetsDirectional.only(top: PetsTheme.getLargePadMarg()),
                   alignment: Alignment.topCenter,
                   child: SizedBox(
                     child: Text(
@@ -81,7 +81,7 @@ class RegistrationTypeButton extends StatelessWidget {
                       style: TextStyle(
                           fontFamily: "Roboto",
                           decoration: TextDecoration.none,
-                          fontSize: PetsTheme.getSmallFont(context),
+                          fontSize: PetsTheme.getSmallFont(),
                           fontWeight: FontWeight.w700,
                           color: (this.isHidden) ? Colors.transparent : PetsTheme.blackTextColor),
                     ),

@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:petmatch/models/User.dart';
 import 'package:petmatch/theme/petsTheme.dart';
 import 'package:petmatch/widgets/buttons/CircularButton.dart';
+import 'package:petmatch/widgets/main/UserAvatar.dart';
 
 class FeedHeader extends StatelessWidget {
   final double userImageRatio = 0.2;
@@ -17,13 +18,13 @@ class FeedHeader extends StatelessWidget {
     List<Widget> petImages = [];
     if (mainUser.pets.length > 0) {
       mainUser.pets.forEach((element) {
-        petImages.add(getCircularImage(context, element.image, petImageRatio));
+        petImages.add(Container(margin: EdgeInsets.only(right: PetsTheme.getLargePadMarg()), child: UserAvatar(image: element.image, imageRatio: petImageRatio)));
       });
     }
 
     return Container(
       width: MediaQuery.of(context).size.width,
-      padding: EdgeInsets.all(PetsTheme.getLargestPadMarg(context)),
+      padding: EdgeInsets.all(PetsTheme.getLargestPadMarg()),
       height: double.infinity,
       color: Colors.transparent,
       child: Column(
@@ -33,7 +34,7 @@ class FeedHeader extends StatelessWidget {
         children: [
           Flexible(
             flex: 2,
-            child: getCircularImage(context, mainUser.image, userImageRatio),
+            child: Container(alignment: Alignment.centerLeft, child: UserAvatar(image: mainUser.image, imageRatio: userImageRatio)),
           ),
           Flexible(
             flex: 4,
@@ -47,15 +48,12 @@ class FeedHeader extends StatelessWidget {
                   Flexible(
                       flex: 3,
                       child: Container(
-                        margin: EdgeInsets.symmetric(vertical: PetsTheme.getSmallestPadMarg(context)),
+                        margin: EdgeInsets.symmetric(vertical: PetsTheme.getSmallestPadMarg()),
                         child: SizedBox(
                             child: Text(
                           "Welcome Back " + mainUser.name + "!",
                           style: TextStyle(
-                              fontFamily: "Roboto",
-                              fontSize: PetsTheme.getMuchLargerFont(context),
-                              color: PetsTheme.whiteBarColor,
-                              fontWeight: FontWeight.bold),
+                              fontFamily: "Roboto", fontSize: PetsTheme.getMuchLargerFont(), color: PetsTheme.whiteBarColor, fontWeight: FontWeight.bold),
                         )),
                       )),
                   Flexible(
@@ -80,24 +78,5 @@ class FeedHeader extends StatelessWidget {
         ],
       ),
     );
-  }
-
-  Container getCircularImage(BuildContext context, String image, double imageRatio) {
-    return Container(
-        alignment: Alignment.centerLeft,
-        margin: EdgeInsets.only(right: PetsTheme.getMuchLargerPadMarg(context)),
-        child: AspectRatio(
-          aspectRatio: 1.0,
-          child: ClipOval(
-            child: FittedBox(
-                child: FadeInImage(
-              fit: BoxFit.cover,
-              width: MediaQuery.of(context).size.width * imageRatio,
-              height: MediaQuery.of(context).size.width * imageRatio,
-              image: NetworkImage(image),
-              placeholder: AssetImage("assets/images/icons/main/userPlaceholder.png"),
-            )),
-          ),
-        ));
   }
 }

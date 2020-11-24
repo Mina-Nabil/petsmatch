@@ -27,13 +27,13 @@ class ConfirmPassScreen extends StatelessWidget {
             fit: FlexFit.loose,
             child: Container(
               alignment: Alignment.topLeft,
-              margin: EdgeInsets.only(top: PetsTheme.getLargePadMarg(context)),
+              margin: EdgeInsets.only(top: PetsTheme.getLargePadMarg()),
               child: Wrap(
                 alignment: WrapAlignment.start,
                 children: <Widget>[
                   Text("Enter ur new password",
                       style: TextStyle(
-                          fontSize: PetsTheme.getLargeFont(context),
+                          fontSize: PetsTheme.getLargeFont(),
                           fontFamily: "Oregano")),
                   Row(
                     mainAxisSize: MainAxisSize.max,
@@ -42,11 +42,11 @@ class ConfirmPassScreen extends StatelessWidget {
                       Container(
                           constraints: BoxConstraints(maxWidth: fieldsWidth),
                           margin: EdgeInsets.symmetric(
-                              vertical: PetsTheme.getSmallerPadMarg(context)),
+                              vertical: PetsTheme.getSmallerPadMarg()),
                           color: PetsTheme.fieldsBackGroundColor,
                           child: Padding(
                               padding: EdgeInsets.only(
-                                  left: PetsTheme.getMeduimPadMarg(context)),
+                                  left: PetsTheme.getMeduimPadMarg()),
                               child: TextFormField(
                                 obscureText: true,
                                 decoration: InputDecoration(
@@ -55,11 +55,11 @@ class ConfirmPassScreen extends StatelessWidget {
                                     hintStyle: TextStyle(
                                         fontFamily: "Segoe",
                                         fontSize:
-                                            PetsTheme.getLargeFont(context),
+                                            PetsTheme.getLargeFont(),
                                         color: PetsTheme.hintColor)),
                                 style: TextStyle(
                                     fontFamily: "Segoe",
-                                    fontSize: PetsTheme.getLargeFont(context)),
+                                    fontSize: PetsTheme.getLargeFont()),
                               ))),
                     ],
                   )
@@ -72,13 +72,13 @@ class ConfirmPassScreen extends StatelessWidget {
             fit: FlexFit.loose,
             child: Container(
               alignment: Alignment.topLeft,
-              margin: EdgeInsets.only(top: PetsTheme.getLargePadMarg(context)),
+              margin: EdgeInsets.only(top: PetsTheme.getLargePadMarg()),
               child: Wrap(
                 alignment: WrapAlignment.start,
                 children: <Widget>[
                   Text("Please re-enter the password",
                       style: TextStyle(
-                          fontSize: PetsTheme.getLargeFont(context),
+                          fontSize: PetsTheme.getLargeFont(),
                           fontFamily: "Oregano")),
                   Row(
                     mainAxisSize: MainAxisSize.max,
@@ -87,11 +87,11 @@ class ConfirmPassScreen extends StatelessWidget {
                       Container(
                           constraints: BoxConstraints(maxWidth: fieldsWidth),
                           margin: EdgeInsets.symmetric(
-                              vertical: PetsTheme.getSmallerPadMarg(context)),
+                              vertical: PetsTheme.getSmallerPadMarg()),
                           color: PetsTheme.fieldsBackGroundColor,
                           child: Padding(
                               padding: EdgeInsets.only(
-                                  left: PetsTheme.getMeduimPadMarg(context)),
+                                  left: PetsTheme.getMeduimPadMarg()),
                               child: TextFormField(
                                 obscureText: true,
                                 decoration: InputDecoration(
@@ -100,11 +100,11 @@ class ConfirmPassScreen extends StatelessWidget {
                                     hintStyle: TextStyle(
                                         fontFamily: "Segoe",
                                         fontSize:
-                                            PetsTheme.getLargeFont(context),
+                                            PetsTheme.getLargeFont(),
                                         color: PetsTheme.hintColor)),
                                 style: TextStyle(
                                     fontFamily: "Segoe",
-                                    fontSize: PetsTheme.getLargeFont(context)),
+                                    fontSize: PetsTheme.getLargeFont()),
                               ))),
                       Expanded(
                         child: FlatButton(

@@ -89,7 +89,7 @@ class LoginScreenSetup extends StatelessWidget {
                 child: Text(
                   this.topbarTitle,
                   style: TextStyle(
-                      fontFamily: "Roboto", color: PetsTheme.whiteBarColor, fontWeight: FontWeight.bold, fontSize: PetsTheme.getEvenMuchLargerFont(context)),
+                      fontFamily: "Roboto", color: PetsTheme.whiteBarColor, fontWeight: FontWeight.bold, fontSize: PetsTheme.getEvenMuchLargerFont()),
                 ),
               ),
             ),
@@ -100,7 +100,7 @@ class LoginScreenSetup extends StatelessWidget {
                       child: Text(
                         this.topbarSubtitle,
                         style: TextStyle(
-                            fontFamily: "Roboto", color: PetsTheme.whiteBarColor, fontWeight: FontWeight.normal, fontSize: PetsTheme.getLargeFont(context)),
+                            fontFamily: "Roboto", color: PetsTheme.whiteBarColor, fontWeight: FontWeight.normal, fontSize: PetsTheme.getLargeFont()),
                       ),
                     ),
                   )
@@ -130,7 +130,7 @@ class LoginScreenSetup extends StatelessWidget {
                   color: PetsTheme.currentMainColor,
                   fontFamily: "Roboto",
                   fontWeight: FontWeight.bold,
-                  fontSize: (!this.smalFormTitle) ? PetsTheme.getMuchLargerFont(context) : PetsTheme.getMeduimFont(context)),
+                  fontSize: (!this.smalFormTitle) ? PetsTheme.getMuchLargerFont() : PetsTheme.getMeduimFont()),
             ),
           ),
         ),
@@ -146,7 +146,7 @@ class LoginScreenSetup extends StatelessWidget {
             child: Text(
               this.formSubtitle,
               style:
-                  TextStyle(color: PetsTheme.currentMainColor, fontFamily: "Roboto", fontWeight: FontWeight.normal, fontSize: PetsTheme.getMeduimFont(context)),
+                  TextStyle(color: PetsTheme.currentMainColor, fontFamily: "Roboto", fontWeight: FontWeight.normal, fontSize: PetsTheme.getMeduimFont()),
             ),
           ),
         ),
@@ -156,7 +156,7 @@ class LoginScreenSetup extends StatelessWidget {
 
     Widget bottomAreaRootWidget = Container(
       width: MediaQuery.of(context).size.width,
-      padding: EdgeInsets.symmetric(horizontal: PetsTheme.getLargestPadMarg(context)),
+      padding: EdgeInsets.symmetric(horizontal: PetsTheme.getLargestPadMarg()),
       child: Column(
         children: [
           Flexible(

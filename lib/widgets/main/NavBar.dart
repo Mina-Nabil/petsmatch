@@ -9,13 +9,13 @@ import 'package:flutter/services.dart' show rootBundle;
 
 class NavBar extends CustomPainter {
   static final Paint _barPainter = new Paint()
-    ..color = PetsTheme.petsTextGrayColor
+    ..color = PetsTheme.whiteBarColor
     ..style = PaintingStyle.fill;
 
-  // static final Paint _barStroker = new Paint()
-  //   ..color = Color.fromRGBO(0, 84, 150, 1)
-  //   ..strokeWidth = 2
-  //   ..style = PaintingStyle.stroke;
+  static final Paint _barStroker = new Paint()
+    ..color = PetsTheme.petsGrayIconColor
+    ..strokeWidth = 2
+    ..style = PaintingStyle.stroke;
 
   Paint _pawPainter = new Paint()
     ..color = PetsTheme.currentMainColor
@@ -84,35 +84,35 @@ class NavBar extends CustomPainter {
 
     ///paw dimensions
     final double minTopStart = .582;
-    final double minTopEnd = .242;
+    final double minTopEnd = minTopStart / 2;
     final double minTop = (scale * (minTopEnd - minTopStart) + minTopStart);
 
-    final double _botPawYStart = .856;
-    final double _botPawYEnd = .906;
+    final double _botPawYStart = .916;
+    final double _botPawYEnd = .926;
     final double _botPawY = (scale * (_botPawYEnd - _botPawYStart) + _botPawYStart);
 
     final double _topPawYStart = .726;
-    final double _topPawYEnd = .616;
+    final double _topPawYEnd = .606;
     final double _topPawY = (scale * (_topPawYEnd - _topPawYStart) + _topPawYStart);
 
-    final double _pawQuad1X1Start = .37;
-    final double _pawQuad1X1End = .23;
+    final double _pawQuad1X1Start = .385;
+    final double _pawQuad1X1End = .285;
     final double _pawQuad1X1 = (scale * (_pawQuad1X1End - _pawQuad1X1Start) + _pawQuad1X1Start);
 
-    final double _pawQuad1Y1Start = .896;
-    final double _pawQuad1Y1End = .976;
+    final double _pawQuad1Y1Start = .946;
+    final double _pawQuad1Y1End = .996;
     final double _pawQuad1Y1 = (scale * (_pawQuad1Y1End - _pawQuad1Y1Start) + _pawQuad1Y1Start);
 
-    final double _pawQuad1StartXStart = .435;
-    final double _pawQuad1StartXEnd = .384;
+    final double _pawQuad1StartXStart = .451;
+    final double _pawQuad1StartXEnd = .411;
     final double _pawQuad1StartX = (scale * (_pawQuad1StartXEnd - _pawQuad1StartXStart) + _pawQuad1StartXStart);
 
-    final double _pawQuad1EndXStart = .4625;
-    final double _pawQuad1EndXEnd = .43;
+    final double _pawQuad1EndXStart = .4655;
+    final double _pawQuad1EndXEnd = .44;
     final double _pawQuad1EndX = (scale * (_pawQuad1EndXEnd - _pawQuad1EndXStart) + _pawQuad1EndXStart);
 
-    final double _pawCenterYStart = .825;
-    final double _pawCenterYEnd = .83;
+    final double _pawCenterYStart = .868;
+    final double _pawCenterYEnd = .828;
     final double _pawCenterY = (scale * (_pawCenterYEnd - _pawCenterYStart) + _pawCenterYStart);
 
     ///derived Paw dimensions
@@ -140,7 +140,7 @@ class NavBar extends CustomPainter {
       ..lineTo(0, size.height)
       ..lineTo(0, topHeight);
     canvas.drawPath(bar, _barPainter);
-    // canvas.drawPath(bar, _barStroker);
+    canvas.drawLine(new Offset(0, topHeight), new Offset(size.width, topHeight), _barStroker);
     Path paw = new Path()
       ..moveTo(_pawQuad1StartX * size.width, _topPawY * size.height)
       ..quadraticBezierTo(_pawQuad1X1 * size.width, _pawQuad1Y1 * size.height, _pawQuad1EndX * size.width, _botPawY * size.height)
@@ -149,50 +149,51 @@ class NavBar extends CustomPainter {
       ..quadraticBezierTo(size.width / 2, minTop * size.height, _pawQuad1StartX * size.width, _topPawY * size.height);
 
     // canvas.drawShadow(paw.shift(new Offset(5, 0)), Colors.black, 2, false);
-    // canvas.drawShadow(paw, Colors.black, 3.5, false);
+    if (scale > .3) {
+      canvas.drawShadow(paw, Colors.black, 3.5, false);
+    }
     canvas.drawPath(paw, _pawPainter);
 
-
-    //paw ovals dimensions
-    final double paw2XCenterStart = .45;
-    final double paw2XCenterEnd = .4049;
-    final double paw2XCenter = ((scale * (paw2XCenterEnd - paw2XCenterStart) + paw2XCenterStart));
-    final double paw3XCenter = 1 - paw2XCenter;
-
-    final double paw1XCenterStart = 0.484;
-    final double paw1XCenterEnd = 0.284;
-    final double paw1XCenter = ((scale * (paw1XCenterEnd - paw1XCenterStart) + paw1XCenterStart));
-    final double paw4XCenter = 1 - paw1XCenter;
-
-    final double topPawCenterYStart = .26825;
-    final double topPawCenterYEnd = .06825;
-    final double topPawCenterY = ((scale * (topPawCenterYEnd - topPawCenterYStart) + topPawCenterYStart)) / .355;
-
-    final double botPawCenterYStart = .25832;
-    final double botPawCenterYEnd = .17832;
-    final double botPawCenterY = ((scale * (botPawCenterYEnd - botPawCenterYStart) + botPawCenterYStart)) / .355;
-
-    final double topPawWidthStart = .03;
-    final double topPawWidthEnd = .16;
-    final double topPawWidth = scale * (topPawWidthEnd - topPawWidthStart) + topPawWidthStart;
-
-    final double topPawHeightStart = 0.0364317841 / 2;
-    final double topPawHeightEnd = 0.1064317841;
-    final double topPawHeight = (((scale * (topPawHeightEnd - topPawHeightStart) + topPawHeightStart)) / .355);
-
-    final double botPawWidthStart = .03;
-    final double botPawWidthEnd = .1413;
-    final double botPawWidth = scale * (botPawWidthEnd - botPawWidthStart) + botPawWidthStart;
-
-    final double botPawHeightStart = .05;
-    final double botPawHeightEnd = .1049;
-    final double botPawHeight = (scale * (botPawHeightEnd - botPawHeightStart) + botPawHeightStart) / .355;
-
-    Offset paw1Offset = Offset(paw1XCenter * size.width, botPawCenterY * size.height);
-    Offset paw2Offset = Offset(paw2XCenter * size.width, topPawCenterY * size.height);
-    Offset paw3Offset = Offset(paw3XCenter * size.width, topPawCenterY * size.height);
-    Offset paw4Offset = Offset(paw4XCenter * size.width, botPawCenterY * size.height);
     if (scale > .3) {
+      //paw ovals dimensions
+      final double paw2XCenterStart = .45;
+      final double paw2XCenterEnd = .4185;
+      final double paw2XCenter = ((scale * (paw2XCenterEnd - paw2XCenterStart) + paw2XCenterStart));
+      final double paw3XCenter = 1 - paw2XCenter;
+
+      final double paw1XCenterStart = 0.484;
+      final double paw1XCenterEnd = 0.324;
+      final double paw1XCenter = ((scale * (paw1XCenterEnd - paw1XCenterStart) + paw1XCenterStart));
+      final double paw4XCenter = 1 - paw1XCenter;
+
+      final double topPawCenterYStart = .30825;
+      final double topPawCenterYEnd = 0.055;
+      final double topPawCenterY = ((scale * (topPawCenterYEnd - topPawCenterYStart) + topPawCenterYStart)) / .355;
+
+      final double botPawCenterYStart = .30832;
+      final double botPawCenterYEnd = .17832;
+      final double botPawCenterY = ((scale * (botPawCenterYEnd - botPawCenterYStart) + botPawCenterYStart)) / .355;
+
+      final double topPawWidthStart = .03;
+      final double topPawWidthEnd = .15;
+      final double topPawWidth = scale * (topPawWidthEnd - topPawWidthStart) + topPawWidthStart;
+
+      final double topPawHeightStart = 0.0364317841 / 2;
+      final double topPawHeightEnd = 0.138;
+      final double topPawHeight = (((scale * (topPawHeightEnd - topPawHeightStart) + topPawHeightStart)) / .355);
+
+      final double botPawWidthStart = .03;
+      final double botPawWidthEnd = .1413;
+      final double botPawWidth = scale * (botPawWidthEnd - botPawWidthStart) + botPawWidthStart;
+
+      final double botPawHeightStart = .05;
+      final double botPawHeightEnd = .118;
+      final double botPawHeight = (scale * (botPawHeightEnd - botPawHeightStart) + botPawHeightStart) / .355;
+
+      Offset paw1Offset = Offset(paw1XCenter * size.width, botPawCenterY * size.height);
+      Offset paw2Offset = Offset(paw2XCenter * size.width, topPawCenterY * size.height);
+      Offset paw3Offset = Offset(paw3XCenter * size.width, topPawCenterY * size.height);
+      Offset paw4Offset = Offset(paw4XCenter * size.width, botPawCenterY * size.height);
       Rect paw1 = Rect.fromCenter(center: paw1Offset, width: botPawWidth * size.width, height: botPawHeight * size.height);
       Rect paw2 = Rect.fromCenter(center: paw2Offset, width: topPawWidth * size.width, height: topPawHeight * size.height);
       Rect paw3 = Rect.fromCenter(center: paw3Offset, width: topPawWidth * size.width, height: topPawHeight * size.height);

@@ -20,6 +20,7 @@ class _SearchScreen extends State<SearchScreen> {
   @override
   Widget build(BuildContext context) {
     return BaseScreen(
+      // isNavBar: true,
         isRightPadding: false,
         isLeftPadding: false,
         isBottomPadding: false,
@@ -38,7 +39,7 @@ class _SearchScreen extends State<SearchScreen> {
                 child: Container(
                   alignment: Alignment.centerLeft,
                   margin: EdgeInsets.only(
-                      left: PetsTheme.getMuchLargerPadMarg(context)),
+                      left: PetsTheme.getMuchLargerPadMarg()),
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
@@ -52,7 +53,7 @@ class _SearchScreen extends State<SearchScreen> {
                                 fontFamily: "Roboto",
                                 color: PetsTheme.whiteBarColor,
                                 fontWeight: FontWeight.bold,
-                                fontSize: PetsTheme.getLargeFont(context)),
+                                fontSize: PetsTheme.getLargeFont()),
                           ),
                         ),
                       )),
@@ -65,10 +66,10 @@ class _SearchScreen extends State<SearchScreen> {
                 flex: 3,
                 child: Container(
                     padding: EdgeInsets.only(
-                        bottom: PetsTheme.getLargePadMarg(context)),
+                        bottom: PetsTheme.getLargePadMarg()),
                     margin: EdgeInsets.only(
-                        bottom: PetsTheme.getMuchLargerPadMarg(context),
-                        left: PetsTheme.getMuchLargerPadMarg(context)),
+                        bottom: PetsTheme.getMuchLargerPadMarg(),
+                        left: PetsTheme.getMuchLargerPadMarg()),
                     child: Row(
                       children: [
                         Flexible(
@@ -87,8 +88,8 @@ class _SearchScreen extends State<SearchScreen> {
                           flex: 26,
                           child: Container(
                             padding: EdgeInsets.symmetric(
-                              horizontal: PetsTheme.getMeduimPadMarg(context),
-                              vertical: PetsTheme.getLargePadMarg(context)
+                              horizontal: PetsTheme.getMeduimPadMarg(),
+                              vertical: PetsTheme.getLargePadMarg()
                             ),
                             child: FittedBox(
                           child: Text(
@@ -97,7 +98,7 @@ class _SearchScreen extends State<SearchScreen> {
                                 fontFamily: "Roboto",
                                 color: PetsTheme.whiteBarColor,
                                 fontWeight: FontWeight.normal,
-                                fontSize: PetsTheme.getLargeFont(context)),
+                                fontSize: PetsTheme.getLargeFont()),
                           ),
                         ),
                       ))
@@ -112,7 +113,7 @@ class _SearchScreen extends State<SearchScreen> {
                   alignment: Alignment.centerLeft,
                   width: MediaQuery.of(context).size.width,
                   margin: EdgeInsets.symmetric(
-                      horizontal: PetsTheme.getSmallestPadMarg(context)),
+                      horizontal: PetsTheme.getSmallestPadMarg()),
                   decoration: BoxDecoration(
                       color: PetsTheme.whiteBarColor,
                       borderRadius: BorderRadius.only(

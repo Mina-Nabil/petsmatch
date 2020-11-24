@@ -25,7 +25,7 @@ class _SplashScreenState extends State<SplashScreen> {
       print("LOGGING IN NOW"); //function el login hna
       if (true) {
         //replace with authentication result
-    
+
         Navigator.pushReplacement(context, new PageTransition(type: PageTransitionType.fade, duration: Duration(milliseconds: 1200), child: LoginScreen()));
       } else {
         //Navigate to home screen when done
@@ -36,6 +36,8 @@ class _SplashScreenState extends State<SplashScreen> {
 
   @override
   Widget build(BuildContext context) {
+    PetsTheme.initTheme(context);
+
     //Padding & Marging Init
     return BaseScreen(
       backGroundColor: bgColor.blue,
