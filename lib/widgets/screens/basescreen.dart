@@ -234,7 +234,6 @@ class CustomRenderStack extends RenderStack {
 
   bool isLayersPassed(int currentLayer) {
     const layersMax = 0;
-    print(currentLayer);
     return (currentLayer > layersMax);
   }
 

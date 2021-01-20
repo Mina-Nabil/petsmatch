@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:petmatch/screens/basescreen.dart';
+import 'package:petmatch/widgets/screens/basescreen.dart';
 import 'package:petmatch/theme/petsTheme.dart';
 
 class CommonScreenSetup extends StatelessWidget {

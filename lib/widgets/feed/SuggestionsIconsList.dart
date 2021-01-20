@@ -13,7 +13,7 @@ class SuggesionsIconsList extends StatelessWidget {
     return Container(
       height: 185,
       width: MediaQuery.of(context).size.width,
-      padding: EdgeInsets.symmetric(vertical: PetsTheme.getMeduimPadMarg(), horizontal: PetsTheme.getLargePadMarg()),
+      padding: EdgeInsets.only(top: PetsTheme.getMeduimPadMarg(), left: PetsTheme.getLargePadMarg()),
       decoration: BoxDecoration(color: Colors.white, borderRadius: BorderRadius.circular(borderRadius)),
       margin: EdgeInsets.symmetric(vertical: PetsTheme.getMeduimPadMarg()),
       child: Column(

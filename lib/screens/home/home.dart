@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:petmatch/models/Pet.dart';
 import 'package:petmatch/models/User.dart';
 import 'package:petmatch/models/Profile.dart';
-import 'package:petmatch/screens/basescreen.dart';
+import 'package:petmatch/widgets/screens/basescreen.dart';
 import 'package:petmatch/theme/petsTheme.dart';
 import 'package:petmatch/widgets/feed/FeedHeader.dart';
 import 'package:petmatch/widgets/feed/NewPostWidget.dart';

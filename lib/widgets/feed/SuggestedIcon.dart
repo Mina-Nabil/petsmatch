@@ -13,7 +13,7 @@ class SuggestedIcon extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       height: height,
-      margin: EdgeInsets.only(right: PetsTheme.getLargePadMarg()),
+      margin: EdgeInsets.only(right: PetsTheme.getLargestPadMarg()),
       child: Column(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         crossAxisAlignment: CrossAxisAlignment.center,

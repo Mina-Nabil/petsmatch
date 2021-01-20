@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:page_transition/page_transition.dart';
-import 'package:petmatch/screens/basescreen.dart';
+import 'package:petmatch/widgets/screens/basescreen.dart';
 import 'package:petmatch/screens/login/confirmPass.dart';
 import 'package:petmatch/theme/petsTheme.dart';
 
