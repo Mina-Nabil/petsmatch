@@ -51,8 +51,7 @@ class CongratsScreen extends StatelessWidget {
                 )),
             PetsButton(
               buttonText: "Done",
-              callBackFunction: () => Navigator.of(context)
-                  .restorablePopAndPushNamed('/home' ),
+              callBackFunction: () => Navigator.of(context).popAndPushNamed('/home' ),
               bgColor: PetsTheme.currentMainColor,
               textColor: Colors.white,
               isBorder: false,
