@@ -41,6 +41,9 @@ dependencies:
   # load svg icons
   flutter_svg: ^0.18.0
 
+  # for creating fuzzy timestamps. (e.g. "5 minutes ago")
+  timeago: ^2.0.29
+
 dev_dependencies:
   # app logo
   flutter_launcher_icons: "^0.8.0"
@@ -69,6 +72,9 @@ flutter:
    - assets/images/icons/twoPaws.svg
    - assets/images/icons/google.svg
    - assets/images/icons/fb.svg
+   - assets/images/icons/love.svg
+   - assets/images/icons/comment.svg
+   - assets/images/icons/share.svg
    - assets/images/icons/registration/petOwnerType.svg
    - assets/images/icons/registration/vetType.svg
    - assets/images/icons/registration/storeType.svg
@@ -81,6 +87,7 @@ flutter:
    - assets/images/icons/main/gallery.svg
    - assets/images/icons/main/location.svg
    - assets/images/icons/main/userPlaceholder.png
+   - assets/images/icons/main/imagePlaceholder.png
    - assets/images/icons/pages/mating.png
    - assets/images/icons/pages/servicesx1.png
    - assets/images/icons/pages/servicesx2.png
