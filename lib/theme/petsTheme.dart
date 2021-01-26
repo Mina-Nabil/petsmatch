@@ -105,7 +105,7 @@ class PetsTheme {
 
   static void _initFonts(BuildContext context) {
     //Font init
-    _smallIconSize = (MediaQuery.of(context).size.width > bigScreenWidth) ? 20 : 10;
+    _smallIconSize = (MediaQuery.of(context).size.width > bigScreenWidth) ? 25 : 15;
 
     _veryLargeFont = (MediaQuery.of(context).size.width > bigScreenWidth)
         ? 50

@@ -19,7 +19,6 @@ class RegularPostWidget extends StatefulWidget {
 class _RegularPostWidgetState extends State<RegularPostWidget> {
   @override
   Widget build(BuildContext context) {
-
     return Container(
       margin: EdgeInsets.symmetric(vertical: PetsTheme.getMeduimPadMarg()),
       decoration: BoxDecoration(
@@ -117,22 +116,22 @@ class _RegularPostWidgetState extends State<RegularPostWidget> {
                       children: [
                         Column(
                           children: [
-                            Text("${widget.post.lovesCount}"),
-                            Text("Love"),
+                            Text("${widget.post.lovesCount}", style: TextStyle(fontSize: PetsTheme.getSmallFont()),),
+                            Text("Love", style: TextStyle(fontSize: PetsTheme.getSmallFont()),),
                           ],
                         ),
                         SizedBox(width: PetsTheme.getLargePadMarg(),),
                         Column(
                           children: [
-                            Text("${widget.post.commentsCount}"),
-                            Text("Comments"),
+                            Text("${widget.post.commentsCount}", style: TextStyle(fontSize: PetsTheme.getSmallFont()),),
+                            Text("Comments", style: TextStyle(fontSize: PetsTheme.getSmallFont()),),
                           ],
                         ),
                         SizedBox(width: PetsTheme.getLargePadMarg(),),
                         Column(
                           children: [
-                            Text("${widget.post.sharesCount}"),
-                            Text("Shares"),
+                            Text("${widget.post.sharesCount}", style: TextStyle(fontSize: PetsTheme.getSmallFont()),),
+                            Text("Shares", style: TextStyle(fontSize: PetsTheme.getSmallFont()),),
                           ],
                         ),
                       ],
