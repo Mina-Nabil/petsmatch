@@ -1,15 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:petmatch/models/Pet.dart';
+import 'package:petmatch/models/Post.dart';
 import 'package:petmatch/models/User.dart';
 import 'package:petmatch/models/Profile.dart';
-import 'package:petmatch/widgets/screens/basescreen.dart';
-import 'package:petmatch/theme/petsTheme.dart';
+import 'package:petmatch/widgets/feed/RegularPostWidget.dart';
 import 'package:petmatch/widgets/feed/FeedHeader.dart';
 import 'package:petmatch/widgets/feed/NewPostWidget.dart';
 import 'package:petmatch/widgets/feed/SuggestedIcon.dart';
 import 'package:petmatch/widgets/feed/SuggestionsIconsList.dart';
 import 'package:petmatch/widgets/screens/CommonScreenSetup.dart';
-import 'package:petmatch/widgets/buttons/PetsButton.dart';
 
 class HomeScreen extends StatefulWidget {
   @override
@@ -39,6 +38,9 @@ class _HomeScreenState extends State<HomeScreen> {
   testUser.addAllPet(pets);
   }
 
+  // later PostProvider
+  List<Post> testPosts = posts; 
+
   @override
   Widget build(BuildContext context) {
     return CommonScreenSetup(
@@ -49,7 +51,13 @@ class _HomeScreenState extends State<HomeScreen> {
           ...pets.map((element) {return SuggestedIcon(element);})
         ]),
 
-        
+        ...testPosts.map(
+          (e) {
+            return RegularPostWidget(e);}
+        ).toList(),
+
+        //for bottom nav bar
+        SizedBox(height: 50,)
       ],),
       isNavBar: true,
       isSmallTop: false,

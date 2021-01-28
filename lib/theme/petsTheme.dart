@@ -57,6 +57,8 @@ class PetsTheme {
 
   static const Color blackTextColor = Color.fromRGBO(69, 79, 99, 1);
 
+  static Color commentBgColor = petsBlueColor.withOpacity(.1);
+
 // old design color
   @deprecated
   static final Color cyan = Color.fromRGBO(180, 240, 255, 1);
@@ -80,6 +82,7 @@ class PetsTheme {
   static double _largeFont;
   static double _meduimFont;
   static double _smallFont;
+  static double _verySmallFont;
 
   //Icons Size
   static double _smallIconSize;
@@ -102,7 +105,7 @@ class PetsTheme {
 
   static void _initFonts(BuildContext context) {
     //Font init
-    _smallIconSize = (MediaQuery.of(context).size.width > bigScreenWidth) ? 50 : 40;
+    _smallIconSize = (MediaQuery.of(context).size.width > smallScreenWidth)? 25 : 15;
 
     _veryLargeFont = (MediaQuery.of(context).size.width > bigScreenWidth)
         ? 50
@@ -139,6 +142,12 @@ class PetsTheme {
         : (MediaQuery.of(context).size.width > smallScreenWidth)
             ? 13
             : 10;
+    _verySmallFont = (MediaQuery.of(context).size.width > bigScreenWidth)
+        ? 12
+        : (MediaQuery.of(context).size.width > smallScreenWidth)
+            ? 10
+            : 8;
+
     _navbarHeightRatio = (MediaQuery.of(context).size.height > bigScreenHeight)
         ? .20
         : (MediaQuery.of(context).size.height > smallScreenHeight)
@@ -198,7 +207,12 @@ class PetsTheme {
     return _smallFont;
   }
 
-  static double getSmallIconSize() {
+  static double getVerySmallFont() {
+    assert(_context != null);
+    return _verySmallFont;
+  }
+
+  static double smallIconSize() {
     assert(_context != null);
     return _smallIconSize;
   }

@@ -1,15 +1,8 @@
 import 'dart:ui';
 
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/svg.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'package:page_transition/page_transition.dart';
 import 'package:petmatch/widgets/screens/basescreen.dart';
-import 'package:petmatch/screens/home/home.dart';
-import 'package:petmatch/screens/login/regTypes.dart';
-import 'package:petmatch/screens/login/sendMailCode.dart';
 import 'package:petmatch/theme/petsTheme.dart';
-import 'package:petmatch/screens/login/login.dart';
 
 class SearchScreen extends StatefulWidget {
   @override
@@ -24,103 +17,83 @@ class _SearchScreen extends State<SearchScreen> {
         isRightPadding: false,
         isLeftPadding: false,
         isBottomPadding: false,
+        //isTopPadding: false,
         noTitle: true,
         child: Container(
           width: MediaQuery.of(context).size.width,
           height: MediaQuery.of(context).size.height,
           child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
+            mainAxisAlignment: MainAxisAlignment.start,
             crossAxisAlignment: CrossAxisAlignment.center,
             mainAxisSize: MainAxisSize.max,
-            children: <Widget>[
-              Flexible(
-                fit: FlexFit.loose,
-                flex: 2,
-                child: Container(
-                  alignment: Alignment.centerLeft,
-                  margin: EdgeInsets.only(
-                      left: PetsTheme.getMuchLargerPadMarg()),
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      Expanded(
-                        child: Container( 
-                          width: MediaQuery.of(context).size.width*0.55,
-                        child: FittedBox(
-                          child: Text(
-                            "What are you looking for?",
-                            style: TextStyle(
-                                fontFamily: "Roboto",
-                                color: PetsTheme.whiteBarColor,
-                                fontWeight: FontWeight.bold,
-                                fontSize: PetsTheme.getLargeFont()),
-                          ),
-                        ),
-                      )),
-                    ],
+            children: [
+
+              Container(
+                alignment: Alignment.centerLeft,
+                margin: EdgeInsets.symmetric(horizontal: PetsTheme.getMuchLargerPadMarg(), vertical: PetsTheme.getMeduimPadMarg()),
+                child: FittedBox(
+                  child: Text(
+                    "What are you looking for?",
+                    style: TextStyle(
+                        fontFamily: "Roboto",
+                        color: PetsTheme.whiteBarColor,
+                        fontWeight: FontWeight.bold,
+                        fontSize: PetsTheme.getLargeFont()),
                   ),
                 ),
               ),
-              Flexible(
-                fit: FlexFit.loose,
-                flex: 3,
-                child: Container(
-                    padding: EdgeInsets.only(
-                        bottom: PetsTheme.getLargePadMarg()),
-                    margin: EdgeInsets.only(
-                        bottom: PetsTheme.getMuchLargerPadMarg(),
-                        left: PetsTheme.getMuchLargerPadMarg()),
-                    child: Row(
-                      children: [
-                        Flexible(
-                            fit: FlexFit.loose,
-                            flex: 74,
-                            child: Container(
-                              height: 40,
-                              decoration: BoxDecoration(
-                                color: PetsTheme.whiteBarColor,
-                                borderRadius:
-                                    BorderRadius.all(Radius.circular(20)),
+
+              Container(
+                margin: EdgeInsets.symmetric(horizontal: PetsTheme.getMuchLargerPadMarg(), vertical: PetsTheme.getMeduimPadMarg()),
+                  child: Row(
+                    children: [
+                      Expanded(
+                          child: TextField(
+                            textAlignVertical: TextAlignVertical.center,
+                            style: TextStyle(fontSize: PetsTheme.getMeduimFont()),
+                            decoration: InputDecoration(
+                              contentPadding: EdgeInsets.all(PetsTheme.getSmallPadMarg()),
+                              filled: true,
+                              fillColor: Colors.white,
+                              border: OutlineInputBorder(
+                                borderRadius: BorderRadius.circular(20),
+                                borderSide: BorderSide( width: 0,style: BorderStyle.none,),
                               ),
-                            )),
-                        Flexible(
-                          fit: FlexFit.loose,
-                          flex: 26,
-                          child: Container(
-                            padding: EdgeInsets.symmetric(
-                              horizontal: PetsTheme.getMeduimPadMarg(),
-                              vertical: PetsTheme.getLargePadMarg()
+                              prefixIcon: Icon(Icons.search,),
+                              hintText: "Search PetsMatch",
+                              hintStyle: TextStyle(fontSize: PetsTheme.getMeduimFont()),
                             ),
-                            child: FittedBox(
-                          child: Text(
-                            "Cancel",
-                            style: TextStyle(
-                                fontFamily: "Roboto",
-                                color: PetsTheme.whiteBarColor,
-                                fontWeight: FontWeight.normal,
-                                fontSize: PetsTheme.getLargeFont()),
                           ),
+                      ),
+
+                      SizedBox(width: PetsTheme.getLargePadMarg(),),
+
+                      FittedBox(
+                        child: Text(
+                          "Cancel",
+                          style: TextStyle(
+                              fontFamily: "Roboto",
+                              color: PetsTheme.whiteBarColor,
+                              fontWeight: FontWeight.normal,
+                              fontSize: PetsTheme.getLargeFont()),
                         ),
-                      ))
-                      
-                      ],
-                    )),
-              ),
-              Flexible(
-                fit: FlexFit.loose,
-                flex: 15,
-                child: Container(
-                  alignment: Alignment.centerLeft,
-                  width: MediaQuery.of(context).size.width,
-                  margin: EdgeInsets.symmetric(
-                      horizontal: PetsTheme.getSmallestPadMarg()),
-                  decoration: BoxDecoration(
-                      color: PetsTheme.whiteBarColor,
-                      borderRadius: BorderRadius.only(
-                          topLeft: Radius.circular(20),
-                          topRight: Radius.circular(20))),
-                ),
-              ),
+                      ),
+                    
+                    
+                    ],
+                  )),
+                  
+                  Expanded(
+                    child: Container(
+                      width: MediaQuery.of(context).size.width,
+                      margin: EdgeInsets.only(top: PetsTheme.getMeduimPadMarg()),
+                      decoration: BoxDecoration(
+                          color: PetsTheme.whiteBarColor,
+                          borderRadius: BorderRadius.only(
+                              topLeft: Radius.circular(20),
+                              topRight: Radius.circular(20))),
+                    ),
+                  ),
             ],
           ),
         ));
