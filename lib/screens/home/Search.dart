@@ -52,7 +52,7 @@ class _SearchScreen extends State<SearchScreen> {
                             textAlignVertical: TextAlignVertical.center,
                             style: TextStyle(fontSize: PetsTheme.getMeduimFont()),
                             decoration: InputDecoration(
-                              contentPadding: EdgeInsets.all(PetsTheme.getSmallPadMarg()),
+                              contentPadding: EdgeInsets.all(PetsTheme.getSmallerPadMarg()),
                               filled: true,
                               fillColor: Colors.white,
                               border: OutlineInputBorder(
@@ -69,20 +69,25 @@ class _SearchScreen extends State<SearchScreen> {
                       SizedBox(width: PetsTheme.getLargePadMarg(),),
 
                       FittedBox(
-                        child: Text(
-                          "Cancel",
-                          style: TextStyle(
-                              fontFamily: "Roboto",
-                              color: PetsTheme.whiteBarColor,
-                              fontWeight: FontWeight.normal,
-                              fontSize: PetsTheme.getLargeFont()),
+                        child: GestureDetector(
+                          child: Text(
+                            "Cancel",
+                            style: TextStyle(
+                                fontFamily: "Roboto",
+                                color: PetsTheme.whiteBarColor,
+                                fontWeight: FontWeight.normal,
+                                fontSize: PetsTheme.getLargeFont()),
+                          ),
+                          onTap:  () {
+                            Navigator.of(context).pop();
+                          } ,
                         ),
                       ),
                     
                     
                     ],
                   )),
-                  
+
                   Expanded(
                     child: Container(
                       width: MediaQuery.of(context).size.width,

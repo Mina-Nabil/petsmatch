@@ -91,23 +91,42 @@ class _RegularPostWidgetState extends State<RegularPostWidget> {
                     // love commnet, share icons
                     Row(
                       children: [
-                        GestureDetector(
+                        FlatButton(
+                          padding: EdgeInsets.only(right: PetsTheme.getMeduimPadMarg()),
+                          materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
+                          minWidth: 1,
+                          splashColor: Colors.transparent,  
+                          highlightColor: Colors.transparent,
                           child: SvgPicture.asset(
                             "assets/images/icons/love.svg",
                             color: widget.post.isLoved? Colors.pink : Colors.grey, 
                             width: PetsTheme.smallIconSize(), height: PetsTheme.smallIconSize() ,
                           ),
-                          onTap: () {
+                          onPressed: () {
                             setState(() {
                               widget.post.toggleLove();
                             });
                             //TODO should update backend with this toggle
                           },
                         ),
-                        SizedBox(width: PetsTheme.getLargePadMarg(),),
-                        SvgPicture.asset("assets/images/icons/comment.svg",color: Colors.grey, width: PetsTheme.smallIconSize(), height: PetsTheme.smallIconSize() ,),
-                        SizedBox(width: PetsTheme.getLargePadMarg(),),
-                        SvgPicture.asset("assets/images/icons/share.svg",color: Colors.grey, width: PetsTheme.smallIconSize(), height: PetsTheme.smallIconSize() ,),
+                       
+                        FlatButton(
+                          padding: EdgeInsets.symmetric(horizontal: PetsTheme.getMeduimPadMarg()),
+                          materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
+                          minWidth: 1,
+                          splashColor: Colors.transparent,  
+                          highlightColor: Colors.transparent,
+                          onPressed: () {},
+                          child: SvgPicture.asset("assets/images/icons/comment.svg",color: Colors.grey, width: PetsTheme.smallIconSize(), height: PetsTheme.smallIconSize() ,)),
+                      
+                        FlatButton(
+                          padding: EdgeInsets.symmetric(horizontal: PetsTheme.getMeduimPadMarg()),
+                          materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
+                          minWidth: 1,
+                          splashColor: Colors.transparent,  
+                          highlightColor: Colors.transparent,
+                          onPressed: () {},
+                          child: SvgPicture.asset("assets/images/icons/share.svg",color: Colors.grey, width: PetsTheme.smallIconSize(), height: PetsTheme.smallIconSize() ,)),
                       ],
                     ),
 
