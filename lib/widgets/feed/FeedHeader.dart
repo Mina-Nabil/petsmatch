@@ -64,7 +64,7 @@ class FeedHeader extends StatelessWidget {
                     flex: 1,
                     child: GestureDetector(
                       child: CircularPetButton(PetsTheme.currentMainColor.withOpacity(.2), searchIconPath, Colors.white),
-                      onTap: () => Navigator.of(context).popAndPushNamed('/search'),
+                      onTap: () => Navigator.of(context).pushNamed('/search'),
                     ),
                   )
                 ],

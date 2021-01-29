@@ -1,10 +1,11 @@
 
 import 'package:petmatch/models/Profile.dart';
+import 'package:petmatch/models/User.dart';
 
 class Pet extends Profile{
 
 
-  Pet(name, image){
+  Pet(name, image, this.owner){
     super.name = name;
     super.image=image;
   }
@@ -26,4 +27,11 @@ class Pet extends Profile{
   set image(String _image) {
       image=_image;
   }
+
+  String whoIAm() {
+    return "$owner's pet";
+  }
+
+  final String owner;
+//  final String ownerId;
 }

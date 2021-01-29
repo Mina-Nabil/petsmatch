@@ -2,16 +2,18 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:petmatch/models/Post.dart';
 import 'package:petmatch/theme/petsTheme.dart';
+import 'package:petmatch/widgets/feed/UserNameRole.dart';
 import 'package:petmatch/widgets/main/UserAvatar.dart';
 
 import 'package:timeago/timeago.dart' as timeago;
 
 class RegularPostWidget extends StatefulWidget {
   
-  RegularPostWidget(this.post);
+  RegularPostWidget(this.post, {this.contentPadding = EdgeInsets.zero, this.margin = EdgeInsets.zero});
 
   final RegularPost post;
-
+  final EdgeInsetsGeometry contentPadding;
+  final EdgeInsetsGeometry margin;
   @override
   _RegularPostWidgetState createState() => _RegularPostWidgetState();
 }
@@ -20,7 +22,7 @@ class _RegularPostWidgetState extends State<RegularPostWidget> {
   @override
   Widget build(BuildContext context) {
     return Container(
-      margin: EdgeInsets.symmetric(vertical: PetsTheme.getMeduimPadMarg()),
+      margin: widget.margin,
       decoration: BoxDecoration(
         color: Colors.white,
         borderRadius: BorderRadius.circular(20)
@@ -43,7 +45,7 @@ class _RegularPostWidgetState extends State<RegularPostWidget> {
             ),
 
           Padding(
-            padding: EdgeInsets.symmetric(horizontal: PetsTheme.getMuchLargerPadMarg()),
+            padding: widget.contentPadding,
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
@@ -72,14 +74,10 @@ class _RegularPostWidgetState extends State<RegularPostWidget> {
                       margin: EdgeInsets.symmetric(vertical: PetsTheme.getMeduimPadMarg()),
                       child: UserAvatar(image: widget.post.owner.imageUrl,imageRatio: 1,)
                     ),
-                    SizedBox(width: PetsTheme.getMeduimPadMarg(),),
-                    Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Text(widget.post.owner.name, style: TextStyle(fontSize: PetsTheme.getMeduimFont() ,fontWeight: FontWeight.bold),),
-                        Text(widget.post.owner.whoIAm(),style: TextStyle(fontSize: PetsTheme.getVerySmallFont(), color: Colors.grey)),
-                      ],
-                    )
+
+                    Container(
+                      margin: EdgeInsets.all(PetsTheme.getMeduimPadMarg()),
+                      child: UserNameRole(name: widget.post.owner.name, role: widget.post.owner.whoIAm())),
                   ],
                 ),
 
@@ -91,23 +89,42 @@ class _RegularPostWidgetState extends State<RegularPostWidget> {
                     // love commnet, share icons
                     Row(
                       children: [
-                        GestureDetector(
+                        FlatButton(
+                          padding: EdgeInsets.only(right: PetsTheme.getMeduimPadMarg()),
+                          materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
+                          minWidth: 1,
+                          splashColor: Colors.transparent,  
+                          highlightColor: Colors.transparent,
                           child: SvgPicture.asset(
                             "assets/images/icons/love.svg",
                             color: widget.post.isLoved? Colors.pink : Colors.grey, 
                             width: PetsTheme.smallIconSize(), height: PetsTheme.smallIconSize() ,
                           ),
-                          onTap: () {
+                          onPressed: () {
                             setState(() {
                               widget.post.toggleLove();
                             });
                             //TODO should update backend with this toggle
                           },
                         ),
-                        SizedBox(width: PetsTheme.getLargePadMarg(),),
-                        SvgPicture.asset("assets/images/icons/comment.svg",color: Colors.grey, width: PetsTheme.smallIconSize(), height: PetsTheme.smallIconSize() ,),
-                        SizedBox(width: PetsTheme.getLargePadMarg(),),
-                        SvgPicture.asset("assets/images/icons/share.svg",color: Colors.grey, width: PetsTheme.smallIconSize(), height: PetsTheme.smallIconSize() ,),
+                       
+                        FlatButton(
+                          padding: EdgeInsets.symmetric(horizontal: PetsTheme.getMeduimPadMarg()),
+                          materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
+                          minWidth: 1,
+                          splashColor: Colors.transparent,  
+                          highlightColor: Colors.transparent,
+                          onPressed: () {},
+                          child: SvgPicture.asset("assets/images/icons/comment.svg",color: Colors.grey, width: PetsTheme.smallIconSize(), height: PetsTheme.smallIconSize() ,)),
+                      
+                        FlatButton(
+                          padding: EdgeInsets.symmetric(horizontal: PetsTheme.getMeduimPadMarg()),
+                          materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
+                          minWidth: 1,
+                          splashColor: Colors.transparent,  
+                          highlightColor: Colors.transparent,
+                          onPressed: () {},
+                          child: SvgPicture.asset("assets/images/icons/share.svg",color: Colors.grey, width: PetsTheme.smallIconSize(), height: PetsTheme.smallIconSize() ,)),
                       ],
                     ),
 
