@@ -1,6 +1,12 @@
 import 'dart:ui';
 
 import 'package:flutter/material.dart';
+import 'package:petmatch/models/Pet.dart';
+import 'package:petmatch/models/Post.dart';
+import 'package:petmatch/models/User.dart';
+import 'package:petmatch/widgets/feed/RegularPostWidget.dart';
+import 'package:petmatch/widgets/feed/UserNameRole.dart';
+import 'package:petmatch/widgets/main/UserAvatar.dart';
 import 'package:petmatch/widgets/screens/basescreen.dart';
 import 'package:petmatch/theme/petsTheme.dart';
 
@@ -10,6 +16,45 @@ class SearchScreen extends StatefulWidget {
 }
 
 class _SearchScreen extends State<SearchScreen> {
+
+  List<User> searchResultsPeople = [
+    User("Ahmed Abbas", "https://upload.wikimedia.org/wikipedia/en/thumb/a/a1/NafSadh_Profile.jpg/768px-NafSadh_Profile.jpg", "_email", 
+    pets: [
+      Pet("Roy", "https://connected-vet.com/wp-content/uploads/2020/11/e2ecf5d1-d17f-4fab-97cf-a77322c5566d.jpg", "Ahmed Abbas"),
+    ]),
+
+    User("Aya Ahmed", "https://static.jobscan.co/blog/uploads/linkedin-profile-picture-1280x720.jpg", "_email",
+    pets: [
+      Pet("Lilly", "https://hips.hearstapps.com/hmg-prod.s3.amazonaws.com/images/why-cats-are-best-pets-worshipped-animals-1559234295.jpg", "Aya Ahmed"),
+    ]
+    ),
+  ];
+
+  List<User> searchResultsTrainers = [
+    User("Ahmed Abbas", "https://upload.wikimedia.org/wikipedia/en/thumb/a/a1/NafSadh_Profile.jpg/768px-NafSadh_Profile.jpg", "_email", 
+    pets: [
+      Pet("Roy", "https://connected-vet.com/wp-content/uploads/2020/11/e2ecf5d1-d17f-4fab-97cf-a77322c5566d.jpg", "Ahmed Abbas"),
+    ]),
+
+    User("Aya Ahmed", "https://static.jobscan.co/blog/uploads/linkedin-profile-picture-1280x720.jpg", "_email",
+    pets: [
+      Pet("Lilly", "https://hips.hearstapps.com/hmg-prod.s3.amazonaws.com/images/why-cats-are-best-pets-worshipped-animals-1559234295.jpg", "Aya Ahmed"),
+    ]
+    ),
+  ];
+
+  List<Post> searchResultsPosts = [
+    RegularPost(
+      owner: UserPostOwner(id: 1, name: "Ahmed Mahmoud", imageUrl: "https://www.leisureopportunities.co.uk/images/995586_746594.jpg", pets: ["Rex"]), 
+      commentsCount: 5, 
+      lovesCount: 2, 
+      sharesCount: 0, 
+      postDate: DateTime.now(),
+      isLoved: false,
+      text: "Any recommendations for good vets ?!",
+    ),
+  ];
+
   @override
   Widget build(BuildContext context) {
     return BaseScreen(
@@ -88,17 +133,109 @@ class _SearchScreen extends State<SearchScreen> {
                     ],
                   )),
 
-                  Expanded(
-                    child: Container(
-                      width: MediaQuery.of(context).size.width,
-                      margin: EdgeInsets.only(top: PetsTheme.getMeduimPadMarg()),
-                      decoration: BoxDecoration(
-                          color: PetsTheme.whiteBarColor,
-                          borderRadius: BorderRadius.only(
-                              topLeft: Radius.circular(20),
-                              topRight: Radius.circular(20))),
-                    ),
+Expanded(
+  child: Container(
+    width: MediaQuery.of(context).size.width,
+    decoration: BoxDecoration(
+      color: Colors.grey[200],
+      borderRadius: BorderRadius.only(
+          topLeft: Radius.circular(20),
+          topRight: Radius.circular(20))
+    ),
+    child: ListView(
+      children: [
+        //people
+        Container(
+          margin: EdgeInsets.only(bottom :PetsTheme.getLargerPadMarg()),
+          padding: EdgeInsets.all(PetsTheme.getLargerPadMarg()),
+            decoration: BoxDecoration(
+              color: Colors.white,
+              borderRadius: BorderRadius.all(Radius.circular(20))
+            ),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              if(searchResultsPeople.isNotEmpty) 
+                Container(
+                  margin: EdgeInsets.only(bottom: PetsTheme.getMeduimPadMarg()),
+                  child: Text("People", style: TextStyle(fontSize: PetsTheme.getMeduimFont(), fontWeight: FontWeight.bold),)),
+
+              ...searchResultsPeople.map((e) {
+                return Padding(
+                  padding: EdgeInsets.symmetric(vertical: PetsTheme.getSmallPadMarg()),
+                  child: ListTile(
+                    contentPadding: EdgeInsets.zero,
+                    leading: UserAvatar(image: e.image,imageRatio: 1,),
+                    title: UserNameRole(name: e.name, role: e.whoIAm()),
                   ),
+                );
+              }).toList(),
+            ],
+          ),
+        ),
+
+        // trainers
+        Container(
+          margin: EdgeInsets.only(bottom :PetsTheme.getLargerPadMarg()),
+          padding: EdgeInsets.all(PetsTheme.getLargerPadMarg()),
+            decoration: BoxDecoration(
+              color: Colors.white,
+              borderRadius: BorderRadius.all(Radius.circular(20))
+            ),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              if(searchResultsPeople.isNotEmpty) 
+                Container(
+                  margin: EdgeInsets.only(bottom: PetsTheme.getMeduimPadMarg()),
+                  child: Text("Trainers", style: TextStyle(fontSize: PetsTheme.getMeduimFont(), fontWeight: FontWeight.bold),)),
+
+              ...searchResultsTrainers.map((e) {
+                return Padding(
+                  padding: EdgeInsets.symmetric(vertical: PetsTheme.getSmallPadMarg()),
+                  child: ListTile(
+                    contentPadding: EdgeInsets.zero,
+                    leading: UserAvatar(image: e.image,imageRatio: 1,),
+                    title: UserNameRole(name: e.name, role: e.whoIAm()),
+                  ),
+                );
+              }).toList(),
+            ],
+          ),
+        ),
+
+        // posts
+        // trainers
+        Container(
+          padding: EdgeInsets.all(PetsTheme.getLargerPadMarg()),
+            decoration: BoxDecoration(
+              color: Colors.white,
+              borderRadius: BorderRadius.all(Radius.circular(20))
+            ),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              if(searchResultsPeople.isNotEmpty) 
+                Container(
+                  margin: EdgeInsets.only(bottom: PetsTheme.getMeduimPadMarg()),
+                  child: Text("Posts", style: TextStyle(fontSize: PetsTheme.getMeduimFont(), fontWeight: FontWeight.bold),)),
+
+              ...searchResultsPosts.map((e) {
+                return Padding(
+                  padding: EdgeInsets.symmetric(vertical: PetsTheme.getSmallPadMarg()),
+                  child: RegularPostWidget(e),
+                );
+              }).toList(),
+            ],
+          ),
+        ),
+      ],
+    ),
+)),
+
             ],
           ),
         ));
