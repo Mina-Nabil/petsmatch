@@ -17,13 +17,13 @@ class MyApp extends StatelessWidget {
       onGenerateRoute: (settings) {
         switch (settings.name) {
           case '/home':
-            return PageTransition(child: HomeScreen(), type: PageTransitionType.downToUp);
+            return PageTransition(child: HomeScreen(), type: PageTransitionType.bottomToTop);
             break;
           case '/notifications':
-            return PageTransition(child: NotificationsScreen(), type: PageTransitionType.downToUp);
+            return PageTransition(child: NotificationsScreen(), type: PageTransitionType.bottomToTop);
             break;
           case '/search':
-            return PageTransition(child: SearchScreen(), type: PageTransitionType.downToUp);
+            return PageTransition(child: SearchScreen(), type: PageTransitionType.bottomToTop);
           default:
             return null;
         }

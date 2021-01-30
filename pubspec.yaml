@@ -24,7 +24,7 @@ dependencies:
   # Use with the CupertinoIcons class for iOS style icons.
   cupertino_icons: ^0.1.2
 
-  page_transition: ^1.1.6
+  page_transition: ^1.1.7+6
 
   # For FB Icon
   font_awesome_flutter: ^8.7.0
