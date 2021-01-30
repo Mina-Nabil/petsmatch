@@ -21,6 +21,9 @@ class RegularPostWidget extends StatefulWidget {
 class _RegularPostWidgetState extends State<RegularPostWidget> {
   @override
   Widget build(BuildContext context) {
+    final int imageWidth = MediaQuery.of(context).size.width.toInt();
+    final int imageHeight = 250;
+
     return Container(
       margin: widget.margin,
       decoration: BoxDecoration(
@@ -37,9 +40,15 @@ class _RegularPostWidgetState extends State<RegularPostWidget> {
               borderRadius: BorderRadius.only(topLeft: Radius.circular(20), topRight: Radius.circular(20)),
               child: FadeInImage(
                   fit: BoxFit.cover,
-                  width: MediaQuery.of(context).size.width ,
-                  height: 250,
-                  image: NetworkImage(widget.post.image),
+                  width: imageWidth.toDouble() ,
+                  height: imageHeight.toDouble(),
+                  image: Image.network(
+                    widget.post.image,
+                    width:imageWidth.toDouble(),
+                    cacheWidth: imageWidth,
+                    height: imageHeight.toDouble(),
+                    cacheHeight: imageHeight,
+                  ).image,
                   placeholder: Image.asset("assets/images/icons/main/imagePlaceholder.png",fit: BoxFit.contain,).image,
                 ),
             ),

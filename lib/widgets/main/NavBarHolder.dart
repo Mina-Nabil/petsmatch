@@ -102,7 +102,7 @@ class _NavBarHolderState extends State<NavBarHolder> with SingleTickerProviderSt
                     child: FlatButton(
                       child: getNavButtonIconContainer(Paths.home_icon_svg_file, _pawScale.value * -1 + 1, isPage: true),
                       onPressed: () {
-                        Navigator.of(context).pushReplacementNamed('/home');
+                        Navigator.of(context).popAndPushNamed('/home');
                       },
                     ),
                   ),
@@ -111,7 +111,7 @@ class _NavBarHolderState extends State<NavBarHolder> with SingleTickerProviderSt
                     child: FlatButton(
                       child: getNavButtonIconContainer(Paths.notification_icon_svg_file, _pawScale.value * -1 + 1),
                       onPressed: () {
-                        Navigator.of(context).pushReplacementNamed('/notifications');
+                        Navigator.of(context).popAndPushNamed('/notifications');
                       },
                       splashColor: Colors.transparent,  
                       highlightColor: Colors.transparent,
