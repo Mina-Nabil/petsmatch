@@ -23,6 +23,7 @@ class BaseScreen extends StatefulWidget {
   final bool isRightPadding;
   final bool noTitle;
   final bool isKeyBoardChangeSize;
+  final bool isAppBarBackArrow;
   final String titleText;
   final bgColor backGroundColor;
   final bgMask backGroundMask;
@@ -42,6 +43,7 @@ class BaseScreen extends StatefulWidget {
       this.noTitle = false,
       this.isTopColorDark = false,
       this.isKeyBoardChangeSize = false,
+      this.isAppBarBackArrow = true,
       this.isNavBar = false,
       this.isPortraitLock = false,
       this.titleCenter = true,
@@ -125,7 +127,7 @@ class _BaseScreenState extends State<BaseScreen> {
                 title: (widget.titleText != null)
                     ? Text(this.widget.titleText, style: (this.widget.titleStyle) ?? TextStyle(fontFamily: "Oregano", fontSize: PetsTheme.getLargerFont()))
                     : Text(""),
-
+                automaticallyImplyLeading: widget.isAppBarBackArrow,
                 centerTitle: widget.titleCenter,
                 bottom: (widget.subTitle) ?? widget.subTitle,
                 backgroundColor: Colors.transparent, // status bar color,

@@ -99,11 +99,23 @@ class _NavBarHolderState extends State<NavBarHolder> with SingleTickerProviderSt
                 children: <Widget>[
                   Flexible(
                     flex: 2,
-                    child: getNavButtonIconContainer(Paths.home_icon_svg_file, _pawScale.value * -1 + 1, isPage: true),
+                    child: FlatButton(
+                      child: getNavButtonIconContainer(Paths.home_icon_svg_file, _pawScale.value * -1 + 1, isPage: true),
+                      onPressed: () {
+                        Navigator.of(context).pushReplacementNamed('/home');
+                      },
+                    ),
                   ),
                   Flexible(
                     flex: 2,
-                    child: getNavButtonIconContainer(Paths.notification_icon_svg_file, _pawScale.value * -1 + 1),
+                    child: FlatButton(
+                      child: getNavButtonIconContainer(Paths.notification_icon_svg_file, _pawScale.value * -1 + 1),
+                      onPressed: () {
+                        Navigator.of(context).pushReplacementNamed('/notifications');
+                      },
+                      splashColor: Colors.transparent,  
+                      highlightColor: Colors.transparent,
+                    ),
                   ),
                   Flexible(
                     flex: 3,

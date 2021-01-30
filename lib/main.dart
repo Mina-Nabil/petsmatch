@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:page_transition/page_transition.dart';
+import 'package:petmatch/screens/home/Notifications.dart';
 import 'package:petmatch/screens/home/Search.dart';
 import 'package:petmatch/screens/home/home.dart';
 import 'package:petmatch/screens/login/splash.dart';
@@ -17,6 +18,9 @@ class MyApp extends StatelessWidget {
         switch (settings.name) {
           case '/home':
             return PageTransition(child: HomeScreen(), type: PageTransitionType.downToUp);
+            break;
+          case '/notifications':
+            return PageTransition(child: NotificationsScreen(), type: PageTransitionType.downToUp);
             break;
           case '/search':
             return PageTransition(child: SearchScreen(), type: PageTransitionType.downToUp);
