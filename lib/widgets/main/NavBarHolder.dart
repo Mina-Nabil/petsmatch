@@ -123,7 +123,12 @@ class _NavBarHolderState extends State<NavBarHolder> with SingleTickerProviderSt
                   ),
                   Flexible(
                     flex: 2,
-                    child: getNavButtonIconContainer(Paths.chat_icon_svg_file, _pawScale.value * -1 + 1),
+                    child: FlatButton(
+                      child: getNavButtonIconContainer(Paths.chat_icon_svg_file, _pawScale.value * -1 + 1),
+                      onPressed: () {
+                        Navigator.of(context).popAndPushNamed('/chat');
+                      },
+                    ),
                   ),
                   Flexible(
                     flex: 2,

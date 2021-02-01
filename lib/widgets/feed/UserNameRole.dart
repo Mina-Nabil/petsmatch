@@ -15,8 +15,12 @@ class UserNameRole extends StatelessWidget {
       Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Text(name, style: TextStyle(fontSize: PetsTheme.getMeduimFont() ,fontWeight: FontWeight.bold),),
-          Text(role,style: TextStyle(fontSize: PetsTheme.getVerySmallFont(), color: Colors.grey)),
+          Text(name, 
+          style: TextStyle(
+            color: PetsTheme.blackTextColor,
+            fontSize: PetsTheme.getMeduimFont() ,
+            fontWeight: FontWeight.bold),),
+          Text(role,style: TextStyle(fontSize: PetsTheme.getVerySmallFont(), color: PetsTheme.petsTextGrayColor)),
         ],
       );
   }
