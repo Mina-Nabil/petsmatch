@@ -66,6 +66,7 @@ class _PetMatchMainScreenState extends State<PetMatchMainScreen> with SingleTick
         child: Container(
           height: MediaQuery.of(context).size.height, 
           width: MediaQuery.of(context).size.width,
+          color: PetsTheme.currentBgMainColor,
           child: Image.asset(
             "assets/images/masks/def_blue.png",
             fit: BoxFit.cover,
