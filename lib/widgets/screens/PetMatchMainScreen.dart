@@ -65,6 +65,7 @@ class _PetMatchMainScreenState extends State<PetMatchMainScreen> with SingleTick
       ),
 
       SafeArea(
+        maintainBottomViewPadding: true,
         child: DefaultTabController(
           length: 5,
 
