@@ -70,7 +70,7 @@ class _SearchScreen extends State<SearchScreen> {
               Container(
                 child: FittedBox(
                   child: Text(
-                    "What are you looking for?",
+                    "What are you looking for??",
                     style: TextStyle(
                       fontFamily: "Roboto",
                       color: PetsTheme.whiteBarColor,

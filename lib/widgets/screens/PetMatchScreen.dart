@@ -32,7 +32,10 @@ class PetMatchScreen extends StatelessWidget {
 
 
         SafeArea(
+          top: true,
           bottom: false,
+          right: true,
+          left: true,
           child: Scaffold(
             backgroundColor: Colors.transparent,
             body: body,
