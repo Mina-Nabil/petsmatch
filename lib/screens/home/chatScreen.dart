@@ -39,7 +39,7 @@ List<Chat> _recentChats = [
       ]
     ),
     dateTime: DateTime.now().subtract(Duration(hours: 1)),
-    lastText: "Hey, How's everything going"
+    lastText: "Hello Dear, How's everything going"
   ),
   Chat(
     user:  User("Ahmed Abbas", "https://upload.wikimedia.org/wikipedia/en/thumb/a/a1/NafSadh_Profile.jpg/768px-NafSadh_Profile.jpg", "_email", 
@@ -85,64 +85,70 @@ List<Chat> _recentChats = [
         child: ListView.builder(
           itemCount: _recentChats.length,
           itemBuilder: (context, index) {
-            return Slidable(
-              key: UniqueKey(),
-              direction: Axis.horizontal,
-              actionPane: SlidableDrawerActionPane(),
-              actionExtentRatio: 1/6,
-              child: ListTile(
-                contentPadding: EdgeInsets.symmetric(vertical: PetsTheme.getSmallerPadMarg() ,horizontal: 20),
-                leading: UserAvatar(image: _recentChats[index].user.image,imageRatio: 1,),
-                title: UserNameRole(name:  _recentChats[index].user.name, role:  _recentChats[index].user.whoIAm()),
-                subtitle: Text(_recentChats[index].lastText, style: TextStyle(color: PetsTheme.blackTextColor),),
-                trailing: Text(DateFormat.jm().format(_recentChats[index].dateTime)),
-              ),
-              
-              secondaryActions: <Widget>[
-                Container(
-                  color: PetsTheme.petsRedColor,
-                  child: Center(
-                    child: Column(
-                      mainAxisSize: MainAxisSize.min,
-                      children: [
-                        IconButton(
-                          color: PetsTheme.petsPurpleColor,
-                          icon: SvgPicture.asset("assets/images/icons/delete.svg",
-                            color: Colors.white, 
-                            width: PetsTheme.smallIconSize(), height: PetsTheme.smallIconSize() ,
-                          ),
-                          onPressed: (){
-                            print("delete chat");
-                          }
-                        )
-                      ],
-                    ),
-                  ),
+            return Column(
+
+              children: [
+              Slidable(
+                key: UniqueKey(),
+                direction: Axis.horizontal,
+                actionPane: SlidableDrawerActionPane(),
+                actionExtentRatio: 1/6,
+                child: ListTile(
+                  contentPadding: EdgeInsets.symmetric(vertical: PetsTheme.getSmallerPadMarg() ,horizontal: 20),
+                  leading: UserAvatar(image: _recentChats[index].user.image,imageRatio: 1,),
+                  title: UserNameRole(name:  _recentChats[index].user.name, role:  _recentChats[index].user.whoIAm()),
+                  subtitle: Text(_recentChats[index].lastText, style: TextStyle(color: PetsTheme.blackTextColor), overflow: TextOverflow.ellipsis,),
+                  trailing: Text(DateFormat.jm().format(_recentChats[index].dateTime)),
                 ),
                 
-                Container(
-                  color: PetsTheme.petsPurpleColor,
-                  child: Center(
-                    child: Column(
-                      mainAxisSize: MainAxisSize.min,
-                      children: [
-                        IconButton(
-                          color: PetsTheme.petsPurpleColor,
-                          icon: SvgPicture.asset(
-                            "assets/images/icons/edit.svg",
-                            color: Colors.white, 
-                            width: PetsTheme.smallIconSize(), height: PetsTheme.smallIconSize() ,
-                          ),
-                          onPressed: (){
-                            print("edit chat");
-                          }
-                        )
-                      ],
+                secondaryActions: <Widget>[
+                  Container(
+                    color: PetsTheme.petsRedColor,
+                    child: Center(
+                      child: Column(
+                        mainAxisSize: MainAxisSize.min,
+                        children: [
+                          IconButton(
+                            color: PetsTheme.petsPurpleColor,
+                            icon: SvgPicture.asset("assets/images/icons/delete.svg",
+                              color: Colors.white, 
+                              width: PetsTheme.smallIconSize(), height: PetsTheme.smallIconSize() ,
+                            ),
+                            onPressed: (){
+                              print("delete chat");
+                            }
+                          )
+                        ],
+                      ),
                     ),
                   ),
-                ) 
-                
-              ],
+                  
+                  Container(
+                    color: PetsTheme.petsPurpleColor,
+                    child: Center(
+                      child: Column(
+                        mainAxisSize: MainAxisSize.min,
+                        children: [
+                          IconButton(
+                            color: PetsTheme.petsPurpleColor,
+                            icon: SvgPicture.asset(
+                              "assets/images/icons/edit.svg",
+                              color: Colors.white, 
+                              width: PetsTheme.smallIconSize(), height: PetsTheme.smallIconSize() ,
+                            ),
+                            onPressed: (){
+                              print("edit chat");
+                            }
+                          )
+                        ],
+                      ),
+                    ),
+                  ) 
+                  
+                ],
+              ),
+              Divider(height: 0,)
+              ]
             );
           }
         ),

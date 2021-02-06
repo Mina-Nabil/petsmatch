@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:petmatch/screens/home/NotificationsScreen.dart';
-import 'package:petmatch/screens/home/chart.dart';
+import 'package:petmatch/screens/home/chatScreen.dart';
 import 'package:petmatch/screens/home/HomeScreen.dart';
 import 'package:petmatch/settings/paths.dart';
 import 'package:petmatch/theme/petsTheme.dart';
