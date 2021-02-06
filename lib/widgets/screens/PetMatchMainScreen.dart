@@ -50,33 +50,22 @@ class _PetMatchMainScreenState extends State<PetMatchMainScreen> with SingleTick
   Widget build(BuildContext context) {
     return Stack(
       children: [
-      
-      //Base background
-      Container(
-        color: Colors.white,
-      ),
 
       // Background Image
-      // Disable top, right, left safe area as we need the image to be full screen
-      // Except only bottom safe area as we need the safe area under bottom tab bar to be white (base background)
-      SafeArea(
-        top: false,
-        right: false,
-        left: false,
-        child: Container(
-          height: MediaQuery.of(context).size.height, 
-          width: MediaQuery.of(context).size.width,
-          color: PetsTheme.currentBgMainColor,
-          child: Image.asset(
-            "assets/images/masks/def_blue.png",
-            fit: BoxFit.cover,
-            color: PetsTheme.currentBgMainColor.withOpacity(1.0),
-            colorBlendMode: BlendMode.srcOut,
-          ),
+      Container(
+        height: MediaQuery.of(context).size.height, 
+        width: MediaQuery.of(context).size.width,
+        color: PetsTheme.currentBgMainColor,
+        child: Image.asset(
+          "assets/images/masks/def_blue.png",
+          fit: BoxFit.cover,
+          color: PetsTheme.currentBgMainColor.withOpacity(1.0),
+          colorBlendMode: BlendMode.srcOut,
         ),
       ),
 
       SafeArea(
+        bottom: false,
         child: DefaultTabController(
           length: 5,
 
@@ -89,6 +78,7 @@ class _PetMatchMainScreenState extends State<PetMatchMainScreen> with SingleTick
             ),
 
             bottomNavigationBar: Container(
+              padding: EdgeInsets.only(bottom: MediaQuery.of(context).padding.bottom),
               color: Colors.white,
               child: TabBar(
                 controller: _tabController,

@@ -14,8 +14,6 @@ class PetMatchScreen extends StatelessWidget {
     return Stack(
       children: [
 
-        //Base background
-        Container(color: Colors.white),
 
         //Background Image
         Container(
