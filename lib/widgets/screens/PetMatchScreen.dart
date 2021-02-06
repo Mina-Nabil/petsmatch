@@ -30,16 +30,15 @@ class PetMatchScreen extends StatelessWidget {
           ),
         ),
 
+
         SafeArea(
           bottom: false,
           child: Scaffold(
             backgroundColor: Colors.transparent,
-            body: Padding(
-              padding: EdgeInsets.only(bottom: MediaQuery.of(context).padding.bottom),
-              child: body,
-            ),
+            body: body,
           ),
-        )
+        ),
+      
       ],
     );
   }
