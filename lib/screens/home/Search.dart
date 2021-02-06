@@ -126,9 +126,9 @@ class _SearchScreen extends State<SearchScreen> {
                 )),
             ]),
 
-          bodyPadding: EdgeInsets.only(bottom: MediaQuery.of(context).padding.bottom),
+          bodyPadding: EdgeInsets.zero,
           body: ListView(
-            padding: EdgeInsets.zero,
+            padding: EdgeInsets.only(bottom: MediaQuery.of(context).padding.bottom),
             children: [
 
               //people
