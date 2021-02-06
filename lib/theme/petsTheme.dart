@@ -47,7 +47,7 @@ class PetsTheme {
   static final Color petsBgPurpleColor = petsPurpleColor.withOpacity(.6);
   static final Color petsBgPinkColor = petsPinkColor.withOpacity(.6);
   static final Color petsBgCyanColor = petsCyanColor.withOpacity(.6);
-  static final Color petsWhiteBg = Color.fromARGB(255, 246, 246, 246);
+  static const Color petsWhiteBg = Color.fromARGB(255, 246, 246, 246);
   static final Color petsRedBg = Color.fromARGB(25, 255,0,110);
   static final Color petsGreenBg = Color.fromARGB(25, 6,214,160);
   static final Color petsBlueBg = Color.fromARGB(25, 61,107,255);

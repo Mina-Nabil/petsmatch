@@ -74,7 +74,8 @@ class _LoginScreenState extends State<LoginScreen> {
     void fbLogin() {
       print("FB Login");
       if (true) {
-        Navigator.of(context).pushReplacement(new PageTransition(child: HomeScreen(), type: PageTransitionType.fade));
+        //Navigator.of(context).pushReplacement(new PageTransition(child: HomeScreen(), type: PageTransitionType.fade));
+        Navigator.of(context).pushReplacementNamed('/home' );
       }
     }
 

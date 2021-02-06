@@ -7,7 +7,7 @@ import 'package:petmatch/models/User.dart';
 import 'package:petmatch/theme/petsTheme.dart';
 import 'package:petmatch/widgets/feed/UserNameRole.dart';
 import 'package:petmatch/widgets/main/UserAvatar.dart';
-import 'package:petmatch/widgets/screens/basescreen.dart';
+import 'package:petmatch/widgets/screens/PetMatchContainer.dart';
 
 class Chat {
   Chat({
@@ -72,22 +72,15 @@ List<Chat> _recentChats = [
 
   @override
   Widget build(BuildContext context) {
-    return BaseScreen(
-      titleText: "Chat",
-      titleStyle: TextStyle(fontFamily: "Roboto", fontSize: PetsTheme.getMuchLargerFont(), color: PetsTheme.whiteBarColor, fontWeight: FontWeight.bold),
-      titleCenter: false,
-      isAppBarBackArrow: false,
-      isNavBar: true,
-      isLeftPadding: false,
-      isRightPadding: false,
+    return PetMatchContainer(
 
-      child: Container(
-          decoration: BoxDecoration(
-          color: Colors.white,
-          borderRadius: BorderRadius.only(
-          topLeft: Radius.circular(20),
-          topRight: Radius.circular(20))
-        ),
+      header: Text("Chats",
+        style: TextStyle(fontFamily: "Roboto", fontSize: PetsTheme.getMuchLargerFont(), color: PetsTheme.whiteBarColor, fontWeight: FontWeight.bold),
+      ),
+
+      bodyPadding: EdgeInsets.zero,
+      bodyBackgroundColor: Colors.white,
+      body: Container(
 
         child: ListView.builder(
           itemCount: _recentChats.length,
@@ -98,7 +91,7 @@ List<Chat> _recentChats = [
               actionPane: SlidableDrawerActionPane(),
               actionExtentRatio: 1/6,
               child: ListTile(
-                contentPadding: EdgeInsets.symmetric(horizontal: PetsTheme.getLargerPadMarg()),
+                contentPadding: EdgeInsets.symmetric(vertical: PetsTheme.getSmallerPadMarg() ,horizontal: 20),
                 leading: UserAvatar(image: _recentChats[index].user.image,imageRatio: 1,),
                 title: UserNameRole(name:  _recentChats[index].user.name, role:  _recentChats[index].user.whoIAm()),
                 subtitle: Text(_recentChats[index].lastText, style: TextStyle(color: PetsTheme.blackTextColor),),

@@ -127,7 +127,7 @@ class NavBar extends CustomPainter {
 
     final double pawImageRatio = 0.65;
 
-    Path bar = new Path()
+   /* Path bar = new Path()
       ..moveTo(0, topHeight)
       // ..lineTo(actualBar1Width, topHeight)
       // ..arcToPoint(new Offset(_arc1X * size.width, _arc1Y * size.height),
@@ -140,7 +140,7 @@ class NavBar extends CustomPainter {
       ..lineTo(0, size.height)
       ..lineTo(0, topHeight);
     canvas.drawPath(bar, _barPainter);
-    canvas.drawLine(new Offset(0, topHeight), new Offset(size.width, topHeight), _barStroker);
+    canvas.drawLine(new Offset(0, topHeight), new Offset(size.width, topHeight), _barStroker);*/
     Path paw = new Path()
       ..moveTo(_pawQuad1StartX * size.width, _topPawY * size.height)
       ..quadraticBezierTo(_pawQuad1X1 * size.width, _pawQuad1Y1 * size.height, _pawQuad1EndX * size.width, _botPawY * size.height)

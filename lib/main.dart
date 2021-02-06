@@ -1,9 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:page_transition/page_transition.dart';
-import 'package:petmatch/screens/home/Notifications.dart';
 import 'package:petmatch/screens/home/Search.dart';
-import 'package:petmatch/screens/home/chart.dart';
-import 'package:petmatch/screens/home/home.dart';
+import 'package:petmatch/widgets/screens/PetMatchMainScreen.dart';
 import 'package:petmatch/screens/login/splash.dart';
 import 'package:petmatch/theme/petsTheme.dart';
 
@@ -18,13 +16,7 @@ class MyApp extends StatelessWidget {
       onGenerateRoute: (settings) {
         switch (settings.name) {
           case '/home':
-            return PageTransition(child: HomeScreen(), type: PageTransitionType.bottomToTop);
-            break;
-          case '/notifications':
-            return PageTransition(child: NotificationsScreen(), type: PageTransitionType.bottomToTop);
-            break;
-          case '/chat':
-            return PageTransition(child: ChatScreen(), type: PageTransitionType.bottomToTop);
+            return PageTransition(child: PetMatchMainScreen(), type: PageTransitionType.bottomToTop);
             break;
           case '/search':
             return PageTransition(child: SearchScreen(), type: PageTransitionType.bottomToTop);
