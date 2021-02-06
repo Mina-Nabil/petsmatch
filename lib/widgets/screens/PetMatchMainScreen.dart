@@ -65,7 +65,8 @@ class _PetMatchMainScreenState extends State<PetMatchMainScreen> with SingleTick
       ),
 
       SafeArea(
-        maintainBottomViewPadding: true,
+        bottom: false,
+
         child: DefaultTabController(
           length: 5,
 
@@ -78,6 +79,7 @@ class _PetMatchMainScreenState extends State<PetMatchMainScreen> with SingleTick
             ),
 
             bottomNavigationBar: Container(
+              padding: EdgeInsets.only(bottom: 10),
               color: Colors.white,
               child: TabBar(
                 controller: _tabController,
