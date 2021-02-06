@@ -53,20 +53,23 @@ class _PetMatchMainScreenState extends State<PetMatchMainScreen> with SingleTick
       
       //Background Image
       //standalone to be out of safe area
-      Container(
-        height: MediaQuery.of(context).size.height, 
-        width: MediaQuery.of(context).size.width,
-        child: Image.asset(
-          "assets/images/masks/def_blue.png",
-          fit: BoxFit.cover,
-          color: PetsTheme.currentBgMainColor.withOpacity(1.0),
-          colorBlendMode: BlendMode.srcOut,
+      SafeArea(
+        top: false,
+        right: false,
+        left: false,
+        child: Container(
+          height: MediaQuery.of(context).size.height, 
+          width: MediaQuery.of(context).size.width,
+          child: Image.asset(
+            "assets/images/masks/def_blue.png",
+            fit: BoxFit.cover,
+            color: PetsTheme.currentBgMainColor.withOpacity(1.0),
+            colorBlendMode: BlendMode.srcOut,
+          ),
         ),
       ),
 
       SafeArea(
-        bottom: false,
-
         child: DefaultTabController(
           length: 5,
 
@@ -79,7 +82,6 @@ class _PetMatchMainScreenState extends State<PetMatchMainScreen> with SingleTick
             ),
 
             bottomNavigationBar: Container(
-              padding: EdgeInsets.only(bottom: 10),
               color: Colors.white,
               child: TabBar(
                 controller: _tabController,

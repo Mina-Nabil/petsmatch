@@ -9,7 +9,7 @@ class PetMatchContainer extends StatelessWidget {
     this.header,
     this.headerPadding = const EdgeInsets.all(20), /*equal to BorderRadius*/
     this.body,
-    this.bodyPadding =  const EdgeInsets.symmetric(horizontal: 20), /*equal to BorderRadius*/
+    this.bodyPadding =  const EdgeInsets.symmetric(horizontal: 20,), /*equal to BorderRadius*/
     this.bodyBackgroundColor = PetsTheme.petsWhiteBg,
   });
 

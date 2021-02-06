@@ -43,13 +43,19 @@ class NotificationsScreen extends StatelessWidget {
         style: TextStyle(fontFamily: "Roboto", fontSize: PetsTheme.getMuchLargerFont(), color: PetsTheme.whiteBarColor, fontWeight: FontWeight.bold),
       ),
       body: ListView(
+        padding: EdgeInsets.zero,
         children: [
           ..._notifications.map((notification) {
-            return ListTile(
-              contentPadding: EdgeInsets.symmetric(vertical: PetsTheme.getMeduimPadMarg()),
-              leading: UserAvatar(image: notification.imageurl, imageRatio: 1,),
-              title: Text(notification.text, style: TextStyle(fontSize: PetsTheme.getSmallFont()),),
-              trailing: Text(timeago.format(notification.datetime, locale: "en_short"), style: TextStyle(fontSize: PetsTheme.getVerySmallFont(), color: Colors.grey),),
+            return Column(
+              children: [
+                ListTile(
+                  contentPadding: EdgeInsets.symmetric(vertical: PetsTheme.getLargePadMarg()),
+                  leading: UserAvatar(image: notification.imageurl, imageRatio: 1,),
+                  title: Text(notification.text, style: TextStyle(fontSize: PetsTheme.getSmallFont()),),
+                  trailing: Text(timeago.format(notification.datetime, locale: "en_short"), style: TextStyle(fontSize: PetsTheme.getVerySmallFont(), color: Colors.grey),),
+                ),
+                Divider( height: 0,thickness: 1,),
+              ]
             );
           }).toList()
         ],

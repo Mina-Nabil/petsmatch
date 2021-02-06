@@ -61,7 +61,7 @@ final String searchIconPath = "assets/images/icons/main/search.svg";
     }
 
     return PetMatchContainer(
-
+      headerPadding: EdgeInsets.symmetric(horizontal: 20, vertical: 10),
       header: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         mainAxisSize: MainAxisSize.min,
@@ -109,7 +109,7 @@ final String searchIconPath = "assets/images/icons/main/search.svg";
           ),
         ),
 */
-          SizedBox(height: 20,),
+          SizedBox(height: 10,),
           Container(
             width: double.infinity,
             child: SingleChildScrollView(
