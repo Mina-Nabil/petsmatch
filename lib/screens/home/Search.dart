@@ -131,6 +131,7 @@ class _SearchScreen extends State<SearchScreen> {
             children: [
 
               //people
+              if(searchResultsPeople.isNotEmpty) 
               Container(
                 margin: EdgeInsets.only(bottom :PetsTheme.getLargerPadMarg()),
                 padding: EdgeInsets.all(PetsTheme.getLargerPadMarg()),
@@ -142,7 +143,6 @@ class _SearchScreen extends State<SearchScreen> {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   mainAxisSize: MainAxisSize.min,
                   children: [
-                    if(searchResultsPeople.isNotEmpty) 
                       Container(
                         margin: EdgeInsets.only(bottom: PetsTheme.getMeduimPadMarg()),
                         child: Text("People", style: TextStyle(fontSize: PetsTheme.getMeduimFont(), fontWeight: FontWeight.bold),)),
@@ -162,6 +162,7 @@ class _SearchScreen extends State<SearchScreen> {
               ),
 
               // trainers
+              if(searchResultsTrainers.isNotEmpty) 
               Container(
                 margin: EdgeInsets.only(bottom :PetsTheme.getLargerPadMarg()),
                 padding: EdgeInsets.all(PetsTheme.getLargerPadMarg()),
@@ -173,7 +174,6 @@ class _SearchScreen extends State<SearchScreen> {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   mainAxisSize: MainAxisSize.min,
                   children: [
-                    if(searchResultsTrainers.isNotEmpty) 
                       Container(
                         margin: EdgeInsets.only(bottom: PetsTheme.getMeduimPadMarg()),
                         child: Text("Trainers", style: TextStyle(fontSize: PetsTheme.getMeduimFont(), fontWeight: FontWeight.bold),)),
@@ -194,6 +194,7 @@ class _SearchScreen extends State<SearchScreen> {
 
               // posts
               // trainers
+              if(searchResultsPosts.isNotEmpty)
               Container(
                 padding: EdgeInsets.all(PetsTheme.getLargerPadMarg()),
                   decoration: BoxDecoration(
@@ -204,7 +205,6 @@ class _SearchScreen extends State<SearchScreen> {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   mainAxisSize: MainAxisSize.min,
                   children: [
-                    if(searchResultsPosts.isNotEmpty) 
                       Container(
                         margin: EdgeInsets.only(bottom: PetsTheme.getMeduimPadMarg()),
                         child: Text("Posts", style: TextStyle(fontSize: PetsTheme.getMeduimFont(), fontWeight: FontWeight.bold),)),
