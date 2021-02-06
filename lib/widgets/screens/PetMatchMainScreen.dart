@@ -51,8 +51,14 @@ class _PetMatchMainScreenState extends State<PetMatchMainScreen> with SingleTick
     return Stack(
       children: [
       
-      //Background Image
-      //standalone to be out of safe area
+      //Base background
+      Container(
+        color: Colors.white,
+      ),
+
+      // Background Image
+      // Disable top, right, left safe area as we need the image to be full screen
+      // Except only bottom safe area as we need the safe area under bottom tab bar to be white (base background)
       SafeArea(
         top: false,
         right: false,
