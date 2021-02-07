@@ -35,13 +35,15 @@ class PetMatchContainer extends StatelessWidget {
 
           //body
           Expanded(
-            child: Container(
-              padding: bodyPadding,
-              decoration: BoxDecoration(
-                color: bodyBackgroundColor,
-                borderRadius: BorderRadius.only(topLeft: Radius.circular(20),topRight: Radius.circular(20))
+            child: ClipRRect(
+              borderRadius: BorderRadius.only(topLeft: Radius.circular(20),topRight: Radius.circular(20)),
+              child: Container(
+                padding: bodyPadding,
+                decoration: BoxDecoration(
+                  color: bodyBackgroundColor,
+                ),
+                child: body,
               ),
-              child: body,
             ),
           )
         ],
