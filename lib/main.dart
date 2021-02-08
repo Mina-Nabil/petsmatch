@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:page_transition/page_transition.dart';
 import 'package:petmatch/screens/home/Search.dart';
+import 'package:petmatch/screens/home/ConversationScreen.dart';
 import 'package:petmatch/widgets/screens/PetMatchMainScreen.dart';
 import 'package:petmatch/screens/login/splash.dart';
 import 'package:petmatch/theme/petsTheme.dart';
-
 void main() => runApp(MyApp());
 
 class MyApp extends StatelessWidget {
@@ -20,6 +20,8 @@ class MyApp extends StatelessWidget {
             break;
           case '/search':
             return PageTransition(child: SearchScreen(), type: PageTransitionType.bottomToTop);
+          case '/conversation':
+            return PageTransition(child: ConversationScreen(), type: PageTransitionType.bottomToTop);
           default:
             return null;
         }
