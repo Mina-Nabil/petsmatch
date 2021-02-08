@@ -7,7 +7,7 @@ class PetMatchScreen extends StatelessWidget {
   PetMatchScreen({
     @required this.body,
     this.title,
-    this.backArrow = false,
+    this.backArrow = true,
   });
 
   final Widget body;
@@ -41,15 +41,16 @@ class PetMatchScreen extends StatelessWidget {
           left: true,
           child: Scaffold(
             backgroundColor: Colors.transparent,
-            appBar: AppBar(
+            appBar: (backArrow || title != null)? AppBar(
               backgroundColor: Colors.transparent,
               elevation: 0,
+              titleSpacing: 0,
               leading: backArrow? GestureDetector(
                 child: Center(child: FaIcon(FontAwesomeIcons.chevronLeft)),
                 onTap: () => Navigator.of(context).pop(),
-              ) : null,
+              ) : Container(),
               title: title,
-            ),
+            ) : null,
             
             body: body,
           ),

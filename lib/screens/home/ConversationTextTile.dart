@@ -53,6 +53,7 @@ class ConversationTextTile extends StatelessWidget {
             Container(
               width: 25,
               height: 25,
+              margin: EdgeInsets.only(left: PetsTheme.getSmallestPadMarg()),
               child: UserAvatar(image: image, imageRatio: 1,)
             ),
             SizedBox(width: PetsTheme.getMeduimPadMarg(),),

@@ -19,9 +19,9 @@ class MyApp extends StatelessWidget {
             return PageTransition(child: PetMatchMainScreen(), type: PageTransitionType.bottomToTop);
             break;
           case '/search':
-            return PageTransition(child: SearchScreen(), type: PageTransitionType.bottomToTop);
+            return PageTransition(child: SearchScreen(), type: PageTransitionType.rightToLeft);
           case '/conversation':
-            return PageTransition(child: ConversationScreen(), type: PageTransitionType.bottomToTop);
+            return PageTransition(child: ConversationScreen(), type: PageTransitionType.rightToLeft);
           default:
             return null;
         }
