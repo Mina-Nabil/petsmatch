@@ -44,6 +44,9 @@ dependencies:
   # for creating fuzzy timestamps. (e.g. "5 minutes ago")
   timeago: ^2.0.29
 
+  # for ReadMoreText widget
+  readmore: ^1.0.1
+  
   intl: ^0.16.1
   
   # Slidable list item without dismiss 

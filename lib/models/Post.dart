@@ -149,6 +149,17 @@ RegularPost(
   text: "My Friend <3",
 ),
 
+RegularPost(
+  owner: UserPostOwner(id: 3, name:"Sandy", imageUrl: "https://images.unsplash.com/photo-1558898479-33c0057a5d12", pets: ["picky"]), 
+  commentsCount: 17, 
+  lovesCount: 18, 
+  sharesCount: 3, 
+  postDate: DateTime.now().subtract(new Duration(days: 2)),
+  isLoved: true,
+  text: "Pets come with some powerful health benefits." +
+        "Here’s how caring for an animal can help relieve depression and anxiety, lower stress levels, and even improve your heart health." +
+        "Most pet owners are clear about the immediate joys that come with sharing their lives with companion animals. However, many of us remain unaware of the physical and mental health benefits that can also accompany the pleasure of snuggling up to a furry friend. It’s only recently that studies have begun to scientifically explore the benefits of the human-animal bond.",
+),
 
 ];
 

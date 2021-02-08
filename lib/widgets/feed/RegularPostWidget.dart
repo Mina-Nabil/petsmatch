@@ -4,6 +4,7 @@ import 'package:petmatch/models/Post.dart';
 import 'package:petmatch/theme/petsTheme.dart';
 import 'package:petmatch/widgets/feed/UserNameRole.dart';
 import 'package:petmatch/widgets/main/UserAvatar.dart';
+import 'package:readmore/readmore.dart';
 
 import 'package:timeago/timeago.dart' as timeago;
 
@@ -63,7 +64,8 @@ class _RegularPostWidgetState extends State<RegularPostWidget> {
                 if(widget.post.text != null)
                   Padding(
                     padding: EdgeInsets.only(top: PetsTheme.getLargerPadMarg(), bottom: PetsTheme.getSmallerPadMarg()),
-                    child: Text(widget.post.text, style: TextStyle(fontSize: PetsTheme.getSmallFont()),),
+                    child: ReadMoreText(widget.post.text, style: TextStyle(fontSize: PetsTheme.getSmallFont()),
+                      trimLength: widget.post.image != null ? 150 : 300,),
                   ),
 
                 // DateTime
