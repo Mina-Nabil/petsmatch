@@ -142,24 +142,20 @@ class _RegularPostWidgetState extends State<RegularPostWidget> {
                     // love commnet, share count
                     Row(
                       children: [
-                        Column(
-                          children: [
-                            Text("${widget.post.lovesCount}", style: TextStyle(fontSize: PetsTheme.getSmallFont()),),
-                            Text("Love", style: TextStyle(fontSize: PetsTheme.getSmallFont()),),
-                          ],
+                        GestureDetector(
+                          child: Column(
+                            children: [
+                              Text("${widget.post.lovesCount}", style: TextStyle(fontSize: PetsTheme.getSmallFont()),),
+                              Text("Love", style: TextStyle(fontSize: PetsTheme.getSmallFont()),),
+                            ],
+                          ),
+                          onTap: () => Navigator.of(context).pushNamed('/lovers'),
                         ),
                         SizedBox(width: PetsTheme.getLargePadMarg(),),
                         Column(
                           children: [
                             Text("${widget.post.commentsCount}", style: TextStyle(fontSize: PetsTheme.getSmallFont()),),
                             Text("Comments", style: TextStyle(fontSize: PetsTheme.getSmallFont()),),
-                          ],
-                        ),
-                        SizedBox(width: PetsTheme.getLargePadMarg(),),
-                        Column(
-                          children: [
-                            Text("${widget.post.sharesCount}", style: TextStyle(fontSize: PetsTheme.getSmallFont()),),
-                            Text("Shares", style: TextStyle(fontSize: PetsTheme.getSmallFont()),),
                           ],
                         ),
                       ],
