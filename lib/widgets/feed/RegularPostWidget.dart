@@ -10,11 +10,12 @@ import 'package:timeago/timeago.dart' as timeago;
 
 class RegularPostWidget extends StatefulWidget {
   
-  RegularPostWidget(this.post, {this.contentPadding = EdgeInsets.zero, this.margin = EdgeInsets.zero});
+  RegularPostWidget(this.post, {this.contentPadding = EdgeInsets.zero, this.margin = EdgeInsets.zero, this.enableCommentButton = true});
 
   final RegularPost post;
   final EdgeInsetsGeometry contentPadding;
   final EdgeInsetsGeometry margin;
+  final bool enableCommentButton;
   @override
   _RegularPostWidgetState createState() => _RegularPostWidgetState();
 }
@@ -125,7 +126,7 @@ class _RegularPostWidgetState extends State<RegularPostWidget> {
                           minWidth: 1,
                           splashColor: Colors.transparent,  
                           highlightColor: Colors.transparent,
-                          onPressed: () {},
+                          onPressed: () => widget.enableCommentButton? Navigator.of(context).pushNamed('/post') : null,
                           child: SvgPicture.asset("assets/images/icons/comment.svg",color: Colors.grey, width: PetsTheme.smallIconSize(), height: PetsTheme.smallIconSize() ,)),
                       
                         FlatButton(
@@ -152,11 +153,14 @@ class _RegularPostWidgetState extends State<RegularPostWidget> {
                           onTap: () => Navigator.of(context).pushNamed('/lovers'),
                         ),
                         SizedBox(width: PetsTheme.getLargePadMarg(),),
-                        Column(
-                          children: [
-                            Text("${widget.post.commentsCount}", style: TextStyle(fontSize: PetsTheme.getSmallFont()),),
-                            Text("Comments", style: TextStyle(fontSize: PetsTheme.getSmallFont()),),
-                          ],
+                        GestureDetector(
+                          child: Column(
+                            children: [
+                              Text("${widget.post.commentsCount}", style: TextStyle(fontSize: PetsTheme.getSmallFont()),),
+                              Text("Comments", style: TextStyle(fontSize: PetsTheme.getSmallFont()),),
+                            ],
+                          ),
+                          onTap: ()=> widget.enableCommentButton? Navigator.of(context).pushNamed('/post') : null,
                         ),
                       ],
                      )
@@ -166,7 +170,7 @@ class _RegularPostWidgetState extends State<RegularPostWidget> {
                 
 
                 //Comments
-                GestureDetector(
+              /*  GestureDetector(
                   child: Container(
                     margin: EdgeInsets.symmetric(vertical: PetsTheme.getMuchLargerPadMarg()),
                     padding: EdgeInsets.all(PetsTheme.getMeduimPadMarg()),
@@ -187,7 +191,7 @@ class _RegularPostWidgetState extends State<RegularPostWidget> {
                   ),
                   onTap: () {print("Open comments screen and focus on new comment");},
                 ),
-                
+                */
               ],
             ),
           ),

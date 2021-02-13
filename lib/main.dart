@@ -3,6 +3,7 @@ import 'package:page_transition/page_transition.dart';
 import 'package:petmatch/screens/home/Search.dart';
 import 'package:petmatch/screens/home/ConversationScreen.dart';
 import 'package:petmatch/screens/home/post/LoversScreen.dart';
+import 'package:petmatch/screens/home/post/PostScreen.dart';
 import 'package:petmatch/widgets/screens/PetMatchMainScreen.dart';
 import 'package:petmatch/screens/login/splash.dart';
 import 'package:petmatch/theme/petsTheme.dart';
@@ -25,6 +26,8 @@ class MyApp extends StatelessWidget {
             return PageTransition(child: ConversationScreen(), type: PageTransitionType.rightToLeft);
           case '/lovers':
             return PageTransition(child: LoversScreen(), type: PageTransitionType.bottomToTop);
+          case '/post':
+            return PageTransition(child: PostScreen(), type: PageTransitionType.rightToLeft);
             break; 
           default:
             return null;

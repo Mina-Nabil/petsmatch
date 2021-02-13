@@ -136,7 +136,7 @@ final String searchIconPath = "assets/images/icons/main/search.svg";
               return RegularPostWidget(
                 post,
                 margin: EdgeInsets.symmetric(vertical: PetsTheme.getMeduimPadMarg()),
-                contentPadding: EdgeInsets.symmetric(horizontal: PetsTheme.getMuchLargerPadMarg()),
+                contentPadding: EdgeInsets.only(left: PetsTheme.getMuchLargerPadMarg(), right: PetsTheme.getMuchLargerPadMarg(), bottom: PetsTheme.getLargePadMarg()),
               );
             }
           ).toList(),
