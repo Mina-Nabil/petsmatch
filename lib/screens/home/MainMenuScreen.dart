@@ -36,7 +36,7 @@ class MainMenuScreen extends StatelessWidget {
                         margin: EdgeInsets.all(PetsTheme.getSmallPadMarg()),
                         child: UserAvatar(image: "https://cdn.pixabay.com/photo/2017/09/25/13/12/dog-2785074__340.jpg",imageRatio: 1,),
                       ),
-                      Text("Bella", style: TextStyle(fontSize: PetsTheme.getLargeFont(), color: Colors.white),),
+                      Text("Bella", style: TextStyle(fontSize: PetsTheme.getMeduimFont(), color: Colors.white),),
                     ],
                   ),
                 ),
@@ -49,7 +49,7 @@ class MainMenuScreen extends StatelessWidget {
                         margin: EdgeInsets.all(PetsTheme.getSmallPadMarg()),
                         child: UserAvatar(image: "https://cdn.pixabay.com/photo/2017/09/25/13/12/dog-2785074__340.jpg",imageRatio: 1,),
                       ),
-                      Text("Rusty",style: TextStyle(fontSize: PetsTheme.getLargeFont(), color: Colors.white),),
+                      Text("Rusty",style: TextStyle(fontSize: PetsTheme.getMeduimFont(), color: Colors.white),),
                     ],
                   ),
                 ),
@@ -62,7 +62,7 @@ class MainMenuScreen extends StatelessWidget {
                         margin: EdgeInsets.all(PetsTheme.getSmallPadMarg()),
                         child: UserAvatar(image: "https://cdn.pixabay.com/photo/2017/09/25/13/12/dog-2785074__340.jpg",imageRatio: 1,),
                       ),
-                      Text("Rex",style: TextStyle(fontSize: PetsTheme.getLargeFont(), color: Colors.white),),
+                      Text("Rex",style: TextStyle(fontSize: PetsTheme.getMeduimFont(), color: Colors.white),),
                     ],
                   ),
                 ),
@@ -75,7 +75,7 @@ class MainMenuScreen extends StatelessWidget {
                         margin: EdgeInsets.all(PetsTheme.getSmallPadMarg()),
                         child: UserAvatar(image: "https://cdn.pixabay.com/photo/2017/09/25/13/12/dog-2785074__340.jpg",imageRatio: 1,),
                       ),
-                      Text("Lucky", style: TextStyle(fontSize: PetsTheme.getLargeFont(), color: Colors.white),),
+                      Text("Lucky", style: TextStyle(fontSize: PetsTheme.getMeduimFont(), color: Colors.white),),
                     ],
                   ),
                 ),
@@ -85,50 +85,52 @@ class MainMenuScreen extends StatelessWidget {
         ],
       ),
       bodyBackgroundColor: Colors.transparent,
-      body: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          MainMenuItem(
-            margin: EdgeInsets.symmetric(vertical: PetsTheme.getMeduimPadMarg()),
-            text: "Friends", iconPath: "assets/images/icons/menu/friends.svg", 
-            onTap: () {},
-          ),
-          MainMenuItem(
-            margin: EdgeInsets.symmetric(vertical: PetsTheme.getMeduimPadMarg()),
-            text: "Pets", iconPath: "assets/images/icons/menu/pets.svg",
-            onTap: () {},
-          ),
-          MainMenuItem(
-            margin: EdgeInsets.symmetric(vertical: PetsTheme.getMeduimPadMarg()),
-            text: "Trainers", iconPath: "assets/images/icons/menu/trainers.svg",
-          ),
-          MainMenuItem(
-            margin: EdgeInsets.symmetric(vertical: PetsTheme.getMeduimPadMarg()),
-            text: "Vets", iconPath: "assets/images/icons/menu/vets.svg"
-          ),
-          MainMenuItem(
-            margin: EdgeInsets.symmetric(vertical: PetsTheme.getMeduimPadMarg()),
-            text: "Shops", iconPath: "assets/images/icons/menu/shops.svg"
-          ),
-          MainMenuItem(
-            margin: EdgeInsets.symmetric(vertical: PetsTheme.getMeduimPadMarg()),
-            text: "My Walks", iconPath: "assets/images/icons/menu/walks.svg"),
-          MainMenuItem(
-            margin: EdgeInsets.symmetric(vertical: PetsTheme.getMeduimPadMarg()),
-            text: "Matings", iconPath: "assets/images/icons/menu/matings.svg"),
-          MainMenuItem(
-            margin: EdgeInsets.symmetric(vertical: PetsTheme.getMeduimPadMarg()),
-            text: "Settings", iconPath: "assets/images/icons/menu/settings.svg"
-          ),
-          MainMenuItem(
-            margin: EdgeInsets.symmetric(vertical: PetsTheme.getMeduimPadMarg()),
-            text: "Help & Support", iconPath: "assets/images/icons/menu/helpSupport.svg"
-          ),
-          MainMenuItem(
-            margin: EdgeInsets.symmetric(vertical: PetsTheme.getMeduimPadMarg()),
-            text: "Logout", iconPath: "assets/images/icons/menu/logout.svg"
-          ),
-        ],
+      body: SingleChildScrollView(
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            MainMenuItem(
+              margin: EdgeInsets.symmetric(vertical: PetsTheme.getMeduimPadMarg()),
+              text: "Friends", iconPath: "assets/images/icons/menu/friends.svg", 
+              onTap: () {},
+            ),
+            MainMenuItem(
+              margin: EdgeInsets.symmetric(vertical: PetsTheme.getMeduimPadMarg()),
+              text: "Pets", iconPath: "assets/images/icons/menu/pets.svg",
+              onTap: () {},
+            ),
+            MainMenuItem(
+              margin: EdgeInsets.symmetric(vertical: PetsTheme.getMeduimPadMarg()),
+              text: "Trainers", iconPath: "assets/images/icons/menu/trainers.svg",
+            ),
+            MainMenuItem(
+              margin: EdgeInsets.symmetric(vertical: PetsTheme.getMeduimPadMarg()),
+              text: "Vets", iconPath: "assets/images/icons/menu/vets.svg"
+            ),
+            MainMenuItem(
+              margin: EdgeInsets.symmetric(vertical: PetsTheme.getMeduimPadMarg()),
+              text: "Shops", iconPath: "assets/images/icons/menu/shops.svg"
+            ),
+            MainMenuItem(
+              margin: EdgeInsets.symmetric(vertical: PetsTheme.getMeduimPadMarg()),
+              text: "My Walks", iconPath: "assets/images/icons/menu/walks.svg"),
+            MainMenuItem(
+              margin: EdgeInsets.symmetric(vertical: PetsTheme.getMeduimPadMarg()),
+              text: "Matings", iconPath: "assets/images/icons/menu/matings.svg"),
+            MainMenuItem(
+              margin: EdgeInsets.symmetric(vertical: PetsTheme.getMeduimPadMarg()),
+              text: "Settings", iconPath: "assets/images/icons/menu/settings.svg"
+            ),
+            MainMenuItem(
+              margin: EdgeInsets.symmetric(vertical: PetsTheme.getMeduimPadMarg()),
+              text: "Help & Support", iconPath: "assets/images/icons/menu/helpSupport.svg"
+            ),
+            MainMenuItem(
+              margin: EdgeInsets.symmetric(vertical: PetsTheme.getMeduimPadMarg()),
+              text: "Logout", iconPath: "assets/images/icons/menu/logout.svg"
+            ),
+          ],
+        ),
       ),
     );
   }
