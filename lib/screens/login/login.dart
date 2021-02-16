@@ -74,7 +74,6 @@ class _LoginScreenState extends State<LoginScreen> {
     void fbLogin() {
       print("FB Login");
       if (true) {
-        //Navigator.of(context).pushReplacement(new PageTransition(child: HomeScreen(), type: PageTransitionType.fade));
         Navigator.of(context).pushReplacementNamed('/home' );
       }
     }
@@ -82,7 +81,7 @@ class _LoginScreenState extends State<LoginScreen> {
     void googleLogin() {
       print("Google");
       if (true) {
-        Navigator.of(context).pushReplacement(new PageTransition(child: SearchScreen(), type: PageTransitionType.fade));
+        Navigator.of(context).pushReplacementNamed('/home' );
       }
     }
 

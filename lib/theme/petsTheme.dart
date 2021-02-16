@@ -85,6 +85,7 @@ class PetsTheme {
   static double _verySmallFont;
 
   //Icons Size
+  static double _verySmallIconSize;
   static double _smallIconSize;
 
   //Padding & Marging .. use initFonts before use
@@ -104,9 +105,11 @@ class PetsTheme {
   static double _navbarInnerHeightRatio;
 
   static void _initFonts(BuildContext context) {
-    //Font init
+    
+    _verySmallIconSize = (MediaQuery.of(context).size.width > smallScreenWidth)? 15 : 10;
     _smallIconSize = (MediaQuery.of(context).size.width > smallScreenWidth)? 25 : 15;
-
+    
+    //Font init
     _veryLargeFont = (MediaQuery.of(context).size.width > bigScreenWidth)
         ? 50
         : (MediaQuery.of(context).size.width > smallScreenWidth)
@@ -210,6 +213,11 @@ class PetsTheme {
   static double getVerySmallFont() {
     assert(_context != null);
     return _verySmallFont;
+  }
+
+  static double verySmallIconSize() {
+    assert(_context != null);
+    return _verySmallIconSize;
   }
 
   static double smallIconSize() {

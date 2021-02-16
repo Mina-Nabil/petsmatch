@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:petmatch/screens/home/MainMenuScreen.dart';
 import 'package:petmatch/screens/home/NotificationsScreen.dart';
 import 'package:petmatch/screens/home/chatScreen.dart';
 import 'package:petmatch/screens/home/HomeScreen.dart';
@@ -43,7 +44,7 @@ class _PetMatchMainScreenState extends State<PetMatchMainScreen> with SingleTick
     NotificationsScreen(),
     Container(),
     ChatScreen(),
-    Container()
+    MainMenuScreen(),
   ];
 
   @override
