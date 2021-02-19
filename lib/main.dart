@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:page_transition/page_transition.dart';
-import 'package:petmatch/screens/home/Search.dart';
-import 'package:petmatch/screens/home/ConversationScreen.dart';
-import 'package:petmatch/screens/home/post/LoversScreen.dart';
-import 'package:petmatch/screens/home/post/PostScreen.dart';
+import 'package:petmatch/screens/main_screen/SearchScreen.dart';
+import 'package:petmatch/screens/main_screen/ConversationScreen.dart';
+import 'package:petmatch/screens/post_screens/LoversScreen.dart';
+import 'package:petmatch/screens/post_screens/PostScreen.dart';
 import 'package:petmatch/widgets/screens/PetMatchMainScreen.dart';
 import 'package:petmatch/screens/login/splash.dart';
 import 'package:petmatch/theme/petsTheme.dart';

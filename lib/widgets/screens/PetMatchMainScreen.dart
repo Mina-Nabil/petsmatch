@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
-import 'package:petmatch/screens/home/MainMenuScreen.dart';
-import 'package:petmatch/screens/home/NotificationsScreen.dart';
-import 'package:petmatch/screens/home/chatScreen.dart';
-import 'package:petmatch/screens/home/HomeScreen.dart';
+import 'package:petmatch/screens/main_screen/main_tabs/MainMenuScreen.dart';
+import 'package:petmatch/screens/main_screen/main_tabs/NotificationsScreen.dart';
+import 'package:petmatch/screens/main_screen/main_tabs/chatScreen.dart';
+import 'package:petmatch/screens/main_screen/main_tabs/HomeScreen.dart';
 import 'package:petmatch/settings/paths.dart';
 import 'package:petmatch/theme/petsTheme.dart';
 
