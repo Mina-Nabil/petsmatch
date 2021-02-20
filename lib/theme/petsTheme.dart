@@ -88,6 +88,12 @@ class PetsTheme {
   static double _verySmallIconSize;
   static double _smallIconSize;
 
+  static double _radius1;
+  static double _radius2;
+  static double _radius3;
+  static double _radius4;
+  static double _radius5;
+
   //Padding & Marging .. use initFonts before use
   static double _smallPadMarg;
   static double _smallerPadMarg;
@@ -158,6 +164,14 @@ class PetsTheme {
             : .25;
     
     _navbarInnerHeightRatio = 0.3;
+
+    _radius1 = 15;
+    _radius2 = 20;
+    _radius3 = 25;
+    _radius4 = 35;
+    _radius5 = 45;
+
+
 
     //Padding & Marging Init
     _smallPadMarg = (MediaQuery.of(context).size.width > bigScreenWidth)
@@ -278,6 +292,31 @@ class PetsTheme {
   static double getNavBarInnerHeight() {
     assert(_context != null);
     return _navbarInnerHeightRatio;
+  }
+
+  static get radius1 {
+    assert(_context != null);
+    return _radius1;
+  }
+  
+  static get radius2 {
+    assert(_context != null);
+    return _radius2;
+  }
+
+  static get radius3 {
+    assert(_context != null);
+    return _radius3;
+  }
+
+  static get radius4 {
+    assert(_context != null);
+    return _radius4;
+  }
+
+  static get radius5 {
+    assert(_context != null);
+    return _radius5;
   }
 
   static get currentMainColor {
