@@ -21,6 +21,7 @@ class NavBarHolder extends StatefulWidget {
   static final double pawEnd = 1;
 
   //paw circles ratio
+  static final double yEnd = 0.1;
   static final double xStart = 0.4;
   static final double xEnd = 0.6;
   static final double xExpandedStart = 0.2;
@@ -92,50 +93,7 @@ class _NavBarHolderState extends State<NavBarHolder> with SingleTickerProviderSt
                       child: GestureDetector(behavior: HitTestBehavior.opaque, onTapUp: navTapHandle),
                     )
                   : Container(),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                mainAxisSize: MainAxisSize.max,
-                crossAxisAlignment: CrossAxisAlignment.end,
-                children: <Widget>[
-                  Flexible(
-                    flex: 2,
-                    child: FlatButton(
-                      child: getNavButtonIconContainer(Paths.home_icon_svg_file, _pawScale.value * -1 + 1, isPage: true),
-                      onPressed: () {
-                        Navigator.of(context).popAndPushNamed('/home');
-                      },
-                    ),
-                  ),
-                  Flexible(
-                    flex: 2,
-                    child: FlatButton(
-                      child: getNavButtonIconContainer(Paths.notification_icon_svg_file, _pawScale.value * -1 + 1),
-                      onPressed: () {
-                        Navigator.of(context).popAndPushNamed('/notifications');
-                      },
-                      splashColor: Colors.transparent,  
-                      highlightColor: Colors.transparent,
-                    ),
-                  ),
-                  Flexible(
-                    flex: 3,
-                    child: Container(),
-                  ),
-                  Flexible(
-                    flex: 2,
-                    child: FlatButton(
-                      child: getNavButtonIconContainer(Paths.chat_icon_svg_file, _pawScale.value * -1 + 1),
-                      onPressed: () {
-                        Navigator.of(context).popAndPushNamed('/chat');
-                      },
-                    ),
-                  ),
-                  Flexible(
-                    flex: 2,
-                    child: getNavButtonIconContainer(Paths.more_icon_svg_file, _pawScale.value * -1 + 1),
-                  ),
-                ],
-              )
+              
             ],
           ),
         );
@@ -143,43 +101,17 @@ class _NavBarHolderState extends State<NavBarHolder> with SingleTickerProviderSt
     );
   }
 
-  Widget getNavButtonContainer(imgPath, opacity) {
-    return Opacity(
-      opacity: opacity,
-      child: Container(
-        padding: EdgeInsets.all(NavBarHolder.navBarButtonPadding * MediaQuery.of(context).size.height),
-        margin: EdgeInsets.only(bottom: NavBarHolder.navBarButtonPadding / 2 * MediaQuery.of(context).size.height),
-        height: NavBarHolder.navBarContainerHeight * MediaQuery.of(context).size.height,
-        alignment: Alignment.center,
-        child: Image.asset(
-          imgPath,
-          fit: BoxFit.contain,
-        ),
-      ),
-    );
-  }
 
-  Widget getNavButtonIconContainer(String icon, opacity, {bool isPage = false}) {
-    return Opacity(
-      opacity: opacity,
-      child: Container(
-        height: NavBarHolder.navBarContainerHeight * MediaQuery.of(context).size.height,
-        width: MediaQuery.of(context).size.width/4,
-        alignment: Alignment.center,
-        child: SvgPicture.asset(
-                  icon,
-                  color: (isPage) ? PetsTheme.currentMainColor : PetsTheme.petsGrayIconColor,
-                ),
-      ),
-    );
-  }
 
   bool _itIsHome(TapUpDetails upDetails) {
+    double heightLimit = MediaQuery.of(context).size.height * NavBarHolder.yEnd;
     double firstLimit = MediaQuery.of(context).size.width * NavBarHolder.xStart;
     double endLimit = MediaQuery.of(context).size.width * NavBarHolder.xEnd;
     double expanedFirstLimit = MediaQuery.of(context).size.width * NavBarHolder.xExpandedStart;
     double expandedEndLimit = MediaQuery.of(context).size.width * NavBarHolder.xExpandedEnd;
-    return ((upDetails.localPosition.dx > firstLimit && upDetails.localPosition.dx < endLimit && !NavBarHolder.expanded) ||
+    print((upDetails.localPosition.dx > firstLimit && upDetails.localPosition.dx < endLimit && heightLimit < upDetails.localPosition.dy && !NavBarHolder.expanded) ||
+        (upDetails.localPosition.dx > expanedFirstLimit && upDetails.localPosition.dx < expandedEndLimit && NavBarHolder.expanded));
+    return ((upDetails.localPosition.dx > firstLimit && upDetails.localPosition.dx < endLimit && heightLimit < upDetails.localPosition.dy && !NavBarHolder.expanded) ||
         (upDetails.localPosition.dx > expanedFirstLimit && upDetails.localPosition.dx < expandedEndLimit && NavBarHolder.expanded));
   }
 

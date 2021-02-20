@@ -6,6 +6,9 @@ import 'package:petmatch/screens/main_screen/main_tabs/chatScreen.dart';
 import 'package:petmatch/screens/main_screen/main_tabs/HomeScreen.dart';
 import 'package:petmatch/settings/paths.dart';
 import 'package:petmatch/theme/petsTheme.dart';
+import 'package:petmatch/widgets/custom/CustomStack.dart';
+import 'package:petmatch/widgets/main/NavBarHolder.dart';
+import 'package:petmatch/widgets/screens/basescreen.dart';
 
 
 class PetMatchMainScreen extends StatefulWidget {
@@ -49,7 +52,9 @@ class _PetMatchMainScreenState extends State<PetMatchMainScreen> with SingleTick
 
   @override
   Widget build(BuildContext context) {
-    return Stack(
+    return CustomStack(
+      alignment: Alignment.bottomCenter,
+      isNavBar: true,
       children: [
 
       // Background Image
@@ -105,7 +110,7 @@ class _PetMatchMainScreenState extends State<PetMatchMainScreen> with SingleTick
       ),
 
       //Paw
-      //Align(alignment: Alignment.bottomCenter, child: NavBarHolder()),
+      Align(alignment: Alignment.bottomCenter, child: NavBarHolder()),
       
     ]
     );
