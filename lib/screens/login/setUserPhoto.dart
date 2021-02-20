@@ -6,7 +6,6 @@ import 'package:flutter_svg/svg.dart';
 import 'package:image_cropper/image_cropper.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:page_transition/page_transition.dart';
-import 'package:petmatch/widgets/screens/basescreen.dart';
 import 'package:petmatch/screens/login/VerifyMail.dart';
 import 'package:petmatch/settings/paths.dart';
 import 'package:petmatch/theme/petsTheme.dart';

@@ -8,7 +8,7 @@ import 'package:petmatch/widgets/feed/RegularPostWidget.dart';
 import 'package:petmatch/widgets/feed/UserNameRole.dart';
 import 'package:petmatch/widgets/main/UserAvatar.dart';
 import 'package:petmatch/widgets/screens/PetMatchContainer.dart';
-import 'package:petmatch/widgets/screens/PetMatchScreen.dart';
+import 'package:petmatch/widgets/screens/PetMatchSingleScreen.dart';
 import 'package:petmatch/theme/petsTheme.dart';
 
 class SearchScreen extends StatefulWidget {
@@ -58,7 +58,7 @@ class _SearchScreen extends State<SearchScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return PetMatchScreen(
+    return PetMatchSingleScreen(
       
       title: Text("What are you looking for?",
         style: TextStyle(

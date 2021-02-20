@@ -8,14 +8,7 @@ import 'dart:async';
 import 'package:flutter/services.dart' show rootBundle;
 
 class NavBar extends CustomPainter {
-  static final Paint _barPainter = new Paint()
-    ..color = PetsTheme.whiteBarColor
-    ..style = PaintingStyle.fill;
 
-  static final Paint _barStroker = new Paint()
-    ..color = PetsTheme.petsGrayIconColor
-    ..strokeWidth = 2
-    ..style = PaintingStyle.stroke;
 
   Paint _pawPainter = new Paint()
     ..color = PetsTheme.currentMainColor

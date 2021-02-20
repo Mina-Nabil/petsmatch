@@ -3,7 +3,7 @@ import 'dart:ui';
 import 'package:flutter/material.dart';
 import 'package:petmatch/widgets/main/UserAvatar.dart';
 import 'package:petmatch/widgets/screens/PetMatchContainer.dart';
-import 'package:petmatch/widgets/screens/PetMatchScreen.dart';
+import 'package:petmatch/widgets/screens/PetMatchSingleScreen.dart';
 import 'package:petmatch/theme/petsTheme.dart';
 
 
@@ -18,8 +18,8 @@ class _SearchScreen extends State<ConversationScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return PetMatchScreen(
-      backArrow: true,
+    return PetMatchSingleScreen(
+      backArrow: false,
       title: Row(
         children: [
           Container(

@@ -180,7 +180,7 @@ class LoginScreenSetup extends StatelessWidget {
       ),
     );
 
-    return CommonScreenSetup(
+    return  CommonScreenSetup(
       //top Area Widget
       Container(
           width: MediaQuery.of(context).size.width,

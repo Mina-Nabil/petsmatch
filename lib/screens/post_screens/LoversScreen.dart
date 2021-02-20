@@ -6,7 +6,7 @@ import 'package:petmatch/models/User.dart';
 import 'package:petmatch/widgets/feed/UserNameRole.dart';
 import 'package:petmatch/widgets/main/UserAvatar.dart';
 import 'package:petmatch/widgets/screens/PetMatchContainer.dart';
-import 'package:petmatch/widgets/screens/PetMatchScreen.dart';
+import 'package:petmatch/widgets/screens/PetMatchSingleScreen.dart';
 import 'package:petmatch/theme/petsTheme.dart';
 
 
@@ -28,7 +28,7 @@ class _SearchScreen extends State<LoversScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return PetMatchScreen(
+    return PetMatchSingleScreen(
       backArrow: true,
       title: Text("${lovers.length} Loves",
               style: TextStyle(fontFamily: "Roboto", fontSize: PetsTheme.getMuchLargerFont(), color: PetsTheme.whiteBarColor, fontWeight: FontWeight.bold),

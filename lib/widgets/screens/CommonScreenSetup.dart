@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:petmatch/widgets/screens/basescreen.dart';
+import 'package:petmatch/widgets/screens/PetMatchSingleScreen.dart';
 import 'package:petmatch/theme/petsTheme.dart';
 
 class CommonScreenSetup extends StatelessWidget {
@@ -34,19 +34,12 @@ class CommonScreenSetup extends StatelessWidget {
       bottomAreaFlex = 28;
     }
 
-    return BaseScreen(
-      isRightPadding: false,
-      isLeftPadding: false,
-      isPortraitLock: isPortraitLock,
-      isBottomPadding: false,
-      isTopPadding: false,
-      isKeyBoardChangeSize: true,
-      noTitle: !isTitle,
-      isTopColorDark: false,
-      isNavBar: this.isNavBar,
-      backGroundColor: screenBgColor,
-      backGroundMask: screenBgMask,
-      child: LayoutBuilder(
+    return PetMatchSingleScreen(
+      backgroundMask: screenBgMask,
+      backArrow: false,
+      enableRotation: false,
+
+      body: LayoutBuilder(
         builder: (BuildContext context, BoxConstraints constraints) {
           return SingleChildScrollView(
               child: Container(

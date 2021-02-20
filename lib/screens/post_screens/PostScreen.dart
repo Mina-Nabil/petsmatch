@@ -9,7 +9,7 @@ import 'package:petmatch/widgets/feed/RegularPostWidget.dart';
 import 'package:petmatch/widgets/feed/UserNameRole.dart';
 import 'package:petmatch/widgets/main/UserAvatar.dart';
 import 'package:petmatch/widgets/screens/PetMatchContainer.dart';
-import 'package:petmatch/widgets/screens/PetMatchScreen.dart';
+import 'package:petmatch/widgets/screens/PetMatchSingleScreen.dart';
 import 'package:petmatch/theme/petsTheme.dart';
 
 
@@ -33,7 +33,7 @@ class _SearchScreen extends State<PostScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return PetMatchScreen(
+    return PetMatchSingleScreen(
       body: PetMatchContainer(
         headerPadding: EdgeInsets.zero,
         bodyPadding: EdgeInsets.only(bottom: MediaQuery.of(context).padding.bottom),

@@ -6,11 +6,9 @@ import 'package:flutter/services.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:page_transition/page_transition.dart';
-import 'package:petmatch/widgets/screens/basescreen.dart';
 import 'package:petmatch/screens/main_screen/SearchScreen.dart';
 import 'package:petmatch/screens/home.dart';
 import 'package:petmatch/screens/login/regTypes.dart';
-import 'package:petmatch/screens/login/sendMailCode.dart';
 import 'package:petmatch/theme/petsTheme.dart';
 import 'package:petmatch/widgets/screens/LoginScreenSetup.dart';
 import 'package:petmatch/widgets/buttons/SubmitButton.dart';
@@ -68,7 +66,6 @@ class _LoginScreenState extends State<LoginScreen> {
 
     void forgotPass() {
       print("Forget Pass");
-      Navigator.of(context).push(PageTransition(type: PageTransitionType.fade, child: VerifyMailCodeScreen()));
     }
 
     void fbLogin() {

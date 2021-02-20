@@ -4,7 +4,7 @@ import 'package:petmatch/screens/main_screen/SearchScreen.dart';
 import 'package:petmatch/screens/main_screen/ConversationScreen.dart';
 import 'package:petmatch/screens/post_screens/LoversScreen.dart';
 import 'package:petmatch/screens/post_screens/PostScreen.dart';
-import 'package:petmatch/widgets/screens/PetMatchMainScreen.dart';
+import 'package:petmatch/widgets/screens/PetMatchTabsScreen.dart';
 import 'package:petmatch/screens/login/splash.dart';
 import 'package:petmatch/theme/petsTheme.dart';
 void main() => runApp(MyApp());

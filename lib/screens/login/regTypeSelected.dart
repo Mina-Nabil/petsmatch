@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:page_transition/page_transition.dart';
-import 'package:petmatch/widgets/screens/basescreen.dart';
 import 'package:petmatch/screens/login/ownerRegistration.dart';
 import 'package:petmatch/screens/login/storeRegistration.dart';
 import 'package:petmatch/screens/login/trainerRegistration.dart';

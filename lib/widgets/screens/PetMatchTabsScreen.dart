@@ -8,7 +8,6 @@ import 'package:petmatch/settings/paths.dart';
 import 'package:petmatch/theme/petsTheme.dart';
 import 'package:petmatch/widgets/custom/CustomStack.dart';
 import 'package:petmatch/widgets/main/NavBarHolder.dart';
-import 'package:petmatch/widgets/screens/basescreen.dart';
 
 class PetMatchMainScreen extends StatefulWidget {
   @override
@@ -46,6 +45,7 @@ class _PetMatchMainScreenState extends State<PetMatchMainScreen> with SingleTick
     ChatScreen(),
     MainMenuScreen(),
   ];
+  
 
   @override
   Widget build(BuildContext context) {
@@ -63,52 +63,54 @@ class _PetMatchMainScreenState extends State<PetMatchMainScreen> with SingleTick
         ),
       ),
 
-      DefaultTabController(
-        length: 5,
-        child: Scaffold(
-          backgroundColor: Colors.transparent,
-          body: TabBarView(physics: NeverScrollableScrollPhysics(), controller: _tabController, children: tabs),
-          bottomNavigationBar: Container(
-            // padding: EdgeInsets.only(bottom: MediaQuery.of(context).padding.bottom),
-            color: Colors.white,
-            child: SafeArea(
-                child: TabBar(
-              controller: _tabController,
-              tabs: [
-                Tab(
-                  icon: SvgPicture.asset(
-                    "assets/images/icons/pages/home.svg",
-                    color: _tabController.index == 0 ? PetsTheme.currentMainColor : PetsTheme.petsGrayIconColor,
-                  ),
-                ),
-                Tab(
-                  icon: SvgPicture.asset(
-                    "assets/images/icons/pages/notifications.svg",
-                    color: _tabController.index == 1 ? PetsTheme.currentMainColor : PetsTheme.petsGrayIconColor,
-                  ),
-                ),
-                Tab(
-                  text: "",
-                ),
-                Tab(
+  SafeArea(
+    bottom: false,
+    child: DefaultTabController(
+          length: 5,
+          child:  Scaffold(
+            backgroundColor: Colors.transparent,
+            body:  TabBarView(physics: NeverScrollableScrollPhysics(), controller: _tabController, children: tabs), 
+            bottomNavigationBar: Container(
+              padding: EdgeInsets.only(bottom: MediaQuery.of(context).padding.bottom,),
+              color: Colors.white,
+              child:  TabBar(
+                controller: _tabController,
+                tabs: [
+                  Tab(
                     icon: SvgPicture.asset(
-                  "assets/images/icons/pages/chat.svg",
-                  color: _tabController.index == 3 ? PetsTheme.currentMainColor : PetsTheme.petsGrayIconColor,
-                )),
-                Tab(
+                      "assets/images/icons/pages/home.svg",
+                      color: _tabController.index == 0 ? PetsTheme.currentMainColor : PetsTheme.petsGrayIconColor,
+                    ),
+                  ),
+                  Tab(
                     icon: SvgPicture.asset(
-                  Paths.more_icon_svg_file,
-                  color: _tabController.index == 4 ? PetsTheme.currentMainColor : PetsTheme.petsGrayIconColor,
-                )),
-              ],
-              indicatorColor: Colors.transparent,
-            )),
+                      "assets/images/icons/pages/notifications.svg",
+                      color: _tabController.index == 1 ? PetsTheme.currentMainColor : PetsTheme.petsGrayIconColor,
+                    ),
+                  ),
+                  Tab(
+                    text: "",
+                  ),
+                  Tab(
+                      icon: SvgPicture.asset(
+                    "assets/images/icons/pages/chat.svg",
+                    color: _tabController.index == 3 ? PetsTheme.currentMainColor : PetsTheme.petsGrayIconColor,
+                  )),
+                  Tab(
+                      icon: SvgPicture.asset(
+                    Paths.more_icon_svg_file,
+                    color: _tabController.index == 4 ? PetsTheme.currentMainColor : PetsTheme.petsGrayIconColor,
+                  )),
+                ],
+                indicatorColor: Colors.transparent,
+              ),
+            ),
           ),
         ),
-      ),
+  ),   
 
       //Paw
-      Align(alignment: Alignment.bottomCenter, child: SafeArea(child: NavBarHolder())),
+      SafeArea(child: Align(alignment: Alignment.bottomCenter, child:NavBarHolder())),
     ]);
   }
 }

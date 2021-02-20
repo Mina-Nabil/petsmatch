@@ -1,5 +1,6 @@
+import 'package:petmatch/widgets/screens/PetMatchSingleScreen.dart';
+
 import '../../theme/petsTheme.dart';
-import '../../widgets/screens/basescreen.dart';
 import 'login.dart';
 import 'package:flutter/material.dart';
 import 'package:page_transition/page_transition.dart';
@@ -39,12 +40,9 @@ class _SplashScreenState extends State<SplashScreen> {
     PetsTheme.initTheme(context);
 
     //Padding & Marging Init
-    return BaseScreen(
-      backGroundColor: bgColor.blue,
-      backGroundMask: bgMask.def,
-      isTopPadding: true,
-      noTitle: true,
-      child: Container(
+    return PetMatchSingleScreen(
+      backArrow: false,
+      body: Container(
         child: AnimatedOpacity(
             opacity: _visible ? 1.0 : 0.0,
             duration: Duration(milliseconds: 2000),

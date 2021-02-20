@@ -89,6 +89,7 @@ class _RegTypesScreenState extends State<RegTypesScreen> {
     return LoginScreenSetup(
       formTitle: "Sign up as",
       showLogo: true,
+      backgroundMask: bgMask.services,
       formWidget: Column (children: [
         Flexible(flex: 2, child: typesButtonsRow),
         Flexible(flex: 3, child: Container(),)
