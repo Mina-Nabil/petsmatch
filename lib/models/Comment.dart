@@ -1,4 +1,3 @@
-import 'package:petmatch/models/Post.dart';
 import 'package:petmatch/models/User.dart';
 
 class Comment {

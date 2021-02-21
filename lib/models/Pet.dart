@@ -1,6 +1,5 @@
 
 import 'package:petmatch/models/Profile.dart';
-import 'package:petmatch/models/User.dart';
 
 class Pet extends Profile{
 

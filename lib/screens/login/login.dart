@@ -1,13 +1,9 @@
-import 'dart:developer';
 import 'dart:ui';
 
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:flutter_svg/svg.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:page_transition/page_transition.dart';
-import 'package:petmatch/screens/main_screen/SearchScreen.dart';
-import 'package:petmatch/screens/home.dart';
 import 'package:petmatch/screens/login/regTypes.dart';
 import 'package:petmatch/theme/petsTheme.dart';
 import 'package:petmatch/widgets/screens/LoginScreenSetup.dart';
@@ -55,7 +51,7 @@ class _LoginScreenState extends State<LoginScreen> {
     void submitForm() {
       print("Submitting");
       if (true) {
-        Navigator.of(context).pushReplacement(new PageTransition(child: HomeScreen(), type: PageTransitionType.fade));
+        Navigator.of(context).pushReplacementNamed('/home' );
       }
     }
 

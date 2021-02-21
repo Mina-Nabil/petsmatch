@@ -28,7 +28,6 @@ final String searchIconPath = "assets/images/icons/main/search.svg";
   List<Pet> pets;
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
     mainUser =  User("Mina !","https://lh3.googleusercontent.com/9AY45-uFNsXWwvtQmZFRWrpy1koWGBLs5XDVYjy3xg-G6fjlekANnsSbhYYU-E0CDw", "hamada@pets" );
     pets = [

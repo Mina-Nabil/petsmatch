@@ -1,12 +1,8 @@
-import 'dart:ffi';
 import 'dart:ui';
 
 import 'package:flutter/material.dart';
-import 'package:petmatch/models/Pet.dart';
 import 'package:petmatch/models/Post.dart';
-import 'package:petmatch/models/User.dart';
 import 'package:petmatch/widgets/feed/RegularPostWidget.dart';
-import 'package:petmatch/widgets/feed/UserNameRole.dart';
 import 'package:petmatch/widgets/main/UserAvatar.dart';
 import 'package:petmatch/widgets/screens/PetMatchContainer.dart';
 import 'package:petmatch/widgets/screens/PetMatchSingleScreen.dart';
