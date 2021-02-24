@@ -51,7 +51,7 @@ dependencies:
   
   # Slidable list item without dismiss 
   flutter_slidable: ^0.5.7
-  transparent_cupertino_navigationbar: ^0.0.4
+
 dev_dependencies:
   # app logo
   flutter_launcher_icons: "^0.8.0"

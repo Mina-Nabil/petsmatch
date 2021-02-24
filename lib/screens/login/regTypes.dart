@@ -96,7 +96,6 @@ class _RegTypesScreenState extends State<RegTypesScreen> {
       ]),
       topbarTitle: "Welcome to Petmatch",
       topbarSubtitle: "All Pets, One Place...",
-      backArrow: true,
     );
   }
 }

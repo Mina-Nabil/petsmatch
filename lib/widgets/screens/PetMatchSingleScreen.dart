@@ -1,4 +1,3 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
@@ -75,7 +74,6 @@ class _PetMatchSingleScreenState extends State<PetMatchSingleScreen> {
 
   @override
   Widget build(BuildContext context) {
-    print(kToolbarHeight);
     return Stack(
       children: [
         //Background Image
@@ -91,40 +89,33 @@ class _PetMatchSingleScreenState extends State<PetMatchSingleScreen> {
           bottom: false,
           right: true,
           left: true,
-          child: CupertinoPageScaffold(
+          child: Scaffold(
             backgroundColor: Colors.transparent,
-            child: Stack(
-              children:[
-                 Container(
-                   margin: (widget.backArrow || widget.title != null) ? EdgeInsets.only(top:56) : EdgeInsets.zero,
-                   child: SafeArea(child: widget.body)),
-                if(widget.backArrow || widget.title != null)
-                Container(
-                  width: double.infinity,
-                  height: 56,
-                  child: Stack(
-                    children: [
-
-                      if(widget.title != null)
-                        Center(
-                          child: widget.title,
-                        ),
-
-                      if(widget.backArrow)
-                        GestureDetector(
-                          child: Container(
-                            padding: EdgeInsets.only(left: 20),
-                            alignment: Alignment.centerLeft,
-                            child: FaIcon(FontAwesomeIcons.chevronLeft, color: Colors.white,)
-                          ),
-                          onTap: () => Navigator.of(context).pop(),
-                        ),
-                    ],
+            appBar: (widget.backArrow || widget.title != null)
+                ? AppBar(
+                    backgroundColor: Colors.transparent,
+                    brightness: Brightness.dark,
+                    elevation: 0,
+                    titleSpacing: 0,
+                    leading: widget.backArrow
+                        ? GestureDetector(
+                            child: Center(child: FaIcon(FontAwesomeIcons.chevronLeft)),
+                            onTap: () => Navigator.of(context).pop(),
+                          )
+                        : Container(),
+                    title: widget.title,
                   )
-                ),]
-            ),
-        )
-    )
-      ]);
+                : PreferredSize(
+                    preferredSize: Size(0, 0),
+                    child: AppBar(
+                      elevation: 0,
+                      backgroundColor: Colors.transparent, // status bar color,
+                      brightness: Brightness.dark,
+                    )),
+            body: widget.body,
+          ),
+        ),
+      ],
+    );
   }
 }

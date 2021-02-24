@@ -25,8 +25,8 @@ class SuggesionsIconsList extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 FittedBox(
-                    child: Text("Suggested for you", style: TextStyle(fontSize: 14, color: PetsTheme.blackTextColor, fontWeight: FontWeight.bold, fontFamily: "Roboto"))),
-                FittedBox(child: Text("View All", style: TextStyle(fontSize: 14, color: PetsTheme.petsBlueColor, fontWeight: FontWeight.w500, fontFamily: "Roboto")))
+                    child: Text("Suggested for you", style: TextStyle(color: PetsTheme.blackTextColor, fontWeight: FontWeight.bold, fontFamily: "Roboto"))),
+                FittedBox(child: Text("View All", style: TextStyle(color: PetsTheme.petsBlueColor, fontWeight: FontWeight.w500, fontFamily: "Roboto")))
               ],
             ),
           ),

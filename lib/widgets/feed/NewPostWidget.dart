@@ -1,4 +1,3 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:petmatch/models/User.dart';
 import 'package:petmatch/settings/paths.dart';
@@ -38,13 +37,8 @@ class NewPostWidget extends StatelessWidget {
                   Flexible(
                     flex: 6,
                     child: Container(
-                      child: CupertinoTextField(
-                        placeholder: "Share your thoughts...",
-                        placeholderStyle: TextStyle(fontFamily: "Roboto", color: PetsTheme.petsHintGrayColor),
-                        decoration: BoxDecoration(
-                          border: Border(),
-                        ),
-                        //decoration: InputDecoration(hintText: "Share your thoughts...", hintStyle: TextStyle(fontFamily: "Roboto"), border: InputBorder.none),
+                      child: TextFormField(
+                        decoration: InputDecoration(hintText: "Share your thoughts...", hintStyle: TextStyle(fontFamily: "Roboto"), border: InputBorder.none),
                       ),
                     ),
                   ),

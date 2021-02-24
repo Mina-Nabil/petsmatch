@@ -1,4 +1,3 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import '../../theme/petsTheme.dart';
 import 'package:validators/validators.dart';
@@ -78,22 +77,18 @@ class RegTextField extends StatelessWidget {
               Expanded(
                   child: Container(
                       // margin: EdgeInsets.symmetric(vertical: PetsTheme.getSmallerPadMarg(context)),
-                      child:  CupertinoTextField(             
+                      child:  TextFormField(                     
                             controller: _controller,
                             obscureText: obscureText,
                             maxLines: maxLines,
                             minLines: minLines,
-                            //validator: (this.isRequired) ? (value) => validatorFunc(context, value) : (value) => null,
+                            validator: (this.isRequired) ? (value) => validatorFunc(context, value) : (value) => null,
+                            decoration: InputDecoration(
+                              focusColor: PetsTheme.currentMainColor,
+                              enabledBorder: UnderlineInputBorder(borderSide: BorderSide(color: PetsTheme.petsBordersGrayColor)),
+                              hintText: label, hintStyle: TextStyle(color: PetsTheme.petsHintGrayColor, fontSize: PetsTheme.getSmallFont())),
                             style: TextStyle(fontFamily: "Roboto", fontSize: PetsTheme.getLargeFont()),
-                            placeholder: label,
-                            placeholderStyle:  TextStyle(color: PetsTheme.petsHintGrayColor, fontSize: PetsTheme.getSmallFont()),
-                            decoration: BoxDecoration(
-                              border: Border(bottom: BorderSide(color: PetsTheme.petsHintGrayColor))
-                              //focusColor: PetsTheme.currentMainColor,
-                              //enabledBorder: UnderlineInputBorder(borderSide: BorderSide(color: PetsTheme.petsBordersGrayColor)),
-                             // hintText: label, hintStyle: TextStyle(color: PetsTheme.petsHintGrayColor, fontSize: PetsTheme.getSmallFont())),
-                            //style: TextStyle(fontFamily: "Roboto", fontSize: PetsTheme.getLargeFont()),
-                          ))),)
+                          ))),
             ],
           )
         ],

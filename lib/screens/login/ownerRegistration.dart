@@ -85,15 +85,7 @@ class _OwnerRegistrationScreenState extends State<OwnerRegistrationScreen> {
             controller: _confirmPasswordNameController,
             fieldsWidth: fieldsWidth,
           ),
-          RegTextField(
-            label: "Gender",
-            maxFieldHeight: maxFieldHeight,
-            minFieldHeight: minFieldHeight,
-            obscureText: true,
-            controller: _confirmPasswordNameController,
-            fieldsWidth: fieldsWidth,
-          ),
-          /*LabelledFormField(
+          LabelledFormField(
               label: "Gender",
               fieldHeight: maxFieldHeight,
               width: fieldsWidth,
@@ -113,7 +105,6 @@ class _OwnerRegistrationScreenState extends State<OwnerRegistrationScreen> {
                   ),
                 ],
               )),
-              */
           //DatePicker Widget
           LabelledFormField(
             label: "Birth Date",
@@ -125,15 +116,7 @@ class _OwnerRegistrationScreenState extends State<OwnerRegistrationScreen> {
               initialDateTime: DateTime(2000),
             ),
           ),
-          RegTextField(
-            label: "Country",
-            maxFieldHeight: maxFieldHeight,
-            minFieldHeight: minFieldHeight,
-            obscureText: true,
-            controller: _confirmPasswordNameController,
-            fieldsWidth: fieldsWidth,
-          ),
-          /*LabelledFormField(
+          LabelledFormField(
               label: "Country",
               fieldHeight: maxFieldHeight,
               width: fieldsWidth,
@@ -152,16 +135,8 @@ class _OwnerRegistrationScreenState extends State<OwnerRegistrationScreen> {
                     child: Text("Rehab"),
                   ),
                 ],
-              )),*/
-            RegTextField(
-            label: "City",
-            maxFieldHeight: maxFieldHeight,
-            minFieldHeight: minFieldHeight,
-            obscureText: true,
-            controller: _confirmPasswordNameController,
-            fieldsWidth: fieldsWidth,
-          ),  
-          /*LabelledFormField(
+              )),
+          LabelledFormField(
               label: "City",
               fieldHeight: maxFieldHeight,
               width: fieldsWidth,
@@ -180,7 +155,7 @@ class _OwnerRegistrationScreenState extends State<OwnerRegistrationScreen> {
                     child: Text("Giza"),
                   ),
                 ],
-              )),*/
+              )),
 
           SubmitButton(
             callBackFunction: () => Navigator.of(context).push(new PageTransition(child: SetUserPhotoScreen(), type: PageTransitionType.fade)),
