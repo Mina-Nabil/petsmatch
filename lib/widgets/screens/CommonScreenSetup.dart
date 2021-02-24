@@ -9,6 +9,7 @@ class CommonScreenSetup extends StatelessWidget {
   final bool isPortraitLock;
   final bool isNavBar;
   final bool isTitle;
+  final bool backArrow;
   final bgColor screenBgColor;
   final bgMask screenBgMask;
 
@@ -18,7 +19,8 @@ class CommonScreenSetup extends StatelessWidget {
       this.screenBgMask = bgMask.def,
       this.isPortraitLock = false,
       this.isNavBar = false,
-      this.isTitle = true}) {
+      this.isTitle = true,
+      this.backArrow = true}) {
     PetsTheme.currentMainColor = this.screenBgColor;
   }
 
@@ -36,7 +38,7 @@ class CommonScreenSetup extends StatelessWidget {
 
     return PetMatchSingleScreen(
       backgroundMask: screenBgMask,
-      backArrow: false,
+      backArrow: backArrow,
       enableRotation: false,
 
       body: LayoutBuilder(

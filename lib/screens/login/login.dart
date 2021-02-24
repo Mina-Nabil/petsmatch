@@ -1,5 +1,6 @@
 import 'dart:ui';
 
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
@@ -80,6 +81,7 @@ class _LoginScreenState extends State<LoginScreen> {
 
     return LoginScreenSetup(
         backgroundColor: bgColor.blue,
+        backArrow: false,
         isSmallTopArea: false,
         showLogo: true,
         isPortraitLock: true,
@@ -102,9 +104,12 @@ class _LoginScreenState extends State<LoginScreen> {
                     margin: EdgeInsets.only(bottom: PetsTheme.getSmallerPadMarg()),
                     child: Padding(
                         padding: EdgeInsets.only(left: PetsTheme.getMeduimPadMarg()),
-                        child: TextFormField(
-                          decoration:
-                              InputDecoration(hintText: "E-mail", hintStyle: TextStyle(fontFamily: "Segoe", fontSize: 16, color: PetsTheme.petsTextGrayColor)),
+                        child: CupertinoTextField(
+                          placeholder: "E-mail",
+                          placeholderStyle: TextStyle(fontFamily: "Segoe", fontSize: 16, color: PetsTheme.petsTextGrayColor),
+                          decoration: BoxDecoration(
+                            border: Border(bottom: BorderSide(color:  PetsTheme.petsTextGrayColor)),
+                          ),
                           controller: _emailController,
                           style: TextStyle(fontFamily: "Segoe", fontSize: 16),
                         )),
@@ -132,9 +137,12 @@ class _LoginScreenState extends State<LoginScreen> {
                               fit: StackFit.loose,
                               alignment: Alignment.centerRight,
                               children: [
-                                TextFormField(
-                                  decoration: InputDecoration(
-                                      hintText: "Password", hintStyle: TextStyle(fontFamily: "Segoe", fontSize: 16, color: PetsTheme.petsTextGrayColor)),
+                                CupertinoTextField(
+                                  placeholder: "password",
+                                  placeholderStyle: TextStyle(fontFamily: "Segoe", fontSize: 16, color: PetsTheme.petsTextGrayColor),
+                                  decoration: BoxDecoration(
+                                    border: Border(bottom: BorderSide(color:  PetsTheme.petsTextGrayColor)),
+                                  ),
                                   obscureText: obscureTextFlag,
                                   controller: _passwordController,
                                   style: TextStyle(fontFamily: "Segoe", fontSize: 16),
