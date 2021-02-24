@@ -100,7 +100,7 @@ class _PetMatchSingleScreenState extends State<PetMatchSingleScreen> {
               children:[
                  Container(
                    margin: (widget.backArrow || widget.title != null) ? EdgeInsets.only(top:56) : EdgeInsets.zero,
-                   child: SafeArea(child: widget.body)
+                   child: SafeArea(bottom: false, child: widget.body)
                   ),
                 
                 if(widget.backArrow || widget.title != null)

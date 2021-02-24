@@ -7,8 +7,6 @@ class CommonScreenSetup extends StatelessWidget {
   final Widget _bottomWidget;
   final bool isSmallTop;
   final bool isPortraitLock;
-  final bool isNavBar;
-  final bool isTitle;
   final bgColor screenBgColor;
   final bgMask screenBgMask;
 
@@ -16,9 +14,7 @@ class CommonScreenSetup extends StatelessWidget {
       {this.isSmallTop = false,
       this.screenBgColor = bgColor.main,
       this.screenBgMask = bgMask.def,
-      this.isPortraitLock = false,
-      this.isNavBar = false,
-      this.isTitle = true}) {
+      this.isPortraitLock = false,}) {
     PetsTheme.currentMainColor = this.screenBgColor;
   }
 
