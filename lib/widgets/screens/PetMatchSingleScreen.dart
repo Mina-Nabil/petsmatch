@@ -98,10 +98,11 @@ class _PetMatchSingleScreenState extends State<PetMatchSingleScreen> {
             child: Material(color: Colors.transparent, 
             child:  Stack(
               children:[
-                 Container(
+                Container(
                    margin: (widget.backArrow || widget.title != null) ? EdgeInsets.only(top:56) : EdgeInsets.zero,
-                   child: SafeArea(bottom: false, child: widget.body)
-                  ),
+                   child: SafeArea(
+                     top: true, bottom: false, right: true, left: true, child: widget.body)
+                ),
                 
                 if(widget.backArrow || widget.title != null)
                 Container(
