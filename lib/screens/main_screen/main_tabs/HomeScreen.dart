@@ -1,3 +1,4 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:petmatch/models/Pet.dart';
 import 'package:petmatch/models/Post.dart';
@@ -11,15 +12,16 @@ import 'package:petmatch/widgets/feed/SuggestedIcon.dart';
 import 'package:petmatch/widgets/feed/SuggestionsIconsList.dart';
 import 'package:petmatch/widgets/main/UserAvatar.dart';
 import 'package:petmatch/widgets/screens/PetMatchContainer.dart';
+import 'package:petmatch/widgets/screens/PetMatchSingleScreen.dart';
 
 
-class HomeScreen2 extends StatefulWidget {
+class HomeScreen extends StatefulWidget {
 
   @override
-  _HomeScreen2State createState() => _HomeScreen2State();
+  _HomeScreenState createState() => _HomeScreenState();
 }
 
-class _HomeScreen2State extends State<HomeScreen2> {
+class _HomeScreenState extends State<HomeScreen> {
 
 final String searchIconPath = "assets/images/icons/main/search.svg";
 
@@ -59,87 +61,90 @@ final String searchIconPath = "assets/images/icons/main/search.svg";
       });
     }
 
-    return PetMatchContainer(
-      headerPadding: EdgeInsets.symmetric(horizontal: 20, vertical: 10),
-      header: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        mainAxisSize: MainAxisSize.min,
-        children:[
-        
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children:[ 
-              Container(
-                width: 45,
-                height: 45,
-                child: UserAvatar(image: mainUser.image, imageRatio: 1)
-              ),
-              Container(
+    return PetMatchSingleScreen(
+      body: PetMatchContainer(
+        headerPadding: EdgeInsets.symmetric(horizontal: 20, vertical: 10),
+        header: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          mainAxisSize: MainAxisSize.min,
+          children:[
+          
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children:[ 
+                Container(
+                  width: 45,
+                  height: 45,
+                  child: UserAvatar(image: mainUser.image, imageRatio: 1)
+                ),
+                Container(
+                    height: 55,
+                    width: 55,
+                    child: GestureDetector(
+                      child: CircularPetButton(PetsTheme.currentMainColor.withOpacity(.2), searchIconPath, Colors.white),
+                      onTap: () => Navigator.of(context).pushNamed('search'), )
+                      //() => Navigator.of(context).push(CupertinoPageRoute(builder: (_) => SearchScreen()))
+                    //),
+                )
+              ]
+            ),
+
+         /* Padding(
+            padding: const EdgeInsets.symmetric(vertical: 20),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children:[
+                Text("Welcome back \nMina!",
+                  style: TextStyle(
+                    fontFamily: "Roboto", 
+                    fontSize: PetsTheme.getMuchLargerFont(), color: PetsTheme.whiteBarColor, fontWeight: FontWeight.bold),
+                ),
+                Container(
                   height: 55,
                   width: 55,
                   child: GestureDetector(
                     child: CircularPetButton(PetsTheme.currentMainColor.withOpacity(.2), searchIconPath, Colors.white),
                     onTap: () => Navigator.of(context).pushNamed('/search'),
                   ),
-              )
-            ]
-          ),
-
-       /* Padding(
-          padding: const EdgeInsets.symmetric(vertical: 20),
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children:[
-              Text("Welcome back \nMina!",
-                style: TextStyle(
-                  fontFamily: "Roboto", 
-                  fontSize: PetsTheme.getMuchLargerFont(), color: PetsTheme.whiteBarColor, fontWeight: FontWeight.bold),
-              ),
-              Container(
-                height: 55,
-                width: 55,
-                child: GestureDetector(
-                  child: CircularPetButton(PetsTheme.currentMainColor.withOpacity(.2), searchIconPath, Colors.white),
-                  onTap: () => Navigator.of(context).pushNamed('/search'),
-                ),
-              )
-            ]
-            
-          ),
-        ),
-*/
-          SizedBox(height: 10,),
-          Container(
-            width: double.infinity,
-            child: SingleChildScrollView(
-              scrollDirection: Axis.horizontal,
-              //children: petImages,
-              child: Row(
-                children: petImages,
-              ),
+                )
+              ]
+              
             ),
-          )
-        ]
-      ),
+          ),
+*/
+            SizedBox(height: 10,),
+            Container(
+              width: double.infinity,
+              child: SingleChildScrollView(
+                scrollDirection: Axis.horizontal,
+                //children: petImages,
+                child: Row(
+                  children: petImages,
+                ),
+              ),
+            )
+          ]
+        ),
 
-      bodyPadding: EdgeInsets.zero,
-      body: ListView(
-        children: [
-          NewPostWidget(),
-          SuggesionsIconsList([SuggestedIcon(mainUser),  
-            ...pets.map((element) {return SuggestedIcon(element);})
-          ]),
+        bodyPadding: EdgeInsets.zero,
+        body: ListView(
+          children: [
+            NewPostWidget(),
+            SuggesionsIconsList([SuggestedIcon(mainUser),  
+              ...pets.map((element) {return SuggestedIcon(element);})
+            ]),
 
-          ...testPosts.map(
-            (post) {
-              return RegularPostWidget(
-                post,
-                margin: EdgeInsets.symmetric(vertical: PetsTheme.getMeduimPadMarg()),
-                contentPadding: EdgeInsets.only(left: PetsTheme.getMuchLargerPadMarg(), right: PetsTheme.getMuchLargerPadMarg(), bottom: PetsTheme.getLargePadMarg()),
-              );
-            }
-          ).toList(),
-        ],
+            ...testPosts.map(
+              (post) {
+                return RegularPostWidget(
+                  post,
+                  margin: EdgeInsets.symmetric(vertical: PetsTheme.getMeduimPadMarg()),
+                  contentPadding: EdgeInsets.only(left: PetsTheme.getMuchLargerPadMarg(), right: PetsTheme.getMuchLargerPadMarg(), bottom: PetsTheme.getLargePadMarg()),
+                );
+              }
+            ).toList(),
+          ],
+        ),
       ),
     );
   }

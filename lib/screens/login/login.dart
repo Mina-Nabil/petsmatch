@@ -67,7 +67,7 @@ class _LoginScreenState extends State<LoginScreen> {
     void fbLogin() {
       print("FB Login");
       if (true) {
-        Navigator.of(context).pushReplacementNamed('/home' );
+        Navigator.of(context).pushReplacementNamed('home' );
       }
     }
 

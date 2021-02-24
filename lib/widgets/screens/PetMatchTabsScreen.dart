@@ -1,9 +1,13 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:petmatch/screens/main_screen/SearchScreen.dart';
 import 'package:petmatch/screens/main_screen/main_tabs/MainMenuScreen.dart';
 import 'package:petmatch/screens/main_screen/main_tabs/NotificationsScreen.dart';
 import 'package:petmatch/screens/main_screen/main_tabs/chatScreen.dart';
 import 'package:petmatch/screens/main_screen/main_tabs/HomeScreen.dart';
+import 'package:petmatch/screens/post_screens/LoversScreen.dart';
+import 'package:petmatch/screens/post_screens/PostScreen.dart';
 import 'package:petmatch/settings/paths.dart';
 import 'package:petmatch/theme/petsTheme.dart';
 import 'package:petmatch/widgets/custom/CustomStack.dart';
@@ -15,13 +19,13 @@ class PetMatchMainScreen extends StatefulWidget {
 }
 
 class _PetMatchMainScreenState extends State<PetMatchMainScreen> with SingleTickerProviderStateMixin {
-  TabController _tabController;
+  CupertinoTabController _tabController;
+  int _currentTabIndex = 0;
 
   @override
   void initState() {
     super.initState();
-    _tabController = new TabController(vsync: this, length: 5);
-    _tabController.addListener(onTap);
+    _tabController = new CupertinoTabController();
   }
 
   @override
@@ -30,21 +34,12 @@ class _PetMatchMainScreenState extends State<PetMatchMainScreen> with SingleTick
     super.dispose();
   }
 
-  onTap() {
-    int index = _tabController.previousIndex;
+  void _onTap(int index) {
     setState(() {
-      if (_tabController.index == 2) //middle empty tab
-        _tabController.index = index;
+      _currentTabIndex = index;
+      _tabController.index = index;
     });
   }
-
-  List<Widget> tabs = [
-    HomeScreen2(),
-    NotificationsScreen(),
-    Container(),
-    ChatScreen(),
-    MainMenuScreen(),
-  ];
   
 
   @override
@@ -65,47 +60,70 @@ class _PetMatchMainScreenState extends State<PetMatchMainScreen> with SingleTick
 
   SafeArea(
     bottom: false,
-    child: DefaultTabController(
-          length: 5,
-          child:  Scaffold(
-            backgroundColor: Colors.transparent,
-            body:  TabBarView(physics: NeverScrollableScrollPhysics(), controller: _tabController, children: tabs), 
-            bottomNavigationBar: Container(
-              padding: EdgeInsets.only(bottom: MediaQuery.of(context).padding.bottom,),
-              color: Colors.white,
-              child:  TabBar(
-                controller: _tabController,
-                tabs: [
-                  Tab(
-                    icon: SvgPicture.asset(
-                      "assets/images/icons/pages/home.svg",
-                      color: _tabController.index == 0 ? PetsTheme.currentMainColor : PetsTheme.petsGrayIconColor,
-                    ),
-                  ),
-                  Tab(
-                    icon: SvgPicture.asset(
-                      "assets/images/icons/pages/notifications.svg",
-                      color: _tabController.index == 1 ? PetsTheme.currentMainColor : PetsTheme.petsGrayIconColor,
-                    ),
-                  ),
-                  Tab(
-                    text: "",
-                  ),
-                  Tab(
-                      icon: SvgPicture.asset(
-                    "assets/images/icons/pages/chat.svg",
-                    color: _tabController.index == 3 ? PetsTheme.currentMainColor : PetsTheme.petsGrayIconColor,
-                  )),
-                  Tab(
-                      icon: SvgPicture.asset(
-                    Paths.more_icon_svg_file,
-                    color: _tabController.index == 4 ? PetsTheme.currentMainColor : PetsTheme.petsGrayIconColor,
-                  )),
-                ],
-                indicatorColor: Colors.transparent,
-              ),
+    child: CupertinoTabScaffold(
+      backgroundColor: Colors.black,
+      controller: _tabController,
+      tabBar: CupertinoTabBar(
+        onTap: _onTap,
+        items: [
+          BottomNavigationBarItem(
+            icon: SvgPicture.asset(
+              "assets/images/icons/pages/home.svg",
+               color: _tabController.index == 0 ? PetsTheme.currentMainColor : PetsTheme.petsGrayIconColor,
             ),
           ),
+          BottomNavigationBarItem(
+            icon: SvgPicture.asset(
+              "assets/images/icons/pages/notifications.svg",
+              color: _tabController.index == 1 ? PetsTheme.currentMainColor : PetsTheme.petsGrayIconColor,
+            ),
+          ),
+          BottomNavigationBarItem(
+            icon: Container()
+          ),
+          BottomNavigationBarItem(
+            icon: SvgPicture.asset(
+              "assets/images/icons/pages/chat.svg",
+              color: _tabController.index == 3 ? PetsTheme.currentMainColor : PetsTheme.petsGrayIconColor,
+            )
+          ),
+          BottomNavigationBarItem(
+            icon: SvgPicture.asset(
+              Paths.more_icon_svg_file,
+              color: _tabController.index == 4 ? PetsTheme.currentMainColor : PetsTheme.petsGrayIconColor,
+            )
+          ),
+        ]
+      ),
+      tabBuilder: (context, i){
+        return CupertinoTabView(
+          builder: (context) {
+            switch (i) {
+              case 0:
+                return  HomeScreen();
+                break;
+              case 1:
+                return  NotificationsScreen();
+                break;
+              case 3:
+                return  ChatScreen();
+                break;
+              case 4:
+                return  MainMenuScreen();
+                break;
+              default:
+                return null;
+            }
+          },
+
+          routes: {
+            'search' : (context) => SearchScreen(),
+            'post'   : (context) => PostScreen(),
+            'lovers' : (context) => LoversScreen(),
+          },
+        );
+      },
+ 
         ),
   ),   
 

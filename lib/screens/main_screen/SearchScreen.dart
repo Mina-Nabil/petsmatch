@@ -59,7 +59,7 @@ class _SearchScreen extends State<SearchScreen> {
   @override
   Widget build(BuildContext context) {
     return PetMatchSingleScreen(
-      
+      backArrow: true,
       title: Text("What are you looking for?",
         style: TextStyle(
           fontFamily: "Roboto",

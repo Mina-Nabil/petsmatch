@@ -126,7 +126,7 @@ class _RegularPostWidgetState extends State<RegularPostWidget> {
                           minWidth: 1,
                           splashColor: Colors.transparent,  
                           highlightColor: Colors.transparent,
-                          onPressed: () => widget.enableCommentButton? Navigator.of(context).pushNamed('/post') : null,
+                          onPressed: () => widget.enableCommentButton? Navigator.of(context).pushNamed('post') : null,
                           child: SvgPicture.asset("assets/images/icons/comment.svg",color: Colors.grey, width: PetsTheme.smallIconSize(), height: PetsTheme.smallIconSize() ,)),
                       
                         FlatButton(
@@ -150,7 +150,7 @@ class _RegularPostWidgetState extends State<RegularPostWidget> {
                               Text("Love", style: TextStyle(fontSize: PetsTheme.getSmallFont()),),
                             ],
                           ),
-                          onTap: () => Navigator.of(context).pushNamed('/lovers'),
+                          onTap: () => Navigator.of(context).pushNamed('lovers'),
                         ),
                         SizedBox(width: PetsTheme.getLargePadMarg(),),
                         GestureDetector(
@@ -160,7 +160,7 @@ class _RegularPostWidgetState extends State<RegularPostWidget> {
                               Text("Comments", style: TextStyle(fontSize: PetsTheme.getSmallFont()),),
                             ],
                           ),
-                          onTap: ()=> widget.enableCommentButton? Navigator.of(context).pushNamed('/post') : null,
+                          onTap: ()=> widget.enableCommentButton? Navigator.of(context).pushNamed('post') : null,
                         ),
                       ],
                      )

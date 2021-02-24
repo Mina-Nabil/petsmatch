@@ -30,6 +30,7 @@ class _SearchScreen extends State<PostScreen> {
   @override
   Widget build(BuildContext context) {
     return PetMatchSingleScreen(
+      backArrow: true,
       body: PetMatchContainer(
         headerPadding: EdgeInsets.zero,
         bodyPadding: EdgeInsets.only(bottom: MediaQuery.of(context).padding.bottom),

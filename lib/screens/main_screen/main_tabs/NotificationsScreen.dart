@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:petmatch/theme/petsTheme.dart';
 import 'package:petmatch/widgets/main/UserAvatar.dart';
 import 'package:petmatch/widgets/screens/PetMatchContainer.dart';
+import 'package:petmatch/widgets/screens/PetMatchSingleScreen.dart';
 import 'package:timeago/timeago.dart' as timeago;
 
 class Notification {
@@ -38,29 +39,32 @@ class NotificationsScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return PetMatchContainer(
-      header: Text("Notifications",
-        style: TextStyle(fontFamily: "Roboto", fontSize: PetsTheme.getMuchLargerFont(), color: PetsTheme.whiteBarColor, fontWeight: FontWeight.bold),
+    return PetMatchSingleScreen(
+      backArrow: false,
+      body: PetMatchContainer(
+        header: Text("Notifications",
+          style: TextStyle(fontFamily: "Roboto", fontSize: PetsTheme.getMuchLargerFont(), color: PetsTheme.whiteBarColor, fontWeight: FontWeight.bold),
+        ),
+        body: ListView(
+          padding: EdgeInsets.zero,
+          children: [
+            ..._notifications.map((notification) {
+              return Column(
+                children: [
+                  ListTile(
+                    contentPadding: EdgeInsets.symmetric(vertical: PetsTheme.getLargePadMarg()),
+                    leading: UserAvatar(image: notification.imageurl, imageRatio: 1,),
+                    title: Text(notification.text, style: TextStyle(fontSize: PetsTheme.getSmallFont()),),
+                    trailing: Text(timeago.format(notification.datetime, locale: "en_short"), style: TextStyle(fontSize: PetsTheme.getVerySmallFont(), color: Colors.grey),),
+                  ),
+                  Divider( height: 0,thickness: 1,),
+                ]
+              );
+            }).toList()
+          ],
+        ),
+        bodyBackgroundColor: Colors.white,
       ),
-      body: ListView(
-        padding: EdgeInsets.zero,
-        children: [
-          ..._notifications.map((notification) {
-            return Column(
-              children: [
-                ListTile(
-                  contentPadding: EdgeInsets.symmetric(vertical: PetsTheme.getLargePadMarg()),
-                  leading: UserAvatar(image: notification.imageurl, imageRatio: 1,),
-                  title: Text(notification.text, style: TextStyle(fontSize: PetsTheme.getSmallFont()),),
-                  trailing: Text(timeago.format(notification.datetime, locale: "en_short"), style: TextStyle(fontSize: PetsTheme.getVerySmallFont(), color: Colors.grey),),
-                ),
-                Divider( height: 0,thickness: 1,),
-              ]
-            );
-          }).toList()
-        ],
-      ),
-      bodyBackgroundColor: Colors.white,
     );
   }
 }
