@@ -64,7 +64,7 @@ class _PetMatchMainScreenState extends State<PetMatchMainScreen> with SingleTick
       backgroundColor: Colors.black,
       controller: _tabController,
       tabBar: CupertinoTabBar(
-        backgroundColor: PetsTheme.petsWhiteBg,
+        backgroundColor: Colors.white,
         onTap: _onTap,
         items: [
           BottomNavigationBarItem(

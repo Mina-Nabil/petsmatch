@@ -33,7 +33,7 @@ class _SearchScreen extends State<PostScreen> {
       backArrow: true,
       body: PetMatchContainer(
         headerPadding: EdgeInsets.zero,
-        bodyPadding: EdgeInsets.only(bottom: MediaQuery.of(context).padding.bottom),
+        bodyPadding: EdgeInsets.zero,
         bodyBackgroundColor: Colors.white,
         body: Column(
           children:[
