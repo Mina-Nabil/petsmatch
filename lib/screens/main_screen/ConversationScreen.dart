@@ -19,7 +19,7 @@ class _SearchScreen extends State<ConversationScreen> {
   @override
   Widget build(BuildContext context) {
     return PetMatchSingleScreen(
-      backArrow: false,
+      backArrow: true,
       title: Row(
         children: [
           Container(

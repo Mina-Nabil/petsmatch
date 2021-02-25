@@ -76,7 +76,7 @@ class _PetMatchSingleScreenState extends State<PetMatchSingleScreen> {
   @override
   Widget build(BuildContext context) {
     
-    double appBarLeftPadding = 20;
+    
 
     return Stack(
       children: [
@@ -99,40 +99,61 @@ class _PetMatchSingleScreenState extends State<PetMatchSingleScreen> {
             child:  Stack(
               children:[
                 Container(
-                   margin: (widget.backArrow || widget.title != null) ? EdgeInsets.only(top:56) : EdgeInsets.zero,
-                   child: SafeArea(
-                     top: true, bottom: false, right: true, left: true, child: widget.body)
+                  margin: (widget.backArrow || widget.title != null) ? EdgeInsets.only(top:56) : EdgeInsets.zero,
+                  child: SafeArea(
+                    top: true, bottom: false, right: true, left: true, 
+                    child: widget.body
+                  )
                 ),
                 
                 if(widget.backArrow || widget.title != null)
-                Container(
-                  width: double.infinity,
-                  height: 56,
-                  child: Stack(
-                    children: [
-                      if(widget.title != null)
-                        Container(
-                          padding: EdgeInsets.only(left: appBarLeftPadding*2.5),
-                          alignment: Alignment.centerLeft,
-                          child: widget.title,
-                        ),
-                      if(widget.backArrow)
-                        GestureDetector(
-                          child: Container(
-                            padding: EdgeInsets.only(left: appBarLeftPadding),
-                            alignment: Alignment.centerLeft,
-                            child: FaIcon(FontAwesomeIcons.chevronLeft, color: Colors.white,)
-                          ),
-                          onTap: () => Navigator.of(context).pop(),
-                        ),
-                    ],
-                  )
-                ),]
+                  PetMatchAppBar(title: widget.title, backArrow: widget.backArrow,),
+              ]
             ),
             ),
           ),
         ),
       ],
+    );
+  }
+}
+
+class PetMatchAppBar extends StatelessWidget {
+
+  PetMatchAppBar({
+    this.title,
+    this.backArrow = false,
+  });
+
+  final Widget title;
+  final bool backArrow;
+  final double appBarLeftPadding = 20;
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      width: double.infinity,
+        height: 56,
+        child: Stack(
+          children: [
+            if(title != null)
+              Container(
+                padding: EdgeInsets.only(left: appBarLeftPadding*2.5),
+                alignment: Alignment.centerLeft,
+                child: title,
+              ),
+            
+            if(backArrow)
+              GestureDetector(
+                child: Container(
+                  padding: EdgeInsets.only(left: appBarLeftPadding),
+                  alignment: Alignment.centerLeft,
+                  child: FaIcon(FontAwesomeIcons.chevronLeft, color: Colors.white,)
+                ),
+                onTap: () => Navigator.of(context).pop(),
+              ),
+          ],
+        )
     );
   }
 }

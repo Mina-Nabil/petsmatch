@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:petmatch/screens/main_screen/ConversationScreen.dart';
 import 'package:petmatch/screens/main_screen/SearchScreen.dart';
 import 'package:petmatch/screens/main_screen/main_tabs/MainMenuScreen.dart';
 import 'package:petmatch/screens/main_screen/main_tabs/NotificationsScreen.dart';
@@ -20,7 +21,6 @@ class PetMatchMainScreen extends StatefulWidget {
 
 class _PetMatchMainScreenState extends State<PetMatchMainScreen> with SingleTickerProviderStateMixin {
   CupertinoTabController _tabController;
-  int _currentTabIndex = 0;
 
   @override
   void initState() {
@@ -36,7 +36,6 @@ class _PetMatchMainScreenState extends State<PetMatchMainScreen> with SingleTick
 
   void _onTap(int index) {
     setState(() {
-      _currentTabIndex = index;
       _tabController.index = index;
     });
   }
@@ -121,6 +120,7 @@ class _PetMatchMainScreenState extends State<PetMatchMainScreen> with SingleTick
             'search' : (context) => SearchScreen(),
             'post'   : (context) => PostScreen(),
             'lovers' : (context) => LoversScreen(),
+            'conversation' : (context) => ConversationScreen()
           },
         );
       },

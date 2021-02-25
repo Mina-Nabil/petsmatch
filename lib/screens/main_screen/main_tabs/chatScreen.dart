@@ -101,7 +101,7 @@ List<Chat> _recentChats = [
                     title: UserNameRole(name:  _recentChats[index].user.name, role:  _recentChats[index].user.whoIAm()),
                     subtitle: Text(_recentChats[index].lastText, style: TextStyle(color: PetsTheme.blackTextColor), overflow: TextOverflow.ellipsis,),
                     trailing: Text(DateFormat.jm().format(_recentChats[index].dateTime)),
-                    onTap: () => Navigator.of(context).pushNamed('/conversation'),
+                    onTap: () => Navigator.of(context).pushNamed('conversation'),
                   ),
                   
                   secondaryActions: <Widget>[
