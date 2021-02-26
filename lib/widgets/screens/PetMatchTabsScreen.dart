@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:petmatch/UI/profile/ProfileScreen.dart';
 import 'package:petmatch/screens/main_screen/ConversationScreen.dart';
 import 'package:petmatch/screens/main_screen/SearchScreen.dart';
 import 'package:petmatch/screens/main_screen/main_tabs/MainMenuScreen.dart';
@@ -120,7 +121,8 @@ class _PetMatchMainScreenState extends State<PetMatchMainScreen> with SingleTick
             'search' : (context) => SearchScreen(),
             'post'   : (context) => PostScreen(),
             'lovers' : (context) => LoversScreen(),
-            'conversation' : (context) => ConversationScreen()
+            'conversation' : (context) => ConversationScreen(),
+            'profile' : (context) => ProfileScreen(),
           },
         );
       },

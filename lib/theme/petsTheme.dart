@@ -93,6 +93,7 @@ class PetsTheme {
   static double _radius3;
   static double _radius4;
   static double _radius5;
+  static double _radius6;
 
   //Padding & Marging .. use initFonts before use
   static double _smallPadMarg;
@@ -170,6 +171,7 @@ class PetsTheme {
     _radius3 = 25;
     _radius4 = 35;
     _radius5 = 45;
+    _radius6 = 55;
 
 
 
@@ -319,6 +321,10 @@ class PetsTheme {
     return _radius5;
   }
 
+  static get radius6 {
+    assert(_context != null);
+    return _radius6;
+  }
   static get currentMainColor {
     return _currentMainColor;
   }

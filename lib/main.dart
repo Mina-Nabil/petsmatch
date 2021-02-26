@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:petmatch/UI/profile/ProfileScreen.dart';
 import 'package:petmatch/screens/main_screen/SearchScreen.dart';
 import 'package:petmatch/screens/main_screen/ConversationScreen.dart';
 import 'package:petmatch/screens/post_screens/LoversScreen.dart';
@@ -44,6 +45,10 @@ class MyApp extends StatelessWidget {
           case 'post':
             return CupertinoPageRoute(
             builder: (_) => PostScreen(), settings: settings);
+            break;
+          case 'profile':
+            return CupertinoPageRoute(
+            builder: (_) => ProfileScreen(), settings: settings);
             break; 
           default:
             return null;

@@ -72,10 +72,13 @@ final String searchIconPath = "assets/images/icons/main/search.svg";
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children:[ 
-                Container(
-                  width: 45,
-                  height: 45,
-                  child: UserAvatar(image: mainUser.image, imageRatio: 1)
+                GestureDetector(
+                  child: Container(
+                    width: 45,
+                    height: 45,
+                    child: UserAvatar(image: mainUser.image, imageRatio: 1),
+                  ),
+                  onTap: () => Navigator.of(context).pushNamed('profile'),
                 ),
                 Container(
                     height: 55,
