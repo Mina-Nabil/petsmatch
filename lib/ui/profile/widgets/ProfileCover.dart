@@ -73,14 +73,14 @@ class ProfileCover extends StatelessWidget {
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       RoundButton(
-                        child: Text("Send a message", style: TextStyle(fontSize: PetsTheme.getSmallFont(), color: PetsTheme.currentMainColor),),
+                        child: FittedBox(child: Text("Send a message", style: TextStyle(fontSize: PetsTheme.getSmallFont(), color: PetsTheme.currentMainColor),)),
                         color: Colors.white,
                         height: 30,
                         width: MediaQuery.of(context).size.width/3, // good for SmallFont
                       ),
                       
                       RoundButton(
-                        child: Text("Friends", style: TextStyle(fontSize: PetsTheme.getSmallFont(), color: Colors.white),),
+                        child: FittedBox(child: Text("Friends", style: TextStyle(fontSize: PetsTheme.getSmallFont(), color: Colors.white),)),
                         borderColor: Colors.white,
                         height: 30,
                         width: MediaQuery.of(context).size.width/3,  // good for SmallFont
