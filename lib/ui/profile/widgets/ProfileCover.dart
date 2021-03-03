@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:petmatch/models/Pet.dart';
 import 'package:petmatch/models/User.dart';
 import 'package:petmatch/theme/petsTheme.dart';
+import 'package:petmatch/widgets/Pair.dart';
+import 'package:petmatch/widgets/buttons/CircularMoreButton.dart';
 import 'package:petmatch/widgets/main/UserAvatar.dart';
 
 
@@ -44,11 +46,11 @@ class ProfileCover extends StatelessWidget {
                                 children: [
                                   for (var pet in mainUser.pets) 
                                     Container(
-                                      margin: EdgeInsets.only(right: PetsTheme.getMeduimPadMarg()),
+                                      margin: EdgeInsets.only(right: PetsTheme.getLargePadMarg()),
                                       child: Column(
                                         children: [
                                           Container(
-                                            height: 35, width: 35,
+                                            height: 40, width: 40,
                                             margin: EdgeInsets.symmetric(vertical: PetsTheme.getSmallPadMarg()),
                                             child: UserAvatar(image: pet.image,imageRatio: 1,),
                                           ),
@@ -85,11 +87,12 @@ class ProfileCover extends StatelessWidget {
                         height: 30,
                         width: MediaQuery.of(context).size.width/3,  // good for SmallFont
                       ),
-                      Container(
-                        height: 30,
-                        width: 30,
-                        child: Placeholder(),
-                      )
+                      CircularMoreButton(
+                        radius: 15,
+                        color: Colors.white, 
+                        backgroundColor: Color.fromRGBO(20, 44, 122, 0.5),
+                        onPressed: () {},
+                      ),
                     ],
                   ),
 
@@ -98,13 +101,38 @@ class ProfileCover extends StatelessWidget {
                   //friends & pets
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                    children: [
-                      Container(width: 30, height: 30, child: Placeholder(),),
-                      Container(width: 30, height: 30, child: Placeholder(),),
-                      Container(width: 30, height: 30, child: Placeholder(),),
-                      Container(width: 30, height: 30, child: Placeholder(),),
+                    children: [ 
+                      GestureDetector(
+                        child: Pair(
+                          Text("450", style: TextStyle(fontSize: PetsTheme.getLargeFont(), color: Colors.white, fontWeight: FontWeight.bold)),
+                          Text("Friends",style: TextStyle(fontSize: PetsTheme.getMeduimFont(), color: Colors.white,)),
+                        ),
+                        onTap: () {print("Friends");},
+                      ),
+                      GestureDetector(
+                        child: Pair(
+                          Text("2",style: TextStyle(fontSize: PetsTheme.getLargeFont(), color: Colors.white, fontWeight: FontWeight.bold)),
+                          Text("Pets",style: TextStyle(fontSize: PetsTheme.getMeduimFont(), color: Colors.white,)),
+                        ),
+                        onTap: () {print("Pets");},
+                      ),
+                      GestureDetector(
+                        child: Pair(
+                          Text("30",style: TextStyle(fontSize: PetsTheme.getLargeFont(), color: Colors.white, fontWeight: FontWeight.bold)),
+                          Text("Reviews",style: TextStyle(fontSize: PetsTheme.getMeduimFont(), color: Colors.white,)),
+                        ),
+                        onTap: () {print("Reviews");},
+                      ),
+                      GestureDetector(
+                        child: Pair(
+                          Text("45",style: TextStyle(fontSize: PetsTheme.getLargeFont(), color: Colors.white, fontWeight: FontWeight.bold)),
+                          Text("Photos",style: TextStyle(fontSize: PetsTheme.getMeduimFont(), color: Colors.white,)),
+                        ),
+                        onTap: () {print("Photos");},
+                      ),
                     ],
                   ),
+                  SizedBox(height: PetsTheme.getLargePadMarg(),),
                 ],
               ),
             );

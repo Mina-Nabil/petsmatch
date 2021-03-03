@@ -132,6 +132,7 @@ class PetMatchAppBar extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
+      color: Colors.transparent,
       width: double.infinity,
         height: 56,
         child: Stack(
@@ -146,6 +147,7 @@ class PetMatchAppBar extends StatelessWidget {
             if(backArrow)
               GestureDetector(
                 child: Container(
+                  color: Colors.transparent,
                   padding: EdgeInsets.only(left: appBarLeftPadding),
                   alignment: Alignment.centerLeft,
                   child: FaIcon(FontAwesomeIcons.chevronLeft, color: Colors.white,)
