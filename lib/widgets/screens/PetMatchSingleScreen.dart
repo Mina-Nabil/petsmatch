@@ -118,6 +118,7 @@ class _PetMatchSingleScreenState extends State<PetMatchSingleScreen> {
   Widget _buildScreenWidget() {
     if(widget.scrollableHeader) {
       return SingleChildScrollView(
+        physics: ClampingScrollPhysics(),
         child: Column(
           children:[
             _buildHeaderWidget(),

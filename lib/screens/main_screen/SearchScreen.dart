@@ -90,6 +90,7 @@ class _SearchScreen extends State<SearchScreen> {
           ),
       ),
       body: ListView(
+        padding: EdgeInsets.zero,
             children: [
 
             //people
