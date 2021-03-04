@@ -22,8 +22,7 @@ class NewPostWidget extends StatelessWidget {
             BoxConstraints(minHeight: MediaQuery.of(context).size.height * minHeightRatio, maxHeight: MediaQuery.of(context).size.height * maxHeightRatio),
         padding: EdgeInsets.symmetric(horizontal: PetsTheme.getLargerPadMarg(), vertical: PetsTheme.getMeduimPadMarg()),
         margin: EdgeInsets.only(bottom: PetsTheme.getMeduimPadMarg()),
-        child: ListView(
-          shrinkWrap: true,
+        child: Column(
           children: [
             Container(
               width: MediaQuery.of(context).size.width,

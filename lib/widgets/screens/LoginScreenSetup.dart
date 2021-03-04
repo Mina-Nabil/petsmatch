@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:petmatch/theme/petsTheme.dart';
 import 'package:petmatch/widgets/screens/CommonScreenSetup.dart';
+import 'package:petmatch/widgets/screens/PetMatchSingleScreen.dart';
 
 class LoginScreenSetup extends StatelessWidget {
   final bool showLogo;
@@ -59,53 +60,43 @@ class LoginScreenSetup extends StatelessWidget {
     List<Widget> topAreaWidgets = [];
 
     if (showLogo) {
-      Widget logoWidget = Flexible(
-          flex: 1,
-          child: Container(
-              alignment: Alignment.bottomCenter,
-              constraints: BoxConstraints(maxHeight: logoMaxHeight),
-              child: Hero(
-                  tag: "logo",
-                  child: SizedBox(
-                    child: SvgPicture.asset(
-                      "assets/images/logo/orig.svg",
-                      color: PetsTheme.whiteBarColor,
-                    ),
-                  ))));
+      Widget logoWidget = Container(
+        margin: EdgeInsets.all(PetsTheme.getLargePadMarg()),
+          alignment: Alignment.bottomCenter,
+          constraints: BoxConstraints(maxHeight: logoMaxHeight),
+          child: Hero(
+              tag: "logo",
+              child: SizedBox(
+                child: SvgPicture.asset(
+                  "assets/images/logo/orig.svg",
+                  color: PetsTheme.whiteBarColor,
+                ),
+              )));
       topAreaWidgets.add(logoWidget);
     }
-    Widget topTitleWidget = Flexible(
-      fit: FlexFit.tight,
-      flex: 1,
-      child: Container(
-        alignment: Alignment.center,
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-          children: [
-            Flexible(
-              flex: 2,
-              child: FittedBox(
-                child: Text(
-                  this.topbarTitle,
-                  style: TextStyle(
-                      fontFamily: "Roboto", color: PetsTheme.whiteBarColor, fontWeight: FontWeight.bold, fontSize: PetsTheme.getEvenMuchLargerFont()),
-                ),
-              ),
+    Widget topTitleWidget = Container(
+      margin: EdgeInsets.all(PetsTheme.getLargePadMarg()),
+      alignment: Alignment.center,
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+        children: [
+          FittedBox(
+            child: Text(
+              this.topbarTitle,
+              style: TextStyle(
+                  fontFamily: "Roboto", color: PetsTheme.whiteBarColor, fontWeight: FontWeight.bold, fontSize: PetsTheme.getEvenMuchLargerFont()),
             ),
-            (this.topbarSubtitle != '')
-                ? Flexible(
-                    flex: 1,
-                    child: SizedBox(
-                      child: Text(
-                        this.topbarSubtitle,
-                        style: TextStyle(
-                            fontFamily: "Roboto", color: PetsTheme.whiteBarColor, fontWeight: FontWeight.normal, fontSize: PetsTheme.getLargeFont()),
-                      ),
-                    ),
-                  )
-                : Container(),
-          ],
-        ),
+          ),
+          (this.topbarSubtitle != '')
+              ? SizedBox(
+                child: Text(
+                  this.topbarSubtitle,
+                  style: TextStyle(
+                      fontFamily: "Roboto", color: PetsTheme.whiteBarColor, fontWeight: FontWeight.normal, fontSize: PetsTheme.getLargeFont()),
+                ),
+              )
+              : Container(),
+        ],
       ),
     );
     topAreaWidgets.add(topTitleWidget);
@@ -180,9 +171,9 @@ class LoginScreenSetup extends StatelessWidget {
       ),
     );
 
-    return  CommonScreenSetup(
+    return  PetMatchSingleScreen(
       //top Area Widget
-      Container(
+     header: Container(
           width: MediaQuery.of(context).size.width,
           child: Column(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -191,12 +182,13 @@ class LoginScreenSetup extends StatelessWidget {
               children: topAreaWidgets)),
 
       //Bottom Area widget
-      bottomAreaRootWidget,
+      body:bottomAreaRootWidget,
       //Configurations
-      screenBgColor: this.backgroundColor,
-      screenBgMask: this.backgroundMask,
-      isSmallTop: this.isSmallTopArea,
-      isPortraitLock: isPortraitLock,
+      //screenBgColor: this.backgroundColor,
+      //screenBgMask: this.backgroundMask,
+      //isSmallTop: this.isSmallTopArea,
+      enableRotation: isPortraitLock,
     );
+
   }
 }

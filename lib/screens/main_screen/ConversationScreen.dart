@@ -2,7 +2,6 @@ import 'dart:ui';
 
 import 'package:flutter/material.dart';
 import 'package:petmatch/widgets/main/UserAvatar.dart';
-import 'package:petmatch/widgets/screens/PetMatchContainer.dart';
 import 'package:petmatch/widgets/screens/PetMatchSingleScreen.dart';
 import 'package:petmatch/theme/petsTheme.dart';
 
@@ -33,9 +32,9 @@ class _SearchScreen extends State<ConversationScreen> {
         ],
       ),
       
-      body: PetMatchContainer(
-        headerPadding: EdgeInsets.zero,
-        bodyPadding: EdgeInsets.only(bottom: MediaQuery.of(context).padding.bottom),
+   //   body: PetMatchContainer(
+  //      headerPadding: EdgeInsets.zero,
+  //      bodyPadding: EdgeInsets.only(bottom: MediaQuery.of(context).padding.bottom),
         bodyBackgroundColor: Colors.white,
         body: Column(
           children: [
@@ -92,7 +91,7 @@ class _SearchScreen extends State<ConversationScreen> {
                   ],
                 )),
           ],
-        )
+  //      )
       ),
     );
   }

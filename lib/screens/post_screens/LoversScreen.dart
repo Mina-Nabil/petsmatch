@@ -5,7 +5,6 @@ import 'package:petmatch/models/Pet.dart';
 import 'package:petmatch/models/User.dart';
 import 'package:petmatch/widgets/feed/UserNameRole.dart';
 import 'package:petmatch/widgets/main/UserAvatar.dart';
-import 'package:petmatch/widgets/screens/PetMatchContainer.dart';
 import 'package:petmatch/widgets/screens/PetMatchSingleScreen.dart';
 import 'package:petmatch/theme/petsTheme.dart';
 
@@ -33,18 +32,15 @@ class _SearchScreen extends State<LoversScreen> {
       title: Text("${lovers.length} Loves",
               style: TextStyle(fontFamily: "Roboto", fontSize: PetsTheme.getMuchLargerFont(), color: PetsTheme.whiteBarColor, fontWeight: FontWeight.bold),
           ),
-      
-      body: PetMatchContainer(
-        headerPadding: EdgeInsets.zero,
-        bodyPadding: EdgeInsets.all(20),
-        bodyBackgroundColor: Colors.white,
-        body: ListView.builder(
+      bodyBackgroundColor: Colors.white,
+      body: ListView.builder(
+        padding: EdgeInsets.zero,
           itemCount: lovers.length,
           itemBuilder: (context, index) {
             return Column(
               children: [
                 ListTile(
-                  contentPadding: EdgeInsets.zero,
+                  contentPadding: EdgeInsets.symmetric(horizontal: 20, vertical: 10),
                   leading: Container(
                     width: 45,
                     height: 45,
@@ -52,12 +48,12 @@ class _SearchScreen extends State<LoversScreen> {
                   ),
                   title: UserNameRole(name: lovers[index].name, role: lovers[index].whoIAm())
                 ),
-                Divider(height: 0,)
+                Divider(height: 0, thickness: 1,indent: 20, endIndent: 20,)
               ],
             );
           }
 
       ),
-    ));
+    );
   }
 }

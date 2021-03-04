@@ -6,16 +6,28 @@ import 'package:petmatch/theme/petsTheme.dart';
 
 class PetMatchSingleScreen extends StatefulWidget {
   PetMatchSingleScreen({
-    @required this.body,
-    this.backgroundMask,
     this.title,
+    this.header,
+    this.body,
+    this.bodyBackgroundColor,
+    this.backgroundMask,
+    this.scrollableHeader = false,
     this.enableRotation = false,
     this.backArrow = false,
-  });
+  }) : 
+  /*
+  Can not have title widget (appBar widget) and scrollable header
+  */
+  assert( ! (title != null && scrollableHeader));
 
-  final Widget body;
-  final Widget title;
+
+  final Widget title;  // AppBar widget
+  final Widget header; // Upper Widget with mask background
+  final Widget body;   // Main widget(s) for the screen
+
+  final Color bodyBackgroundColor;
   final bool backArrow;
+  final bool scrollableHeader;
   final bool enableRotation;
   final bgMask backgroundMask;
 
@@ -25,7 +37,7 @@ class PetMatchSingleScreen extends StatefulWidget {
 
 class _PetMatchSingleScreenState extends State<PetMatchSingleScreen> {
   String bgMaskPath;
-  Image bgMaskImage;
+  DecorationImage  backgroundImage;
 
   @override
   void initState() {
@@ -52,11 +64,12 @@ class _PetMatchSingleScreenState extends State<PetMatchSingleScreen> {
         break;
     }
     print(bgMaskPath);
-    bgMaskImage = Image.asset(
-      bgMaskPath,
-      fit: BoxFit.cover,
-      color: PetsTheme.currentBgMainColor.withOpacity(1.0),
-      colorBlendMode: BlendMode.srcOut,
+
+    backgroundImage = DecorationImage(
+      image: Image.asset(bgMaskPath).image,
+      fit: BoxFit.cover, 
+      colorFilter: ColorFilter.mode(
+      PetsTheme.currentBgMainColor.withOpacity(1.0) , BlendMode.srcOut),
     );
 
     if (widget.enableRotation)
@@ -75,47 +88,81 @@ class _PetMatchSingleScreenState extends State<PetMatchSingleScreen> {
 
   @override
   Widget build(BuildContext context) {
-    
-    
-
-    return Stack(
-      children: [
-        //Background Image
-        Container(
-          height: MediaQuery.of(context).size.height,
-          width: MediaQuery.of(context).size.width,
-          color: PetsTheme.currentBgMainColor,
-          child: bgMaskImage,
-        ),
-
-        SafeArea(
-          top: true,
-          bottom: false,
-          right: true,
-          left: true,
-          child: CupertinoPageScaffold(
-            backgroundColor: Colors.transparent,
-            child: Material(color: Colors.transparent, 
-            child:  Stack(
-              children:[
-                Container(
-                  margin: (widget.backArrow || widget.title != null) ? EdgeInsets.only(top:56) : EdgeInsets.zero,
-                  child: SafeArea(
-                    top: true, bottom: false, right: true, left: true, 
-                    child: widget.body
-                  )
-                ),
-                
-                if(widget.backArrow || widget.title != null)
-                  PetMatchAppBar(title: widget.title, backArrow: widget.backArrow,),
-              ]
-            ),
-            ),
+    return SafeArea(
+      top: false,
+      bottom: false,
+      right: true,
+      left: true,
+      child: CupertinoPageScaffold(
+        backgroundColor: widget.bodyBackgroundColor?? Colors.grey[100],
+        child: Material(
+          color: Colors.transparent, 
+          child:  Stack(
+            children:[
+              Container(
+                child: SafeArea(
+                  top: false, bottom: false, right: true, left: true, 
+                  child: _buildScreenWidget()
+                )
+              ),
+              
+              if(widget.backArrow || widget.title != null)
+                PetMatchAppBar(title: widget.title, backArrow: widget.backArrow,),
+            ]
           ),
         ),
-      ],
+      ),
     );
   }
+
+  Widget _buildScreenWidget() {
+    if(widget.scrollableHeader) {
+      return SingleChildScrollView(
+        child: Column(
+          children:[
+            _buildHeaderWidget(),
+            _buildBodyWidget(),
+          ]
+        ),
+      );
+    } else {
+      return Column(
+        children:[
+          _buildHeaderWidget(),
+          Expanded(child: _buildBodyWidget(),),
+        ]
+      );
+    }
+  }
+
+  Widget _buildHeaderWidget() {
+    bool appBarExists = (widget.backArrow || widget.title != null);
+    
+    return Container(
+      padding:  appBarExists ? EdgeInsets.only(top:(56 + MediaQuery.of(context).padding.top)) : EdgeInsets.only(top:MediaQuery.of(context).padding.top),
+      decoration: BoxDecoration(
+        color:  Colors.black.withOpacity(0.7),
+        image: backgroundImage,
+      ),
+      child: widget.header,
+    );
+  }
+
+  Widget _buildBodyWidget() {
+    return Container(
+      decoration: BoxDecoration(
+          color:  PetsTheme.currentBgMainColor.withOpacity(1),
+        ),
+      child: ClipRRect(
+        borderRadius: BorderRadius.only(topLeft: Radius.circular(20),topRight: Radius.circular(20)),
+        child: Container(
+          width: double.infinity,
+          color: widget.bodyBackgroundColor?? Colors.grey[100],
+          child: widget.body
+          )
+      ),
+    );
+  } 
 }
 
 class PetMatchAppBar extends StatelessWidget {
@@ -132,14 +179,15 @@ class PetMatchAppBar extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
+      padding: EdgeInsets.only(top:MediaQuery.of(context).padding.top),
       color: Colors.transparent,
       width: double.infinity,
-        height: 56,
+        height: 56 + MediaQuery.of(context).padding.top,
         child: Stack(
           children: [
             if(title != null)
               Container(
-                padding: EdgeInsets.only(left: appBarLeftPadding*2.5),
+                padding:  EdgeInsets.only(left: backArrow? appBarLeftPadding*2.5 : appBarLeftPadding),
                 alignment: Alignment.centerLeft,
                 child: title,
               ),

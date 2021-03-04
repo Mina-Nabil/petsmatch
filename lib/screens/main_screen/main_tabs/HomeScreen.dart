@@ -11,7 +11,6 @@ import 'package:petmatch/widgets/feed/RegularPostWidget.dart';
 import 'package:petmatch/widgets/feed/SuggestedIcon.dart';
 import 'package:petmatch/widgets/feed/SuggestionsIconsList.dart';
 import 'package:petmatch/widgets/main/UserAvatar.dart';
-import 'package:petmatch/widgets/screens/PetMatchContainer.dart';
 import 'package:petmatch/widgets/screens/PetMatchSingleScreen.dart';
 
 
@@ -62,75 +61,50 @@ final String searchIconPath = "assets/images/icons/main/search.svg";
     }
 
     return PetMatchSingleScreen(
-      body: PetMatchContainer(
-        headerPadding: EdgeInsets.symmetric(horizontal: 20, vertical: 10),
-        header: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          mainAxisSize: MainAxisSize.min,
-          children:[
-          
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children:[ 
-                GestureDetector(
-                  child: Container(
-                    width: 45,
-                    height: 45,
-                    child: UserAvatar(image: mainUser.image, imageRatio: 1),
+      scrollableHeader: true,
+      header: Container(
+        padding: EdgeInsets.all(20),
+        child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            mainAxisSize: MainAxisSize.min,
+            children:[
+            
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children:[ 
+                  GestureDetector(
+                    child: Container(
+                      width: 45,
+                      height: 45,
+                      child: UserAvatar(image: mainUser.image, imageRatio: 1),
+                    ),
+                    onTap: () => Navigator.of(context).pushNamed('profile'),
                   ),
-                  onTap: () => Navigator.of(context).pushNamed('profile'),
-                ),
-                Container(
-                    height: 55,
-                    width: 55,
-                    child: GestureDetector(
-                      child: CircularPetButton(PetsTheme.currentMainColor.withOpacity(.2), searchIconPath, Colors.white),
-                      onTap: () => Navigator.of(context).pushNamed('search'), )
-                      //() => Navigator.of(context).push(CupertinoPageRoute(builder: (_) => SearchScreen()))
-                    //),
-                )
-              ]
-            ),
-
-         /* Padding(
-            padding: const EdgeInsets.symmetric(vertical: 20),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children:[
-                Text("Welcome back \nMina!",
-                  style: TextStyle(
-                    fontFamily: "Roboto", 
-                    fontSize: PetsTheme.getMuchLargerFont(), color: PetsTheme.whiteBarColor, fontWeight: FontWeight.bold),
-                ),
-                Container(
-                  height: 55,
-                  width: 55,
-                  child: GestureDetector(
-                    child: CircularPetButton(PetsTheme.currentMainColor.withOpacity(.2), searchIconPath, Colors.white),
-                    onTap: () => Navigator.of(context).pushNamed('/search'),
-                  ),
-                )
-              ]
-              
-            ),
-          ),
-*/
-            SizedBox(height: 10,),
-            Container(
-              width: double.infinity,
-              child: SingleChildScrollView(
-                scrollDirection: Axis.horizontal,
-                //children: petImages,
-                child: Row(
-                  children: petImages,
-                ),
+                  Container(
+                      height: 55,
+                      width: 55,
+                      child: GestureDetector(
+                        child: CircularPetButton(PetsTheme.currentMainColor.withOpacity(.2), searchIconPath, Colors.white),
+                        onTap: () => Navigator.of(context).pushNamed('search'), )
+                  )
+                ]
               ),
-            )
-          ]
-        ),
+              SizedBox(height: 10,),
+              Container(
+                width: double.infinity,
+                child: SingleChildScrollView(
+                  scrollDirection: Axis.horizontal,
+                  child: Row(
+                    children: petImages,
+                  ),
+                ),
+              )
+            ]
+          ),
+      ),
 
-        bodyPadding: EdgeInsets.zero,
-        body: ListView(
+      
+        body: Column(
           children: [
             NewPostWidget(),
             SuggesionsIconsList([SuggestedIcon(mainUser),  
@@ -148,7 +122,7 @@ final String searchIconPath = "assets/images/icons/main/search.svg";
             ).toList(),
           ],
         ),
-      ),
+      
     );
   }
 }

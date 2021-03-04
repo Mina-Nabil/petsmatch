@@ -7,7 +7,6 @@ import 'package:petmatch/models/User.dart';
 import 'package:petmatch/theme/petsTheme.dart';
 import 'package:petmatch/widgets/feed/UserNameRole.dart';
 import 'package:petmatch/widgets/main/UserAvatar.dart';
-import 'package:petmatch/widgets/screens/PetMatchContainer.dart';
 import 'package:petmatch/widgets/screens/PetMatchSingleScreen.dart';
 
 class Chat {
@@ -74,17 +73,17 @@ List<Chat> _recentChats = [
   @override
   Widget build(BuildContext context) {
     return PetMatchSingleScreen(
-      body: PetMatchContainer(
-
-        header: Text("Chats",
+      scrollableHeader: false,
+      backArrow: false,
+      title: Text("Chats",
           style: TextStyle(fontFamily: "Roboto", fontSize: PetsTheme.getMuchLargerFont(), color: PetsTheme.whiteBarColor, fontWeight: FontWeight.bold),
         ),
 
-        bodyPadding: EdgeInsets.zero,
         bodyBackgroundColor: Colors.white,
         body: Container(
 
           child: ListView.builder(
+            padding: EdgeInsets.zero,
             itemCount: _recentChats.length,
             itemBuilder: (context, index) {
               return Column(
@@ -150,13 +149,13 @@ List<Chat> _recentChats = [
                     
                   ],
                 ),
-                Divider(height: 0,)
+                Divider(height: 0,thickness: 1, indent: 20, endIndent: 20,)
                 ]
               );
             }
           ),
         ),
-      ),
+      
     );
   }
 }

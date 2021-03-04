@@ -1,3 +1,4 @@
+import 'package:flutter/cupertino.dart';
 import 'package:petmatch/widgets/screens/PetMatchSingleScreen.dart';
 
 import '../../theme/petsTheme.dart';
@@ -40,9 +41,16 @@ class _SplashScreenState extends State<SplashScreen> {
     PetsTheme.initTheme(context);
 
     //Padding & Marging Init
-    return PetMatchSingleScreen(
-      backArrow: false,
-      body: Container(
+    return CupertinoPageScaffold(
+      child: Container(
+        decoration: BoxDecoration(
+          color:  Colors.black.withOpacity(0.7),
+          image: DecorationImage(
+            image: Image.asset("assets/images/masks/def_blue.png").image,
+            fit: BoxFit.cover, 
+            colorFilter: ColorFilter.mode( PetsTheme.currentBgMainColor.withOpacity(1.0) , BlendMode.srcOut),
+          ),
+        ),
         child: AnimatedOpacity(
             opacity: _visible ? 1.0 : 0.0,
             duration: Duration(milliseconds: 2000),

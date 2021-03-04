@@ -46,7 +46,7 @@ class _PetMatchMainScreenState extends State<PetMatchMainScreen> with SingleTick
   Widget build(BuildContext context) {
     return CustomStack(alignment: Alignment.bottomCenter, isNavBar: true, children: [
       // Background Image
-      Container(
+   /*   Container(
         height: MediaQuery.of(context).size.height,
         width: MediaQuery.of(context).size.width,
         color: PetsTheme.currentBgMainColor,
@@ -56,9 +56,10 @@ class _PetMatchMainScreenState extends State<PetMatchMainScreen> with SingleTick
           color: PetsTheme.currentBgMainColor.withOpacity(1.0),
           colorBlendMode: BlendMode.srcOut,
         ),
-      ),
+      ),*/
 
   SafeArea(
+    top: false,
     bottom: false,
     child: CupertinoTabScaffold(
       backgroundColor: Colors.black,

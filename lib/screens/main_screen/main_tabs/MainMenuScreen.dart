@@ -2,18 +2,16 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:petmatch/theme/petsTheme.dart';
 import 'package:petmatch/widgets/main/UserAvatar.dart';
-import 'package:petmatch/widgets/screens/PetMatchContainer.dart';
 import 'package:petmatch/widgets/screens/PetMatchSingleScreen.dart';
 
 class MainMenuScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return PetMatchSingleScreen(
-      body: PetMatchContainer(
-        headerPadding: EdgeInsets.zero,
-        bodyBackgroundColor: Colors.transparent,
-        body: SingleChildScrollView(
-          child: Column(
+      scrollableHeader: false,
+      header: Container(
+        padding: EdgeInsets.only(left: 20, bottom: 20, right: 20),
+        child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
             Container(
@@ -93,9 +91,16 @@ class MainMenuScreen extends StatelessWidget {
                 ),
               ),
             ),
-
-
-
+            ],
+          ),
+      ),
+      bodyBackgroundColor: Colors.white,
+      body: Container(
+        padding: EdgeInsets.symmetric(horizontal: 20),
+        child: SingleChildScrollView(
+          child: Column(
+            children: [
+              /*
 
               MainMenuItem(
                 margin: EdgeInsets.symmetric(vertical: PetsTheme.getLargePadMarg()),
@@ -124,7 +129,7 @@ class MainMenuScreen extends StatelessWidget {
                 text: "My Walks", iconPath: "assets/images/icons/menu/walks.svg"),
               MainMenuItem(
                 margin: EdgeInsets.symmetric(vertical: PetsTheme.getLargePadMarg()),
-                text: "Matings", iconPath: "assets/images/icons/menu/matings.svg"),
+                text: "Matings", iconPath: "assets/images/icons/menu/matings.svg"),*/
               MainMenuItem(
                 margin: EdgeInsets.symmetric(vertical: PetsTheme.getLargePadMarg()),
                 text: "Settings", iconPath: "assets/images/icons/menu/settings.svg"
@@ -141,6 +146,7 @@ class MainMenuScreen extends StatelessWidget {
           ),
         ),
       ),
+      
     );
   }
 }
@@ -166,12 +172,12 @@ class MainMenuItem extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
             SvgPicture.asset(iconPath,
-              color: Colors.white, 
+              color:  PetsTheme.currentMainColor, 
               width: PetsTheme.verySmallIconSize(), 
               height: PetsTheme.verySmallIconSize() ,
             ),
             SizedBox(width: PetsTheme.getLargePadMarg(),),
-            Text(text, style: TextStyle(fontSize: PetsTheme.getLargeFont(), color: Colors.white), ),
+            Text(text, style: TextStyle(fontSize: PetsTheme.getLargeFont(), color: PetsTheme.currentMainColor), ),
           ],
         ),
       ),

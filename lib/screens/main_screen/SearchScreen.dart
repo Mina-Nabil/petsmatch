@@ -7,7 +7,6 @@ import 'package:petmatch/models/User.dart';
 import 'package:petmatch/widgets/feed/RegularPostWidget.dart';
 import 'package:petmatch/widgets/feed/UserNameRole.dart';
 import 'package:petmatch/widgets/main/UserAvatar.dart';
-import 'package:petmatch/widgets/screens/PetMatchContainer.dart';
 import 'package:petmatch/widgets/screens/PetMatchSingleScreen.dart';
 import 'package:petmatch/theme/petsTheme.dart';
 
@@ -58,7 +57,135 @@ class _SearchScreen extends State<SearchScreen> {
 
   @override
   Widget build(BuildContext context) {
+
     return PetMatchSingleScreen(
+      backArrow: true,
+      scrollableHeader: false,
+      title: Text(
+        "What are you looking for?",
+        style: TextStyle(
+          fontFamily: "Roboto",
+          color: PetsTheme.whiteBarColor,
+          fontWeight: FontWeight.bold,
+          fontSize: PetsTheme.getLargeFont()
+        ),
+      ),
+      header: Container(
+        padding: EdgeInsets.only(bottom: 20, right: 20, left: 20),
+        child: TextField(
+            textAlignVertical: TextAlignVertical.center,
+            style: TextStyle(fontSize: PetsTheme.getMeduimFont()),
+            decoration: InputDecoration(
+              contentPadding: EdgeInsets.all(PetsTheme.getSmallerPadMarg()),
+              filled: true,
+              fillColor: Colors.white,
+              border: OutlineInputBorder(
+                borderRadius: BorderRadius.circular(20),
+                borderSide: BorderSide( width: 0,style: BorderStyle.none,),
+              ),
+              prefixIcon: Icon(Icons.search,),
+              hintText: "Search PetsMatch",
+              hintStyle: TextStyle(fontSize: PetsTheme.getMeduimFont()),
+            ),
+          ),
+      ),
+      body: ListView(
+            children: [
+
+            //people
+            if(searchResultsPeople.isNotEmpty) 
+            Container(
+              margin: EdgeInsets.only(bottom :PetsTheme.getLargerPadMarg()),
+              padding: EdgeInsets.all(PetsTheme.getLargerPadMarg()),
+                decoration: BoxDecoration(
+                  color: Colors.white,
+                  borderRadius: BorderRadius.all(Radius.circular(20))
+                ),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                    Container(
+                      margin: EdgeInsets.only(bottom: PetsTheme.getMeduimPadMarg()),
+                      child: Text("People", style: TextStyle(fontSize: PetsTheme.getMeduimFont(), fontWeight: FontWeight.bold),)),
+
+                  ...searchResultsPeople.map((e) {
+                    return Padding(
+                      padding: EdgeInsets.symmetric(vertical: PetsTheme.getSmallPadMarg()),
+                      child: ListTile(
+                        contentPadding: EdgeInsets.zero,
+                        leading: UserAvatar(image: e.image,imageRatio: 1,),
+                        title: UserNameRole(name: e.name, role: e.whoIAm()),
+                      ),
+                    );
+                  }).toList(),
+                ],
+              ),
+            ),
+
+            // trainers
+            if(searchResultsTrainers.isNotEmpty) 
+            Container(
+              margin: EdgeInsets.only(bottom :PetsTheme.getLargerPadMarg()),
+              padding: EdgeInsets.all(PetsTheme.getLargerPadMarg()),
+                decoration: BoxDecoration(
+                  color: Colors.white,
+                  borderRadius: BorderRadius.all(Radius.circular(20))
+                ),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                    Container(
+                      margin: EdgeInsets.only(bottom: PetsTheme.getMeduimPadMarg()),
+                      child: Text("Trainers", style: TextStyle(fontSize: PetsTheme.getMeduimFont(), fontWeight: FontWeight.bold),)),
+
+                  ...searchResultsTrainers.map((e) {
+                    return Padding(
+                      padding: EdgeInsets.symmetric(vertical: PetsTheme.getSmallPadMarg()),
+                      child: ListTile(
+                        contentPadding: EdgeInsets.zero,
+                        leading: UserAvatar(image: e.image,imageRatio: 1,),
+                        title: UserNameRole(name: e.name, role: e.whoIAm()),
+                      ),
+                    );
+                  }).toList(),
+                ],
+              ),
+            ),
+
+            // posts
+            // trainers
+            if(searchResultsPosts.isNotEmpty)
+            Container(
+              padding: EdgeInsets.all(PetsTheme.getLargerPadMarg()),
+                decoration: BoxDecoration(
+                  color: Colors.white,
+                  borderRadius: BorderRadius.all(Radius.circular(20))
+                ),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                    Container(
+                      margin: EdgeInsets.only(bottom: PetsTheme.getMeduimPadMarg()),
+                      child: Text("Posts", style: TextStyle(fontSize: PetsTheme.getMeduimFont(), fontWeight: FontWeight.bold),)),
+
+                  ...searchResultsPosts.map((e) {
+                    return Padding(
+                      padding: EdgeInsets.symmetric(vertical: PetsTheme.getSmallPadMarg()),
+                      child: RegularPostWidget(e),
+                    );
+                  }).toList(),
+                ],
+              ),
+            ),
+
+          ],
+        ),
+    );
+
+    /*return PetMatchSingleScreen(
       backArrow: true,
       title: Text("What are you looking for?",
         style: TextStyle(
@@ -185,6 +312,6 @@ class _SearchScreen extends State<SearchScreen> {
           ],
         ),
         ),
-    );
+    );*/
   }
 }

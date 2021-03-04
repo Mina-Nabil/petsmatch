@@ -4,7 +4,6 @@ import 'package:flutter/material.dart';
 import 'package:petmatch/models/Post.dart';
 import 'package:petmatch/widgets/feed/RegularPostWidget.dart';
 import 'package:petmatch/widgets/main/UserAvatar.dart';
-import 'package:petmatch/widgets/screens/PetMatchContainer.dart';
 import 'package:petmatch/widgets/screens/PetMatchSingleScreen.dart';
 import 'package:petmatch/theme/petsTheme.dart';
 
@@ -31,14 +30,12 @@ class _SearchScreen extends State<PostScreen> {
   Widget build(BuildContext context) {
     return PetMatchSingleScreen(
       backArrow: true,
-      body: PetMatchContainer(
-        headerPadding: EdgeInsets.zero,
-        bodyPadding: EdgeInsets.zero,
-        bodyBackgroundColor: Colors.white,
-        body: Column(
+      bodyBackgroundColor: Colors.white,
+      body: Column(
           children:[
             Expanded(
               child: ListView(
+                padding: EdgeInsets.zero,
                 children: [
                   RegularPostWidget(
                     _post, 
@@ -103,7 +100,7 @@ class _SearchScreen extends State<PostScreen> {
           ]
         )
         
-    ));
+    );
   }
 }
 
