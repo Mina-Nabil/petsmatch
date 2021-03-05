@@ -21,7 +21,9 @@ class Pair extends StatelessWidget {
           children: [first, second],
         );
       default:
-      assert(false);
+        return Column(
+            children: [first, second],
+        );
     }
 
   }

@@ -134,14 +134,17 @@ class MainMenuScreen extends StatelessWidget {
                 margin: EdgeInsets.symmetric(vertical: PetsTheme.getLargePadMarg()),
                 text: "Settings", iconPath: "assets/images/icons/menu/settings.svg"
               ),
+              Divider(thickness: 1,),
               MainMenuItem(
                 margin: EdgeInsets.symmetric(vertical: PetsTheme.getLargePadMarg()),
                 text: "Help & Support", iconPath: "assets/images/icons/menu/helpSupport.svg"
               ),
+              Divider(thickness: 1,),
               MainMenuItem(
                 margin: EdgeInsets.symmetric(vertical: PetsTheme.getLargePadMarg()),
                 text: "Logout", iconPath: "assets/images/icons/menu/logout.svg"
               ),
+              Divider(thickness: 1,),
             ],
           ),
         ),
