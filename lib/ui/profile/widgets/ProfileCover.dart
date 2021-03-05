@@ -4,6 +4,7 @@ import 'package:petmatch/models/User.dart';
 import 'package:petmatch/theme/petsTheme.dart';
 import 'package:petmatch/widgets/Pair.dart';
 import 'package:petmatch/widgets/buttons/CircularMoreButton.dart';
+import 'package:petmatch/widgets/buttons/RoundButton.dart';
 import 'package:petmatch/widgets/main/UserAvatar.dart';
 
 
@@ -107,14 +108,14 @@ class ProfileCover extends StatelessWidget {
                           Text("450", style: TextStyle(fontSize: PetsTheme.getLargeFont(), color: Colors.white, fontWeight: FontWeight.bold)),
                           Text("Friends",style: TextStyle(fontSize: PetsTheme.getMeduimFont(), color: Colors.white,)),
                         ),
-                        onTap: () {print("Friends");},
+                        onTap: () => Navigator.pushNamed(context, 'friends'),
                       ),
                       GestureDetector(
                         child: Pair(
                           Text("2",style: TextStyle(fontSize: PetsTheme.getLargeFont(), color: Colors.white, fontWeight: FontWeight.bold)),
                           Text("Pets",style: TextStyle(fontSize: PetsTheme.getMeduimFont(), color: Colors.white,)),
                         ),
-                        onTap: () {print("Pets");},
+                        onTap: () => Navigator.pushNamed(context, 'pets'),
                       ),
                       GestureDetector(
                         child: Pair(
@@ -136,41 +137,5 @@ class ProfileCover extends StatelessWidget {
                 ],
               ),
             );
-  }
-}
-
-class RoundButton extends StatelessWidget {
-
-  RoundButton({
-    this.child,
-    this.onPressed,
-    this.width,
-    this.height,
-    this.color,
-    this.borderColor = Colors.transparent
-  });
-  final Widget child;
-  final double width;
-  final double height;
-  final Color color;
-  final borderColor;
-  final Function onPressed;
-  @override
-  Widget build(BuildContext context) {
-    print(PetsTheme.getSmallFont());
-    return Container(
-      alignment: Alignment.center,
-      width: width,
-      height: height,
-      decoration: BoxDecoration(
-        color: color, 
-        border: Border.all(color: borderColor), 
-        borderRadius: BorderRadius.circular(PetsTheme.getMuchLargerFont())
-      ),
-      child: FlatButton(
-        onPressed: onPressed,
-        child: child,
-      ),
-    );
   }
 }
