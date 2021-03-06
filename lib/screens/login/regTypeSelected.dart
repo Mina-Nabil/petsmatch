@@ -26,21 +26,25 @@ class RegTypeSelectedScreen extends StatelessWidget {
         iconPath = Paths.owner_icon_file;
         iconCaption = "Pet Owner";
         PetsTheme.currentMainColor = bgColor.blue;
+        PetsTheme.accountType = AccountType.petOwner;
         break;
       case userType.trainer:
         iconPath = Paths.trainer_icon_file;
         iconCaption = "Trainer";
          PetsTheme.currentMainColor = bgColor.purple;
+         PetsTheme.accountType = AccountType.trainer;
         break;
       case userType.vet:
         iconPath = Paths.vet_icon_file;
         iconCaption = "Vet";
          PetsTheme.currentMainColor = bgColor.cyan;
+         PetsTheme.accountType = AccountType.vet;
         break;
       case userType.store:
         iconPath = Paths.store_icon_file;
         iconCaption = "Store";
          PetsTheme.currentMainColor = bgColor.pink;
+         PetsTheme.accountType = AccountType.store;
         break;
     }
 

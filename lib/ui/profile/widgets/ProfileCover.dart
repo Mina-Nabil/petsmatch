@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:petmatch/models/Pet.dart';
 import 'package:petmatch/models/User.dart';
 import 'package:petmatch/theme/petsTheme.dart';
@@ -8,7 +9,20 @@ import 'package:petmatch/widgets/buttons/RoundButton.dart';
 import 'package:petmatch/widgets/main/UserAvatar.dart';
 
 
-class ProfileCover extends StatelessWidget {
+abstract class ProfileCover extends StatelessWidget {
+  factory ProfileCover() {
+    switch (PetsTheme.accountType) {
+      case AccountType.petOwner:
+        return PetOwnerProfileCover();
+      case AccountType.trainer:
+        return TrainerProfileCover();
+      default:
+        return PetOwnerProfileCover();
+    }
+  }
+}
+
+class PetOwnerProfileCover extends StatelessWidget implements ProfileCover {
   @override
   Widget build(BuildContext context) {
     User  mainUser =  User("Mina Abdallah","https://lh3.googleusercontent.com/9AY45-uFNsXWwvtQmZFRWrpy1koWGBLs5XDVYjy3xg-G6fjlekANnsSbhYYU-E0CDw", "hamada@pets" );
@@ -117,6 +131,129 @@ class ProfileCover extends StatelessWidget {
                         child: Pair(
                           Text("2",style: TextStyle(fontSize: PetsTheme.getLargeFont(), color: Colors.white, fontWeight: FontWeight.bold)),
                           Text("Pets",style: TextStyle(fontSize: PetsTheme.getMeduimFont(), color: Colors.white,)),
+                        ),
+                        onTap: () => Navigator.pushNamed(context, 'pets'),
+                      ),
+                      GestureDetector(
+                        child: Pair(
+                          Text("30",style: TextStyle(fontSize: PetsTheme.getLargeFont(), color: Colors.white, fontWeight: FontWeight.bold)),
+                          Text("Reviews",style: TextStyle(fontSize: PetsTheme.getMeduimFont(), color: Colors.white,)),
+                        ),
+                        onTap: () {print("Reviews");},
+                      ),
+                      GestureDetector(
+                        child: Pair(
+                          Text("45",style: TextStyle(fontSize: PetsTheme.getLargeFont(), color: Colors.white, fontWeight: FontWeight.bold)),
+                          Text("Photos",style: TextStyle(fontSize: PetsTheme.getMeduimFont(), color: Colors.white,)),
+                        ),
+                        onTap: () {print("Photos");},
+                      ),
+                    ],
+                  ),
+                  SizedBox(height: PetsTheme.getLargePadMarg(),),
+                ],
+              ),
+            );
+  }
+}
+
+class TrainerProfileCover extends StatelessWidget implements ProfileCover {
+  @override
+  Widget build(BuildContext context) {
+
+    
+    return Container(
+              padding: EdgeInsets.symmetric(horizontal: 20),
+              child: Column(
+                children: [
+                  //pp & data
+                  Row(
+                    children: [
+                      Container(
+                        height: PetsTheme.radius6*2,
+                        width: PetsTheme.radius6*2,
+                        child: UserAvatar(
+                          image: "https://static.toiimg.com/thumb/msid-66987080,imgsize-1017159,width-800,height-600,resizemode-75/66987080.jpg",
+                          imageRatio: 1,
+                        ),
+                      ),
+                      SizedBox(width: 20,),
+                      
+                      Expanded(
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text("Mohamed Mortada", style: TextStyle(fontSize: PetsTheme.getLargerFont(), color: Colors.white, fontWeight: FontWeight.bold)),
+                            
+                            Row(
+                              children: [
+                                RatingBar.builder(itemSize: PetsTheme.getMeduimFont(),
+                                  itemBuilder: (context, _) => Icon(Icons.star, color: Colors.white,),
+                                  initialRating: 3.5,
+                                  direction: Axis.horizontal,
+                                  unratedColor: Colors.white.withAlpha(50),
+                                  allowHalfRating: true,
+                                  onRatingUpdate: null
+                                ),
+                                Text("| 3.5", style: TextStyle(fontSize: PetsTheme.getMeduimFont(), color: Colors.white),),
+                              ]
+                            ),
+                            SizedBox(height: PetsTheme.getMeduimPadMarg(),),
+                            Text("Certified trainer", style: TextStyle(fontSize: PetsTheme.getMeduimFont(), color: Colors.white),),
+                            Text("Lorem Ipsum is simply dummy text", style: TextStyle(fontSize: PetsTheme.getMeduimFont(), color: Colors.white),),
+                            
+                          ],
+                        ),
+                      )
+                    ],
+
+
+                  ),
+
+                  SizedBox(height: PetsTheme.getLargerPadMarg(),),
+                  //buttons
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      RoundButton(
+                        child: FittedBox(child: Text("Send a message", style: TextStyle(fontSize: PetsTheme.getSmallFont(), color: PetsTheme.currentMainColor),)),
+                        color: Colors.white,
+                        height: 30,
+                        width: MediaQuery.of(context).size.width/3, // good for SmallFont
+                      ),
+                      
+                      RoundButton(
+                        child: FittedBox(child: Text("Following", style: TextStyle(fontSize: PetsTheme.getSmallFont(), color: Colors.white),)),
+                        borderColor: Colors.white,
+                        height: 30,
+                        width: MediaQuery.of(context).size.width/3,  // good for SmallFont
+                      ),
+                      CircularMoreButton(
+                        radius: 15,
+                        color: Colors.white, 
+                        backgroundColor: Color.fromRGBO(20, 44, 122, 0.5),
+                        onPressed: () {},
+                      ),
+                    ],
+                  ),
+
+                  SizedBox(height: PetsTheme.getLargerPadMarg(),),
+
+                  //friends & pets
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                    children: [ 
+                      GestureDetector(
+                        child: Pair(
+                          Text("450", style: TextStyle(fontSize: PetsTheme.getLargeFont(), color: Colors.white, fontWeight: FontWeight.bold)),
+                          Text("Followers",style: TextStyle(fontSize: PetsTheme.getMeduimFont(), color: Colors.white,)),
+                        ),
+                        onTap: () => Navigator.pushNamed(context, 'friends'),
+                      ),
+                      GestureDetector(
+                        child: Pair(
+                          Text("2",style: TextStyle(fontSize: PetsTheme.getLargeFont(), color: Colors.white, fontWeight: FontWeight.bold)),
+                          Text("Trained Pets",style: TextStyle(fontSize: PetsTheme.getMeduimFont(), color: Colors.white,)),
                         ),
                         onTap: () => Navigator.pushNamed(context, 'pets'),
                       ),

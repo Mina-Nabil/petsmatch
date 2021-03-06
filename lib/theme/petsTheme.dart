@@ -4,6 +4,10 @@ import 'package:flutter/material.dart';
 enum bgColor { blue, purple, cyan, pink, main }
 enum bgMask { def, mating, training, walk, services }
 
+//Should not be in theme, Will leave it here temporary until we have backend.
+//TODO move AccountType out of theme
+enum AccountType {petOwner, trainer, vet, store}
+
 class PetsTheme {
   static PetsTheme _theme;
 
@@ -110,6 +114,10 @@ class PetsTheme {
   //Navbar ratio
   static double _navbarHeightRatio;
   static double _navbarInnerHeightRatio;
+
+  //Should not be in theme, Will leave it here temporary until we have backend.
+  //TODO move AccountType out of theme
+  static AccountType _accountType = AccountType.petOwner;
 
   static void _initFonts(BuildContext context) {
     
@@ -358,5 +366,13 @@ class PetsTheme {
 
         break;
     }
+  }
+
+  static set accountType(AccountType type) {
+    _accountType = type;
+  }
+
+  static get accountType {
+    return _accountType;
   }
 }
