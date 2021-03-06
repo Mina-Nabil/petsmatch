@@ -13,6 +13,7 @@ import 'package:petmatch/screens/post_screens/PostScreen.dart';
 import 'package:petmatch/settings/paths.dart';
 import 'package:petmatch/theme/petsTheme.dart';
 import 'package:petmatch/ui/profile/FriendsListScreen.dart';
+import 'package:petmatch/ui/profile/PetProfileScreen.dart';
 import 'package:petmatch/ui/profile/PetsListScreen.dart';
 import 'package:petmatch/widgets/custom/CustomStack.dart';
 import 'package:petmatch/widgets/main/NavBarHolder.dart';
@@ -126,6 +127,7 @@ class _PetMatchMainScreenState extends State<PetMatchMainScreen> with SingleTick
             'lovers' : (context) => LoversScreen(),
             'conversation' : (context) => ConversationScreen(),
             'profile' : (context) => ProfileScreen(),
+            'petProfile' : (context) => PetProfileScreen(),
             'friends' : (context) => FriendsListScreen(),
             'pets' : (context) => PetsListScreen(),
           },

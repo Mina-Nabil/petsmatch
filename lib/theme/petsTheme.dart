@@ -171,7 +171,7 @@ class PetsTheme {
     _radius3 = 25;
     _radius4 = 35;
     _radius5 = 45;
-    _radius6 = 55;
+    _radius6 = 65;
 
 
 

@@ -8,6 +8,7 @@ import 'package:petmatch/screens/post_screens/PostScreen.dart';
 import 'package:petmatch/screens/login/splash.dart';
 import 'package:petmatch/theme/petsTheme.dart';
 import 'package:petmatch/ui/profile/FriendsListScreen.dart';
+import 'package:petmatch/ui/profile/PetProfileScreen.dart';
 import 'package:petmatch/ui/profile/PetsListScreen.dart';
 import 'package:petmatch/widgets/screens/PetMatchTabsScreen.dart';
 void main() => runApp(MyApp());
@@ -51,6 +52,10 @@ class MyApp extends StatelessWidget {
           case 'profile':
             return CupertinoPageRoute(
             builder: (_) => ProfileScreen(), settings: settings);
+            break;
+          case 'petProfile':
+            return CupertinoPageRoute(
+            builder: (_) => PetProfileScreen(), settings: settings);
             break;
           case 'friends':
             return CupertinoPageRoute(

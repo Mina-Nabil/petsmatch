@@ -46,18 +46,21 @@ class ProfileCover extends StatelessWidget {
                                 mainAxisAlignment: MainAxisAlignment.start,
                                 children: [
                                   for (var pet in mainUser.pets) 
-                                    Container(
-                                      margin: EdgeInsets.only(right: PetsTheme.getLargePadMarg()),
-                                      child: Column(
-                                        children: [
-                                          Container(
-                                            height: 40, width: 40,
-                                            margin: EdgeInsets.symmetric(vertical: PetsTheme.getSmallPadMarg()),
-                                            child: UserAvatar(image: pet.image,imageRatio: 1,),
-                                          ),
-                                          Text(pet.name, style: TextStyle(fontSize: PetsTheme.getMeduimFont(), color: Colors.white),),
-                                        ],
+                                    GestureDetector(
+                                      child: Container(
+                                        margin: EdgeInsets.only(right: PetsTheme.getLargePadMarg()),
+                                        child: Column(
+                                          children: [
+                                            Container(
+                                              height: 40, width: 40,
+                                              margin: EdgeInsets.symmetric(vertical: PetsTheme.getSmallPadMarg()),
+                                              child: UserAvatar(image: pet.image,imageRatio: 1,),
+                                            ),
+                                            Text(pet.name, style: TextStyle(fontSize: PetsTheme.getMeduimFont(), color: Colors.white),),
+                                          ],
+                                        ),
                                       ),
+                                      onTap: () => Navigator.pushNamed(context, 'petProfile'),
                                     )
                                 ]
                               ),
