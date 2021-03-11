@@ -31,29 +31,27 @@ class _SearchScreen extends State<ConversationScreen> {
           )
         ],
       ),
-      
-   //   body: PetMatchContainer(
-  //      headerPadding: EdgeInsets.zero,
-  //      bodyPadding: EdgeInsets.only(bottom: MediaQuery.of(context).padding.bottom),
         bodyBackgroundColor: Colors.white,
+
         body: Column(
           children: [
             Expanded(
               child: ListView(
+                padding: EdgeInsets.only(top: 20, left: 20, right: 20),
                 children: [
                   ConversationTextTile(
-                    text: "Hii", 
-                    image: "https://upload.wikimedia.org/wikipedia/en/thumb/a/a1/NafSadh_Profile.jpg/768px-NafSadh_Profile.jpg",
-                    type: ConversationTextType.RECEIVE),
+                    "Hii", 
+                    "https://upload.wikimedia.org/wikipedia/en/thumb/a/a1/NafSadh_Profile.jpg/768px-NafSadh_Profile.jpg",
+                    ConversationType.RECEIVE),
                   ConversationTextTile(
-                    image: "https://lh3.googleusercontent.com/9AY45-uFNsXWwvtQmZFRWrpy1koWGBLs5XDVYjy3xg-G6fjlekANnsSbhYYU-E0CDw",
-                    text: "aaa yasta 3ml a?",
-                    type: ConversationTextType.SEND,
+                    "aaa yasta 3ml a?",
+                    "https://lh3.googleusercontent.com/9AY45-uFNsXWwvtQmZFRWrpy1koWGBLs5XDVYjy3xg-G6fjlekANnsSbhYYU-E0CDw",
+                    ConversationType.SEND,
                   ),
                   ConversationTextTile(
-                    image: "https://upload.wikimedia.org/wikipedia/en/thumb/a/a1/NafSadh_Profile.jpg/768px-NafSadh_Profile.jpg",
-                    text: "kolo fol el7, enta 3ml a?",
-                    type: ConversationTextType.RECEIVE,
+                    "kolo fol el7, enta 3ml?",
+                    "https://upload.wikimedia.org/wikipedia/en/thumb/a/a1/NafSadh_Profile.jpg/768px-NafSadh_Profile.jpg",
+                    ConversationType.RECEIVE,
                   ),
                 ],
               ),
@@ -91,73 +89,128 @@ class _SearchScreen extends State<ConversationScreen> {
                   ],
                 )),
           ],
-  //      )
       ),
     );
   }
 }
 
-enum ConversationTextType {
+enum ConversationType {
   SEND,
   RECEIVE
 }
 
-class ConversationTextTile extends StatelessWidget {
+abstract class ConversationTextTile extends StatelessWidget {
+
+  factory ConversationTextTile(
+    String text,
+    String image,
+    ConversationType type
+  ) {
+    if(type == ConversationType.RECEIVE) {
+      return ConversationTextTileReceived(text: text, image: image,);
+    } else {
+      return ConversationTextTileSend(text: text, image: image,);
+    }
+  }
+}
+
+class ConversationTextTileReceived extends StatelessWidget implements ConversationTextTile {
   
   
-  const ConversationTextTile({
+  const ConversationTextTileReceived({
     @required this.text,
     @required this.image,
-    @required this.type
   });
 
   final String image;
   final String text;
-  final ConversationTextType type;
   @override
   Widget build(BuildContext context) {
-    return Align(
-      alignment: type == ConversationTextType.RECEIVE? Alignment.centerLeft : Alignment.centerRight,
-      child: Container(
-        margin: EdgeInsets.all(PetsTheme.getSmallPadMarg()),
-        padding: EdgeInsets.all(PetsTheme.getMeduimPadMarg()),
-        decoration: type == ConversationTextType.RECEIVE ? 
-        BoxDecoration(
-          color:Colors.grey[300],
-          borderRadius: BorderRadius.only(
-            bottomLeft: const Radius.circular(35.0),
-            topRight: const Radius.circular(20.0),
-            bottomRight:  const Radius.circular(20.0),
-          )
-        )
-        : BoxDecoration(
-          color: PetsTheme.commentBgColor,
-          borderRadius: BorderRadius.only(
-            topLeft: const Radius.circular(20.0),
-            bottomLeft: const Radius.circular(20.0),
-            topRight: const Radius.circular(35.0),
-            bottomRight: Radius.zero
-          )
+    return Row(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Container(
+          width: 30,
+          height: 30,
+          margin: EdgeInsets.only(left: PetsTheme.getSmallestPadMarg()),
+          child: UserAvatar(image: image, imageRatio: 1,)
         ),
-        child: Row(
-          mainAxisSize: MainAxisSize.min,
-          crossAxisAlignment: CrossAxisAlignment.end,
-          children: [
-            if(type == ConversationTextType.RECEIVE)
-            Container(
-              width: 25,
-              height: 25,
-              margin: EdgeInsets.only(left: PetsTheme.getSmallestPadMarg()),
-              child: UserAvatar(image: image, imageRatio: 1,)
-            ),
-            SizedBox(width: PetsTheme.getMeduimPadMarg(),),
-            Flexible(
-              child: Text(text ,style: TextStyle(fontSize: PetsTheme.getMeduimFont()),),
-            ),
-            SizedBox(width: PetsTheme.getMeduimPadMarg(),),
-          ],
+
+        Expanded(
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Text("02:09 PM", style: TextStyle(fontSize: PetsTheme.getVerySmallFont(),color: PetsTheme.petsHintGrayColor)),
+              Container(
+                margin: EdgeInsets.all(PetsTheme.getSmallPadMarg()),
+                padding: EdgeInsets.all(PetsTheme.getMeduimPadMarg()),
+                decoration: BoxDecoration(
+                  color:PetsTheme.commentBgColor,
+                  borderRadius: BorderRadius.only(
+                    bottomLeft: const Radius.circular(20.0),
+                    topRight: const Radius.circular(20.0),
+                    bottomRight:  const Radius.circular(20.0),
+                  ),
+                ),
+                child: Text(text ,style: TextStyle(fontSize: PetsTheme.getMeduimFont()),),
+                
+
+              ),
+            ],
+          ),
         ),
-      ),
+      ]);
+  }
+}
+
+class ConversationTextTileSend extends StatelessWidget implements ConversationTextTile {
+  
+  
+  const ConversationTextTileSend({
+    @required this.text,
+    @required this.image,
+  });
+
+  final String image;
+  final String text;
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      alignment: Alignment.centerRight,
+      child: Row(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        mainAxisAlignment: MainAxisAlignment.end,
+        children: [
+          Expanded(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.end,
+              children: [
+                Text("02:09 PM", style: TextStyle(fontSize: PetsTheme.getVerySmallFont(), color: PetsTheme.petsHintGrayColor)),
+                Container(
+                  margin: EdgeInsets.all(PetsTheme.getSmallPadMarg()),
+                  padding: EdgeInsets.all(PetsTheme.getMeduimPadMarg()),
+                  decoration: BoxDecoration(
+                    color:PetsTheme.currentMainColor,
+                    borderRadius: BorderRadius.only(
+                      bottomLeft: const Radius.circular(20.0),
+                      topLeft: const Radius.circular(20.0),
+                      bottomRight:  const Radius.circular(20.0),
+                    ),
+                  ),
+                  child: Text(text ,style: TextStyle(color: Colors.white, fontSize: PetsTheme.getMeduimFont()),),
+                  
+
+                ),
+              ],
+            ),
+          ),
+          Container(
+            width: 30,
+            height: 30,
+            margin: EdgeInsets.only(left: PetsTheme.getSmallestPadMarg()),
+            child: UserAvatar(image: image, imageRatio: 1,)
+          ),
+        ]),
     );
   }
 }
