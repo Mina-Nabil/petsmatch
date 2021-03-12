@@ -72,6 +72,8 @@ class _SearchScreen extends State<ConversationScreen> {
                               borderRadius: BorderRadius.circular(20),
                               borderSide: BorderSide( width: 0,style: BorderStyle.none,),
                             ),
+                            hintText: " Write a message ...",
+                            hintStyle: TextStyle(color: PetsTheme.petsHintGrayColor)
                           ),
                         ),
                     ),
@@ -137,26 +139,28 @@ class ConversationTextTileReceived extends StatelessWidget implements Conversati
         ),
 
         Expanded(
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Text("02:09 PM", style: TextStyle(fontSize: PetsTheme.getVerySmallFont(),color: PetsTheme.petsHintGrayColor)),
-              Container(
-                margin: EdgeInsets.all(PetsTheme.getSmallPadMarg()),
-                padding: EdgeInsets.all(PetsTheme.getMeduimPadMarg()),
-                decoration: BoxDecoration(
-                  color:PetsTheme.commentBgColor,
-                  borderRadius: BorderRadius.only(
-                    bottomLeft: const Radius.circular(20.0),
-                    topRight: const Radius.circular(20.0),
-                    bottomRight:  const Radius.circular(20.0),
+          child: Container(
+            margin: EdgeInsets.all(PetsTheme.getSmallPadMarg()),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text("02:09 PM", style: TextStyle(fontSize: PetsTheme.getVerySmallFont(),color: PetsTheme.petsHintGrayColor)),
+                Container(
+                  padding: EdgeInsets.all(PetsTheme.getMeduimPadMarg()),
+                  decoration: BoxDecoration(
+                    color:PetsTheme.commentBgColor,
+                    borderRadius: BorderRadius.only(
+                      bottomLeft: const Radius.circular(15.0),
+                      topRight: const Radius.circular(15.0),
+                      bottomRight:  const Radius.circular(15.0),
+                    ),
                   ),
-                ),
-                child: Text(text ,style: TextStyle(fontSize: PetsTheme.getMeduimFont()),),
-                
+                  child: Text(text ,style: TextStyle(fontSize: PetsTheme.getMeduimFont()),),
+                  
 
-              ),
-            ],
+                ),
+              ],
+            ),
           ),
         ),
       ]);
@@ -182,26 +186,28 @@ class ConversationTextTileSend extends StatelessWidget implements ConversationTe
         mainAxisAlignment: MainAxisAlignment.end,
         children: [
           Expanded(
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.end,
-              children: [
-                Text("02:09 PM", style: TextStyle(fontSize: PetsTheme.getVerySmallFont(), color: PetsTheme.petsHintGrayColor)),
-                Container(
-                  margin: EdgeInsets.all(PetsTheme.getSmallPadMarg()),
-                  padding: EdgeInsets.all(PetsTheme.getMeduimPadMarg()),
-                  decoration: BoxDecoration(
-                    color:PetsTheme.currentMainColor,
-                    borderRadius: BorderRadius.only(
-                      bottomLeft: const Radius.circular(20.0),
-                      topLeft: const Radius.circular(20.0),
-                      bottomRight:  const Radius.circular(20.0),
+            child: Container(
+              margin: EdgeInsets.all(PetsTheme.getSmallPadMarg()),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.end,
+                children: [
+                  Text("02:09 PM", style: TextStyle(fontSize: PetsTheme.getVerySmallFont(), color: PetsTheme.petsHintGrayColor)),
+                  Container(
+                    padding: EdgeInsets.all(PetsTheme.getMeduimPadMarg()),
+                    decoration: BoxDecoration(
+                      color:PetsTheme.currentMainColor,
+                      borderRadius: BorderRadius.only(
+                        bottomLeft: const Radius.circular(15.0),
+                        topLeft: const Radius.circular(15.0),
+                        bottomRight:  const Radius.circular(15.0),
+                      ),
                     ),
-                  ),
-                  child: Text(text ,style: TextStyle(color: Colors.white, fontSize: PetsTheme.getMeduimFont()),),
-                  
+                    child: Text(text ,style: TextStyle(color: Colors.white, fontSize: PetsTheme.getMeduimFont()),),
+                    
 
-                ),
-              ],
+                  ),
+                ],
+              ),
             ),
           ),
           Container(
