@@ -21,12 +21,51 @@ class NavBarHolder extends StatefulWidget {
   static final double pawEnd = 1;
 
   //paw circles ratio
+  //all circles ratios
   static final double yEnd = 0.1;
   static final double xStart = 0.4;
   static final double xEnd = 0.6;
   static final double xExpandedStart = 0.2;
   static final double xExpandedEnd = 0.8;
+
+  //first circle (base left)
+  static final double xBaseLeftStart = 0.26;
+  static final double xBaseLeftEnd = 0.4;
+  static final double yBaseLeftStart = 0.07;
+  static final double yBaseLeftEnd = 0.13;
+
+  //second circle (upper left)
+  static final double xUpperLeftStart = 0.34;
+  static final double xUpperLeftEnd = 0.48;
+  static final double yUpperLeftStart = 0;
+  static final double yUpperLeftEnd = 0.07;
+
+  //third circle (upper right)
+  static final double xUpperRightStart = 0.50;
+  static final double xUpperRightEnd = 0.64;
+  static final double yUpperRightStart = 0;
+  static final double yUpperRightEnd = 0.07;
+
+  //fourth circle (base right)
+  static final double xBaseRightStart = 0.58;
+  static final double xBaseRightEnd = 0.74;
+  static final double yBaseRightStart = 0.07;
+  static final double yBaseRightEnd = 0.13;
+
   static bool expanded = false;
+
+  Function baseLeftCallback;
+  Function upperLeftCallback;
+  Function upperRightCallback;
+  Function baseRightCallback;
+
+  NavBarHolder(
+      {@required Function servicesCallback, @required Function trainingCallback, @required Function matingCallback, @required Function walkingCallback}) {
+    this.baseLeftCallback = servicesCallback;
+    this.upperLeftCallback = trainingCallback;
+    this.upperRightCallback = matingCallback;
+    this.baseRightCallback = walkingCallback;
+  }
 
   @override
   _NavBarHolderState createState() => _NavBarHolderState();
@@ -93,7 +132,6 @@ class _NavBarHolderState extends State<NavBarHolder> with SingleTickerProviderSt
                       child: GestureDetector(behavior: HitTestBehavior.opaque, onTapUp: navTapHandle),
                     )
                   : Container(),
-              
             ],
           ),
         );
@@ -101,18 +139,65 @@ class _NavBarHolderState extends State<NavBarHolder> with SingleTickerProviderSt
     );
   }
 
-
-
   bool _itIsHome(TapUpDetails upDetails) {
     double heightLimit = MediaQuery.of(context).size.height * NavBarHolder.yEnd;
     double firstLimit = MediaQuery.of(context).size.width * NavBarHolder.xStart;
     double endLimit = MediaQuery.of(context).size.width * NavBarHolder.xEnd;
     double expanedFirstLimit = MediaQuery.of(context).size.width * NavBarHolder.xExpandedStart;
     double expandedEndLimit = MediaQuery.of(context).size.width * NavBarHolder.xExpandedEnd;
-    print((upDetails.localPosition.dx > firstLimit && upDetails.localPosition.dx < endLimit && heightLimit < upDetails.localPosition.dy && !NavBarHolder.expanded) ||
-        (upDetails.localPosition.dx > expanedFirstLimit && upDetails.localPosition.dx < expandedEndLimit && NavBarHolder.expanded));
-    return ((upDetails.localPosition.dx > firstLimit && upDetails.localPosition.dx < endLimit && heightLimit < upDetails.localPosition.dy && !NavBarHolder.expanded) ||
-        (upDetails.localPosition.dx > expanedFirstLimit && upDetails.localPosition.dx < expandedEndLimit && NavBarHolder.expanded));
+    bool isTapped = (upDetails.localPosition.dx > firstLimit &&
+            upDetails.localPosition.dx < endLimit &&
+            heightLimit < upDetails.localPosition.dy &&
+            !NavBarHolder.expanded) ||
+        (upDetails.localPosition.dx > expanedFirstLimit && upDetails.localPosition.dx < expandedEndLimit && NavBarHolder.expanded);
+    return isTapped;
+  }
+
+  bool _itIsBaseLeft(TapUpDetails upDetails) {
+    double startHeightLimit = MediaQuery.of(context).size.height * NavBarHolder.yBaseLeftStart;
+    double endHeightLimit = MediaQuery.of(context).size.height * NavBarHolder.yBaseLeftEnd;
+    double startWidthLimit = MediaQuery.of(context).size.width * NavBarHolder.xBaseLeftStart;
+    double endWidthLimit = MediaQuery.of(context).size.width * NavBarHolder.xBaseLeftEnd;
+
+    return _isCircle(upDetails, startWidthLimit, endWidthLimit, startHeightLimit, endHeightLimit);
+  }
+
+  bool _itIsUpperLeft(TapUpDetails upDetails) {
+    double startHeightLimit = MediaQuery.of(context).size.height * NavBarHolder.yUpperLeftStart;
+    double endHeightLimit = MediaQuery.of(context).size.height * NavBarHolder.yUpperLeftEnd;
+    double startWidthLimit = MediaQuery.of(context).size.width * NavBarHolder.xUpperLeftStart;
+    double endWidthLimit = MediaQuery.of(context).size.width * NavBarHolder.xUpperLeftEnd;
+
+    return _isCircle(upDetails, startWidthLimit, endWidthLimit, startHeightLimit, endHeightLimit);
+  }
+
+  bool _itIsUpperRight(TapUpDetails upDetails) {
+    double startHeightLimit = MediaQuery.of(context).size.height * NavBarHolder.yUpperRightStart;
+    double endHeightLimit = MediaQuery.of(context).size.height * NavBarHolder.yUpperRightEnd;
+    double startWidthLimit = MediaQuery.of(context).size.width * NavBarHolder.xUpperRightStart;
+    double endWidthLimit = MediaQuery.of(context).size.width * NavBarHolder.xUpperRightEnd;
+
+    return _isCircle(upDetails, startWidthLimit, endWidthLimit, startHeightLimit, endHeightLimit);
+  }
+
+  bool _itIsBaseRight(TapUpDetails upDetails) {
+    double startHeightLimit = MediaQuery.of(context).size.height * NavBarHolder.yBaseRightStart;
+    double endHeightLimit = MediaQuery.of(context).size.height * NavBarHolder.yBaseRightEnd;
+    double startWidthLimit = MediaQuery.of(context).size.width * NavBarHolder.xBaseRightStart;
+    double endWidthLimit = MediaQuery.of(context).size.width * NavBarHolder.xBaseRightEnd;
+
+    return _isCircle(upDetails, startWidthLimit, endWidthLimit, startHeightLimit, endHeightLimit);
+  }
+
+  bool _isCircle(TapUpDetails upDetails, double startWidthLimit, double endWidthLimit, double startHeightLimit, double endHeightLimit) {
+
+    bool isTapped = (upDetails.localPosition.dx > startWidthLimit &&
+        upDetails.localPosition.dx < endWidthLimit &&
+        startHeightLimit < upDetails.localPosition.dy &&
+        endHeightLimit > upDetails.localPosition.dy &&
+        NavBarHolder.expanded);
+
+    return (isTapped);
   }
 
   void shrinkPaw() {
@@ -137,6 +222,20 @@ class _NavBarHolderState extends State<NavBarHolder> with SingleTickerProviderSt
   }
 
   void navTapHandle(TapUpDetails upDetails) {
+    if (_itIsBaseLeft(upDetails)) {
+      widget.baseLeftCallback();
+    }
+    if (_itIsUpperLeft(upDetails)) {
+      widget.upperLeftCallback();
+    }
+
+    if (_itIsUpperRight(upDetails)) {
+      widget.upperRightCallback();
+    }
+
+    if (_itIsBaseRight(upDetails)) {
+      widget.baseRightCallback();
+    }
     if (_itIsHome(upDetails)) {
       togglePaw();
     }

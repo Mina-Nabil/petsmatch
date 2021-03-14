@@ -43,13 +43,12 @@ class _PetMatchMainScreenState extends State<PetMatchMainScreen> with SingleTick
       _tabController.index = index;
     });
   }
-  
 
   @override
   Widget build(BuildContext context) {
     return CustomStack(alignment: Alignment.bottomCenter, isNavBar: true, children: [
       // Background Image
-   /*   Container(
+      /*   Container(
         height: MediaQuery.of(context).size.height,
         width: MediaQuery.of(context).size.width,
         color: PetsTheme.currentBgMainColor,
@@ -61,84 +60,83 @@ class _PetMatchMainScreenState extends State<PetMatchMainScreen> with SingleTick
         ),
       ),*/
 
-  SafeArea(
-    top: false,
-    bottom: false,
-    child: CupertinoTabScaffold(
-      backgroundColor: Colors.black,
-      controller: _tabController,
-      tabBar: CupertinoTabBar(
-        backgroundColor: Colors.white,
-        onTap: _onTap,
-        items: [
-          BottomNavigationBarItem(
-            icon: SvgPicture.asset(
-              "assets/images/icons/pages/home.svg",
-               color: _tabController.index == 0 ? PetsTheme.currentMainColor : PetsTheme.petsGrayIconColor,
+      SafeArea(
+        top: false,
+        bottom: false,
+        child: CupertinoTabScaffold(
+          backgroundColor: Colors.black,
+          controller: _tabController,
+          tabBar: CupertinoTabBar(backgroundColor: Colors.white, onTap: _onTap, items: [
+            BottomNavigationBarItem(
+              icon: SvgPicture.asset(
+                "assets/images/icons/pages/home.svg",
+                color: _tabController.index == 0 ? PetsTheme.currentMainColor : PetsTheme.petsGrayIconColor,
+              ),
             ),
-          ),
-          BottomNavigationBarItem(
-            icon: SvgPicture.asset(
-              "assets/images/icons/pages/notifications.svg",
-              color: _tabController.index == 1 ? PetsTheme.currentMainColor : PetsTheme.petsGrayIconColor,
+            BottomNavigationBarItem(
+              icon: SvgPicture.asset(
+                "assets/images/icons/pages/notifications.svg",
+                color: _tabController.index == 1 ? PetsTheme.currentMainColor : PetsTheme.petsGrayIconColor,
+              ),
             ),
-          ),
-          BottomNavigationBarItem(
-            icon: Container()
-          ),
-          BottomNavigationBarItem(
-            icon: SvgPicture.asset(
+            BottomNavigationBarItem(icon: Container()),
+            BottomNavigationBarItem(
+                icon: SvgPicture.asset(
               "assets/images/icons/pages/chat.svg",
               color: _tabController.index == 3 ? PetsTheme.currentMainColor : PetsTheme.petsGrayIconColor,
-            )
-          ),
-          BottomNavigationBarItem(
-            icon: SvgPicture.asset(
+            )),
+            BottomNavigationBarItem(
+                icon: SvgPicture.asset(
               Paths.more_icon_svg_file,
               color: _tabController.index == 4 ? PetsTheme.currentMainColor : PetsTheme.petsGrayIconColor,
-            )
-          ),
-        ]
-      ),
-      tabBuilder: (context, i){
-        return CupertinoTabView(
-          builder: (context) {
-            switch (i) {
-              case 0:
-                return  HomeScreen();
-                break;
-              case 1:
-                return  NotificationsScreen();
-                break;
-              case 3:
-                return  ChatScreen();
-                break;
-              case 4:
-                return  MainMenuScreen();
-                break;
-              default:
-                return null;
-            }
+            )),
+          ]),
+          tabBuilder: (context, i) {
+            return CupertinoTabView(
+              builder: (context) {
+                switch (i) {
+                  case 0:
+                    return HomeScreen();
+                    break;
+                  case 1:
+                    return NotificationsScreen();
+                    break;
+                  case 3:
+                    return ChatScreen();
+                    break;
+                  case 4:
+                    return MainMenuScreen();
+                    break;
+                  default:
+                  print("Hwa da");
+                    return null;
+                }
+              },
+              routes: {
+                'search': (context) => SearchScreen(),
+                'post': (context) => PostScreen(),
+                'lovers': (context) => LoversScreen(),
+                'conversation': (context) => ConversationScreen(),
+                'profile': (context) => ProfileScreen(),
+                'petProfile': (context) => PetProfileScreen(),
+                'friends': (context) => FriendsListScreen(),
+                'pets': (context) => PetsListScreen(),
+              },
+            );
           },
-
-          routes: {
-            'search' : (context) => SearchScreen(),
-            'post'   : (context) => PostScreen(),
-            'lovers' : (context) => LoversScreen(),
-            'conversation' : (context) => ConversationScreen(),
-            'profile' : (context) => ProfileScreen(),
-            'petProfile' : (context) => PetProfileScreen(),
-            'friends' : (context) => FriendsListScreen(),
-            'pets' : (context) => PetsListScreen(),
-          },
-        );
-      },
- 
         ),
-  ),   
+      ),
 
       //Paw
-      SafeArea(child: Align(alignment: Alignment.bottomCenter, child:NavBarHolder())),
+      SafeArea(
+          child: Align(
+              alignment: Alignment.bottomCenter,
+              child: NavBarHolder(
+                matingCallback: () => print("services"),
+                servicesCallback: () => print("train"),
+                trainingCallback: () => print("mate"),
+                walkingCallback: () => print("walk"),
+              ))),
     ]);
   }
 }
