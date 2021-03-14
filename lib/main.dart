@@ -10,6 +10,7 @@ import 'package:petmatch/theme/petsTheme.dart';
 import 'package:petmatch/ui/profile/FriendsListScreen.dart';
 import 'package:petmatch/ui/profile/PetProfileScreen.dart';
 import 'package:petmatch/ui/profile/PetsListScreen.dart';
+import 'package:petmatch/ui/profile/PhotosScreen.dart';
 import 'package:petmatch/widgets/screens/PetMatchTabsScreen.dart';
 void main() => runApp(MyApp());
 
@@ -63,7 +64,11 @@ class MyApp extends StatelessWidget {
           case 'pets':
             return CupertinoPageRoute(
             builder: (_) => PetsListScreen(), settings: settings);
-            break; 
+            break;
+          case 'photos':
+            return CupertinoPageRoute(
+            builder: (_) => PhotosScreen(), settings: settings);
+            break;
           default:
             return null;
         }

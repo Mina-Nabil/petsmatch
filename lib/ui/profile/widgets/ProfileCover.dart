@@ -150,7 +150,7 @@ class PetOwnerProfileCover extends StatelessWidget implements ProfileCover {
                           Text("45",style: TextStyle(fontSize: PetsTheme.getLargeFont(), color: Colors.white, fontWeight: FontWeight.bold)),
                           Text("Photos",style: TextStyle(fontSize: PetsTheme.getMeduimFont(), color: Colors.white,)),
                         ),
-                        onTap: () {print("Photos");},
+                        onTap: () => Navigator.pushNamed(context, 'photos'),
                       ),
                     ],
                   ),
