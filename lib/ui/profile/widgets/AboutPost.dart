@@ -1,10 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:petmatch/theme/petsTheme.dart';
-import 'package:petmatch/ui/profile/widgets/ProfileCustomPosts.dart';
 import 'package:petmatch/widgets/Pair.dart';
 
 
-class AboutPost extends StatelessWidget implements ProfileCustomPost {
+class AboutPost extends StatelessWidget {
 
   AboutPost({this.phoneNo, this.address, this.website, this.mail, this.workingHours});
   final String phoneNo;
