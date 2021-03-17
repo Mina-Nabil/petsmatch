@@ -127,6 +127,7 @@ flutter:
   #custom
    - assets/images/custom/congrats.png
    - assets/images/custom/congratsx2.png
+   - assets/images/custom/matingPet.svg
 
   fonts:
   - family: Oregano
