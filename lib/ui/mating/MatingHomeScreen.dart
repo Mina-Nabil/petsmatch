@@ -80,6 +80,7 @@ class _MatingHomeScreenState extends State<MatingHomeScreen> {
             Expanded(
               child: PageView(
                 controller: _pageController,
+                onPageChanged: (index) => changeSelectedPage(index),
                 children: [
                   RecentMatings(),
                   CrushTab(),
