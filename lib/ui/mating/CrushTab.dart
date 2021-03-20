@@ -16,7 +16,7 @@ class CrushTab extends StatelessWidget {
           image2: "https://hips.hearstapps.com/hmg-prod.s3.amazonaws.com/images/dog-puppy-on-garden-royalty-free-image-1586966191.jpg",
           petName2: "Bella",
           trailing: CircularButton(
-            child: SvgPicture.asset("assets/images/icons/setupDate.svg"),
+            child: SvgPicture.asset("assets/images/icons/setupDate.svg", color: PetsTheme.currentMainColor,),
             backgroundColor: PetsTheme.currentMainColor.withOpacity(0.2),
             onPressed: () {},
             radius: PetsTheme.radius2,
@@ -31,7 +31,7 @@ class CrushTab extends StatelessWidget {
           image2: "https://hips.hearstapps.com/hmg-prod.s3.amazonaws.com/images/dog-puppy-on-garden-royalty-free-image-1586966191.jpg",
           petName2: "Bella",
           trailing: CircularButton(
-            child: SvgPicture.asset("assets/images/icons/setupDate.svg"),
+            child: SvgPicture.asset("assets/images/icons/setupDate.svg", color: PetsTheme.currentMainColor,),
             backgroundColor: PetsTheme.currentMainColor.withOpacity(0.2),
             onPressed: () {},
             radius: PetsTheme.radius2,

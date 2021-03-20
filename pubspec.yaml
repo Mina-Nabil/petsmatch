@@ -89,6 +89,8 @@ flutter:
    - assets/images/icons/delete.svg
    - assets/images/icons/heart.svg
    - assets/images/icons/setupDate.svg
+   - assets/images/icons/ratingStar.svg
+   - assets/images/icons/paw.svg
    - assets/images/icons/registration/petOwnerType.svg
    - assets/images/icons/registration/vetType.svg
    - assets/images/icons/registration/storeType.svg
