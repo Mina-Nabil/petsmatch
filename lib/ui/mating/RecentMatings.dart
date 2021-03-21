@@ -30,6 +30,7 @@ class RecentMatings extends StatelessWidget {
           borderColor: Colors.white,
           color: PetsTheme.currentMainColor,
           width: double.infinity, // good for SmallFont
+          onPressed: () => Navigator.pushNamed(context, 'Mating/SelectPet'),
         ),
       ],
     );

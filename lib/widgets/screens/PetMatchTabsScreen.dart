@@ -13,6 +13,7 @@ import 'package:petmatch/screens/post_screens/PostScreen.dart';
 import 'package:petmatch/settings/paths.dart';
 import 'package:petmatch/theme/petsTheme.dart';
 import 'package:petmatch/ui/mating/MatingHomeScreen.dart';
+import 'package:petmatch/ui/mating/SelectPetScreen.dart';
 import 'package:petmatch/ui/profile/FriendsListScreen.dart';
 import 'package:petmatch/ui/profile/PetProfileScreen.dart';
 import 'package:petmatch/ui/profile/PetsListScreen.dart';
@@ -118,6 +119,7 @@ class _PetMatchMainScreenState extends State<PetMatchMainScreen> with SingleTick
                   'friends': (context) => FriendsListScreen(),
                   'pets': (context) => PetsListScreen(),
                   'photos' : (context) => PhotosScreen(),
+                  'Mating/SelectPet' : (context) => SelectPetScreen(),
                 },
               );
             },

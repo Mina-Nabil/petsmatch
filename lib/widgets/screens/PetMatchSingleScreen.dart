@@ -141,6 +141,7 @@ class _PetMatchSingleScreenState extends State<PetMatchSingleScreen> {
     
     return Container(
       padding:  appBarExists ? EdgeInsets.only(top:(56 + MediaQuery.of(context).padding.top)) : EdgeInsets.only(top:MediaQuery.of(context).padding.top),
+      width: double.infinity,
       decoration: BoxDecoration(
         color:  Colors.black.withOpacity(0.9),
         image: backgroundImage,
