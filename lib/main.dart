@@ -7,6 +7,8 @@ import 'package:petmatch/screens/post_screens/LoversScreen.dart';
 import 'package:petmatch/screens/post_screens/PostScreen.dart';
 import 'package:petmatch/screens/login/splash.dart';
 import 'package:petmatch/theme/petsTheme.dart';
+import 'package:petmatch/ui/mating/FindMateScreen.dart';
+import 'package:petmatch/ui/mating/FindMateStartScreen.dart';
 import 'package:petmatch/ui/mating/SelectPetScreen.dart';
 import 'package:petmatch/ui/profile/FriendsListScreen.dart';
 import 'package:petmatch/ui/profile/PetProfileScreen.dart';
@@ -73,6 +75,12 @@ class MyApp extends StatelessWidget {
           case 'Mating/SelectPet':
             return CupertinoPageRoute(
               builder: (_) => SelectPetScreen(), settings: settings);
+          case 'Mating/FindMateStart':
+            return CupertinoPageRoute(
+              builder: (_) => FindMateStartScreen(), settings: settings);
+          case 'Mating/FindMate':
+            return CupertinoPageRoute(
+              builder: (_) => FindMateScreen(), settings: settings);
           default:
             return null;
         }

@@ -17,6 +17,7 @@ class _MatingHomeScreenState extends State<MatingHomeScreen> {
   @override
   Widget build(BuildContext context) {
     return PetMatchSingleScreen(
+      backgroundMask: bgMask.mating,
       title: Text(
         "Matings",
         style: TextStyle(

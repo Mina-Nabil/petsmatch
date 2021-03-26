@@ -14,6 +14,7 @@ class SelectPetScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return PetMatchSingleScreen(
+      backgroundMask: bgMask.mating,
       backArrow: true,
       header: Padding(
         padding: const EdgeInsets.only(left:20, right: 20, bottom: 20),
@@ -37,7 +38,7 @@ class SelectPetScreen extends StatelessWidget {
                   Text(pet.name, style: TextStyle(fontSize: PetsTheme.getMeduimFont(), color: PetsTheme.blackTextColor),),
                   space: PetsTheme.getSmallPadMarg(),
                 ),
-                onTap: () => print("Search Mate for ${pet.name}"),
+                onTap: () => Navigator.pushNamed(context, 'Mating/FindMateStart'),
               )
           ]
         ),

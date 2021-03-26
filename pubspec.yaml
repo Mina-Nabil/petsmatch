@@ -127,6 +127,7 @@ flutter:
    - assets/images/icons/menu/settings.svg
    - assets/images/icons/menu/helpSupport.svg
    - assets/images/icons/menu/logout.svg
+   - assets/images/icons/mating/matingLove.svg
 
   #custom
    - assets/images/custom/congrats.png
