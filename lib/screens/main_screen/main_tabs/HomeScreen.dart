@@ -60,8 +60,8 @@ final String searchIconPath = "assets/images/icons/main/search.svg";
       });
     }
 
-    return PetMatchSingleScreen(
-      scrollableHeader: true,
+    return PetMatchSingleScreen.scrollable(
+      //scrollableHeader: true,
       header: Container(
         padding: EdgeInsets.all(20),
         child: Column(
@@ -104,8 +104,7 @@ final String searchIconPath = "assets/images/icons/main/search.svg";
       ),
 
       
-        body: Column(
-          children: [
+        bodyWidgets: [
             NewPostWidget(),
             SuggesionsIconsList([SuggestedIcon(mainUser),  
               ...pets.map((element) {return SuggestedIcon(element);})
@@ -121,7 +120,6 @@ final String searchIconPath = "assets/images/icons/main/search.svg";
               }
             ).toList(),
           ],
-        ),
       
     );
   }

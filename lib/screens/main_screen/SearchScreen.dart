@@ -60,7 +60,7 @@ class _SearchScreen extends State<SearchScreen> {
 
     return PetMatchSingleScreen(
       backArrow: true,
-      scrollableHeader: false,
+      //scrollableHeader: false,
       title: Text(
         "What are you looking for?",
         style: TextStyle(
