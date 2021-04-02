@@ -4,6 +4,7 @@ import 'package:flutter_svg/svg.dart';
 import 'package:petmatch/models/Pet.dart';
 import 'package:petmatch/theme/petsTheme.dart';
 import 'package:petmatch/widgets/Pair.dart';
+import 'package:petmatch/widgets/PetMatchRating.dart';
 import 'package:petmatch/widgets/buttons/CircularMoreButton.dart';
 
 
@@ -126,31 +127,16 @@ class FindMatingCard extends StatelessWidget {
                       children: [
                         SvgPicture.asset("assets/images/icons/paw.svg", color: PetsTheme.currentMainColor, width: 16,),
                         SizedBox(width: PetsTheme.getSmallestPadMarg(),),
-                        RatingBar.builder(itemSize: PetsTheme.getSmallFont(),
-                          itemBuilder: (context, _) => Icon(Icons.star, color: PetsTheme.currentMainColor,),
-                          initialRating: 4.0,
-                          direction: Axis.horizontal,
-                          unratedColor: Colors.grey,
-                          allowHalfRating: true,
-                          onRatingUpdate: null
-                        ),
-                        Text("| 4.0", style: TextStyle(fontSize: PetsTheme.getSmallFont(), color: Colors.grey),),
+                        PetMatchRating(rate: 4, size: PetsTheme.getSmallFont(), ratedColor: PetsTheme.currentMainColor, unratedColor:  Colors.grey),
 
                         SizedBox(width: PetsTheme.getLargePadMarg(),),
 
                         
                         Icon(Icons.person, size: 20, color: PetsTheme.currentMainColor,),
-                        RatingBar.builder(itemSize: PetsTheme.getSmallFont(),
-                          itemBuilder: (context, _) => Icon(Icons.star, color: PetsTheme.currentMainColor,),
-                          initialRating: 3.0,
-                          direction: Axis.horizontal,
-                          unratedColor: Colors.grey,
-                          allowHalfRating: true,
-                          onRatingUpdate: null
-                        ),
-                        Text("| 3.0", style: TextStyle(fontSize: PetsTheme.getSmallFont(), color: Colors.grey),),
+                        PetMatchRating(rate: 3, size: PetsTheme.getSmallFont(), ratedColor: PetsTheme.currentMainColor, unratedColor:  Colors.grey),
 
                         Expanded(child: Container()),
+                        
                         //reviews
                         GestureDetector(
                           child: Text("40 Reviews", style: TextStyle(color: PetsTheme.currentMainColor),),
