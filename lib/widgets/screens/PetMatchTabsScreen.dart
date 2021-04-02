@@ -26,28 +26,19 @@ import 'package:petmatch/ui/walking/WalkingHomeScreen.dart';
 import 'package:petmatch/widgets/custom/CustomStack.dart';
 import 'package:petmatch/widgets/main/NavBarHolder.dart';
 
-enum PawScreens {mating, services, training, walking}
-
 class PetMatchMainScreen extends StatefulWidget {
-  Key matingKey = UniqueKey();
-  Key serKey = UniqueKey();
-  Key walkKey = UniqueKey();
-  Key vetKey = UniqueKey();
-
-
-
   @override
   _PetMatchMainScreenState createState() => _PetMatchMainScreenState();
 }
 
 class _PetMatchMainScreenState extends State<PetMatchMainScreen> with SingleTickerProviderStateMixin {
   CupertinoTabController _tabController;
-  int _previousTabIndex = 0;
+  int _previousTabIndex = 1;
 
   @override
   void initState() {
     super.initState();
-    _tabController = new CupertinoTabController();
+    _tabController = new CupertinoTabController(initialIndex: 1);
   }
 
   @override
@@ -59,7 +50,7 @@ class _PetMatchMainScreenState extends State<PetMatchMainScreen> with SingleTick
   void _onTap(int index) {
 
     print("onTap $_previousTabIndex $index");
-    if(index == 1 || index == 3 || index == 4 || index == 5 || index == 6 || index == 8) {
+    if(index == 0 || index == 2 || index == 4 || index == 5 || index == 6 || index == 7 || index == 9 || index == 11) {
       setState(() {
         _tabController.index = _previousTabIndex;
       });
@@ -87,41 +78,46 @@ class _PetMatchMainScreenState extends State<PetMatchMainScreen> with SingleTick
             controller: _tabController,
             tabBar: CupertinoTabBar(
               backgroundColor: Colors.white, 
-              onTap: _onTap, items: [
+              onTap: _onTap,
+              currentIndex: 1,
+              items: [
               // [0]
+              BottomNavigationBarItem(icon: Container()),
+              // [1]
               BottomNavigationBarItem(
                 icon: SvgPicture.asset(
                   "assets/images/icons/pages/home.svg",
-                  color: _tabController.index == 0 ? PetsTheme.currentMainColor : PetsTheme.petsGrayIconColor,
+                  color: _tabController.index == 1 ? PetsTheme.currentMainColor : PetsTheme.petsGrayIconColor,
                 ),
               ),
-              // [1]
-              BottomNavigationBarItem(icon: Container()),
               // [2]
+              BottomNavigationBarItem(icon: Container()),
+              // [3]
               BottomNavigationBarItem(
                 icon: SvgPicture.asset(
                   "assets/images/icons/pages/notifications.svg",
-                  color: _tabController.index == 2 ? PetsTheme.currentMainColor : PetsTheme.petsGrayIconColor,
+                  color: _tabController.index == 3 ? PetsTheme.currentMainColor : PetsTheme.petsGrayIconColor,
                 ),
               ),
               // 4 hidden tabs for paw
-              BottomNavigationBarItem(icon: Container()), // [3]
               BottomNavigationBarItem(icon: Container()), // [4]
               BottomNavigationBarItem(icon: Container()), // [5]
               BottomNavigationBarItem(icon: Container()), // [6]
-              // [7]
+              BottomNavigationBarItem(icon: Container()), // [7]
+              // [8]
               BottomNavigationBarItem(
                   icon: SvgPicture.asset(
                 "assets/images/icons/pages/chat.svg",
-                color: _tabController.index == 7 ? PetsTheme.currentMainColor : PetsTheme.petsGrayIconColor,
+                color: _tabController.index == 8 ? PetsTheme.currentMainColor : PetsTheme.petsGrayIconColor,
               )),
-              BottomNavigationBarItem(icon: Container()), // [8]
-              // [9]
+              BottomNavigationBarItem(icon: Container()), // [9]
+              // [10]
               BottomNavigationBarItem(
                 icon: SvgPicture.asset(
                   Paths.more_icon_svg_file,
-                  color: _tabController.index == 9 ? PetsTheme.currentMainColor : PetsTheme.petsGrayIconColor,
-                )),
+                  color: _tabController.index == 10 ? PetsTheme.currentMainColor : PetsTheme.petsGrayIconColor,
+              )),
+              BottomNavigationBarItem(icon: Container()),// [11]
             ]),
             tabBuilder: (context, i) {
               print("michael");
@@ -130,21 +126,21 @@ class _PetMatchMainScreenState extends State<PetMatchMainScreen> with SingleTick
                  
                 builder: (context) {
                   switch (i) {
-                    case 0:
+                    case 1:
                       return HomeScreen();
-                    case 2:
-                      return NotificationsScreen();
                     case 3:
+                      return NotificationsScreen();
+                    case 4:
                       return ServicesHomeScreen();
-                    case 4 : 
-                      return TrainHomeScreen();
                     case 5 : 
+                      return TrainHomeScreen();
+                    case 6 : 
                       return MatingHomeScreen();
-                    case 6 :
+                    case 7 :
                       return WalkingHomeScreen();
-                    case 7:
+                    case 8:
                       return ChatScreen();
-                    case 9:
+                    case 10:
                       return MainMenuScreen();
                     default:
                     print("Hwa da");
@@ -178,25 +174,25 @@ class _PetMatchMainScreenState extends State<PetMatchMainScreen> with SingleTick
           alignment: Alignment.bottomCenter,
           child: NavBarHolder(
             servicesCallback: () {  setState(() {
-                _tabController.index = 3;
+                _tabController.index = 4;
               });
             },
 
             trainingCallback: () {
               setState(() {
-                _tabController.index = 4;
+                _tabController.index = 5;
               });
             },
 
             matingCallback: () {
               setState(() {
-                _tabController.index = 5;
+                _tabController.index = 6;
               });
             },
 
             walkingCallback: () {
               setState(() {
-                _tabController.index = 6;
+                _tabController.index = 7;
               });
             },
           ))),
