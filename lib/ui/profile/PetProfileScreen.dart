@@ -16,12 +16,11 @@ class PetProfileScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     
 
-    return PetMatchSingleScreen(
+    return PetMatchSingleScreen.scrollable(
       backArrow: true,
-      scrollableHeader: true,
+      //scrollableHeader: true,
       header: PetProfileCover(),
-      body: Column(
-        children: [
+      bodyWidgets:  [
           NewPostWidget(),
           ...posts.map(
               (post) {
@@ -32,9 +31,7 @@ class PetProfileScreen extends StatelessWidget {
                 );
               }
             ).toList(),
-
         ],
-      ),
     );
       }
 }

@@ -1,61 +1,39 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/flutter_svg.dart';
+import 'package:petmatch/models/Pet.dart';
 import 'package:petmatch/theme/petsTheme.dart';
-import 'package:petmatch/widgets/buttons/CircularMoreButton.dart';
+import 'package:petmatch/ui/mating/FindMateCard.dart';
 import 'package:petmatch/widgets/screens/PetMatchSingleScreen.dart';
 
-
+List<Pet> pets = [
+    Pet("Coco", "https://images.indianexpress.com/2021/01/Golden-Retriever-dog.jpg", "Ahmed Mostafa"),
+    Pet("Bobby", "https://cdn.pixabay.com/photo/2017/09/25/13/12/dog-2785074__340.jpg", "Mina"),
+    Pet("Lili", "https://communityimpact.com/uploads/images/2020/11/12/101807.JPG", "Aly"),
+];
 class FindMateScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return PetMatchSingleScreen(
       backArrow: true,
-      title: Text("Bella is looking for a Make",style: TextStyle(
-              fontSize: PetsTheme.getLargerFont(),
+      title: Row(
+        children: [
+          CircleAvatar(
+            backgroundImage: Image.network("https://image.cnbcfm.com/api/v1/image/105992231-1561667465295gettyimages-521697453.jpeg?v=1561667497&w=1600&h=900",).image,
+            radius: PetsTheme.radius1,
+          ),
+          SizedBox(width: PetsTheme.getSmallPadMarg(),),
+          Text("Bella is looking for a Mate",
+            style: TextStyle(
+              fontSize: PetsTheme.getLargeFont(),
               color: Colors.white,
-              fontWeight: FontWeight.bold)),
-      body: Container(
-        child: Column(
-          children: [
-            Expanded(child: Placeholder()),
-            Container(
-              padding: EdgeInsets.symmetric(horizontal: 20),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Container(
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children:[
-                          Text("Coco"),
-                          Text("location"),
-                          ]
-                        ),
-                        CircularButton(
-                          child: SvgPicture.asset('assets/images/icons/mating/matingLove.svg'),
-                          radius: PetsTheme.radius3,
-                          backgroundColor: Colors.red[50], 
-                          onPressed: null
-                        )
-                      ],
-                    ),
-                  ),
-                  Text("View profile"),
-                  Row(
-                    children: [
-                      Flexible(flex: 2, child: Container(margin: EdgeInsets.only(right: PetsTheme.getSmallPadMarg()), color: PetsTheme.commentBgColor, height: 50,)),
-                      Flexible(flex: 1, child: Container(margin: EdgeInsets.all(PetsTheme.getSmallPadMarg()),color: PetsTheme.commentBgColor, height: 50,)),
-                      Flexible(flex: 1, child: Container(margin: EdgeInsets.only(left: PetsTheme.getSmallPadMarg()),color: PetsTheme.commentBgColor, height: 50,)),
-                    ],
-                  )
-                ],
-              ),
-            )
-          ],
-        ),
+              fontWeight: FontWeight.bold))
+        ],
+      ),
+      //body: FindMatingCard(pets[0]),
+      body: PageView.builder(
+        itemCount: pets.length,
+        itemBuilder: (context, index) {
+          return FindMatingCard(pets[index]);
+        }
       ),
     );
   }

@@ -8,7 +8,7 @@ class MainMenuScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return PetMatchSingleScreen(
-      scrollableHeader: false,
+      //scrollableHeader: false,
       header: Container(
         padding: EdgeInsets.only(left: 20, bottom: 20, right: 20),
         child: Column(

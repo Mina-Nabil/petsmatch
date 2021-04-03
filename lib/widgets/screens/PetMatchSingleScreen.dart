@@ -11,20 +11,24 @@ class PetMatchSingleScreen extends StatefulWidget {
     this.body,
     this.bodyBackgroundColor,
     this.backgroundMask,
-    this.scrollableHeader = false,
+    //this.scrollableHeader = false,
     this.enableRotation = false,
     this.backArrow = false,
-  }) : 
-  /*
-  Can not have title widget (appBar widget) and scrollable header
-  */
-  assert( ! (title != null && scrollableHeader));
+  }) : scrollableHeader = false, bodyWidgets = null;
 
+  PetMatchSingleScreen.scrollable({
+    this.header,
+    this.bodyBackgroundColor,
+    this.bodyWidgets,
+    this.backgroundMask,
+    this.enableRotation = false,
+    this.backArrow = false,
+  }) : scrollableHeader = true, title = null, body = null;
 
   final Widget title;  // AppBar widget
   final Widget header; // Upper Widget with mask background
   final Widget body;   // Main widget(s) for the screen
-
+  final List<Widget> bodyWidgets;
   final Color bodyBackgroundColor;
   final bool backArrow;
   final bool scrollableHeader;
@@ -122,7 +126,7 @@ class _PetMatchSingleScreenState extends State<PetMatchSingleScreen> {
         child: Column(
           children:[
             _buildHeaderWidget(),
-            _buildBodyWidget(),
+            _buildScrollableBodyWidget(),
           ]
         ),
       );
@@ -164,8 +168,26 @@ class _PetMatchSingleScreenState extends State<PetMatchSingleScreen> {
           )
       ),
     );
+  }
+    Widget _buildScrollableBodyWidget() {
+    return Container(
+      decoration: BoxDecoration(
+          color:  PetsTheme.currentBgMainColor.withOpacity(1),
+        ),
+      child: ClipRRect(
+        borderRadius: BorderRadius.only(topLeft: Radius.circular(20),topRight: Radius.circular(20)),
+        child: Container(
+          width: double.infinity,
+          color: widget.bodyBackgroundColor?? Colors.grey[100],
+          child: Column(
+            children: widget.bodyWidgets,
+          )
+          )
+      ),
+    );
   } 
 }
+
 
 class PetMatchAppBar extends StatelessWidget {
 

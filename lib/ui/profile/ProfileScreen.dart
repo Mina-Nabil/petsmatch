@@ -17,12 +17,11 @@ class ProfileScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     
 
-    return PetMatchSingleScreen(
+    return PetMatchSingleScreen.scrollable(
       backArrow: true,
-      scrollableHeader: true,
+      //scrollableHeader: true,
       header: ProfileCover(),
-      body: Column(
-        children: [
+      bodyWidgets: [
           if(PetsTheme.accountType == AccountType.vet || PetsTheme.accountType == AccountType.store)
             AboutPost(
               phoneNo: "012124578", 
@@ -43,9 +42,7 @@ class ProfileScreen extends StatelessWidget {
                 );
               }
             ).toList(),
-
         ],
-      ),
     );
       }
 }

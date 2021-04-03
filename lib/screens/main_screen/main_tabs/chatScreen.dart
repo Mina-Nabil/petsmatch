@@ -73,7 +73,7 @@ List<Chat> _recentChats = [
   @override
   Widget build(BuildContext context) {
     return PetMatchSingleScreen(
-      scrollableHeader: false,
+      //scrollableHeader: false,
       backArrow: false,
       title: Text("Chats",
           style: TextStyle(fontFamily: "Roboto", fontSize: PetsTheme.getMuchLargerFont(), color: PetsTheme.whiteBarColor, fontWeight: FontWeight.bold),

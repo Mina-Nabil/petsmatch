@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:petmatch/models/Pet.dart';
 import 'package:petmatch/models/User.dart';
 import 'package:petmatch/theme/petsTheme.dart';
 import 'package:petmatch/widgets/Pair.dart';
+import 'package:petmatch/widgets/PetMatchRating.dart';
 import 'package:petmatch/widgets/buttons/CircularMoreButton.dart';
 import 'package:petmatch/widgets/buttons/RoundButton.dart';
 import 'package:petmatch/widgets/main/UserAvatar.dart';
@@ -347,24 +347,10 @@ class CommercialCover extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(name, style: TextStyle(fontSize: PetsTheme.getLargerFont(), color: Colors.white, fontWeight: FontWeight.bold)),
-                  
-                  Row(
-                    children: [
-                      RatingBar.builder(itemSize: PetsTheme.getMeduimFont(),
-                        itemBuilder: (context, _) => Icon(Icons.star, color: Colors.white,),
-                        initialRating: rate,
-                        direction: Axis.horizontal,
-                        unratedColor: Colors.white.withAlpha(50),
-                        allowHalfRating: true,
-                        onRatingUpdate: null
-                      ),
-                      Text("| $rate", style: TextStyle(fontSize: PetsTheme.getMeduimFont(), color: Colors.white),),
-                    ]
-                  ),
+                  PetMatchRating(rate: rate, size: PetsTheme.getMeduimFont(), ratedColor: Colors.white, unratedColor: Colors.white.withAlpha(50)),
                   SizedBox(height: PetsTheme.getMeduimPadMarg(),),
                   Text(title, style: TextStyle(fontSize: PetsTheme.getMeduimFont(), color: Colors.white),),
                   Text(shortDescription, style: TextStyle(fontSize: PetsTheme.getMeduimFont(), color: Colors.white),),
-                  
                 ],
               ),
             )
