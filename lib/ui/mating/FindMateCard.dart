@@ -136,10 +136,11 @@ class FindMatingCard extends StatelessWidget {
                         PetMatchRating(rate: 3, size: PetsTheme.getSmallFont(), ratedColor: PetsTheme.currentMainColor, unratedColor:  Colors.grey),
 
                         Expanded(child: Container()),
-                        
+
                         //reviews
                         GestureDetector(
                           child: Text("40 Reviews", style: TextStyle(color: PetsTheme.currentMainColor),),
+                          onTap: () => Navigator.of(context).pushNamed("Mating/PetReviews"),
                         )
                       ],
                     )
