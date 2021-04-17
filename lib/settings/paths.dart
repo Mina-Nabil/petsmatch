@@ -31,6 +31,8 @@ class Paths {
   static const String gallery_icon_svg = "assets/images/icons/main/gallery.svg";
   static const String location_icon_svg = "assets/images/icons/main/location.svg";
 
+  static const String search_icon_path = "assets/images/icons/main/search.svg";
+
   //image files paths
 
 }

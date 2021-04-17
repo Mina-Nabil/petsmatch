@@ -21,7 +21,7 @@ import 'package:petmatch/ui/profile/FriendsListScreen.dart';
 import 'package:petmatch/ui/profile/PetProfileScreen.dart';
 import 'package:petmatch/ui/profile/PetsListScreen.dart';
 import 'package:petmatch/ui/profile/PhotosScreen.dart';
-import 'package:petmatch/ui/services/MatingHomeScreen.dart';
+import 'package:petmatch/ui/services/ServicesHomeScreen.dart';
 import 'package:petmatch/ui/train/TrainHomeScreen.dart';
 import 'package:petmatch/ui/walking/WalkingHomeScreen.dart';
 import 'package:petmatch/widgets/custom/CustomStack.dart';

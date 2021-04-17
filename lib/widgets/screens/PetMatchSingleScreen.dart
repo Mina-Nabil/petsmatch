@@ -14,7 +14,8 @@ class PetMatchSingleScreen extends StatefulWidget {
     //this.scrollableHeader = false,
     this.enableRotation = false,
     this.backArrow = false,
-  }) : scrollableHeader = false, bodyWidgets = null;
+  })  : scrollableHeader = false,
+        bodyWidgets = null;
 
   PetMatchSingleScreen.scrollable({
     this.header,
@@ -23,11 +24,13 @@ class PetMatchSingleScreen extends StatefulWidget {
     this.backgroundMask,
     this.enableRotation = false,
     this.backArrow = false,
-  }) : scrollableHeader = true, title = null, body = null;
+  })  : scrollableHeader = true,
+        title = null,
+        body = null;
 
-  final Widget title;  // AppBar widget
+  final Widget title; // AppBar widget
   final Widget header; // Upper Widget with mask background
-  final Widget body;   // Main widget(s) for the screen
+  final Widget body; // Main widget(s) for the screen
   final List<Widget> bodyWidgets;
   final Color bodyBackgroundColor;
   final bool backArrow;
@@ -41,7 +44,7 @@ class PetMatchSingleScreen extends StatefulWidget {
 
 class _PetMatchSingleScreenState extends State<PetMatchSingleScreen> {
   String bgMaskPath;
-  DecorationImage  backgroundImage;
+  DecorationImage backgroundImage;
 
   @override
   void initState() {
@@ -71,9 +74,8 @@ class _PetMatchSingleScreenState extends State<PetMatchSingleScreen> {
 
     backgroundImage = DecorationImage(
       image: Image.asset(bgMaskPath).image,
-      fit: BoxFit.cover, 
-      colorFilter: ColorFilter.mode(
-      PetsTheme.currentBgMainColor.withOpacity(1.0) , BlendMode.srcOut),
+      fit: BoxFit.cover,
+      colorFilter: ColorFilter.mode(PetsTheme.currentBgMainColor.withOpacity(1.0), BlendMode.srcOut),
     );
 
     if (widget.enableRotation)
@@ -98,56 +100,49 @@ class _PetMatchSingleScreenState extends State<PetMatchSingleScreen> {
       right: true,
       left: true,
       child: CupertinoPageScaffold(
-        backgroundColor: widget.bodyBackgroundColor?? Colors.grey[100],
+        backgroundColor: widget.bodyBackgroundColor ?? Colors.grey[100],
         child: Material(
-          color: Colors.transparent, 
-          child:  Stack(
-            children:[
-              Container(
-                child: SafeArea(
-                  top: false, bottom: false, right: true, left: true, 
-                  child: _buildScreenWidget()
-                )
+          color: Colors.transparent,
+          child: Stack(children: [
+            Container(child: SafeArea(top: false, bottom: false, right: true, left: true, child: _buildScreenWidget())),
+            if (widget.backArrow || widget.title != null)
+              PetMatchAppBar(
+                title: widget.title,
+                backArrow: widget.backArrow,
               ),
-              
-              if(widget.backArrow || widget.title != null)
-                PetMatchAppBar(title: widget.title, backArrow: widget.backArrow,),
-            ]
-          ),
+          ]),
         ),
       ),
     );
   }
 
   Widget _buildScreenWidget() {
-    if(widget.scrollableHeader) {
+    if (widget.scrollableHeader) {
       return SingleChildScrollView(
         physics: ClampingScrollPhysics(),
-        child: Column(
-          children:[
-            _buildHeaderWidget(),
-            _buildScrollableBodyWidget(),
-          ]
-        ),
+        child: Column(children: [
+          _buildHeaderWidget(),
+          _buildScrollableBodyWidget(),
+        ]),
       );
     } else {
-      return Column(
-        children:[
-          _buildHeaderWidget(),
-          Expanded(child: _buildBodyWidget(),),
-        ]
-      );
+      return Column(children: [
+        _buildHeaderWidget(),
+        Expanded(
+          child: _buildBodyWidget(),
+        ),
+      ]);
     }
   }
 
   Widget _buildHeaderWidget() {
     bool appBarExists = (widget.backArrow || widget.title != null);
-    
+
     return Container(
-      padding:  appBarExists ? EdgeInsets.only(top:(56 + MediaQuery.of(context).padding.top)) : EdgeInsets.only(top:MediaQuery.of(context).padding.top),
+      padding: appBarExists ? EdgeInsets.only(top: (56 + MediaQuery.of(context).padding.top)) : EdgeInsets.only(top: MediaQuery.of(context).padding.top),
       width: double.infinity,
       decoration: BoxDecoration(
-        color:  Colors.black.withOpacity(0.9),
+        color: Colors.black.withOpacity(0.9),
         image: backgroundImage,
       ),
       child: widget.header,
@@ -157,40 +152,32 @@ class _PetMatchSingleScreenState extends State<PetMatchSingleScreen> {
   Widget _buildBodyWidget() {
     return Container(
       decoration: BoxDecoration(
-          color:  PetsTheme.currentBgMainColor.withOpacity(1),
-        ),
-      child: ClipRRect(
-        borderRadius: BorderRadius.only(topLeft: Radius.circular(20),topRight: Radius.circular(20)),
-        child: Container(
-          width: double.infinity,
-          color: widget.bodyBackgroundColor?? Colors.grey[100],
-          child: widget.body
-          )
+        color: PetsTheme.currentBgMainColor.withOpacity(1),
       ),
+      child: ClipRRect(
+          borderRadius: BorderRadius.only(topLeft: Radius.circular(20), topRight: Radius.circular(20)),
+          child: Container(width: double.infinity, color: widget.bodyBackgroundColor ?? Colors.grey[100], child: widget.body)),
     );
   }
-    Widget _buildScrollableBodyWidget() {
+
+  Widget _buildScrollableBodyWidget() {
     return Container(
       decoration: BoxDecoration(
-          color:  PetsTheme.currentBgMainColor.withOpacity(1),
-        ),
-      child: ClipRRect(
-        borderRadius: BorderRadius.only(topLeft: Radius.circular(20),topRight: Radius.circular(20)),
-        child: Container(
-          width: double.infinity,
-          color: widget.bodyBackgroundColor?? Colors.grey[100],
-          child: Column(
-            children: widget.bodyWidgets,
-          )
-          )
+        color: PetsTheme.currentBgMainColor.withOpacity(1),
       ),
+      child: ClipRRect(
+          borderRadius: BorderRadius.only(topLeft: Radius.circular(20), topRight: Radius.circular(20)),
+          child: Container(
+              width: double.infinity,
+              color: widget.bodyBackgroundColor ?? Colors.grey[100],
+              child: Column(
+                children: widget.bodyWidgets,
+              ))),
     );
-  } 
+  }
 }
 
-
 class PetMatchAppBar extends StatelessWidget {
-
   PetMatchAppBar({
     this.title,
     this.backArrow = false,
@@ -203,31 +190,31 @@ class PetMatchAppBar extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      padding: EdgeInsets.only(top:MediaQuery.of(context).padding.top),
-      color: Colors.transparent,
-      width: double.infinity,
+        padding: EdgeInsets.only(top: MediaQuery.of(context).padding.top),
+        color: Colors.transparent,
+        width: double.infinity,
         height: 56 + MediaQuery.of(context).padding.top,
         child: Stack(
           children: [
-            if(title != null)
+            if (title != null)
               Container(
-                padding:  EdgeInsets.only(left: backArrow? appBarLeftPadding*2.5 : appBarLeftPadding),
+                padding: EdgeInsets.only(left: backArrow ? appBarLeftPadding * 2.5 : appBarLeftPadding),
                 alignment: Alignment.centerLeft,
                 child: title,
               ),
-            
-            if(backArrow)
+            if (backArrow)
               GestureDetector(
                 child: Container(
-                  color: Colors.transparent,
-                  padding: EdgeInsets.only(left: appBarLeftPadding),
-                  alignment: Alignment.centerLeft,
-                  child: FaIcon(FontAwesomeIcons.chevronLeft, color: Colors.white,)
-                ),
+                    color: Colors.transparent,
+                    padding: EdgeInsets.only(left: appBarLeftPadding),
+                    alignment: Alignment.centerLeft,
+                    child: FaIcon(
+                      FontAwesomeIcons.chevronLeft,
+                      color: Colors.white,
+                    )),
                 onTap: () => Navigator.of(context).pop(),
               ),
           ],
-        )
-    );
+        ));
   }
 }

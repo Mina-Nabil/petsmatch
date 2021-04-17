@@ -4,6 +4,7 @@ import 'package:petmatch/models/Pet.dart';
 import 'package:petmatch/models/Post.dart';
 import 'package:petmatch/models/Profile.dart';
 import 'package:petmatch/models/User.dart';
+import 'package:petmatch/settings/paths.dart';
 import 'package:petmatch/theme/petsTheme.dart';
 import 'package:petmatch/widgets/buttons/CircularButton.dart';
 import 'package:petmatch/widgets/feed/NewPostWidget.dart';
@@ -22,7 +23,7 @@ class HomeScreen extends StatefulWidget {
 
 class _HomeScreenState extends State<HomeScreen> {
 
-final String searchIconPath = "assets/images/icons/main/search.svg";
+
 
   User mainUser;
   List<Profile> suggests;
@@ -84,7 +85,7 @@ final String searchIconPath = "assets/images/icons/main/search.svg";
                       height: 55,
                       width: 55,
                       child: GestureDetector(
-                        child: CircularPetButton(PetsTheme.currentMainColor.withOpacity(.2), searchIconPath, Colors.white),
+                        child: CircularPetButton(PetsTheme.currentMainColor.withOpacity(.2), Paths.search_icon_path, Colors.white),
                         onTap: () => Navigator.of(context).pushNamed('search'), )
                   )
                 ]

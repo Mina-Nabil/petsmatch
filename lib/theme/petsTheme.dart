@@ -45,6 +45,7 @@ class PetsTheme {
   static const Color petsGreenColor = Color.fromRGBO(6, 214, 160, 1);
   static const Color petsGrayIconColor = Color.fromARGB(51, 15, 19, 39);
   static final Color petsRedColor = Color.fromARGB(255, 255,0,110);
+  static final Color petsLightBlueColor = Color.fromARGB(255, 111, 145, 255);
   static Color _currentMainColor = petsBlueColor;
 
   static final Color petsBgBlueColor = petsBlueColor.withOpacity(.6);
