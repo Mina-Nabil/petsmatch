@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:petmatch/models/PetsBanner.dart';
 import 'package:petmatch/models/Vet.dart';
-import 'package:petmatch/ui/services/widgets/HorizontalBannerList.dart';
+import 'package:petmatch/widgets/custom/HorizontalBannerList.dart';
 import 'package:petmatch/widgets/feed/SuggestedIcon.dart';
 import 'package:petmatch/widgets/feed/SuggestionsIconsList.dart';
 
@@ -34,7 +34,8 @@ class _AllServicesScreenState extends State<AllServicesScreen> {
           SuggesionsIconsList( 
             [..._suggestedVetsList.map((e) => SuggestedIcon(e))], 
             listHeight: 120,
-          )
+          ) ,
+          
         ],
       ),
     );

@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:petmatch/settings/paths.dart';
 import 'package:petmatch/theme/petsTheme.dart';
-import 'package:petmatch/ui/services/AllServicesScreen.dart';
-import 'package:petmatch/ui/services/ShopsScreen.dart';
-import 'package:petmatch/ui/services/VetsScreen.dart';
+import 'package:petmatch/screens/services/AllServicesScreen.dart';
+import 'package:petmatch/screens/services/ShopsScreen.dart';
+import 'package:petmatch/screens/services/VetsScreen.dart';
 import 'package:petmatch/widgets/buttons/CircularButton.dart';
 import 'package:petmatch/widgets/screens/PetMatchSingleScreen.dart';
 

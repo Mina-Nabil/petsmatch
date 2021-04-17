@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:petmatch/models/Pet.dart';
 import 'package:petmatch/theme/petsTheme.dart';
-import 'package:petmatch/ui/mating/FindMateCard.dart';
+import 'package:petmatch/screens/mating/FindMateCard.dart';
 import 'package:petmatch/widgets/screens/PetMatchSingleScreen.dart';
 
 List<Pet> pets = [

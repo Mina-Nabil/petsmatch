@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:petmatch/theme/petsTheme.dart';
-import 'package:petmatch/widgets/PetMatchRating.dart';
+import 'package:petmatch/widgets/custom/PetMatchRating.dart';
 import 'package:petmatch/widgets/screens/PetMatchSingleScreen.dart';
 
 

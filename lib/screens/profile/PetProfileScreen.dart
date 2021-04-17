@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:petmatch/models/Post.dart';
 import 'package:petmatch/theme/petsTheme.dart';
-import 'package:petmatch/ui/profile/widgets/PetProfileCover.dart';
+import 'package:petmatch/widgets/posts/PetProfileCover.dart';
 import 'package:petmatch/widgets/feed/NewPostWidget.dart';
 import 'package:petmatch/widgets/feed/RegularPostWidget.dart';
 import 'package:petmatch/widgets/screens/PetMatchSingleScreen.dart';

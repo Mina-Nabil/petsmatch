@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:petmatch/theme/petsTheme.dart';
-import 'package:petmatch/widgets/Pair.dart';
+import 'package:petmatch/widgets/custom/Pair.dart';
 
 
 class AboutPost extends StatelessWidget {

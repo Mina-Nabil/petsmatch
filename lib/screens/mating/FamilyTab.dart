@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:petmatch/theme/petsTheme.dart';
-import 'package:petmatch/ui/mating/CrushTab.dart';
+import 'package:petmatch/screens/mating/CrushTab.dart';
 import 'package:petmatch/widgets/buttons/CircularMoreButton.dart';
 
 

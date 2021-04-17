@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:petmatch/theme/petsTheme.dart';
-import 'package:petmatch/ui/mating/CrushTab.dart';
-import 'package:petmatch/ui/mating/FamilyTab.dart';
-import 'package:petmatch/ui/mating/RecentMatings.dart';
+import 'package:petmatch/screens/mating/CrushTab.dart';
+import 'package:petmatch/screens/mating/FamilyTab.dart';
+import 'package:petmatch/screens/mating/RecentMatings.dart';
 import 'package:petmatch/widgets/screens/PetMatchSingleScreen.dart';
 
 class MatingHomeScreen extends StatefulWidget {
