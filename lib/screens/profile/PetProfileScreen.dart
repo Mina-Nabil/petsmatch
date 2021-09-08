@@ -10,11 +10,8 @@ import 'package:petmatch/widgets/screens/PetMatchSingleScreen.dart';
 class PetProfileScreen extends StatelessWidget {
 
 
-    
-
   @override
   Widget build(BuildContext context) {
-    
 
     return PetMatchSingleScreen.scrollable(
       backArrow: true,
