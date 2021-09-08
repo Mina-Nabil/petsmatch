@@ -3,11 +3,14 @@ import 'dart:ui';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:google_sign_in/google_sign_in.dart';
 import 'package:page_transition/page_transition.dart';
 import 'package:petmatch/screens/login/regTypes.dart';
 import 'package:petmatch/theme/petsTheme.dart';
 import 'package:petmatch/widgets/screens/LoginScreenSetup.dart';
 import 'package:petmatch/widgets/buttons/SubmitButton.dart';
+
+final GoogleSignIn googlesignin = GoogleSignIn();
 
 class LoginScreen extends StatefulWidget {
   @override
@@ -20,15 +23,26 @@ class _LoginScreenState extends State<LoginScreen> {
   final TextEditingController _passwordController = TextEditingController();
   bool obscureTextFlag = true;
   Color obscureTextColor = PetsTheme.petsTextGrayColor;
-
+  bool IsAuth = false;
   @override
   void initState() {
     // blocking change in screen orientation
     super.initState();
+
+    googlesignin.onCurrentUserChanged.listen((GoogleSignInAccount account) {
+      if (account != null) {
+        print(account);
+        IsAuth = true;
+      }
+    });
     SystemChrome.setPreferredOrientations([
       DeviceOrientation.portraitUp,
       DeviceOrientation.portraitDown,
     ]);
+  }
+
+  login() {
+    googlesignin.signIn();
   }
 
   @override
@@ -51,13 +65,16 @@ class _LoginScreenState extends State<LoginScreen> {
     void submitForm() {
       print("Submitting");
       if (true) {
-        Navigator.of(context).pushReplacementNamed('/home' );
+        Navigator.of(context).pushReplacementNamed('/home');
       }
     }
 
     void signUp() {
       print("SignUp Aho");
-      Navigator.of(context).push(PageTransition(type: PageTransitionType.fade, child: RegTypesScreen())).timeout(Duration.zero);
+      Navigator.of(context)
+          .push(PageTransition(
+              type: PageTransitionType.fade, child: RegTypesScreen()))
+          .timeout(Duration.zero);
     }
 
     void forgotPass() {
@@ -67,14 +84,15 @@ class _LoginScreenState extends State<LoginScreen> {
     void fbLogin() {
       print("FB Login");
       if (true) {
-        Navigator.of(context).pushReplacementNamed('home' );
+        Navigator.of(context).pushReplacementNamed('home');
       }
     }
 
     void googleLogin() {
       print("Google");
-      if (true) {
-        Navigator.of(context).pushReplacementNamed('/home' );
+      login();
+      if (IsAuth) {
+        Navigator.of(context).pushReplacementNamed('/home');
       }
     }
 
@@ -99,12 +117,18 @@ class _LoginScreenState extends State<LoginScreen> {
                 children: <Widget>[
                   Container(
                     constraints: BoxConstraints(maxWidth: fieldsWidth),
-                    margin: EdgeInsets.only(bottom: PetsTheme.getSmallerPadMarg()),
+                    margin:
+                        EdgeInsets.only(bottom: PetsTheme.getSmallerPadMarg()),
                     child: Padding(
-                        padding: EdgeInsets.only(left: PetsTheme.getMeduimPadMarg()),
+                        padding:
+                            EdgeInsets.only(left: PetsTheme.getMeduimPadMarg()),
                         child: TextFormField(
-                          decoration:
-                              InputDecoration(hintText: "E-mail", hintStyle: TextStyle(fontFamily: "Segoe", fontSize: 16, color: PetsTheme.petsTextGrayColor)),
+                          decoration: InputDecoration(
+                              hintText: "E-mail",
+                              hintStyle: TextStyle(
+                                  fontFamily: "Segoe",
+                                  fontSize: 16,
+                                  color: PetsTheme.petsTextGrayColor)),
                           controller: _emailController,
                           style: TextStyle(fontFamily: "Segoe", fontSize: 16),
                         )),
@@ -125,25 +149,34 @@ class _LoginScreenState extends State<LoginScreen> {
                     children: <Widget>[
                       Container(
                         width: fieldsWidth,
-                        margin: EdgeInsets.only(top: PetsTheme.getSmallPadMarg()),
+                        margin:
+                            EdgeInsets.only(top: PetsTheme.getSmallPadMarg()),
                         child: Padding(
-                            padding: EdgeInsets.only(left: PetsTheme.getLargePadMarg()),
+                            padding: EdgeInsets.only(
+                                left: PetsTheme.getLargePadMarg()),
                             child: Stack(
                               fit: StackFit.loose,
                               alignment: Alignment.centerRight,
                               children: [
                                 TextFormField(
                                   decoration: InputDecoration(
-                                      hintText: "Password", hintStyle: TextStyle(fontFamily: "Segoe", fontSize: 16, color: PetsTheme.petsTextGrayColor)),
+                                      hintText: "Password",
+                                      hintStyle: TextStyle(
+                                          fontFamily: "Segoe",
+                                          fontSize: 16,
+                                          color: PetsTheme.petsTextGrayColor)),
                                   obscureText: obscureTextFlag,
                                   controller: _passwordController,
-                                  style: TextStyle(fontFamily: "Segoe", fontSize: 16),
+                                  style: TextStyle(
+                                      fontFamily: "Segoe", fontSize: 16),
                                 ),
                                 SizedBox(
                                   child: ButtonTheme(
-                                      padding: EdgeInsets.all(PetsTheme.getSmallerPadMarg()), //adds padding inside the button
+                                      padding: EdgeInsets.all(PetsTheme
+                                          .getSmallerPadMarg()), //adds padding inside the button
 
-                                      materialTapTargetSize: MaterialTapTargetSize.shrinkWrap, //limits the touch area to the button area
+                                      materialTapTargetSize: MaterialTapTargetSize
+                                          .shrinkWrap, //limits the touch area to the button area
                                       minWidth: 0, //wraps child's width
                                       height: 0, //wraps child's height
                                       child: FlatButton(
@@ -165,13 +198,17 @@ class _LoginScreenState extends State<LoginScreen> {
                   ),
                   Container(
                       width: fieldsWidth,
-                      margin: EdgeInsets.only(top: PetsTheme.getMeduimPadMarg()),
+                      margin:
+                          EdgeInsets.only(top: PetsTheme.getMeduimPadMarg()),
                       alignment: Alignment.centerRight,
                       child: SizedBox(
                         child: Text(
                           "Forgot password?",
-                          style:
-                              TextStyle(fontFamily: "Roboto", fontSize: PetsTheme.getSmallFont(), color: PetsTheme.petsTextGrayColor.withOpacity(0.5)),
+                          style: TextStyle(
+                              fontFamily: "Roboto",
+                              fontSize: PetsTheme.getSmallFont(),
+                              color:
+                                  PetsTheme.petsTextGrayColor.withOpacity(0.5)),
                         ),
                       ))
                 ],
@@ -192,59 +229,66 @@ class _LoginScreenState extends State<LoginScreen> {
                 child: Container(
                   width: fieldsWidth * 0.5,
                   alignment: Alignment.center,
-                  child: Column(mainAxisAlignment: MainAxisAlignment.spaceEvenly, children: [
-                    Flexible(
-                        flex: 1,
-                        child: Container(
-                            child: SizedBox(
-                          child: Text(
-                            "Sign in with",
-                            style: TextStyle(fontFamily: "Roboto", fontSize: PetsTheme.getSmallFont()),
+                  child: Column(
+                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                      children: [
+                        Flexible(
+                            flex: 1,
+                            child: Container(
+                                child: SizedBox(
+                              child: Text(
+                                "Sign in with",
+                                style: TextStyle(
+                                    fontFamily: "Roboto",
+                                    fontSize: PetsTheme.getSmallFont()),
+                              ),
+                            ))),
+                        Flexible(
+                          flex: 2,
+                          child: Container(
+                            margin: EdgeInsets.symmetric(
+                                vertical: PetsTheme.getLargerPadMarg()),
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                              children: [
+                                Flexible(
+                                    flex: 1,
+                                    child: Container(
+                                        width: 50,
+                                        decoration: BoxDecoration(
+                                            color: PetsTheme.fbBlue,
+                                            shape: BoxShape.circle),
+                                        child: SizedBox.expand(
+                                            child: FlatButton(
+                                          padding: EdgeInsets.all(0),
+                                          onPressed: fbLogin,
+                                          child: Icon(
+                                            FontAwesomeIcons.facebookF,
+                                            color: Colors.white,
+                                          ),
+                                        )))),
+                                Flexible(
+                                    flex: 1,
+                                    child: Container(
+                                        width: 50,
+                                        decoration: BoxDecoration(
+                                          color: PetsTheme.googleRed,
+                                          shape: BoxShape.circle,
+                                        ),
+                                        child: SizedBox.expand(
+                                            child: FlatButton(
+                                          padding: EdgeInsets.all(0),
+                                          onPressed: googleLogin,
+                                          child: Icon(
+                                            FontAwesomeIcons.googlePlusG,
+                                            color: Colors.white,
+                                          ),
+                                        )))),
+                              ],
+                            ),
                           ),
-                        ))),
-                    Flexible(
-                      flex: 2,
-                      child: Container(
-                        margin: EdgeInsets.symmetric(vertical: PetsTheme.getLargerPadMarg()),
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                          children: [
-                            Flexible(
-                                flex: 1,
-                                child: Container(
-                                    width: 50,
-                                    decoration: BoxDecoration(color: PetsTheme.fbBlue, shape: BoxShape.circle),
-                                    child: SizedBox.expand(
-                                        child: FlatButton(
-                                      padding: EdgeInsets.all(0),
-                                      onPressed: fbLogin,
-                                      child: Icon(
-                                        FontAwesomeIcons.facebookF,
-                                        color: Colors.white,
-                                      ),
-                                    )))),
-                            Flexible(
-                                flex: 1,
-                                child: Container(
-                                    width: 50,
-                                    decoration: BoxDecoration(
-                                      color: PetsTheme.googleRed,
-                                      shape: BoxShape.circle,
-                                    ),
-                                    child: SizedBox.expand(
-                                        child: FlatButton(
-                                      padding: EdgeInsets.all(0),
-                                      onPressed: googleLogin,
-                                      child: Icon(
-                                        FontAwesomeIcons.googlePlusG,
-                                        color: Colors.white,
-                                      ),
-                                    )))),
-                          ],
-                        ),
-                      ),
-                    )
-                  ]),
+                        )
+                      ]),
                 ))
           ],
         ));

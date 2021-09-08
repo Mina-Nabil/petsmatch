@@ -23,17 +23,32 @@ class _RegTypesScreenState extends State<RegTypesScreen> {
       });
     });
 
-    Navigator.push(context, new PageTransition(type: PageTransitionType.fade, duration: Duration(milliseconds: 500), child: RegTypeSelectedScreen(type)))
+    Navigator.push(
+            context,
+            new PageTransition(
+                type: PageTransitionType.fade,
+                duration: Duration(milliseconds: 500),
+                child: RegTypeSelectedScreen(type)))
         //refreshing page in case it is popped up
         .then((value) => setState(() {
-              allTypes = {userType.owner: false, userType.store: false, userType.trainer: false, userType.vet: false};
+              allTypes = {
+                userType.owner: false,
+                userType.store: false,
+                userType.trainer: false,
+                userType.vet: false
+              };
               PetsTheme.currentMainColor = bgColor.blue;
             }));
   }
 
   @override
   void initState() {
-    allTypes = {userType.owner: false, userType.store: false, userType.trainer: false, userType.vet: false};
+    allTypes = {
+      userType.owner: false,
+      userType.store: false,
+      userType.trainer: false,
+      userType.vet: false
+    };
     super.initState();
   }
 
@@ -63,7 +78,9 @@ class _RegTypesScreenState extends State<RegTypesScreen> {
                 highlightColor: Colors.transparent,
                 padding: EdgeInsets.all(0),
                 onPressed: () => selectType(context, userType.trainer),
-                child: RegistrationTypeButton(Paths.trainer_icon_file, "Trainer", userTypeSelected: userType.trainer,
+                child: RegistrationTypeButton(
+                    Paths.trainer_icon_file, "Trainer",
+                    userTypeSelected: userType.trainer,
                     isHidden: allTypes[userType.trainer]))),
         Flexible(
             flex: 1,
@@ -72,8 +89,9 @@ class _RegTypesScreenState extends State<RegTypesScreen> {
                 highlightColor: Colors.transparent,
                 padding: EdgeInsets.all(0),
                 onPressed: () => selectType(context, userType.vet),
-                child:
-                    RegistrationTypeButton(Paths.vet_icon_file, "Vet",  userTypeSelected: userType.vet,isHidden: allTypes[userType.vet]))),
+                child: RegistrationTypeButton(Paths.vet_icon_file, "Vet",
+                    userTypeSelected: userType.vet,
+                    isHidden: allTypes[userType.vet]))),
         Flexible(
             flex: 1,
             child: FlatButton(
@@ -81,7 +99,8 @@ class _RegTypesScreenState extends State<RegTypesScreen> {
                 highlightColor: Colors.transparent,
                 padding: EdgeInsets.all(0),
                 onPressed: () => selectType(context, userType.store),
-                child: RegistrationTypeButton(Paths.store_icon_file, "Store", userTypeSelected: userType.store,
+                child: RegistrationTypeButton(Paths.store_icon_file, "Store",
+                    userTypeSelected: userType.store,
                     isHidden: allTypes[userType.store]))),
       ],
     );
@@ -90,9 +109,12 @@ class _RegTypesScreenState extends State<RegTypesScreen> {
       formTitle: "Sign up as",
       showLogo: true,
       backgroundMask: bgMask.services,
-      formWidget: Column (children: [
+      formWidget: Column(children: [
         Flexible(flex: 2, child: typesButtonsRow),
-        Flexible(flex: 3, child: Container(),)
+        Flexible(
+          flex: 3,
+          child: Container(),
+        )
       ]),
       topbarTitle: "Welcome to Petmatch",
       topbarSubtitle: "All Pets, One Place...",

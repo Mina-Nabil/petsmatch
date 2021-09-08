@@ -11,33 +11,44 @@ class NewPostWidget extends StatelessWidget {
 
   final TextEditingController _postController = new TextEditingController();
 
-  final user = new User("Hamada", "https://lh3.googleusercontent.com/9AY45-uFNsXWwvtQmZFRWrpy1koWGBLs5XDVYjy3xg-G6fjlekANnsSbhYYU-E0CDw",  "mina@stmary",);
-
+  final user = new User();
   @override
   Widget build(BuildContext context) {
     return Container(
         width: MediaQuery.of(context).size.width,
-        decoration: BoxDecoration(color: Colors.white, borderRadius: BorderRadius.circular(20)),
-        constraints:
-            BoxConstraints(minHeight: MediaQuery.of(context).size.height * minHeightRatio, maxHeight: MediaQuery.of(context).size.height * maxHeightRatio),
-        padding: EdgeInsets.symmetric(horizontal: PetsTheme.getLargerPadMarg(), vertical: PetsTheme.getMeduimPadMarg()),
+        decoration: BoxDecoration(
+            color: Colors.white, borderRadius: BorderRadius.circular(20)),
+        constraints: BoxConstraints(
+            minHeight: MediaQuery.of(context).size.height * minHeightRatio,
+            maxHeight: MediaQuery.of(context).size.height * maxHeightRatio),
+        padding: EdgeInsets.symmetric(
+            horizontal: PetsTheme.getLargerPadMarg(),
+            vertical: PetsTheme.getMeduimPadMarg()),
         margin: EdgeInsets.only(bottom: PetsTheme.getMeduimPadMarg()),
         child: Column(
           children: [
             Container(
               width: MediaQuery.of(context).size.width,
               height: 50,
-              padding: EdgeInsets.symmetric(horizontal: PetsTheme.getSmallPadMarg()),
+              padding:
+                  EdgeInsets.symmetric(horizontal: PetsTheme.getSmallPadMarg()),
               child: Row(
                 children: [
                   Flexible(
                       flex: 1,
-                      child: Container(margin: EdgeInsets.only(right: PetsTheme.getLargePadMarg()), child: UserAvatar(image: user.image, imageRatio: .2))),
+                      child: Container(
+                          margin: EdgeInsets.only(
+                              right: PetsTheme.getLargePadMarg()),
+                          child:
+                              UserAvatar(image: user.image, imageRatio: .2))),
                   Flexible(
                     flex: 6,
                     child: Container(
                       child: TextFormField(
-                        decoration: InputDecoration(hintText: "Share your thoughts...", hintStyle: TextStyle(fontFamily: "Roboto"), border: InputBorder.none),
+                        decoration: InputDecoration(
+                            hintText: "Share your thoughts...",
+                            hintStyle: TextStyle(fontFamily: "Roboto"),
+                            border: InputBorder.none),
                       ),
                     ),
                   ),

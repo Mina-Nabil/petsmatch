@@ -8,21 +8,44 @@ import 'package:petmatch/widgets/screens/LoginScreenSetup.dart';
 import 'package:petmatch/widgets/buttons/SkipButton.dart';
 import 'package:petmatch/widgets/buttons/SubmitButton.dart';
 import 'package:petmatch/widgets/form/regTextField.dart';
+import '../../models/user.dart';
+import '../../providers/api_providers/user_provider.dart';
 
 class OwnerRegistrationScreen extends StatefulWidget {
   @override
-  _OwnerRegistrationScreenState createState() => _OwnerRegistrationScreenState();
+  _OwnerRegistrationScreenState createState() =>
+      _OwnerRegistrationScreenState();
 }
 
 class _OwnerRegistrationScreenState extends State<OwnerRegistrationScreen> {
-  final TextEditingController _firstNameController = new TextEditingController();
+  final TextEditingController _firstNameController =
+      new TextEditingController();
   final TextEditingController _lastNameController = new TextEditingController();
   final TextEditingController _emailController = new TextEditingController();
-  final TextEditingController _passwordNameController = new TextEditingController();
-  final TextEditingController _confirmPasswordNameController = new TextEditingController();
+  final TextEditingController _passwordNameController =
+      new TextEditingController();
+  final TextEditingController _confirmPasswordNameController =
+      new TextEditingController();
+  UserProvider userProvider;
+
+  String _genderController;
+  DateTime _dateOfBirth;
+  String _country;
+  String _city;
 
   DateTime birthDate = null;
 
+  final List<DropdownMenuItem> genderItems = <DropdownMenuItem>[
+    DropdownMenuItem(
+      child: Text("Male"),
+    ),
+    DropdownMenuItem(
+      child: Text("Female"),
+    ),
+    DropdownMenuItem(
+      child: Text("Prefer not to mention"),
+    ),
+  ];
   setDate(newDate) {
     birthDate = newDate;
   }
@@ -90,20 +113,17 @@ class _OwnerRegistrationScreenState extends State<OwnerRegistrationScreen> {
               fieldHeight: maxFieldHeight,
               width: fieldsWidth,
               childField: DropdownButtonFormField(
-                decoration: InputDecoration(enabledBorder: UnderlineInputBorder(borderSide: BorderSide(color: PetsTheme.petsBordersGrayColor))),
-                style: TextStyle(fontFamily: "Roboto", color: Colors.black, fontSize: PetsTheme.getLargeFont()),
+                decoration: InputDecoration(
+                    enabledBorder: UnderlineInputBorder(
+                        borderSide:
+                            BorderSide(color: PetsTheme.petsBordersGrayColor))),
+                style: TextStyle(
+                    fontFamily: "Roboto",
+                    color: Colors.black,
+                    fontSize: PetsTheme.getLargeFont()),
                 onChanged: citySelected,
-                items: [
-                  DropdownMenuItem(
-                    child: Text("Male"),
-                  ),
-                  DropdownMenuItem(
-                    child: Text("Female"),
-                  ),
-                  DropdownMenuItem(
-                    child: Text("Prefer not to mention"),
-                  ),
-                ],
+                items: genderItems,
+                value: _genderController,
               )),
           //DatePicker Widget
           LabelledFormField(
@@ -111,7 +131,11 @@ class _OwnerRegistrationScreenState extends State<OwnerRegistrationScreen> {
             fieldHeight: maxDateFieldHeight,
             width: fieldsWidth,
             childField: CupertinoDatePicker(
-              onDateTimeChanged: (newDate) => setDate(newDate),
+              onDateTimeChanged: (newDate) {
+                setState(() {
+                  _dateOfBirth = newDate;
+                });
+              },
               mode: CupertinoDatePickerMode.date,
               initialDateTime: DateTime(2000),
             ),
@@ -121,8 +145,14 @@ class _OwnerRegistrationScreenState extends State<OwnerRegistrationScreen> {
               fieldHeight: maxFieldHeight,
               width: fieldsWidth,
               childField: DropdownButtonFormField(
-                decoration: InputDecoration(enabledBorder: UnderlineInputBorder(borderSide: BorderSide(color: PetsTheme.petsBordersGrayColor))),
-                style: TextStyle(fontFamily: "Roboto", color: Colors.black, fontSize: PetsTheme.getLargeFont()),
+                decoration: InputDecoration(
+                    enabledBorder: UnderlineInputBorder(
+                        borderSide:
+                            BorderSide(color: PetsTheme.petsBordersGrayColor))),
+                style: TextStyle(
+                    fontFamily: "Roboto",
+                    color: Colors.black,
+                    fontSize: PetsTheme.getLargeFont()),
                 onChanged: citySelected,
                 items: [
                   DropdownMenuItem(
@@ -135,14 +165,21 @@ class _OwnerRegistrationScreenState extends State<OwnerRegistrationScreen> {
                     child: Text("Rehab"),
                   ),
                 ],
+                value: _country,
               )),
           LabelledFormField(
               label: "City",
               fieldHeight: maxFieldHeight,
               width: fieldsWidth,
               childField: DropdownButtonFormField(
-                decoration: InputDecoration(enabledBorder: UnderlineInputBorder(borderSide: BorderSide(color: PetsTheme.petsBordersGrayColor))),
-                style: TextStyle(fontFamily: "Roboto", color: Colors.black, fontSize: PetsTheme.getLargeFont()),
+                decoration: InputDecoration(
+                    enabledBorder: UnderlineInputBorder(
+                        borderSide:
+                            BorderSide(color: PetsTheme.petsBordersGrayColor))),
+                style: TextStyle(
+                    fontFamily: "Roboto",
+                    color: Colors.black,
+                    fontSize: PetsTheme.getLargeFont()),
                 onChanged: citySelected,
                 items: [
                   DropdownMenuItem(
@@ -155,14 +192,43 @@ class _OwnerRegistrationScreenState extends State<OwnerRegistrationScreen> {
                     child: Text("Giza"),
                   ),
                 ],
+                value: _city,
               )),
 
           SubmitButton(
-            callBackFunction: () => Navigator.of(context).push(new PageTransition(child: SetUserPhotoScreen(), type: PageTransitionType.fade)),
+            callBackFunction: () => Navigator.of(context).push(
+                new PageTransition(
+                    child: SetUserPhotoScreen(),
+                    type: PageTransitionType.fade)),
+            // userProvider.signUp(
+            //     User(
+            //       name: _firstNameController.text + _lastNameController.text,
+            //       password: _passwordNameController.text.trim(),
+            //       email: _emailController.text.trim(),
+            //       usertype: "Pet Owner",
+            //       gender: _genderController,
+            //       dateOfBirth: _dateOfBirth,
+            //       country: _country,
+            //       city: _city,
+            //       token: "",
+
+            //name=${user.name}" +
+            // "&password=${user.password}" +
+            // "&email=${user.email}" +
+            // "&image=${user.image}" +
+            // "&gender=${user.gender}" +
+            // "&phone=${user.phone}" +
+            // "&dateOfBirth=${user.dateOfBirth}" +
+            // "&country=${user.country}" +
+            // "&city=${user.city}" +
+            // "&token=${user.token}" +
+            // "&type=${user.usertype}";
+            // ),
+            // context),
             buttonText: "Next",
             isShowPaws: false,
           ),
-          SkipButton(callBackFunction: null)
+          SkipButton(callBackFunction: null),
         ],
       ),
     );

@@ -9,7 +9,8 @@ class CongratsScreen extends StatelessWidget {
       body: Container(
         width: MediaQuery.of(context).size.width,
         height: MediaQuery.of(context).size.height,
-        constraints: BoxConstraints(maxHeight: MediaQuery.of(context).size.height),
+        constraints:
+            BoxConstraints(maxHeight: MediaQuery.of(context).size.height),
         color: Colors.white,
         child: Column(
           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
@@ -45,11 +46,13 @@ class CongratsScreen extends StatelessWidget {
                 flex: 4,
                 child: Container(
                   width: MediaQuery.of(context).size.width * 0.8,
-                  child: Image.asset('assets/images/custom/congrats.png', fit: BoxFit.contain),
+                  child: Image.asset('assets/images/custom/congrats.png',
+                      fit: BoxFit.contain),
                 )),
             PetsButton(
               buttonText: "Done",
-              callBackFunction: () => Navigator.of(context).pushNamedAndRemoveUntil('home', (route) => false),
+              callBackFunction: () => Navigator.of(context)
+                  .pushNamedAndRemoveUntil('home', (route) => false),
               bgColor: PetsTheme.currentMainColor,
               textColor: Colors.white,
               isBorder: false,
