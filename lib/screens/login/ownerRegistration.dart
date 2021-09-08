@@ -96,12 +96,15 @@ class _OwnerRegistrationScreenState extends State<OwnerRegistrationScreen> {
                 items: [
                   DropdownMenuItem(
                     child: Text("Male"),
+                    value: 1,
                   ),
                   DropdownMenuItem(
                     child: Text("Female"),
+                    value: 2,
                   ),
                   DropdownMenuItem(
                     child: Text("Prefer not to mention"),
+                    value: 3,
                   ),
                 ],
               )),
