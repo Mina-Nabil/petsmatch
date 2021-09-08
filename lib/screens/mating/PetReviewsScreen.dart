@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:petmatch/theme/petsTheme.dart';
 import 'package:petmatch/widgets/custom/PetMatchRating.dart';
+import 'package:petmatch/widgets/feed/UserNameRole.dart';
 import 'package:petmatch/widgets/screens/PetMatchSingleScreen.dart';
 
 
@@ -41,10 +42,54 @@ class PetReviewsScreen extends StatelessWidget {
       ),
 
       body: ListView(
+        padding: EdgeInsets.all(PetsTheme.getLargePadMarg()),
         children: [
-          Container(child: Placeholder(), height: 100,),
-          Container(child: Placeholder(), height: 100,),
-          Container(child: Placeholder(), height: 100,),
+          Container(
+            child: Container(
+              padding: EdgeInsets.all(PetsTheme.getMeduimPadMarg()),
+              decoration: BoxDecoration(
+                color: PetsTheme.commentBgColor,
+                borderRadius: const BorderRadius.all(const Radius.circular(10.0))),
+              child: Column(
+                children:[
+                  Row(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    CircleAvatar(backgroundImage: Image.network("https://www.incimages.com/uploaded_files/image/1920x1080/getty_624206636_200013332000928034_376810.jpg").image, radius: PetsTheme.radius2,),
+                    SizedBox(width: PetsTheme.getMeduimPadMarg(),),
+                    Column(
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.end,
+                          children: [
+                            UserNameRole(name: "Akram Abd El-Aziz", role: "Roy's Owner"),
+                            SizedBox(width: PetsTheme.getMeduimPadMarg(),),
+                            Text("20 June 2020"),
+                          ],
+                        ),
+                        SizedBox(height: PetsTheme.getSmallerPadMarg(),),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.start,
+                          children: [
+                            SvgPicture.asset("assets/images/icons/paw.svg", color: PetsTheme.currentMainColor, width: 16,),
+                            Text(" | 3.0  "),
+                            Icon(Icons.person, size: 20, color: PetsTheme.currentMainColor,),
+                            Text(" | 3.0  "),
+                          ],
+                        )
+                      ],
+                    )
+                    
+                  ],
+                ),
+                SizedBox(height: PetsTheme.getSmallPadMarg(),),
+                Text("Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor. do eiusmod tempor."),
+              ]
+              ),
+            ),
+          ),
         ],
       ),
     );
