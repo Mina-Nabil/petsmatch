@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:petmatch/screens/main_screen/main_tabs/HomeScreen.dart';
 import 'package:petmatch/screens/profile/ProfileScreen.dart';
 import 'package:petmatch/screens/main_screen/SearchScreen.dart';
 import 'package:petmatch/screens/main_screen/ConversationScreen.dart';
@@ -32,21 +33,21 @@ class MyApp extends StatelessWidget {
       onGenerateRoute: (settings) {
         switch (settings.name) {
           case 'home':
-          // return CupertinoPageRoute(
-          //     builder: (_) => PetMatchMainScreen(), settings: settings);
-          // break;
+          return CupertinoPageRoute(
+              builder: (_) => PetMatchMainScreen(), settings: settings);
+          break;
           case 'search':
-          // return CupertinoPageRoute(
-          //     builder: (_) => SearchScreen(), settings: settings);
-          // break;
+          return CupertinoPageRoute(
+              builder: (_) => SearchScreen(), settings: settings);
+          break;
           case 'conversation':
             return CupertinoPageRoute(
                 builder: (_) => ConversationScreen(), settings: settings);
             break;
-          // case 'lovers':
-          //   return CupertinoPageRoute(
-          //   builder: (_) => LoversScreen(), settings: settings);
-          //   break;
+          case 'lovers':
+            return CupertinoPageRoute(
+            builder: (_) => LoversScreen(), settings: settings);
+            break;
           case 'post':
             return CupertinoPageRoute(
                 builder: (_) => PostScreen(), settings: settings);
@@ -59,26 +60,26 @@ class MyApp extends StatelessWidget {
             return CupertinoPageRoute(
                 builder: (_) => PetProfileScreen(), settings: settings);
             break;
-            // case 'friends':
-            //   return CupertinoPageRoute(
-            //       builder: (_) => FriendsListScreen(), settings: settings);
-            // case 'pets':
-            //   return CupertinoPageRoute(
-            //       builder: (_) => PetsListScreen(), settings: settings);
+            case 'friends':
+              return CupertinoPageRoute(
+                  builder: (_) => FriendsListScreen(), settings: settings);
+            case 'pets':
+              return CupertinoPageRoute(
+                  builder: (_) => PetsListScreen(), settings: settings);
             break;
           case 'photos':
             return CupertinoPageRoute(
                 builder: (_) => PhotosScreen(), settings: settings);
             break;
-          // case 'Mating/SelectPet':
-          //   return CupertinoPageRoute(
-          //       builder: (_) => SelectPetScreen(), settings: settings);
+          case 'Mating/SelectPet':
+            return CupertinoPageRoute(
+                builder: (_) => SelectPetScreen(), settings: settings);
           case 'Mating/FindMateStart':
             return CupertinoPageRoute(
                 builder: (_) => FindMateStartScreen(), settings: settings);
-          // case 'Mating/FindMate':
-          //   return CupertinoPageRoute(
-          //       builder: (_) => FindMateScreen(), settings: settings);
+          case 'Mating/FindMate':
+            return CupertinoPageRoute(
+                builder: (_) => FindMateScreen(), settings: settings);
           case 'Mating/PetReviews':
             return CupertinoPageRoute(
                 builder: (_) => PetReviewsScreen(), settings: settings);
