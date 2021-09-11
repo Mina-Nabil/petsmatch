@@ -1,35 +1,19 @@
 class URLs {
-  // http://maya-edu.ml:81   ---   http://172.30.121.224 --- http://kinetics-crm.ml:81/up4quote/
-  //static final String host = "http://kinetics-crm.ml:81/up4quote";
   static final String host = "http://127.0.0.1:8000/api";
   String login;
   String register;
-  String userQuoteList;
-  String recentQuoteList;
-  String userFavoriteQuoteList;
-  String switchToFavorite;
-  String addQuote;
-  String getCategories;
-  String getPostalCode;
-  String addComment;
-  String getComments;
-  String addQuotation;
-  String getQuoteQuotation;
-  String getPendingQuotes;
-  String getHistoryQuotes;
-  String getUsers;
-  String getProducts;
-  String getSupplierProducts;
-  String getSchedules;
-  String addSchedule;
-  String deleteSchedule;
-  String editSchedule;
-  String getUserCategories;
-  String updateUserData;
-  String updateUserCategories;
-  String addPet;
-  String updatePet;
-  String getPet;
+  String createPet;
+  String showMyPets;
+  String getAPet;
+  String createPost;
+  String getAPost;
+  String getNewsFeed;
+  String getYourPosts;
+  String createComment;
+  String getPostComments;
+  String getAComment;
+  String updateUserData; // ?uid=30
+
   static final String getUserAlbums =
       "$host/api/return/user/portfolio"; // ?uid=53
   static final String addAlbum = "$host/api/handle/new/portfolio"; // post
@@ -53,8 +37,7 @@ class URLs {
       "$host/api/handle/new/rate"; // ?uid=36&title=rate&rated_uid=30&value=5&desc=some long description20
   static final String getJobberRate =
       "$host/api/return/user/rates/averages"; // ?uid=30
-  static final String getUser =
-      "$host/api/handle/return/all/user/data"; // ?uid=30
+  static final String getUser = "$host/api/me"; // ?uid=30
   static final String getUserNotifications =
       "$host/api/return/user/notifications"; // ?uid=30&page=0
   static final String editUserNotifications =
@@ -67,39 +50,17 @@ class URLs {
     login = "$host/login";
     //login = "$host/my-api/login-user.json";
     register = "$host/register";
-    userQuoteList = "$host/api/return/user/quotes";
-    recentQuoteList =
-        "$host/return/all/quotes"; // ?page=18&category=5&category=6
-    addQuote = "$host/api/handle/new/quote";
-    getCategories = "$host/api/return/all/categories";
-    updateUserCategories = "$host/handle/users/update/category";
-    getPostalCode = "$host/api/handle/return/postal/code/location";
-    addComment = "$host/handle/new/comment";
-    getComments = "$host/return/provider/comment";
-    addQuotation = "$host/handle/new/quotation";
-    getQuoteQuotation = "$host/return/quote/quotations";
-    getPendingQuotes =
-        "$host/api/return/provider/pending/quotations"; // ?pid=29
-    getHistoryQuotes = "$host/api/return/provider/quotations"; // ?pid=29
-    userFavoriteQuoteList = "$host/api/return/provider/fav/quotes"; // ?pid=1
-    switchToFavorite = "$host/handle/new/fav/quote"; // ?pid=29&quote_nid=247
-    getUsers =
-        "$host/api/handle/return/all/suppliers"; //?uid=1&type=supplier&page=0 || type = supplier or provider
-    getUserCategories =
-        "$host/api/handle/return/all/suppliers/categories"; // ?id=20
-    getProducts = "$host/api/return/all/products";
-    getSupplierProducts = "$host/api/return/supplier/products"; // ?sid=20
-    addSchedule =
-        "$host/api/handle/new/schedule"; // ?title=ss44s&uid=29&from=1s1&to=3245&desc=222
-    editSchedule =
-        "$host/api/handle/edit/schedule"; // ?id=311&title=someTitle&status=1&uid=29&from=1s1&to=3245&desc=222
-    deleteSchedule = "$host/api/handle/delete/schedule"; // ?nid=311
-    getSchedules = "$host/api/return/all/schedule"; // ?uid=29
-    updateUserData = "$host/handle/users/update"; // ?uid=53
-    addPet =
-        "$host/api/handle/new/Pet"; // ?uid=53&title=22&lat=11&postal_code=33&working_hour=22&lng=3
-    updatePet =
-        "$host/api/handle/edit/Pet"; // ?nid=440&title=333&working_hour=33&postal_code=22&lat=2&lng=5
-    getPet = "$host/api/return/Pet"; // ?uid=53
+    createPet =
+        "$host/api/pet"; // ?uid=53&title=22&lat=11&postal_code=33&working_hour=22&lng=3
+    getAPet =
+        "$host/api/pet"; // ?nid=440&title=333&working_hour=33&postal_code=22&lat=2&lng=5
+    createPost = "$host/api/post"; // ?uid=53
+    getAPost = "$host/api/post"; // ?uid=53
+    getYourPosts = "$host/api/post"; // ?uid=53
+    getNewsFeed = "$host/api/news-feed"; // ?uid=53
+    createComment = "$host/api/comment"; // ?uid=53
+    getPostComments = "$host/api/comment"; // ?uid=53
+    getAComment = "$host/api/news-feed"; // ?uid=53
+    updateUserData = "$host/api/me"; // ?uid=30
   }
 }
