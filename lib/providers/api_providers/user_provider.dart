@@ -52,7 +52,7 @@ class UserProvider extends ChangeNotifier {
     var response;
     try {
       response = await http.get(
-        _URLS.register + body,
+        Uri(scheme: _URLS.register + body),
       );
     } catch (_) {
       print(_);
@@ -82,7 +82,7 @@ class UserProvider extends ChangeNotifier {
     http.Response response;
     try {
       response = await http.post(
-        _URLS.login,
+        Uri(scheme: _URLS.login),
         body: {
           "email": user.email,
           "pass": user.password,
@@ -108,7 +108,7 @@ class UserProvider extends ChangeNotifier {
     http.Response response;
     try {
       response = await http.get(
-        URLs.getUser + '&token=$token',
+        Uri(scheme: URLs.getUser + '&token=$token'),
       );
     } catch (error) {
       print(error);
@@ -161,7 +161,7 @@ class UserProvider extends ChangeNotifier {
     notifyListeners();
     var response;
     try {
-      response = await http.get(_URLS.updateUserData + body);
+      response = await http.get(Uri(scheme: _URLS.updateUserData + body));
     } catch (_) {
       return -1;
     }
@@ -201,7 +201,7 @@ class UserProvider extends ChangeNotifier {
     notifyListeners();
     var response;
     try {
-      response = await http.get(_URLS.updateUserData + body);
+      response = await http.get(Uri(scheme: _URLS.updateUserData + body));
     } catch (_) {
       _loading = false;
       notifyListeners();
@@ -249,7 +249,7 @@ class UserProvider extends ChangeNotifier {
     notifyListeners();
     var response;
     try {
-      response = await http.get(_URLS.updateUserData + body);
+      response = await http.get(Uri(scheme: _URLS.updateUserData + body));
     } catch (_) {
       _loading = false;
       notifyListeners();
@@ -284,7 +284,7 @@ class UserProvider extends ChangeNotifier {
     print("start load <----");
     var response;
     try {
-      response = await http.post(URLs.editProfileImage,
+      response = await http.post(Uri(scheme: URLs.editProfileImage),
           body: {"uid": _user.id, "image": user.image, "token": _user.token});
     } catch (error) {
       print(error);
