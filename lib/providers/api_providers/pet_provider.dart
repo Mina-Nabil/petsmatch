@@ -34,7 +34,7 @@ class PetProvider extends ChangeNotifier {
         "?name=${pet.name}" + "&image=${pet.image}" + "&user_id=${pet.user_id}";
     try {
       response = await http.get(
-        Uri(scheme: _URLS.register + body),
+        Uri.parse(_URLS.register + body),
       );
     } catch (_) {
       _isLoaded = false;
@@ -48,7 +48,7 @@ class PetProvider extends ChangeNotifier {
       // If the call to the server was successful, parse the JSON.
       print("200 <----");
       List jsonList = jsonDecode(response.body);
-      _pet = jsonList.map((i) => Pet.fromJson(i)) as Pet;
+      _pet = jsonList.map((i) => Pet.fromJson(i)).toList() ;
       print("done <----");
       _isLoaded = true;
       notifyListeners();
@@ -70,7 +70,7 @@ class PetProvider extends ChangeNotifier {
         "&image=${_pet.image}" +
         "&user_id=${_pet.user_id}";
     response = await http.get(
-      Uri(scheme: _URLS.register + body),
+      Uri.parse(_URLS.register + body),
     );
 
     print("Pet response <----");
@@ -98,7 +98,7 @@ class PetProvider extends ChangeNotifier {
   //       "&user_id=${_pet.user_id}";
   //   try {
   //     response = await http.get(
-  //       Uri(scheme: _URLS.register + body),
+  //       Uri.parse(_URLS.register + body),
   //     );
   //   } catch (_) {
   //     _isLoaded = false;

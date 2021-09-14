@@ -51,9 +51,9 @@ class UserProvider extends ChangeNotifier {
         "&type=${user.usertype}";
     var response;
     try {
-      response = await http.get(
+      response = await http.get(Uri.parse(
         _URLS.register + body,
-      );
+      ));
     } catch (_) {
       print(_);
       _loading = false;
@@ -107,9 +107,9 @@ class UserProvider extends ChangeNotifier {
     print("start load <----");
     http.Response response;
     try {
-      response = await http.get(
+      response = await http.get(Uri.parse(
         URLs.getUser + '&token=$token',
-      );
+      ));
     } catch (error) {
       print(error);
       _isUserLoaded = false;
@@ -161,7 +161,7 @@ class UserProvider extends ChangeNotifier {
     notifyListeners();
     var response;
     try {
-      response = await http.get(_URLS.updateUserData + body);
+      response = await http.get(Uri.parse(_URLS.updateUserData + body));
     } catch (_) {
       return -1;
     }
@@ -201,7 +201,7 @@ class UserProvider extends ChangeNotifier {
     notifyListeners();
     var response;
     try {
-      response = await http.get(_URLS.updateUserData + body);
+      response = await http.get(Uri.parse(_URLS.updateUserData + body));
     } catch (_) {
       _loading = false;
       notifyListeners();
@@ -249,7 +249,7 @@ class UserProvider extends ChangeNotifier {
     notifyListeners();
     var response;
     try {
-      response = await http.get(_URLS.updateUserData + body);
+      response = await http.get(Uri.parse(_URLS.updateUserData + body));
     } catch (_) {
       _loading = false;
       notifyListeners();
