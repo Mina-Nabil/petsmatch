@@ -3,9 +3,15 @@ import 'package:petmatch/models/Profile.dart';
 class Pet extends Profile {
   String name;
   String image;
+  DateTime dob;
   int user_id;
 
-  Pet({name = "", image = "", this.owner}) {
+  Pet({
+    name = "",
+    image = "",
+    this.owner,
+    dob = null,
+  }) {
     super.name = name;
     super.image = image;
   }
@@ -20,6 +26,7 @@ class Pet extends Profile {
   factory Pet.fromJson(Map<String, dynamic> parsedJson) {
     return new Pet(
       name: parsedJson['name'],
+      dob: parsedJson['dob'],
       owner: parsedJson['uid'],
       image: parsedJson['image'],
     );

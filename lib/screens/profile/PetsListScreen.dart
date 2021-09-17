@@ -20,12 +20,11 @@ class PetsListScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     petProvider = Provider.of<PetProvider>(context);
-    petProvider.showMyPets(userProvider.user.id.toString(),
-        token: userProvider.user.token);
+    petProvider.showMyPets(token: userProvider.user.token);
 
     return PetMatchSingleScreen(
         backArrow: true,
-        title: Text("Mina Kamal",
+        title: Text(userProvider.user.name,
             style: TextStyle(
                 fontFamily: "Roboto",
                 fontSize: PetsTheme.getMuchLargerFont(),

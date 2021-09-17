@@ -4,6 +4,7 @@ class URLs {
   String register;
   String createPet;
   String showMyPets;
+  String showOtherPets;
   String getAPet;
   String createPost;
   String getAPost;
@@ -13,7 +14,9 @@ class URLs {
   String getPostComments;
   String getAComment;
   String updateUserData; // ?uid=30
-
+  String crush; // ?uid=30
+  String family; // ?uid=30
+  String mate; // ?uid=30
   static final String getUserAlbums =
       "$host/api/return/user/portfolio"; // ?uid=53
   static final String addAlbum = "$host/api/handle/new/portfolio"; // post
@@ -47,6 +50,10 @@ class URLs {
   static final String getQuote =
       "$host/api/return/quote/data"; // ?uid=37&id=573
   URLs() {
+    showOtherPets = "$host/show/pets";
+    crush = "$host/crush";
+    family = "$host/family";
+    family = "$host/mate";
     login = "$host/login";
     //login = "$host/my-api/login-user.json";
     register = "$host/register";

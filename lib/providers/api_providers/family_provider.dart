@@ -24,7 +24,7 @@ class UserProvider extends ChangeNotifier {
     notifyListeners();
   }
 
-  Future<int> createCrush(Pet pet, BuildContext context) async {
+  Future<int> createfamily(Pet pet, BuildContext context) async {
     print("start load <----");
     _loading = true;
     notifyListeners();
@@ -33,7 +33,7 @@ class UserProvider extends ChangeNotifier {
     var response;
     try {
       response = await http.post(Uri.parse(
-        _URLS.crush + body,
+        _URLS.family + body,
       ));
     } catch (_) {
       print(_);
@@ -46,14 +46,14 @@ class UserProvider extends ChangeNotifier {
     // If the call to the server was successful, parse the JSON.
   }
 
-  Future<int> getCrushes(Pet pet, BuildContext context) async {
+  Future<int> getfamilyes(Pet pet, BuildContext context) async {
     print("start load <----");
     _loading = true;
     notifyListeners();
     http.Response response;
     try {
       response = await http.get(Uri.parse(
-        _URLS.crush,
+        _URLS.family,
       ));
     } catch (_) {
       print(_);
@@ -82,7 +82,7 @@ class UserProvider extends ChangeNotifier {
       notifyListeners();
       return -1;
     }
-    print("Crush respones <----");
+    print("family respones <----");
     print(response.body);
     // If the call to the server was successful, parse the JSON.
     if (response.statusCode >= 200 && response.statusCode < 300) {

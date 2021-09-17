@@ -27,14 +27,12 @@ class PetProvider extends ChangeNotifier {
 
   URLs _URLS = new URLs();
 
-  Future<int> getAPet(String petID, {@required String token}) async {
+  Future<int> getAPet({@required String token}) async {
     print("start load <----");
     var response;
-    String body =
-        "?name=${pet.name}" + "&image=${pet.image}" + "&user_id=${pet.user_id}";
     try {
       response = await http.get(
-        Uri.parse(_URLS.register + body),
+        Uri.parse(_URLS.register),
       );
     } catch (_) {
       _isLoaded = false;
@@ -62,14 +60,62 @@ class PetProvider extends ChangeNotifier {
     }
   }
 
-  Future<List<Pet>> showMyPets(String PetOwner,
-      {@required String petID, @required String token}) async {
+  Future<List<Pet>> showMyPets({@required String token}) async {
     print("start load <----");
     var response;
-    String body = "?name=${_pet.name}" +
-        "&image=${_pet.image}" +
-        "&user_id=${_pet.user_id}";
+
     response = await http.get(
+      Uri.parse(_URLS.register),
+    );
+
+    print("Pet response <----");
+    print(response.body);
+    // If the call to the server was successful, parse the JSON.
+    if (response.statusCode >= 200 && response.statusCode < 300) {
+      // If the call to the server was successful, parse the JSON.
+      print("200 <----");
+      List jsonList = jsonDecode(response.body);
+      List<Pet> _pets = jsonList.map((i) => Pet.fromJson(i)).toList();
+      print("done <----");
+      return _pets;
+    } else {
+      // If that call was not successful, throw an error.
+      print("error");
+      throw ("response state code ${response.statusCode}");
+    }
+  }
+
+  Future<List<Pet>> showOtherPets({@required String token}) async {
+    print("start load <----");
+    var response;
+
+    response = await http.get(
+      Uri.parse(_URLS.showOtherPets),
+    );
+
+    print("Pet response <----");
+    print(response.body);
+    // If the call to the server was successful, parse the JSON.
+    if (response.statusCode >= 200 && response.statusCode < 300) {
+      // If the call to the server was successful, parse the JSON.
+      print("200 <----");
+      List jsonList = jsonDecode(response.body);
+      List<Pet> _pets = jsonList.map((i) => Pet.fromJson(i)).toList();
+      print("done <----");
+      return _pets;
+    } else {
+      // If that call was not successful, throw an error.
+      print("error");
+      throw ("response state code ${response.statusCode}");
+    }
+  }
+
+  Future<List<Pet>> addPet(Pet pet, {@required String token}) async {
+    print("start load <----");
+    var response;
+    String body;
+    body = "?name=${pet.name}" + "&image=${pet.image}" + "&dob=${pet.dob}";
+    response = await http.post(
       Uri.parse(_URLS.register + body),
     );
 
@@ -80,47 +126,13 @@ class PetProvider extends ChangeNotifier {
       // If the call to the server was successful, parse the JSON.
       print("200 <----");
       List jsonList = jsonDecode(response.body);
-      List<Pet> _petCompanies = jsonList.map((i) => Pet.fromJson(i)).toList();
+      List<Pet> _pets = jsonList.map((i) => Pet.fromJson(i)).toList();
       print("done <----");
-      return _petCompanies;
+      return _pets;
     } else {
       // If that call was not successful, throw an error.
       print("error");
       throw ("response state code ${response.statusCode}");
     }
   }
-
-  // Future<int> createPet({Pet Pet, @required String token}) async {
-  //   print("start load <----");
-  //   var response;
-  //   String body = "?name=${_pet.name}" +
-  //       "&image=${_pet.image}" +
-  //       "&user_id=${_pet.user_id}";
-  //   try {
-  //     response = await http.get(
-  //       Uri.parse(_URLS.register + body),
-  //     );
-  //   } catch (_) {
-  //     _isLoaded = false;
-  //     notifyListeners();
-  //     return -1;
-  //   }
-  //   print("respones <----");
-  //   print(response.body);
-  //   // If the call to the server was successful, parse the JSON.
-  //   if (response.statusCode >= 200 && response.statusCode < 300) {
-  //     // If the call to the server was successful, parse the JSON.
-  //     Pet _newPet = Pet.fromJson(jsonDecode(response.body)[0]);
-  //     _newPet.clear();
-  //     _newPet.add(_newPet);
-  //     notifyListeners();
-  //     print("200 <----");
-  //     print("done <----");
-  //     return 1;
-  //   } else {
-  //     // If that call was not successful, throw an error.
-  //     print("error");
-  //     return 0;
-  //   }
-  // }
 }

@@ -15,7 +15,7 @@ class PetProfileScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     petProvider = Provider.of<PetProvider>(context);
-    petProvider.getAPet('1', token: userProvider.user.token);
+    petProvider.getAPet(token: userProvider.user.token);
 
     return PetMatchSingleScreen.scrollable(
       backArrow: true,
