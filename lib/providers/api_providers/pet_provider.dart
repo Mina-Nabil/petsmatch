@@ -48,7 +48,7 @@ class PetProvider extends ChangeNotifier {
       // If the call to the server was successful, parse the JSON.
       print("200 <----");
       List jsonList = jsonDecode(response.body);
-      _pet = jsonList.map((i) => Pet.fromJson(i)).toList() ;
+      _pet = jsonList.map((i) => Pet.fromJson(i)).toList();
       print("done <----");
       _isLoaded = true;
       notifyListeners();
