@@ -24,12 +24,12 @@ class UserProvider extends ChangeNotifier {
     notifyListeners();
   }
 
-  Future<int> createfamily(Pet pet, BuildContext context) async {
+  Future<int> createfamily(Pet pet, Pet myPet, BuildContext context) async {
     print("start load <----");
     _loading = true;
     notifyListeners();
     String body;
-    body = "?subprofile_id=${pet.id}";
+    body = "?subprofile_id=${pet.id}" + "&my_subprofile_id=${myPet.id}";
     var response;
     try {
       response = await http.post(Uri.parse(

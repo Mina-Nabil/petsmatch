@@ -24,12 +24,12 @@ class UserProvider extends ChangeNotifier {
     notifyListeners();
   }
 
-  Future<int> createmate(Pet pet, BuildContext context) async {
+  Future<int> createmate(Pet pet, Pet myPet, BuildContext context) async {
     print("start load <----");
     _loading = true;
     notifyListeners();
     String body;
-    body = "?subprofile_id=${pet.id}";
+    body = "?subprofile_id=${pet.id}" + "&my_subprofile_id=${myPet.id}";
     var response;
     try {
       response = await http.post(Uri.parse(
@@ -46,7 +46,7 @@ class UserProvider extends ChangeNotifier {
     // If the call to the server was successful, parse the JSON.
   }
 
-  Future<int> getmatees(Pet pet, BuildContext context) async {
+  Future<int> getmates(Pet myPet, BuildContext context) async {
     print("start load <----");
     _loading = true;
     notifyListeners();
