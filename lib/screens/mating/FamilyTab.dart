@@ -5,11 +5,24 @@ import 'package:petmatch/screens/mating/CrushTab.dart';
 import 'package:petmatch/widgets/buttons/CircularMoreButton.dart';
 
 
-class FamilyTab extends StatelessWidget {
+class FamilyTab extends StatefulWidget {
+
+  @override
+  _FamilyTabState createState() => _FamilyTabState();
+}
+
+class _FamilyTabState extends State<FamilyTab> {
+  var pets = [];
+  bool isLoading = true;
+
+  
+
   @override
   Widget build(BuildContext context) {
-    return ListView(
-      children: [
+    return (isLoading) ? 
+    Center(child: CircularProgressIndicator()) :
+    ListView(
+      children:  [
         MatingTile(
           image1: "https://cdn.pixabay.com/photo/2017/09/25/13/12/dog-2785074__340.jpg",
           petName1: "Roy",
@@ -44,7 +57,7 @@ class FamilyTab extends StatelessWidget {
         ),
 
         Divider(thickness: 1,),
-      ],
+      ]..addAll(pets.map((e) => MatingTile()))  ,
     );
   }
 }

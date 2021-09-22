@@ -51,7 +51,7 @@ class _HomeScreenState extends State<HomeScreen> {
       Pet(name: "Bobby", image: "https://scx2.b-cdn.net/gfx/news/hires/2018/2-dog.jpg", owner: "Mina"),
       Pet(name: "Bobby", image: "https://cdn.pixabay.com/photo/2017/09/25/13/12/dog-2785074__340.jpg", owner: "Mina"),
     ];
-    mainUser.addAllPet(pets);
+    // mainUser.addAllPet(pets);
   }
 
   // later PostProvider
