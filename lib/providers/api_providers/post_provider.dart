@@ -44,12 +44,10 @@ class postProvider extends ChangeNotifier {
     print("start load <----");
     _loading = true;
     notifyListeners();
-    String body;
-    body = "?user_id=${post.owner}" + "&post_id=${post.postDate}";
     var response;
     try {
       response = await http.get(
-        _URLS.register + body,
+        Uri(scheme: _URLS.register),
       );
     } catch (_) {
       print(_);
@@ -64,15 +62,14 @@ class postProvider extends ChangeNotifier {
       // If the call to the server was successful, parse the JSON.
       print("200 <----");
 
-      _post = Post.fromJson(json.decode(response.body));
+      _post = RegularPost.fromJson(json.decode(response.body));
 
       _ispostLoaded = true;
     }
   }
 
-  Future<int> login(
-      post post, BuildContext context, GlobalKey<ScaffoldState> scaffoldKey,
-      {bool socialMedia = false, String pageID}) async {
+  Future<int> createPost(RegularPost post, BuildContext context,
+      GlobalKey<ScaffoldState> scaffoldKey) async {
     print("start load <----");
     _loading = true;
     notifyListeners();

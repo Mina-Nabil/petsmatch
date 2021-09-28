@@ -64,6 +64,17 @@ class RegularPost extends Post {
 
   final String image;
   final String text;
+
+  factory RegularPost.fromJson(Map<String, dynamic> parsedJson) {
+    return new RegularPost(
+      owner: parsedJson['owner'],
+      postDate: parsedJson['postDate'],
+      commentsCount: parsedJson['commentsCount'],
+      sharesCount: parsedJson['sharesCount'],
+      lovesCount: parsedJson['lovesCount'],
+      isLoved: false,
+    );
+  }
 }
 
 abstract class PostOwner {
