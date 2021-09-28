@@ -3,6 +3,7 @@ import 'dart:convert';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
+import 'package:petmatch/global.dart';
 import 'api_url.dart';
 import '../../models/user.dart';
 
@@ -31,6 +32,12 @@ class UserProvider extends ChangeNotifier {
   set isUserLoaded(bool isLoaded) {
     _isUserLoaded = isLoaded;
     notifyListeners();
+  }
+
+
+  Future<bool> isLoggedIn() async {
+    String token = await Server.token;
+    return token != null;
   }
 
   Future<int> signUp(User user, BuildContext context) async {
@@ -94,7 +101,12 @@ class UserProvider extends ChangeNotifier {
       notifyListeners();
       return -1;
     }
-
+    if(response.statusCode==200){
+      //loggedin
+      Map<String, dynamic> decodedBody = jsonDecode(response.body);
+      User loggedIn = User.fromJson(decodedBody);
+      Server.setToken(decodedBody["accessToken"]);
+    }
     print("response <----");
     print(response.body);
     print(response.statusCode);

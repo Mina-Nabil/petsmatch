@@ -1,8 +1,7 @@
 import 'package:petmatch/models/Profile.dart';
 
 class Pet extends Profile {
-  String name;
-  String image;
+
   DateTime dob;
   int user_id;
 
