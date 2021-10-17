@@ -4,89 +4,24 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:intl/intl.dart';
 import 'package:petmatch/models/Pet.dart';
 import 'package:petmatch/models/User.dart';
+import 'package:petmatch/models/Chat.dart';
+import 'package:petmatch/providers/api_providers/chat_provider.dart';
 import 'package:petmatch/theme/petsTheme.dart';
 import 'package:petmatch/widgets/feed/UserNameRole.dart';
 import 'package:petmatch/widgets/main/UserAvatar.dart';
 import 'package:petmatch/widgets/screens/PetMatchSingleScreen.dart';
-
-class Chat {
-  Chat({this.user, this.lastText, this.dateTime});
-  User user;
-  String lastText;
-  DateTime dateTime;
-}
+import 'package:provider/provider.dart';
 
 class ChatScreen extends StatelessWidget {
-  List<Chat> _recentChats = [
-    Chat(
-        user: User(
-            name: "Ahmed Abbas",
-            image: "https://upload.wikimedia.org/wikipedia/en/thumb/a/a1/NafSadh_Profile.jpg/768px-NafSadh_Profile.jpg",
-            email: "_email",
-            pets: [
-              Pet(
-                  name: "Roy",
-                  image: "https://connected-vet.com/wp-content/uploads/2020/11/e2ecf5d1-d17f-4fab-97cf-a77322c5566d.jpg",
-                  owner: "Ahmed Abbas"),
-            ]),
-        dateTime: DateTime.now().subtract(Duration(hours: 1)),
-        lastText: "Hey, How's everything going"),
-    Chat(
-        user: User(
-            name: "Ahmed Abbas",
-            image: "https://upload.wikimedia.org/wikipedia/en/thumb/a/a1/NafSadh_Profile.jpg/768px-NafSadh_Profile.jpg",
-            email: "_email",
-            pets: [
-              Pet(
-                 name:  "Roy",
-                  image: "https://connected-vet.com/wp-content/uploads/2020/11/e2ecf5d1-d17f-4fab-97cf-a77322c5566d.jpg",
-                  owner: "Ahmed Abbas"),
-            ]),
-        dateTime: DateTime.now().subtract(Duration(hours: 1)),
-        lastText: "Hello Dear, How's everything going"),
-    Chat(
-        user: User(
-            name: "Ahmed Abbas",
-            image: "https://upload.wikimedia.org/wikipedia/en/thumb/a/a1/NafSadh_Profile.jpg/768px-NafSadh_Profile.jpg",
-            email: "_email",
-            pets: [
-              Pet(
-                  name: "Roy",
-                  image: "https://connected-vet.com/wp-content/uploads/2020/11/e2ecf5d1-d17f-4fab-97cf-a77322c5566d.jpg",
-                  owner: "Ahmed Abbas"),
-            ]),
-        dateTime: DateTime.now().subtract(Duration(hours: 1)),
-        lastText: "Hey, How's everything going"),
-    Chat(
-        user: User(
-           name: "Ahmed Abbas",
-            image: "https://upload.wikimedia.org/wikipedia/en/thumb/a/a1/NafSadh_Profile.jpg/768px-NafSadh_Profile.jpg",
-            email: "_email",
-            pets: [
-              Pet(
-                  name: "Roy",
-                  image: "https://connected-vet.com/wp-content/uploads/2020/11/e2ecf5d1-d17f-4fab-97cf-a77322c5566d.jpg",
-                  owner: "Ahmed Abbas"),
-            ]),
-        dateTime: DateTime.now().subtract(Duration(hours: 1)),
-        lastText: "Hey, How's everything going"),
-    Chat(
-        user: User(
-            name:"Ahmed Abbas",
-            image: "https://upload.wikimedia.org/wikipedia/en/thumb/a/a1/NafSadh_Profile.jpg/768px-NafSadh_Profile.jpg",
-            email: "_email",
-            pets: [
-              Pet(
-                  name: "Roy",
-                  image: "https://connected-vet.com/wp-content/uploads/2020/11/e2ecf5d1-d17f-4fab-97cf-a77322c5566d.jpg",
-                  owner: "Ahmed Abbas"),
-            ]),
-        dateTime: DateTime.now().subtract(Duration(hours: 1)),
-        lastText: "Hey, How's everything going"),
-  ];
-
+  List<Chat> _recentChats;
   @override
   Widget build(BuildContext context) {
+    ChatProvider _chatProvider =
+        Provider.of<ChatProvider>(context, listen: false);
+    Future<int> status = _chatProvider.getChats(
+        token: "2|40Ycic1T4aJlOXpiHbJHqBiaM8ozIWjQxv56kDZb");
+    if (status == 1) _recentChats = _chatProvider.chat;
+    print("recent chats ${_recentChats}");
     return PetMatchSingleScreen(
       //scrollableHeader: false,
       backArrow: false,
