@@ -10,6 +10,7 @@ import 'package:petmatch/widgets/buttons/SubmitButton.dart';
 import 'package:petmatch/widgets/form/regTextField.dart';
 import '../../models/user.dart';
 import '../../providers/api_providers/user_provider.dart';
+import 'package:provider/provider.dart';
 
 class OwnerRegistrationScreen extends StatefulWidget {
   @override
@@ -32,6 +33,9 @@ class _OwnerRegistrationScreenState extends State<OwnerRegistrationScreen> {
   DateTime _dateOfBirth;
   String _country;
   String _city;
+  String dropdownValueGender = 'Male';
+  String dropdownValueCountry = 'Egypt';
+  String dropdownValueCity = 'Cairo';
 
   DateTime birthDate = null;
 
@@ -58,6 +62,7 @@ class _OwnerRegistrationScreenState extends State<OwnerRegistrationScreen> {
     double minFieldHeight = 30;
     double maxFieldHeight = 70;
     double maxDateFieldHeight = 130;
+    userProvider = Provider.of<UserProvider>(context);
 
     return LoginScreenSetup(
       formTitle: "Personal Information",
@@ -112,18 +117,28 @@ class _OwnerRegistrationScreenState extends State<OwnerRegistrationScreen> {
               label: "Gender",
               fieldHeight: maxFieldHeight,
               width: fieldsWidth,
-              childField: DropdownButtonFormField(
-                decoration: InputDecoration(
-                    enabledBorder: UnderlineInputBorder(
-                        borderSide:
-                            BorderSide(color: PetsTheme.petsBordersGrayColor))),
-                style: TextStyle(
-                    fontFamily: "Roboto",
-                    color: Colors.black,
-                    fontSize: PetsTheme.getLargeFont()),
-                onChanged: citySelected,
-                items: genderItems,
-                value: _genderController,
+              childField: DropdownButton<String>(
+                value: dropdownValueGender,
+                icon: const Icon(Icons.arrow_downward),
+                iconSize: 24,
+                elevation: 16,
+                style: const TextStyle(color: Colors.grey),
+                underline: Container(
+                  height: 2,
+                  color: Colors.grey,
+                ),
+                onChanged: (String newValue) {
+                  setState(() {
+                    dropdownValueGender = newValue;
+                  });
+                },
+                items: <String>['Male', 'Female', 'Do not specifiy']
+                    .map<DropdownMenuItem<String>>((String value) {
+                  return DropdownMenuItem<String>(
+                    value: value,
+                    child: Text(value),
+                  );
+                }).toList(),
               )),
           //DatePicker Widget
           LabelledFormField(
@@ -144,87 +159,77 @@ class _OwnerRegistrationScreenState extends State<OwnerRegistrationScreen> {
               label: "Country",
               fieldHeight: maxFieldHeight,
               width: fieldsWidth,
-              childField: DropdownButtonFormField(
-                decoration: InputDecoration(
-                    enabledBorder: UnderlineInputBorder(
-                        borderSide:
-                            BorderSide(color: PetsTheme.petsBordersGrayColor))),
-                style: TextStyle(
-                    fontFamily: "Roboto",
-                    color: Colors.black,
-                    fontSize: PetsTheme.getLargeFont()),
-                onChanged: citySelected,
-                items: [
-                  DropdownMenuItem(
-                    child: Text("Egypt"),
-                  ),
-                  DropdownMenuItem(
-                    child: Text("UAE"),
-                  ),
-                  DropdownMenuItem(
-                    child: Text("Rehab"),
-                  ),
-                ],
-                value: _country,
+              childField: DropdownButton<String>(
+                value: dropdownValueCountry,
+                icon: const Icon(Icons.arrow_downward),
+                iconSize: 24,
+                elevation: 16,
+                style: const TextStyle(color: Colors.grey),
+                underline: Container(
+                  height: 2,
+                  color: Colors.grey,
+                ),
+                onChanged: (String newValueCountry) {
+                  setState(() {
+                    dropdownValueCountry = newValueCountry;
+                  });
+                },
+                items: <String>['Egypt', 'UAE', 'KSA']
+                    .map<DropdownMenuItem<String>>((String value) {
+                  return DropdownMenuItem<String>(
+                    value: value,
+                    child: Text(value),
+                  );
+                }).toList(),
               )),
           LabelledFormField(
               label: "City",
               fieldHeight: maxFieldHeight,
               width: fieldsWidth,
-              childField: DropdownButtonFormField(
-                decoration: InputDecoration(
-                    enabledBorder: UnderlineInputBorder(
-                        borderSide:
-                            BorderSide(color: PetsTheme.petsBordersGrayColor))),
-                style: TextStyle(
-                    fontFamily: "Roboto",
-                    color: Colors.black,
-                    fontSize: PetsTheme.getLargeFont()),
-                onChanged: citySelected,
-                items: [
-                  DropdownMenuItem(
-                    child: Text("Cairo"),
-                  ),
-                  DropdownMenuItem(
-                    child: Text("Alex"),
-                  ),
-                  DropdownMenuItem(
-                    child: Text("Giza"),
-                  ),
-                ],
-                value: _city,
+              childField: DropdownButton<String>(
+                value: dropdownValueCity,
+                icon: const Icon(Icons.arrow_downward),
+                iconSize: 24,
+                elevation: 16,
+                style: const TextStyle(color: Colors.grey),
+                underline: Container(
+                  height: 2,
+                  color: Colors.grey,
+                ),
+                onChanged: (String newValueCity) {
+                  setState(() {
+                    dropdownValueCity = newValueCity;
+                  });
+                },
+                items: <String>['Alexandria', 'Cairo', 'Other']
+                    .map<DropdownMenuItem<String>>((String value) {
+                  return DropdownMenuItem<String>(
+                    value: value,
+                    child: Text(value),
+                  );
+                }).toList(),
               )),
 
           SubmitButton(
-            callBackFunction: () => Navigator.of(context).push(
-                new PageTransition(
-                    child: SetUserPhotoScreen(),
-                    type: PageTransitionType.fade)),
-            // userProvider.signUp(
-            //     User(
-            //       name: _firstNameController.text + _lastNameController.text,
-            //       password: _passwordNameController.text.trim(),
-            //       email: _emailController.text.trim(),
-            //       usertype: "Pet Owner",
-            //       gender: _genderController,
-            //       dateOfBirth: _dateOfBirth,
-            //       country: _country,
-            //       city: _city,
-            //       token: "",
-
-            //name=${user.name}" +
-            // "&password=${user.password}" +
-            // "&email=${user.email}" +
-            // "&image=${user.image}" +
-            // "&gender=${user.gender}" +
-            // "&phone=${user.phone}" +
-            // "&dateOfBirth=${user.dateOfBirth}" +
-            // "&country=${user.country}" +
-            // "&city=${user.city}" +
-            // "&token=${user.token}" +
-            // "&type=${user.usertype}";
-            // ),
-            // context),
+            // callBackFunction: () => Navigator.of(context).push(
+            //     new PageTransition(
+            //         child: SetUserPhotoScreen(),
+            //         type: PageTransitionType.fade)),
+            callBackFunction: () async {
+              User antoin = new User(
+                  name: _firstNameController.text + _lastNameController.text,
+                  password: _passwordNameController.text.trim(),
+                  email: _emailController.text.trim(),
+                  usertype: "Pet Owner",
+                  gender: dropdownValueGender,
+                  dateOfBirth: _dateOfBirth,
+                  country: dropdownValueCountry,
+                  city: dropdownValueCity,
+                  token: "");
+              print(context);
+              int status = await userProvider.signUp(antoin);
+              print(status);
+            },
             buttonText: "Next",
             isShowPaws: false,
           ),

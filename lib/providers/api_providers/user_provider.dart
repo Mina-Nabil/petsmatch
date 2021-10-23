@@ -34,13 +34,12 @@ class UserProvider extends ChangeNotifier {
     notifyListeners();
   }
 
-
   Future<bool> isLoggedIn() async {
     String token = await Server.token;
     return token != null;
   }
 
-  Future<int> signUp(User user, BuildContext context) async {
+  Future<int> signUp(User user) async {
     print("start load <----");
     _loading = true;
     notifyListeners();
@@ -101,7 +100,7 @@ class UserProvider extends ChangeNotifier {
       notifyListeners();
       return -1;
     }
-    if(response.statusCode==200){
+    if (response.statusCode == 200) {
       //loggedin
       Map<String, dynamic> decodedBody = jsonDecode(response.body);
       User loggedIn = User.fromJson(decodedBody);

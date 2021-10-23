@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:petmatch/models/User.dart';
 import 'package:petmatch/screens/main_screen/main_tabs/HomeScreen.dart';
 import 'package:petmatch/screens/profile/ProfileScreen.dart';
 import 'package:petmatch/screens/main_screen/SearchScreen.dart';
@@ -17,8 +18,15 @@ import 'package:petmatch/screens/profile/PetProfileScreen.dart';
 import 'package:petmatch/screens/profile/PetsListScreen.dart';
 import 'package:petmatch/screens/profile/PhotosScreen.dart';
 import 'package:petmatch/widgets/screens/PetMatchTabsScreen.dart';
+import 'package:petmatch/providers/api_providers/user_provider.dart';
+import 'package:provider/provider.dart';
 
-void main() => runApp(MyApp());
+void main() => runApp(MyApp(MultiProvider(
+      providers: [
+        Provider<User>(create: (_) => User()),
+      ],
+      child: MyApp(),
+    )));
 
 class MyApp extends StatelessWidget {
   // This widget is the root of your application.
@@ -33,20 +41,20 @@ class MyApp extends StatelessWidget {
       onGenerateRoute: (settings) {
         switch (settings.name) {
           case 'home':
-          return CupertinoPageRoute(
-              builder: (_) => PetMatchMainScreen(), settings: settings);
-          break;
+            return CupertinoPageRoute(
+                builder: (_) => PetMatchMainScreen(), settings: settings);
+            break;
           case 'search':
-          return CupertinoPageRoute(
-              builder: (_) => SearchScreen(), settings: settings);
-          break;
+            return CupertinoPageRoute(
+                builder: (_) => SearchScreen(), settings: settings);
+            break;
           case 'conversation':
             return CupertinoPageRoute(
                 builder: (_) => ConversationScreen(), settings: settings);
             break;
           case 'lovers':
             return CupertinoPageRoute(
-            builder: (_) => LoversScreen(), settings: settings);
+                builder: (_) => LoversScreen(), settings: settings);
             break;
           case 'post':
             return CupertinoPageRoute(
@@ -60,12 +68,12 @@ class MyApp extends StatelessWidget {
             return CupertinoPageRoute(
                 builder: (_) => PetProfileScreen(), settings: settings);
             break;
-            case 'friends':
-              return CupertinoPageRoute(
-                  builder: (_) => FriendsListScreen(), settings: settings);
-            case 'pets':
-              return CupertinoPageRoute(
-                  builder: (_) => PetsListScreen(), settings: settings);
+          case 'friends':
+            return CupertinoPageRoute(
+                builder: (_) => FriendsListScreen(), settings: settings);
+          case 'pets':
+            return CupertinoPageRoute(
+                builder: (_) => PetsListScreen(), settings: settings);
             break;
           case 'photos':
             return CupertinoPageRoute(
