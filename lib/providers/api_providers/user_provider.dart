@@ -60,8 +60,9 @@ class UserProvider extends ChangeNotifier {
       response = await http.get(
         Uri(scheme: _URLS.register + body),
       );
+      print("the respones is ${response}");
     } catch (_) {
-      print(_);
+      print("the error is ${_}");
       _loading = false;
       notifyListeners();
       return -1;
