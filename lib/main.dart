@@ -32,7 +32,7 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MultiProvider(
         providers: [
-          Provider<UserProvider>(create: (_) => UserProvider()),
+          Provider<User>(create: (_) => User()),
         ],
         child: CupertinoApp(
           localizationsDelegates: [
