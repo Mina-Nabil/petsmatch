@@ -49,8 +49,9 @@ class _SetUserPhotoScreenState extends State<SetUserPhotoScreen> {
     });
   }
 
-  submitPhoto(){
-        Navigator.push(context, new PageTransition(type: PageTransitionType.fade, duration: Duration(milliseconds: 500), child: VerifyMailScreen()));
+  submitPhoto() {
+    print("photo");
+    // Navigator.push(context, new PageTransition(type: PageTransitionType.fade, duration: Duration(milliseconds: 500), child: VerifyMailScreen()));
   }
 
   @override
@@ -58,7 +59,8 @@ class _SetUserPhotoScreenState extends State<SetUserPhotoScreen> {
     double photoDiameterRatio = 0.4;
 
     var imagePlaceholder = Container(
-        margin: EdgeInsets.symmetric(horizontal: PetsTheme.getMuchLargerPadMarg()),
+        margin:
+            EdgeInsets.symmetric(horizontal: PetsTheme.getMuchLargerPadMarg()),
         width: MediaQuery.of(context).size.width * photoDiameterRatio,
         height: double.infinity,
         decoration: BoxDecoration(
@@ -153,7 +155,9 @@ class _SetUserPhotoScreenState extends State<SetUserPhotoScreen> {
                 color: Colors.white,
                 height: MediaQuery.of(context).size.height,
                 child: Center(
-                  child: CircularProgressIndicator(backgroundColor: PetsTheme.currentMainColor,),
+                  child: CircularProgressIndicator(
+                    backgroundColor: PetsTheme.currentMainColor,
+                  ),
                 ))
             : Container()
       ],

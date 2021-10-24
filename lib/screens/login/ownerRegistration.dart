@@ -228,7 +228,9 @@ class _OwnerRegistrationScreenState extends State<OwnerRegistrationScreen> {
                   token: "");
               print(context);
               int status = await userProvider.signUp(antoin);
-              print(status);
+              print(userProvider.user);
+              Navigator.of(context).push(new PageTransition(
+                  child: SetUserPhotoScreen(), type: PageTransitionType.fade));
             },
             buttonText: "Next",
             isShowPaws: false,

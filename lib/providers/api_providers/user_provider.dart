@@ -57,8 +57,8 @@ class UserProvider extends ChangeNotifier {
         "&type=${user.usertype}";
     var response;
     try {
-      response = await http.get(
-        Uri(scheme: _URLS.register + body),
+      response = await http.post(
+        Uri.parse(_URLS.register + body),
       );
       print("the respones is ${response}");
     } catch (_) {
@@ -78,6 +78,7 @@ class UserProvider extends ChangeNotifier {
 
       _isUserLoaded = true;
     }
+    return response.statusCode;
   }
 
   Future<int> login(

@@ -21,18 +21,16 @@ import 'package:petmatch/widgets/screens/PetMatchTabsScreen.dart';
 import 'package:petmatch/providers/api_providers/user_provider.dart';
 import 'package:provider/provider.dart';
 
-void main() {
-  Provider.debugCheckInvalidValueType = null;
-  MyApp();
-}
+void main() => runApp(MyApp());
 
 class MyApp extends StatelessWidget {
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
+    Provider.debugCheckInvalidValueType = null;
     return MultiProvider(
         providers: [
-          Provider<User>(create: (_) => User()),
+          Provider<UserProvider>(create: (_) => UserProvider()),
         ],
         child: CupertinoApp(
           localizationsDelegates: [
