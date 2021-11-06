@@ -50,7 +50,7 @@ class _SetUserPhotoScreenState extends State<SetUserPhotoScreen> {
   }
 
   submitPhoto() {
-    print("photo");
+    // print("photo");
     // Navigator.push(context, new PageTransition(type: PageTransitionType.fade, duration: Duration(milliseconds: 500), child: VerifyMailScreen()));
   }
 
