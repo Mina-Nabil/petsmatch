@@ -5,7 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:petmatch/global.dart';
 import 'api_url.dart';
-import '../../models/user.dart';
+import 'package:petmatch/models/User.dart';
 
 class UserProvider extends ChangeNotifier {
   //reset provider data
@@ -74,16 +74,14 @@ class UserProvider extends ChangeNotifier {
       // If the call to the server was successful, parse the JSON.
       print("200 <----");
 
-      _user = User.fromJson(json.decode(response.body));
+      _user = user;
 
       _isUserLoaded = true;
     }
     return response.statusCode;
   }
 
-  Future<int> login(
-      User user, BuildContext context, GlobalKey<ScaffoldState> scaffoldKey,
-      {bool socialMedia = false, String pageID}) async {
+  Future<int> login(User user) async {
     print("start load <----");
     _loading = true;
     notifyListeners();
@@ -93,7 +91,7 @@ class UserProvider extends ChangeNotifier {
         Uri(scheme: _URLS.login),
         body: {
           "email": user.email,
-          "pass": user.password,
+          "password": user.password,
         },
       );
     } catch (_) {

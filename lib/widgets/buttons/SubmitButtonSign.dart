@@ -4,11 +4,11 @@ import 'package:petmatch/settings/paths.dart';
 import 'package:petmatch/theme/petsTheme.dart';
 import 'package:petmatch/widgets/buttons/PetsButton.dart';
 
-class SubmitButton extends StatelessWidget {
-  SubmitButton({
+class SubmitButtonSign extends StatelessWidget {
+  SubmitButtonSign({
     Key key,
     @required this.callBackFunction,
-    this.buttonText = "Let's Go",
+    this.buttonText = "Sign in",
     this.isShowPaws = true,
     this.fieldsWidth,
   }) : super(key: key);
@@ -29,8 +29,7 @@ class SubmitButton extends StatelessWidget {
       buttonText: buttonText,
       isBorder: false,
       fieldsWidth: this.fieldsWidth,
-      bgColor: PetsTheme.petsBgBlueColor,
-      //bgColor: PetsTheme.petsGreenColor,
+      bgColor: PetsTheme.petsGreenColor,
       textColor: Colors.white,
       trailingWidget: (isShowPaws)
           ? SvgPicture.asset(

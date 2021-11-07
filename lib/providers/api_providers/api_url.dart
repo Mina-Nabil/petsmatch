@@ -1,5 +1,5 @@
 class URLs {
-  static final String host = "http://127.0.0.1:8000/api";
+  static final String host = "https://petsmatch-be.herokuapp.com/api";
   String login;
   String register;
   String createPet;

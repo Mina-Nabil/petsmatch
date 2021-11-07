@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:page_transition/page_transition.dart';
+import 'package:petmatch/screens/login/CongratsScreen.dart';
 import 'package:petmatch/screens/login/setUserPhoto.dart';
 import 'package:petmatch/theme/petsTheme.dart';
 import 'package:petmatch/widgets/form/LabelledFormField.dart';
@@ -8,7 +9,7 @@ import 'package:petmatch/widgets/screens/LoginScreenSetup.dart';
 import 'package:petmatch/widgets/buttons/SkipButton.dart';
 import 'package:petmatch/widgets/buttons/SubmitButton.dart';
 import 'package:petmatch/widgets/form/regTextField.dart';
-import '../../models/user.dart';
+import 'package:petmatch/models/User.dart';
 import '../../providers/api_providers/user_provider.dart';
 import 'package:provider/provider.dart';
 
@@ -228,9 +229,10 @@ class _OwnerRegistrationScreenState extends State<OwnerRegistrationScreen> {
                   token: "");
               print(context);
               int status = await userProvider.signUp(antoin);
-              print(userProvider.user);
-              Navigator.of(context).push(new PageTransition(
-                  child: SetUserPhotoScreen(), type: PageTransitionType.fade));
+              print(userProvider.user.email);
+              if (status == 200)
+                Navigator.of(context).push(new PageTransition(
+                    child: CongratsScreen(), type: PageTransitionType.fade));
             },
             buttonText: "Next",
             isShowPaws: false,

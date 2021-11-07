@@ -5,12 +5,18 @@ import 'package:flutter/services.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:page_transition/page_transition.dart';
+import 'package:petmatch/models/User.dart';
+import 'package:petmatch/screens/login/CongratsScreen.dart';
 import 'package:petmatch/screens/login/regTypes.dart';
 import 'package:petmatch/theme/petsTheme.dart';
+import 'package:petmatch/widgets/buttons/SubmitButtonSign.dart';
 import 'package:petmatch/widgets/screens/LoginScreenSetup.dart';
 import 'package:petmatch/widgets/buttons/SubmitButton.dart';
+import '../../providers/api_providers/user_provider.dart';
+import 'package:provider/provider.dart';
 
 final GoogleSignIn googlesignin = GoogleSignIn();
+UserProvider userProvider;
 
 class LoginScreen extends StatefulWidget {
   @override
@@ -49,6 +55,7 @@ class _LoginScreenState extends State<LoginScreen> {
   Widget build(BuildContext context) {
     //some dimensions
     final double fieldsWidth = MediaQuery.of(context).size.width * .7;
+    userProvider = Provider.of<UserProvider>(context);
 
     void _togglePW() {
       print("GET HENAA");
@@ -215,6 +222,26 @@ class _LoginScreenState extends State<LoginScreen> {
               ),
             ),
             //Sign in button - flex 2
+            Flexible(
+              flex: 2,
+              fit: FlexFit.tight,
+              child: SubmitButtonSign(
+                fieldsWidth: fieldsWidth,
+                callBackFunction: () async {
+                  User _user = new User(
+                    password: _passwordController.text.trim(),
+                    email: _emailController.text.trim(),
+                  );
+                  print(context);
+                  int status = await userProvider.login(_user);
+                  print(userProvider.user.email);
+                  if (status == 200)
+                    Navigator.of(context).push(new PageTransition(
+                        child: CongratsScreen(),
+                        type: PageTransitionType.fade));
+                },
+              ),
+            ),
             Flexible(
               flex: 2,
               fit: FlexFit.tight,

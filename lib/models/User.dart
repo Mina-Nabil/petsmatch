@@ -2,7 +2,6 @@ import 'package:petmatch/models/Pet.dart';
 import 'package:petmatch/models/Profile.dart';
 
 class User extends Profile {
-  String _email;
   String name;
   String image;
   String email;
