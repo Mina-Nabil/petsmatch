@@ -1,12 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:petmatch/models/Pet.dart';
 import 'package:petmatch/models/User.dart';
+import 'package:petmatch/providers/api_providers/user_provider.dart';
 import 'package:petmatch/theme/petsTheme.dart';
 import 'package:petmatch/widgets/custom/Pair.dart';
 import 'package:petmatch/widgets/custom/PetMatchRating.dart';
 import 'package:petmatch/widgets/buttons/CircularMoreButton.dart';
 import 'package:petmatch/widgets/buttons/RoundButton.dart';
 import 'package:petmatch/widgets/main/UserAvatar.dart';
+import 'package:provider/provider.dart';
 
 abstract class ProfileCover extends StatelessWidget {
   factory ProfileCover() {
@@ -25,16 +27,61 @@ abstract class ProfileCover extends StatelessWidget {
   }
 }
 
+UserProvider userProvider;
+
 class PetOwnerProfileCover extends StatelessWidget implements ProfileCover {
   @override
   Widget build(BuildContext context) {
-    User mainUser = User();
+    userProvider = Provider.of<UserProvider>(context);
+    print(userProvider.user.image);
+    User mainUser = User(
+        name: userProvider.user.name,
+        image: "https://icon-library.com/images/681517_man_512x512.png",
+        email: userProvider.user.email);
     List<Pet> pets = [
-      Pet(),
-      Pet(),
-      Pet(),
+      Pet(
+          name: "Bobby",
+          image:
+              "https://cdn.pixabay.com/photo/2017/09/25/13/12/dog-2785074__340.jpg",
+          owner: "Mina"),
+      Pet(
+          name: "Bobby",
+          image:
+              "https://cdn.pixabay.com/photo/2017/09/25/13/12/dog-2785074__340.jpg",
+          owner: "Mina"),
+      Pet(
+          name: "Bobby",
+          image:
+              "https://cdn.pixabay.com/photo/2017/09/25/13/12/dog-2785074__340.jpg",
+          owner: "Mina"),
+      Pet(
+          name: "Bobby",
+          image:
+              "https://cdn.pixabay.com/photo/2017/09/25/13/12/dog-2785074__340.jpg",
+          owner: "Mina"),
+      Pet(
+          name: "Bobby",
+          image:
+              "https://cdn.pixabay.com/photo/2017/09/25/13/12/dog-2785074__340.jpg",
+          owner: "Mina"),
+      Pet(
+          name: "Bobby",
+          image:
+              "https://cdn.pixabay.com/photo/2017/09/25/13/12/dog-2785074__340.jpg",
+          owner: "Mina"),
+      Pet(
+          name: "Bobby",
+          image:
+              "https://cdn.pixabay.com/photo/2017/09/25/13/12/dog-2785074__340.jpg",
+          owner: "Mina"),
+      Pet(
+          name: "Bobby",
+          image:
+              "https://cdn.pixabay.com/photo/2017/09/25/13/12/dog-2785074__340.jpg",
+          owner: "Mina"),
     ];
     mainUser.addAllPet(pets);
+    print(mainUser.pets.first);
 
     return Container(
       padding: EdgeInsets.symmetric(horizontal: 20),
@@ -157,7 +204,7 @@ class PetOwnerProfileCover extends StatelessWidget implements ProfileCover {
             children: [
               GestureDetector(
                 child: Pair(
-                  Text("450",
+                  Text("0",
                       style: TextStyle(
                           fontSize: PetsTheme.getLargeFont(),
                           color: Colors.white,
@@ -172,7 +219,7 @@ class PetOwnerProfileCover extends StatelessWidget implements ProfileCover {
               ),
               GestureDetector(
                 child: Pair(
-                  Text("2",
+                  Text("0",
                       style: TextStyle(
                           fontSize: PetsTheme.getLargeFont(),
                           color: Colors.white,
@@ -187,7 +234,7 @@ class PetOwnerProfileCover extends StatelessWidget implements ProfileCover {
               ),
               GestureDetector(
                 child: Pair(
-                  Text("30",
+                  Text("0",
                       style: TextStyle(
                           fontSize: PetsTheme.getLargeFont(),
                           color: Colors.white,
@@ -204,7 +251,7 @@ class PetOwnerProfileCover extends StatelessWidget implements ProfileCover {
               ),
               GestureDetector(
                 child: Pair(
-                  Text("45",
+                  Text("0",
                       style: TextStyle(
                           fontSize: PetsTheme.getLargeFont(),
                           color: Colors.white,

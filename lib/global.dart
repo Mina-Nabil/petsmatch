@@ -8,6 +8,8 @@ class Server {
   static String _loggedInUserType;
   static FlutterSecureStorage _storage = FlutterSecureStorage();
 
+  String get apiToken => _apiToken;
+
   static Future<String> get token async {
     if (_apiToken == null || _apiToken.isEmpty) {
       _apiToken = await _storage.read(key: "token");
@@ -37,5 +39,3 @@ class Server {
     _loggedInUserType = null;
   }
 }
-
-

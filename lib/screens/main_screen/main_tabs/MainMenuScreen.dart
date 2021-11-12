@@ -12,78 +12,130 @@ class MainMenuScreen extends StatelessWidget {
       header: Container(
         padding: EdgeInsets.only(left: 20, bottom: 20, right: 20),
         child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
             Container(
               margin: EdgeInsets.only(top: PetsTheme.getLargerPadMarg()),
               child: Row(
                 children: [
                   Container(
-                    height: 45,
-                    width: 45,
-                    child: UserAvatar(image: "https://lh3.googleusercontent.com/9AY45-uFNsXWwvtQmZFRWrpy1koWGBLs5XDVYjy3xg-G6fjlekANnsSbhYYU-E0CDw",imageRatio: 1,)
+                      height: 45,
+                      width: 45,
+                      child: UserAvatar(
+                        image:
+                            "https://lh3.googleusercontent.com/9AY45-uFNsXWwvtQmZFRWrpy1koWGBLs5XDVYjy3xg-G6fjlekANnsSbhYYU-E0CDw",
+                        imageRatio: 1,
+                      )),
+                  SizedBox(
+                    width: PetsTheme.getLargePadMarg(),
                   ),
-                  SizedBox(width: PetsTheme.getLargePadMarg(),),
-                  Text("Mina Kamal", style: TextStyle(fontSize: PetsTheme.getLargerFont(), color: Colors.white, fontWeight: FontWeight.bold))
+                  Text("Mina Kamal",
+                      style: TextStyle(
+                          fontSize: PetsTheme.getLargerFont(),
+                          color: Colors.white,
+                          fontWeight: FontWeight.bold))
                 ],
               ),
             ),
-            
-            Container
-            (alignment: Alignment.center,
+            Container(
+              alignment: Alignment.center,
               child: SingleChildScrollView(
                 scrollDirection: Axis.horizontal,
                 child: Row(
                   children: [
                     Container(
-                      margin: EdgeInsets.symmetric(horizontal: PetsTheme.getSmallPadMarg()),
+                      margin: EdgeInsets.symmetric(
+                          horizontal: PetsTheme.getSmallPadMarg()),
                       child: Column(
                         children: [
                           Container(
-                            height: 35, width: 35,
+                            height: 35,
+                            width: 35,
                             margin: EdgeInsets.all(PetsTheme.getSmallPadMarg()),
-                            child: UserAvatar(image: "https://cdn.pixabay.com/photo/2017/09/25/13/12/dog-2785074__340.jpg",imageRatio: 1,),
+                            child: UserAvatar(
+                              image:
+                                  "https://cdn.pixabay.com/photo/2017/09/25/13/12/dog-2785074__340.jpg",
+                              imageRatio: 1,
+                            ),
                           ),
-                          Text("Bella", style: TextStyle(fontSize: PetsTheme.getMeduimFont(), color: Colors.white),),
+                          Text(
+                            "Bella",
+                            style: TextStyle(
+                                fontSize: PetsTheme.getMeduimFont(),
+                                color: Colors.white),
+                          ),
                         ],
                       ),
                     ),
                     Container(
-                      margin: EdgeInsets.symmetric(horizontal: PetsTheme.getSmallPadMarg()),
+                      margin: EdgeInsets.symmetric(
+                          horizontal: PetsTheme.getSmallPadMarg()),
                       child: Column(
                         children: [
                           Container(
-                            height: 35, width: 35,
+                            height: 35,
+                            width: 35,
                             margin: EdgeInsets.all(PetsTheme.getSmallPadMarg()),
-                            child: UserAvatar(image: "https://cdn.pixabay.com/photo/2017/09/25/13/12/dog-2785074__340.jpg",imageRatio: 1,),
+                            child: UserAvatar(
+                              image:
+                                  "https://cdn.pixabay.com/photo/2017/09/25/13/12/dog-2785074__340.jpg",
+                              imageRatio: 1,
+                            ),
                           ),
-                          Text("Rusty",style: TextStyle(fontSize: PetsTheme.getMeduimFont(), color: Colors.white),),
+                          Text(
+                            "Rusty",
+                            style: TextStyle(
+                                fontSize: PetsTheme.getMeduimFont(),
+                                color: Colors.white),
+                          ),
                         ],
                       ),
                     ),
                     Container(
-                      margin: EdgeInsets.symmetric(horizontal: PetsTheme.getSmallPadMarg()),
+                      margin: EdgeInsets.symmetric(
+                          horizontal: PetsTheme.getSmallPadMarg()),
                       child: Column(
                         children: [
                           Container(
-                            height: 35, width: 35,
+                            height: 35,
+                            width: 35,
                             margin: EdgeInsets.all(PetsTheme.getSmallPadMarg()),
-                            child: UserAvatar(image: "https://cdn.pixabay.com/photo/2017/09/25/13/12/dog-2785074__340.jpg",imageRatio: 1,),
+                            child: UserAvatar(
+                              image:
+                                  "https://cdn.pixabay.com/photo/2017/09/25/13/12/dog-2785074__340.jpg",
+                              imageRatio: 1,
+                            ),
                           ),
-                          Text("Rex",style: TextStyle(fontSize: PetsTheme.getMeduimFont(), color: Colors.white),),
+                          Text(
+                            "Rex",
+                            style: TextStyle(
+                                fontSize: PetsTheme.getMeduimFont(),
+                                color: Colors.white),
+                          ),
                         ],
                       ),
                     ),
                     Container(
-                      margin: EdgeInsets.symmetric(horizontal: PetsTheme.getSmallPadMarg()),
+                      margin: EdgeInsets.symmetric(
+                          horizontal: PetsTheme.getSmallPadMarg()),
                       child: Column(
                         children: [
                           Container(
-                            height: 35, width: 35,
+                            height: 35,
+                            width: 35,
                             margin: EdgeInsets.all(PetsTheme.getSmallPadMarg()),
-                            child: UserAvatar(image: "https://cdn.pixabay.com/photo/2017/09/25/13/12/dog-2785074__340.jpg",imageRatio: 1,),
+                            child: UserAvatar(
+                              image:
+                                  "https://cdn.pixabay.com/photo/2017/09/25/13/12/dog-2785074__340.jpg",
+                              imageRatio: 1,
+                            ),
                           ),
-                          Text("Lucky", style: TextStyle(fontSize: PetsTheme.getMeduimFont(), color: Colors.white),),
+                          Text(
+                            "Lucky",
+                            style: TextStyle(
+                                fontSize: PetsTheme.getMeduimFont(),
+                                color: Colors.white),
+                          ),
                         ],
                       ),
                     ),
@@ -91,8 +143,8 @@ class MainMenuScreen extends StatelessWidget {
                 ),
               ),
             ),
-            ],
-          ),
+          ],
+        ),
       ),
       bodyBackgroundColor: Colors.white,
       body: Container(
@@ -131,25 +183,33 @@ class MainMenuScreen extends StatelessWidget {
                 margin: EdgeInsets.symmetric(vertical: PetsTheme.getLargePadMarg()),
                 text: "Matings", iconPath: "assets/images/icons/menu/matings.svg"),*/
               MainMenuItem(
-                margin: EdgeInsets.symmetric(vertical: PetsTheme.getLargePadMarg()),
-                text: "Settings", iconPath: "assets/images/icons/menu/settings.svg"
+                  margin: EdgeInsets.symmetric(
+                      vertical: PetsTheme.getLargePadMarg()),
+                  text: "Settings",
+                  iconPath: "assets/images/icons/menu/settings.svg"),
+              Divider(
+                thickness: 1,
               ),
-              Divider(thickness: 1,),
               MainMenuItem(
-                margin: EdgeInsets.symmetric(vertical: PetsTheme.getLargePadMarg()),
-                text: "Help & Support", iconPath: "assets/images/icons/menu/helpSupport.svg"
+                  margin: EdgeInsets.symmetric(
+                      vertical: PetsTheme.getLargePadMarg()),
+                  text: "Help & Support",
+                  iconPath: "assets/images/icons/menu/helpSupport.svg"),
+              Divider(
+                thickness: 1,
               ),
-              Divider(thickness: 1,),
               MainMenuItem(
-                margin: EdgeInsets.symmetric(vertical: PetsTheme.getLargePadMarg()),
-                text: "Logout", iconPath: "assets/images/icons/menu/logout.svg"
+                  margin: EdgeInsets.symmetric(
+                      vertical: PetsTheme.getLargePadMarg()),
+                  text: "Logout",
+                  iconPath: "assets/images/icons/menu/logout.svg"),
+              Divider(
+                thickness: 1,
               ),
-              Divider(thickness: 1,),
             ],
           ),
         ),
       ),
-      
     );
   }
 }
@@ -174,13 +234,21 @@ class MainMenuItem extends StatelessWidget {
         child: Row(
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
-            SvgPicture.asset(iconPath,
-              color:  PetsTheme.currentMainColor, 
-              width: PetsTheme.verySmallIconSize(), 
-              height: PetsTheme.verySmallIconSize() ,
+            SvgPicture.asset(
+              iconPath,
+              color: PetsTheme.currentMainColor,
+              width: PetsTheme.verySmallIconSize(),
+              height: PetsTheme.verySmallIconSize(),
             ),
-            SizedBox(width: PetsTheme.getLargePadMarg(),),
-            Text(text, style: TextStyle(fontSize: PetsTheme.getLargeFont(), color: PetsTheme.currentMainColor), ),
+            SizedBox(
+              width: PetsTheme.getLargePadMarg(),
+            ),
+            Text(
+              text,
+              style: TextStyle(
+                  fontSize: PetsTheme.getLargeFont(),
+                  color: PetsTheme.currentMainColor),
+            ),
           ],
         ),
       ),

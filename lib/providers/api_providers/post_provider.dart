@@ -1,13 +1,13 @@
 import 'dart:async';
 import 'dart:convert';
-import 'dart:html';
+// import 'dart:html';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'api_url.dart';
 import '../../models/Post.dart';
 
-class postProvider extends ChangeNotifier {
+class PostProvider extends ChangeNotifier {
   //reset provider data
   void reset() {
     _post = null;
@@ -16,7 +16,9 @@ class postProvider extends ChangeNotifier {
   }
 
   Post _post;
+  List<RegularPost> _posts;
   Post get post => _post;
+  List<RegularPost> get posts => _posts;
 
   URLs _URLS = new URLs();
 
@@ -40,15 +42,16 @@ class postProvider extends ChangeNotifier {
 //     @required this.sharesCount,
 //     @required this.lovesCount,
 //     @required isLoved,
-  Future<int> getNewsFeed(BuildContext context) async {
+  Future<int> getNewsFeed(String token) async {
     print("start load <----");
     _loading = true;
     notifyListeners();
-    var response;
+    http.Response response;
+    print("this is the token ${token}");
     try {
-      response = await http.get(
-        Uri(scheme: _URLS.register),
-      );
+      response = await http.get(Uri.parse(_URLS.getNewsFeed), headers: {
+        'Authorization': 'Bearer $token',
+      });
     } catch (_) {
       print(_);
       _loading = false;
@@ -62,26 +65,43 @@ class postProvider extends ChangeNotifier {
       // If the call to the server was successful, parse the JSON.
       print("200 <----");
 
-      _post = RegularPost.fromJson(json.decode(response.body));
+      print(json.decode(response.body));
+      Map<String, dynamic> jsonMap = jsonDecode(response.body);
+      List<dynamic> data = jsonMap["data"];
+      print('${data} this is the data');
+      _posts = data.map((i) => RegularPost.fromJson(i)).toList();
+
+      // List<string> = json.decode()
+      // _post = RegularPost.fromJson(json.decode(response.body));
 
       _ispostLoaded = true;
     }
   }
 
-  Future<int> createPost(RegularPost post, BuildContext context,
-      GlobalKey<ScaffoldState> scaffoldKey) async {
+  Future<int> createPost(RegularPost post, String token) async {
     print("start load <----");
     _loading = true;
     notifyListeners();
     http.Response response;
+    var map = new Map<String, dynamic>();
+    map['content'] = 'password';
+    map['client_id'] =
+        '3MVG9dZJodJWITSviqdj3EnW.LrZ81MbuGBqgIxxxdD6u7Mru2NOEs8bHFoFyNw_nVKPhlF2EzDbNYI0rphQL';
+    map['client_secret'] =
+        '42E131F37E4E05313646E1ED1D3788D76192EBECA7486D15BDDB8408B9726B42';
+    map['username'] = 'example@mail.com.us';
+    map['password'] = 'ABC1234563Af88jesKxPLVirJRW8wXvj3D';
     try {
-      response = await http.post(
-        _URLS.login,
-        body: {
-          "email": post.email,
-          "pass": post.password,
-        },
-      );
+      response = await http.post(Uri.parse(_URLS.createComment),
+          headers: {
+            'Authorization': 'Bearer $token',
+          },
+          body: map);
+    } catch (_) {
+      print(_);
+      _loading = false;
+      notifyListeners();
+      return -1;
     } catch (_) {
       print(_);
       _loading = false;
@@ -95,210 +115,210 @@ class postProvider extends ChangeNotifier {
     print(response.headers);
   }
 
-  Future<int> getpostData({
-    @required String token,
-  }) async {
-    print("start load <----");
-    http.Response response;
-    try {
-      response = await http.get(
-        URLs.getpost + '&token=$token',
-      );
-    } catch (error) {
-      print(error);
-      _ispostLoaded = false;
-      notifyListeners();
-      return -1;
-    }
-    print("Jobbers respones <----");
-    print(response.body);
-    // If the call to the server was successful, parse the JSON.
-    if (response.statusCode >= 200 && response.statusCode < 300) {
-      // If the call to the server was successful, parse the JSON.
-      print("200 <----");
-      _post = post.fromJson(jsonDecode(response.body));
-      _ispostLoaded = true;
-      notifyListeners();
-      print("done <----");
-      return 1;
-    } else {
-      print("error ${response.statusCode}");
-      _ispostLoaded = false;
-      notifyListeners();
-      return 0;
-    }
-  }
+  // Future<int> getpostData({
+  //   @required String token,
+  // }) async {
+  //   print("start load <----");
+  //   http.Response response;
+  //   try {
+  //     response = await http.get(
+  //       URLs.getpost + '&token=$token',
+  //     );
+  //   } catch (error) {
+  //     print(error);
+  //     _ispostLoaded = false;
+  //     notifyListeners();
+  //     return -1;
+  //   }
+  //   print("Jobbers respones <----");
+  //   print(response.body);
+  //   // If the call to the server was successful, parse the JSON.
+  //   if (response.statusCode >= 200 && response.statusCode < 300) {
+  //     // If the call to the server was successful, parse the JSON.
+  //     print("200 <----");
+  //     _post = post.fromJson(jsonDecode(response.body));
+  //     _ispostLoaded = true;
+  //     notifyListeners();
+  //     print("done <----");
+  //     return 1;
+  //   } else {
+  //     print("error ${response.statusCode}");
+  //     _ispostLoaded = false;
+  //     notifyListeners();
+  //     return 0;
+  //   }
+  // }
 
-  Future<int> updatePersonalInformation(post post) async {
-    print(_post.token);
-    print(_post.id);
-    String body = "?name=${post.name}" +
-        "&password=${post.password}" +
-        "&email=${post.email}" +
-        "&image=${post.image}" +
-        "&gender=${post.gender}" +
-        "&phone=${post.phone}" +
-        "&dateOfBirth=${post.dateOfBirth}" +
-        "&country=${post.country}" +
-        "&city=${post.city}" +
-        "&token=${post.token}" +
-        "&type=${post.posttype}";
-    if (post.password != null) {
-      body += "&pass=${post.password}";
-    }
+  // Future<int> updatePersonalInformation(post post) async {
+  //   print(_post.token);
+  //   print(_post.id);
+  //   String body = "?name=${post.name}" +
+  //       "&password=${post.password}" +
+  //       "&email=${post.email}" +
+  //       "&image=${post.image}" +
+  //       "&gender=${post.gender}" +
+  //       "&phone=${post.phone}" +
+  //       "&dateOfBirth=${post.dateOfBirth}" +
+  //       "&country=${post.country}" +
+  //       "&city=${post.city}" +
+  //       "&token=${post.token}" +
+  //       "&type=${post.posttype}";
+  //   if (post.password != null) {
+  //     body += "&pass=${post.password}";
+  //   }
 
-    if (post.name != _post.name) {
-      body += "&name=${post.name}";
-    }
-    print("start load <----");
-    _loading = true;
-    notifyListeners();
-    var response;
-    try {
-      response = await http.get(_URLS.updatepostData + body);
-    } catch (_) {
-      return -1;
-    }
-    print("respones <----");
-    print(response.body);
-    // If the call to the server was successful, parse the JSON.
-    if (response.statusCode >= 200 && response.statusCode < 300) {
-      // If the call to the server was successful, parse the JSON.
-      print("200 <----");
-      _post = post.fromJson(json.decode(response.body));
-      print("done <----");
-      return 1;
-    } else if (response.statusCode == 402) {
-      print("name exist");
-      return -2;
-    } else {
-      // If that call was not successful, throw an error.
-      print("error");
-      return 0;
-    }
-  }
+  //   if (post.name != _post.name) {
+  //     body += "&name=${post.name}";
+  //   }
+  //   print("start load <----");
+  //   _loading = true;
+  //   notifyListeners();
+  //   var response;
+  //   try {
+  //     response = await http.get(_URLS.updatepostData + body);
+  //   } catch (_) {
+  //     return -1;
+  //   }
+  //   print("respones <----");
+  //   print(response.body);
+  //   // If the call to the server was successful, parse the JSON.
+  //   if (response.statusCode >= 200 && response.statusCode < 300) {
+  //     // If the call to the server was successful, parse the JSON.
+  //     print("200 <----");
+  //     _post = post.fromJson(json.decode(response.body));
+  //     print("done <----");
+  //     return 1;
+  //   } else if (response.statusCode == 402) {
+  //     print("name exist");
+  //     return -2;
+  //   } else {
+  //     // If that call was not successful, throw an error.
+  //     print("error");
+  //     return 0;
+  //   }
+  // }
 
-  Future<int> updateAreaOfInterest(post post) async {
-    String body = "?name=${post.name}" +
-        "&password=${post.password}" +
-        "&email=${post.email}" +
-        "&image=${post.image}" +
-        "&gender=${post.gender}" +
-        "&phone=${post.phone}" +
-        "&dateOfBirth=${post.dateOfBirth}" +
-        "&country=${post.country}" +
-        "&city=${post.city}" +
-        "&token=${post.token}" +
-        "&type=${post.posttype}";
-    print("start load <----");
-    _loading = true;
-    notifyListeners();
-    var response;
-    try {
-      response = await http.get(_URLS.updatepostData + body);
-    } catch (_) {
-      _loading = false;
-      notifyListeners();
-      return -1;
-    }
-    print("respones <----");
-    print(response.body);
-    // If the call to the server was successful, parse the JSON.
-    if (response.statusCode >= 200 && response.statusCode < 300) {
-      // If the call to the server was successful, parse the JSON.
-      print("200 <----");
+  // Future<int> updateAreaOfInterest(post post) async {
+  //   String body = "?name=${post.name}" +
+  //       "&password=${post.password}" +
+  //       "&email=${post.email}" +
+  //       "&image=${post.image}" +
+  //       "&gender=${post.gender}" +
+  //       "&phone=${post.phone}" +
+  //       "&dateOfBirth=${post.dateOfBirth}" +
+  //       "&country=${post.country}" +
+  //       "&city=${post.city}" +
+  //       "&token=${post.token}" +
+  //       "&type=${post.posttype}";
+  //   print("start load <----");
+  //   _loading = true;
+  //   notifyListeners();
+  //   var response;
+  //   try {
+  //     response = await http.get(_URLS.updatepostData + body);
+  //   } catch (_) {
+  //     _loading = false;
+  //     notifyListeners();
+  //     return -1;
+  //   }
+  //   print("respones <----");
+  //   print(response.body);
+  //   // If the call to the server was successful, parse the JSON.
+  //   if (response.statusCode >= 200 && response.statusCode < 300) {
+  //     // If the call to the server was successful, parse the JSON.
+  //     print("200 <----");
 
-      _loading = false;
-      notifyListeners();
-      print("done <----");
-      return 1;
-    } else if (response.statusCode == 401) {
-      _loading = false;
-      notifyListeners();
-      print("email exist");
-      return -2;
-    } else {
-      // If that call was not successful, throw an error.
-      _loading = false;
-      notifyListeners();
-      print("error");
-      return 0;
-    }
-  }
+  //     _loading = false;
+  //     notifyListeners();
+  //     print("done <----");
+  //     return 1;
+  //   } else if (response.statusCode == 401) {
+  //     _loading = false;
+  //     notifyListeners();
+  //     print("email exist");
+  //     return -2;
+  //   } else {
+  //     // If that call was not successful, throw an error.
+  //     _loading = false;
+  //     notifyListeners();
+  //     print("error");
+  //     return 0;
+  //   }
+  // }
 
-  Future<int> updateSocialMediaLinks(post post) async {
-    String body = "?name=${post.name}" +
-        "&password=${post.password}" +
-        "&email=${post.email}" +
-        "&image=${post.image}" +
-        "&gender=${post.gender}" +
-        "&phone=${post.phone}" +
-        "&dateOfBirth=${post.dateOfBirth}" +
-        "&country=${post.country}" +
-        "&city=${post.city}" +
-        "&token=${post.token}" +
-        "&type=${post.posttype}";
-    print("start load <----");
-    _loading = true;
-    notifyListeners();
-    var response;
-    try {
-      response = await http.get(_URLS.updatepostData + body);
-    } catch (_) {
-      _loading = false;
-      notifyListeners();
-      return -1;
-    }
-    print("respones <----");
-    print(response.body);
-    // If the call to the server was successful, parse the JSON.
-    if (response.statusCode >= 200 && response.statusCode < 300) {
-      // If the call to the server was successful, parse the JSON.
-      print("200 <----");
-      _post = post.fromJson(json.decode(response.body));
-      _loading = false;
-      notifyListeners();
-      print("done <----");
-      return 1;
-    } else if (response.statusCode == 401) {
-      _loading = false;
-      notifyListeners();
-      print("email exist");
-      return -2;
-    } else {
-      // If that call was not successful, throw an error.
-      _loading = false;
-      notifyListeners();
-      print("error");
-      return 0;
-    }
-  }
+  // Future<int> updateSocialMediaLinks(post post) async {
+  //   String body = "?name=${post.name}" +
+  //       "&password=${post.password}" +
+  //       "&email=${post.email}" +
+  //       "&image=${post.image}" +
+  //       "&gender=${post.gender}" +
+  //       "&phone=${post.phone}" +
+  //       "&dateOfBirth=${post.dateOfBirth}" +
+  //       "&country=${post.country}" +
+  //       "&city=${post.city}" +
+  //       "&token=${post.token}" +
+  //       "&type=${post.posttype}";
+  //   print("start load <----");
+  //   _loading = true;
+  //   notifyListeners();
+  //   var response;
+  //   try {
+  //     response = await http.get(_URLS.updatepostData + body);
+  //   } catch (_) {
+  //     _loading = false;
+  //     notifyListeners();
+  //     return -1;
+  //   }
+  //   print("respones <----");
+  //   print(response.body);
+  //   // If the call to the server was successful, parse the JSON.
+  //   if (response.statusCode >= 200 && response.statusCode < 300) {
+  //     // If the call to the server was successful, parse the JSON.
+  //     print("200 <----");
+  //     _post = post.fromJson(json.decode(response.body));
+  //     _loading = false;
+  //     notifyListeners();
+  //     print("done <----");
+  //     return 1;
+  //   } else if (response.statusCode == 401) {
+  //     _loading = false;
+  //     notifyListeners();
+  //     print("email exist");
+  //     return -2;
+  //   } else {
+  //     // If that call was not successful, throw an error.
+  //     _loading = false;
+  //     notifyListeners();
+  //     print("error");
+  //     return 0;
+  //   }
+  // }
 
-  Future<int> updateProfileImage(post post) async {
-    print("start load <----");
-    var response;
-    try {
-      response = await http.post(URLs.editProfileImage,
-          body: {"uid": _post.id, "image": post.image, "token": _post.token});
-    } catch (error) {
-      print(error);
-      return -1;
-    }
+  // Future<int> updateProfileImage(post post) async {
+  //   print("start load <----");
+  //   var response;
+  //   try {
+  //     response = await http.post(URLs.editProfileImage,
+  //         body: {"uid": _post.id, "image": post.image, "token": _post.token});
+  //   } catch (error) {
+  //     print(error);
+  //     return -1;
+  //   }
 
-    print("respones <----");
-    print(response.body);
-    // If the call to the server was successful, parse the JSON.
-    if (response.statusCode >= 200 && response.statusCode < 300) {
-      // If the call to the server was successful, parse the JSON.
-      print("200 <----");
-      _post.image = post.fromJson(json.decode(response.body)).image;
-      notifyListeners();
-      print("done <----");
-      return 1;
-    } else {
-      // If that call was not successful, throw an error.
-      print("error");
-      return 0;
-    }
-  }
+  //   print("respones <----");
+  //   print(response.body);
+  //   // If the call to the server was successful, parse the JSON.
+  //   if (response.statusCode >= 200 && response.statusCode < 300) {
+  //     // If the call to the server was successful, parse the JSON.
+  //     print("200 <----");
+  //     _post.image = post.fromJson(json.decode(response.body)).image;
+  //     notifyListeners();
+  //     print("done <----");
+  //     return 1;
+  //   } else {
+  //     // If that call was not successful, throw an error.
+  //     print("error");
+  //     return 0;
+  //   }
+  // }
 }

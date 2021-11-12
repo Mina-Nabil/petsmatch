@@ -1,3 +1,4 @@
+import 'package:intl/intl.dart';
 import 'package:petmatch/models/Pet.dart';
 import 'package:petmatch/models/Profile.dart';
 
@@ -53,22 +54,27 @@ class User extends Profile {
   }
 
   void addAllPet(List<Pet> pets) {
-    pets.addAll(pets);
+    print(pets);
+    this.pets.addAll(pets);
   }
 
   factory User.fromJson(Map<String, dynamic> parsedJson) {
+    String gender = "Female";
+    if (parsedJson['user']['gender'] == 1) gender = "Male";
+    DateFormat dateFormat = DateFormat("yyyy-MM-dd");
+
     return new User(
-      name: parsedJson['name'],
-      image: parsedJson['image'],
-      email: parsedJson['email'],
-      gender: parsedJson['gender'],
-      phone: parsedJson['phone'],
-      dateOfBirth: parsedJson['dateOfBirth'],
-      country: parsedJson['country'],
-      city: parsedJson['city'],
-      token: parsedJson['token'],
-      password: parsedJson['password'],
-      usertype: parsedJson['usertype'],
+      name: parsedJson['user']['name'],
+      image: parsedJson['user']['image'],
+      email: parsedJson['user']['email'],
+      gender: gender,
+      phone: parsedJson['user']['phone'],
+      dateOfBirth: dateFormat.parse(parsedJson['user']['dateOfBirth']),
+      country: parsedJson['user']['country'],
+      city: parsedJson['user']['city'],
+      token: parsedJson['token']['plainTextToken'],
+      // password: parsedJson['password'],
+      // usertype: parsedJson['usertype'],
     );
   }
 }

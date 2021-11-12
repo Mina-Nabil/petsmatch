@@ -1,6 +1,9 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:page_transition/page_transition.dart';
+import 'package:petmatch/models/User.dart';
+import 'package:petmatch/screens/login/CongratsScreen.dart';
+import 'package:petmatch/screens/login/login.dart';
 import 'package:petmatch/screens/login/setUserPhoto.dart';
 import 'package:petmatch/theme/petsTheme.dart';
 import 'package:petmatch/widgets/form/LabelledFormField.dart';
@@ -50,6 +53,11 @@ class _StoreRegistrationScreenState extends State<StoreRegistrationScreen> {
     double maxFieldHeight = 70;
     double maxDateFieldHeight = 130;
 
+    DateTime _dateOfBirth;
+
+    String dropdownValueGender = 'Male';
+    String dropdownValueCountry = 'Egypt';
+    String dropdownValueCity = 'Cairo';
     return LoginScreenSetup(
       formTitle: "Personal Information",
       topbarTitle: "Step 1",
@@ -104,27 +112,28 @@ class _StoreRegistrationScreenState extends State<StoreRegistrationScreen> {
               label: "Gender",
               fieldHeight: maxFieldHeight,
               width: fieldsWidth,
-              childField: DropdownButtonFormField(
-                decoration: InputDecoration(
-                    enabledBorder: UnderlineInputBorder(
-                        borderSide:
-                            BorderSide(color: PetsTheme.petsBordersGrayColor))),
-                style: TextStyle(
-                    fontFamily: "Roboto",
-                    color: Colors.black,
-                    fontSize: PetsTheme.getLargeFont()),
-                onChanged: citySelected,
-                items: [
-                  DropdownMenuItem(
-                    child: Text("Male"),
-                  ),
-                  DropdownMenuItem(
-                    child: Text("Female"),
-                  ),
-                  DropdownMenuItem(
-                    child: Text("Prefer not to mention"),
-                  ),
-                ],
+              childField: DropdownButton<String>(
+                value: dropdownValueGender,
+                icon: const Icon(Icons.arrow_downward),
+                iconSize: 24,
+                elevation: 16,
+                style: const TextStyle(color: Colors.grey),
+                underline: Container(
+                  height: 2,
+                  color: Colors.grey,
+                ),
+                onChanged: (String newValue) {
+                  setState(() {
+                    dropdownValueGender = newValue;
+                  });
+                },
+                items: <String>['Male', 'Female', 'Do not specifiy']
+                    .map<DropdownMenuItem<String>>((String value) {
+                  return DropdownMenuItem<String>(
+                    value: value,
+                    child: Text(value),
+                  );
+                }).toList(),
               )),
           //DatePicker Widget
           LabelledFormField(
@@ -132,7 +141,11 @@ class _StoreRegistrationScreenState extends State<StoreRegistrationScreen> {
             fieldHeight: maxDateFieldHeight,
             width: fieldsWidth,
             childField: CupertinoDatePicker(
-              onDateTimeChanged: (newDate) => setDate(newDate),
+              onDateTimeChanged: (newDate) {
+                setState(() {
+                  _dateOfBirth = newDate;
+                });
+              },
               mode: CupertinoDatePickerMode.date,
               initialDateTime: DateTime(2000),
             ),
@@ -141,57 +154,76 @@ class _StoreRegistrationScreenState extends State<StoreRegistrationScreen> {
               label: "Country",
               fieldHeight: maxFieldHeight,
               width: fieldsWidth,
-              childField: DropdownButtonFormField(
-                decoration: InputDecoration(
-                    enabledBorder: UnderlineInputBorder(
-                        borderSide:
-                            BorderSide(color: PetsTheme.petsBordersGrayColor))),
-                style: TextStyle(
-                    fontFamily: "Roboto",
-                    color: Colors.black,
-                    fontSize: PetsTheme.getLargeFont()),
-                onChanged: citySelected,
-                items: [
-                  DropdownMenuItem(
-                    child: Text("Egypt"),
-                  ),
-                  DropdownMenuItem(
-                    child: Text("UAE"),
-                  ),
-                  DropdownMenuItem(
-                    child: Text("Rehab"),
-                  ),
-                ],
+              childField: DropdownButton<String>(
+                value: dropdownValueCountry,
+                icon: const Icon(Icons.arrow_downward),
+                iconSize: 24,
+                elevation: 16,
+                style: const TextStyle(color: Colors.grey),
+                underline: Container(
+                  height: 2,
+                  color: Colors.grey,
+                ),
+                onChanged: (String newValueCountry) {
+                  setState(() {
+                    dropdownValueCountry = newValueCountry;
+                  });
+                },
+                items: <String>['Egypt', 'UAE', 'KSA']
+                    .map<DropdownMenuItem<String>>((String value) {
+                  return DropdownMenuItem<String>(
+                    value: value,
+                    child: Text(value),
+                  );
+                }).toList(),
               )),
           LabelledFormField(
               label: "City",
               fieldHeight: maxFieldHeight,
               width: fieldsWidth,
-              childField: DropdownButtonFormField(
-                decoration: InputDecoration(
-                    enabledBorder: UnderlineInputBorder(
-                        borderSide:
-                            BorderSide(color: PetsTheme.petsBordersGrayColor))),
-                style: TextStyle(
-                    fontFamily: "Roboto",
-                    color: Colors.black,
-                    fontSize: PetsTheme.getLargeFont()),
-                onChanged: citySelected,
-                items: [
-                  DropdownMenuItem(
-                    child: Text("Cairo"),
-                  ),
-                  DropdownMenuItem(
-                    child: Text("Alex"),
-                  ),
-                  DropdownMenuItem(
-                    child: Text("Giza"),
-                  ),
-                ],
+              childField: DropdownButton<String>(
+                value: dropdownValueCity,
+                icon: const Icon(Icons.arrow_downward),
+                iconSize: 24,
+                elevation: 16,
+                style: const TextStyle(color: Colors.grey),
+                underline: Container(
+                  height: 2,
+                  color: Colors.grey,
+                ),
+                onChanged: (String newValueCity) {
+                  setState(() {
+                    dropdownValueCity = newValueCity;
+                  });
+                },
+                items: <String>['Alexandria', 'Cairo', 'Other']
+                    .map<DropdownMenuItem<String>>((String value) {
+                  return DropdownMenuItem<String>(
+                    value: value,
+                    child: Text(value),
+                  );
+                }).toList(),
               )),
 
           SubmitButton(
-            callBackFunction: submitForm,
+            callBackFunction: () async {
+              User antoin = new User(
+                  name: _firstNameController.text + _lastNameController.text,
+                  password: _passwordNameController.text.trim(),
+                  email: _emailController.text.trim(),
+                  usertype: "Store",
+                  gender: dropdownValueGender,
+                  dateOfBirth: _dateOfBirth,
+                  country: dropdownValueCountry,
+                  city: dropdownValueCity,
+                  token: "");
+              print(context);
+              int status = await userProvider.signUp(antoin);
+              print(userProvider.user.email);
+              if (status == 200)
+                Navigator.of(context).push(new PageTransition(
+                    child: CongratsScreen(), type: PageTransitionType.fade));
+            },
             buttonText: "Next",
             isShowPaws: false,
           ),

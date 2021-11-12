@@ -15,6 +15,7 @@ class UserProvider extends ChangeNotifier {
     _loading = false;
   }
 
+  Server s;
   User _user;
   User get user => _user;
 
@@ -44,17 +45,25 @@ class UserProvider extends ChangeNotifier {
     _loading = true;
     notifyListeners();
     String body;
+    int type = 0;
+    int gender = 0;
+    if (user.usertype == "Pet Owner") type = 1;
+    if (user.usertype == "Trainer") type = 2;
+    if (user.usertype == "Vet") type = 3;
+    if (user.usertype == "Store") type = 4;
+
+    if (user.gender == "Male") gender = 1;
     body = "?name=${user.name}" +
         "&password=${user.password}" +
         "&email=${user.email}" +
         "&image=${user.image}" +
-        "&gender=${user.gender}" +
+        "&gender=${gender}" +
         "&phone=${user.phone}" +
         "&dateOfBirth=${user.dateOfBirth}" +
         "&country=${user.country}" +
         "&city=${user.city}" +
         "&token=${user.token}" +
-        "&type=${user.usertype}";
+        "&usertype=${type}";
     var response;
     try {
       response = await http.post(
@@ -85,15 +94,11 @@ class UserProvider extends ChangeNotifier {
     print("start load <----");
     _loading = true;
     notifyListeners();
+    String body;
+    body = "?password=${user.password}" + "&email=${user.email}";
     http.Response response;
     try {
-      response = await http.post(
-        Uri(scheme: _URLS.login),
-        body: {
-          "email": user.email,
-          "password": user.password,
-        },
-      );
+      response = await http.post(Uri.parse(_URLS.login + body));
     } catch (_) {
       print(_);
       _loading = false;
@@ -102,9 +107,15 @@ class UserProvider extends ChangeNotifier {
     }
     if (response.statusCode == 200) {
       //loggedin
+      print(response.body);
       Map<String, dynamic> decodedBody = jsonDecode(response.body);
       User loggedIn = User.fromJson(decodedBody);
-      Server.setToken(decodedBody["accessToken"]);
+      // Server.setToken(decodedBody["accessToken"]);
+      print(loggedIn.name);
+      _user = loggedIn;
+      print(_user);
+
+      return response.statusCode;
     }
     print("response <----");
     print(response.body);
@@ -116,11 +127,11 @@ class UserProvider extends ChangeNotifier {
     @required String token,
   }) async {
     print("start load <----");
-    http.Response response;
+    var response;
     try {
-      response = await http.get(
-        Uri(scheme: URLs.getUser + '&token=$token'),
-      );
+      response = await http.post(Uri(scheme: URLs.getUser), headers: {
+        'Authorization': 'Bearer $token',
+      });
     } catch (error) {
       print(error);
       _isUserLoaded = false;

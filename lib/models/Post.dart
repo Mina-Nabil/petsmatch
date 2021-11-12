@@ -1,4 +1,5 @@
 import 'package:flutter/cupertino.dart';
+import 'package:intl/intl.dart';
 
 abstract class Post {
   Post({
@@ -65,13 +66,35 @@ class RegularPost extends Post {
   final String image;
   final String text;
 
+  // factory RegularPost.fromJson(Map<String, dynamic> parsedJson) {
+  //   return new RegularPost(
+  //     owner: parsedJson['owner'],
+  //     postDate: parsedJson['postDate'],
+  //     commentsCount: parsedJson['commentsCount'],
+  //     sharesCount: parsedJson['sharesCount'],
+  //     lovesCount: parsedJson['lovesCount'],
+  //     isLoved: false,
+  //   );
+  // }
   factory RegularPost.fromJson(Map<String, dynamic> parsedJson) {
+    String gender = "Female";
+    if (parsedJson['user']['gender'] == 1) gender = "Male";
+    DateFormat dateFormat = DateFormat("yyyy-MM-dd");
+    PostOwner po = new UserPostOwner(
+        id: parsedJson['user']['id'],
+        name: parsedJson['user']['name'],
+        imageUrl: parsedJson['user']['image']);
+
+    print('${po} this is the PO');
+
     return new RegularPost(
-      owner: parsedJson['owner'],
-      postDate: parsedJson['postDate'],
-      commentsCount: parsedJson['commentsCount'],
-      sharesCount: parsedJson['sharesCount'],
-      lovesCount: parsedJson['lovesCount'],
+      postDate: dateFormat.parse(parsedJson['created_at']),
+      text: parsedJson['content'],
+      image: parsedJson['image'],
+      owner: po,
+      commentsCount: parsedJson['comments'].length,
+      sharesCount: parsedJson['shares'].length,
+      lovesCount: 0,
       isLoved: false,
     );
   }

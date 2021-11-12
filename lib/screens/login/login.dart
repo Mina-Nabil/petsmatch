@@ -24,12 +24,15 @@ class LoginScreen extends StatefulWidget {
 }
 
 class _LoginScreenState extends State<LoginScreen> {
+  final _scaffoldKey = GlobalKey<ScaffoldState>();
+
   //form controllers
   final TextEditingController _emailController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
   bool obscureTextFlag = true;
   Color obscureTextColor = PetsTheme.petsTextGrayColor;
   bool IsAuth = false;
+
   @override
   void initState() {
     // blocking change in screen orientation
@@ -226,21 +229,27 @@ class _LoginScreenState extends State<LoginScreen> {
               flex: 2,
               fit: FlexFit.tight,
               child: SubmitButtonSign(
-                fieldsWidth: fieldsWidth,
-                callBackFunction: () async {
-                  User _user = new User(
-                    password: _passwordController.text.trim(),
-                    email: _emailController.text.trim(),
-                  );
-                  print(context);
-                  int status = await userProvider.login(_user);
-                  print(userProvider.user.email);
-                  if (status == 200)
-                    Navigator.of(context).push(new PageTransition(
-                        child: CongratsScreen(),
-                        type: PageTransitionType.fade));
-                },
-              ),
+                  fieldsWidth: fieldsWidth,
+                  callBackFunction: () async {
+                    User _user = new User(
+                      password: _passwordController.text.trim(),
+                      email: _emailController.text.trim(),
+                    );
+                    print(context);
+                    int status = await userProvider.login(_user);
+                    print(status);
+                    if (status == 200) {
+                      Navigator.of(context).push(new PageTransition(
+                          child: CongratsScreen(),
+                          type: PageTransitionType.fade));
+                    } else {
+                      final snackBar = SnackBar(
+                        duration: Duration(seconds: 1),
+                        content: Text("message"),
+                      );
+                      _scaffoldKey.currentState.showSnackBar(snackBar);
+                    }
+                  }),
             ),
             Flexible(
               flex: 2,
@@ -250,8 +259,10 @@ class _LoginScreenState extends State<LoginScreen> {
                 callBackFunction: signUp,
               ),
             ),
+            SizedBox(height: 100),
+
             //Other sign in options
-            Flexible(
+            /*Flexible(
                 flex: 5,
                 child: Container(
                   width: fieldsWidth * 0.5,
@@ -316,7 +327,7 @@ class _LoginScreenState extends State<LoginScreen> {
                           ),
                         )
                       ]),
-                ))
+                ))*/
           ],
         ));
   }

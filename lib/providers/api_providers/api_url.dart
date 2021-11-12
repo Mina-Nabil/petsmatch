@@ -1,5 +1,6 @@
 class URLs {
   static final String host = "https://petsmatch-be.herokuapp.com/api";
+  //"https://petsmatch-be.herokuapp.com/api";
   String login;
   String register;
   String createPet;
@@ -40,7 +41,7 @@ class URLs {
       "$host/api/handle/new/rate"; // ?uid=36&title=rate&rated_uid=30&value=5&desc=some long description20
   static final String getJobberRate =
       "$host/api/return/user/rates/averages"; // ?uid=30
-  static final String getUser = "$host/api/me"; // ?uid=30
+  static final String getUser = "$host/me"; // ?uid=30
   static final String getUserNotifications =
       "$host/api/return/user/notifications"; // ?uid=30&page=0
   static final String editUserNotifications =
@@ -64,7 +65,7 @@ class URLs {
     createPost = "$host/api/post"; // ?uid=53
     getAPost = "$host/api/post"; // ?uid=53
     getYourPosts = "$host/api/post"; // ?uid=53
-    getNewsFeed = "$host/api/news-feed"; // ?uid=53
+    getNewsFeed = "$host/news-feed"; // ?uid=53
     createComment = "$host/api/comment"; // ?uid=53
     getPostComments = "$host/api/comment"; // ?uid=53
     getAComment = "$host/api/news-feed"; // ?uid=53

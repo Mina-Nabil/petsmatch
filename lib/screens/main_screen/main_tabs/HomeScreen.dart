@@ -13,8 +13,6 @@ import 'package:petmatch/widgets/feed/SuggestedIcon.dart';
 import 'package:petmatch/widgets/feed/SuggestionsIconsList.dart';
 import 'package:petmatch/widgets/main/UserAvatar.dart';
 import 'package:petmatch/widgets/screens/PetMatchSingleScreen.dart';
-import 'package:provider/provider.dart';
-import '../../../providers/api_providers/user_provider.dart';
 
 class HomeScreen extends StatefulWidget {
   @override
@@ -29,7 +27,13 @@ class _HomeScreenState extends State<HomeScreen> {
   // UserProvider _userProvider;
   @override
   void initState() {
+    print("suggests 1");
     super.initState();
+    mainUser = User(
+        name: "Mina !",
+        image:
+            "https://lh3.googleusercontent.com/9AY45-uFNsXWwvtQmZFRWrpy1koWGBLs5XDVYjy3xg-G6fjlekANnsSbhYYU-E0CDw",
+        email: "hamada@pets");
     pets = [
       Pet(
           name: "Bobby",
@@ -71,19 +75,18 @@ class _HomeScreenState extends State<HomeScreen> {
               "https://cdn.pixabay.com/photo/2017/09/25/13/12/dog-2785074__340.jpg",
           owner: "Mina"),
     ];
-    // mainUser.addAllPet(pets);
+    mainUser.addAllPet(pets);
+    print(suggests);
   }
 
   // later PostProvider
+
   List<Post> testPosts = posts;
   @override
   Widget build(BuildContext context) {
-    UserProvider _userProvider = Provider.of<UserProvider>(context);
-
-    print(_userProvider.user.city);
     List<Widget> petImages = [];
-    if (_userProvider.user.pets.length > 0) {
-      _userProvider.user.pets.forEach((element) {
+    if (mainUser.pets.length > 0) {
+      mainUser.pets.forEach((element) {
         petImages.add(Container(
             width: 40,
             height: 40,
@@ -106,9 +109,9 @@ class _HomeScreenState extends State<HomeScreen> {
                     width: 45,
                     height: 45,
                     child: UserAvatar(
-                        image: _userProvider.user.image == null
+                        image: mainUser.image == null
                             ? "https://cdn.pixabay.com/photo/2017/09/25/13/12/dog-2785074__340.jpg"
-                            : _userProvider.user.image,
+                            : mainUser.image,
                         imageRatio: 1),
                   ),
                   onTap: () => Navigator.of(context).pushNamed('profile'),
@@ -142,7 +145,7 @@ class _HomeScreenState extends State<HomeScreen> {
       bodyWidgets: [
         NewPostWidget(),
         SuggesionsIconsList([
-          SuggestedIcon(_userProvider.user),
+          SuggestedIcon(mainUser),
           ...pets.map((element) {
             return SuggestedIcon(element);
           })

@@ -217,6 +217,7 @@ class _OwnerRegistrationScreenState extends State<OwnerRegistrationScreen> {
             //         child: SetUserPhotoScreen(),
             //         type: PageTransitionType.fade)),
             callBackFunction: () async {
+              print('This is the date of birht ${_dateOfBirth}');
               User antoin = new User(
                   name: _firstNameController.text + _lastNameController.text,
                   password: _passwordNameController.text.trim(),
@@ -229,7 +230,6 @@ class _OwnerRegistrationScreenState extends State<OwnerRegistrationScreen> {
                   token: "");
               print(context);
               int status = await userProvider.signUp(antoin);
-              print(userProvider.user.email);
               if (status == 200)
                 Navigator.of(context).push(new PageTransition(
                     child: CongratsScreen(), type: PageTransitionType.fade));
