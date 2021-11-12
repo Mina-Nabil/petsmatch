@@ -71,6 +71,7 @@ class PostProvider extends ChangeNotifier {
       print('${data} this is the data');
       _posts = data.map((i) => RegularPost.fromJson(i)).toList();
 
+      return response.statusCode;
       // List<string> = json.decode()
       // _post = RegularPost.fromJson(json.decode(response.body));
 

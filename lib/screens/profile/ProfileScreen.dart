@@ -10,56 +10,63 @@ import 'package:petmatch/widgets/screens/PetMatchSingleScreen.dart';
 import 'package:provider/provider.dart';
 import '../../providers/api_providers/user_provider.dart';
 
-class ProfileScreen extends StatelessWidget {
-  UserProvider userProvider;
-  PostProvider postProvider;
-  List<Post> posts;
-  int status;
-  bool done = false;
+class ProfileScreen extends StatefulWidget {
   @override
+  State<ProfileScreen> createState() => _ProfileScreenState();
+}
+
+class _ProfileScreenState extends State<ProfileScreen> {
+  UserProvider userProvider;
+
+  PostProvider postProvider;
+
+  List<RegularPost> posts;
+
+  List<Widget> bodyWidgets;
+
+  int status;
+
+  bool done = false;
+
+  @override
+  // ignore: must_call_super
   void initState() {
     done = false;
-    print('${done} done mann');
-    updatePosts();
+    bodyWidgets = [];
+    Future.delayed(Duration.zero).then((value) => updatePosts());
+    super.initState();
   }
 
   void updatePosts() async {
     /* whatever */
+
+    userProvider = Provider.of<UserProvider>(context, listen: false);
+    postProvider = Provider.of<PostProvider>(context, listen: false);
+    bodyWidgets = [
+      AboutPost(
+        phoneNo: userProvider.user.phone,
+        address: userProvider.user.city,
+        website: "www.vetpoint.com",
+        mail: userProvider.user.email,
+        workingHours: "10:00 am - 10:00 pm",
+      ),
+      SizedBox(
+        height: PetsTheme.getMeduimPadMarg() * 2,
+      ),
+      NewPostWidget()
+    ];
     status = await postProvider.getNewsFeed(userProvider.user.token);
     print('${status} these are the status');
     if (status == 200) {
-      done = true;
       posts = postProvider.posts;
       print('${posts} these are the posts');
-    }
-  }
 
-  @override
-  Widget build(BuildContext context) {
-    userProvider = Provider.of<UserProvider>(context);
-    postProvider = Provider.of<PostProvider>(context);
-
-    // userProvider.getUserData(token: userProvider.user.token);
-    return PetMatchSingleScreen.scrollable(
-      backArrow: true,
-      //scrollableHeader: true,
-      header: ProfileCover(),
-      bodyWidgets: [
-        // if (PetsTheme.accountType == AccountType.vet ||
-        //     PetsTheme.accountType == AccountType.store)
-        AboutPost(
-          phoneNo: userProvider.user.phone,
-          address: userProvider.user.city,
-          website: "www.vetpoint.com",
-          mail: userProvider.user.email,
-          workingHours: "10:00 am - 10:00 pm",
-        ),
-        SizedBox(
-          height: PetsTheme.getMeduimPadMarg() * 2,
-        ),
-        NewPostWidget(),
+      setState(() {
+        done = true;
+        print(posts[0].commentsCount);
         if (done)
-          ...posts.map((post) {
+          bodyWidgets.addAll(posts.map((post) {
+            print(post);
             return RegularPostWidget(
               post,
               margin:
@@ -69,8 +76,25 @@ class ProfileScreen extends StatelessWidget {
                   right: PetsTheme.getMuchLargerPadMarg(),
                   bottom: PetsTheme.getLargePadMarg()),
             );
-          }).toList(),
-      ],
+          }).toList());
+        print("${done} it is");
+      });
+    }
+  }
+
+  // void setState() {
+  //   print("${done} it is");
+  //   done = true;
+  // }
+
+  @override
+  Widget build(BuildContext context) {
+    // userProvider.getUserData(token: userProvider.user.token);
+    return PetMatchSingleScreen.scrollable(
+      backArrow: true,
+      //scrollableHeader: true,
+      header: ProfileCover(),
+      bodyWidgets: bodyWidgets,
     );
   }
 }

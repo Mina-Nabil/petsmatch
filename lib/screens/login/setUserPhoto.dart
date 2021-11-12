@@ -28,7 +28,7 @@ class _SetUserPhotoScreenState extends State<SetUserPhotoScreen> {
       inProcess = true;
     });
     final _picker = ImagePicker();
-    PickedFile image = await _picker.getImage(source: source);
+    XFile image = await _picker.pickImage(source: source);
     if (image != null) {
       File croppedImage = await ImageCropper.cropImage(
           sourcePath: image.path,

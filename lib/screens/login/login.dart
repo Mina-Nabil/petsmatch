@@ -1,5 +1,6 @@
 import 'dart:ui';
 
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
@@ -243,11 +244,19 @@ class _LoginScreenState extends State<LoginScreen> {
                           child: CongratsScreen(),
                           type: PageTransitionType.fade));
                     } else {
-                      final snackBar = SnackBar(
-                        duration: Duration(seconds: 1),
-                        content: Text("message"),
+                      new CupertinoAlertDialog(
+                        title: new Text("Dialog Title"),
+                        content: new Text("This is my content"),
+                        actions: <Widget>[
+                          CupertinoDialogAction(
+                            isDefaultAction: true,
+                            child: Text("Yes"),
+                          ),
+                          CupertinoDialogAction(
+                            child: Text("No"),
+                          )
+                        ],
                       );
-                      _scaffoldKey.currentState.showSnackBar(snackBar);
                     }
                   }),
             ),

@@ -232,7 +232,8 @@ class _OwnerRegistrationScreenState extends State<OwnerRegistrationScreen> {
               int status = await userProvider.signUp(antoin);
               if (status == 200)
                 Navigator.of(context).push(new PageTransition(
-                    child: CongratsScreen(), type: PageTransitionType.fade));
+                    child: SetUserPhotoScreen(),
+                    type: PageTransitionType.fade));
             },
             buttonText: "Next",
             isShowPaws: false,
