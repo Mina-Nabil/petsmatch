@@ -54,7 +54,7 @@ class PetsListScreen extends StatelessWidget {
                             fontWeight: FontWeight.bold,
                             color: PetsTheme.currentMainColor),
                       )),
-                  ...petProvider.pet.map((e) {
+                  ...petProvider.pets.map((e) {
                     return Column(children: [
                       ListTile(
                         contentPadding: EdgeInsets.symmetric(

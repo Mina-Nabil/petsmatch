@@ -4,6 +4,7 @@ import 'dart:convert';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
+import 'package:petmatch/models/Comment.dart';
 import 'api_url.dart';
 import '../../models/Post.dart';
 
@@ -16,8 +17,12 @@ class PostProvider extends ChangeNotifier {
   }
 
   Post _post;
-  List<RegularPost> _posts;
   Post get post => _post;
+  List<Comment> _comments;
+  List<Comment> get comments => _comments;
+
+  List<RegularPost> _posts;
+
   List<RegularPost> get posts => _posts;
 
   URLs _URLS = new URLs();
@@ -69,6 +74,7 @@ class PostProvider extends ChangeNotifier {
       Map<String, dynamic> jsonMap = jsonDecode(response.body);
       List<dynamic> data = jsonMap["data"];
       print('${data} this is the data');
+      data.map((e) => e.image = _URLS.media + e.image);
       _posts = data.map((i) => RegularPost.fromJson(i)).toList();
 
       return response.statusCode;
@@ -85,13 +91,50 @@ class PostProvider extends ChangeNotifier {
     notifyListeners();
     http.Response response;
     var map = new Map<String, dynamic>();
-    map['content'] = 'password';
-    map['client_id'] =
-        '3MVG9dZJodJWITSviqdj3EnW.LrZ81MbuGBqgIxxxdD6u7Mru2NOEs8bHFoFyNw_nVKPhlF2EzDbNYI0rphQL';
-    map['client_secret'] =
-        '42E131F37E4E05313646E1ED1D3788D76192EBECA7486D15BDDB8408B9726B42';
-    map['username'] = 'example@mail.com.us';
-    map['password'] = 'ABC1234563Af88jesKxPLVirJRW8wXvj3D';
+    map['content'] = post.text;
+    map['image'] = post.image;
+    try {
+      response = await http.post(Uri.parse(_URLS.createPost),
+          headers: {
+            'Authorization': 'Bearer $token',
+          },
+          body: map);
+    } catch (_) {
+      print(_);
+      _loading = false;
+      notifyListeners();
+      return -1;
+    } catch (_) {
+      print(_);
+      _loading = false;
+      notifyListeners();
+      return -1;
+    }
+
+    print("response <----");
+    print(response.body);
+    print(response.statusCode);
+    print(response.headers);
+  }
+
+  void setPost(RegularPost post) {
+    _post = post;
+    print(_post);
+  }
+
+  void setComment(RegularPost post) {
+    _post = post;
+    print(_post);
+  }
+
+  Future<int> createComment(String text, String post_id, String token) async {
+    print("start load <----");
+    _loading = true;
+    notifyListeners();
+    http.Response response;
+    var map = new Map<String, dynamic>();
+    map['content'] = text;
+    map['post_id'] = post_id;
     try {
       response = await http.post(Uri.parse(_URLS.createComment),
           headers: {

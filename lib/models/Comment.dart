@@ -22,11 +22,9 @@ class Comment {
   factory Comment.fromJson(Map<String, dynamic> parsedJson) {
     return Comment(
       id: parsedJson["id"],
-      owner: parsedJson["Comment_owner"].toDouble() ?? 1.0.toDouble(),
-      postTime: parsedJson["postTime"],
-      lovers: parsedJson["lovers"],
-      replies: parsedJson["replies"],
-      text: parsedJson["text"],
+      owner: parsedJson["user_id"].toDouble() ?? 1.0.toDouble(),
+      postTime: parsedJson["created_at"],
+      text: parsedJson["content"],
     );
   }
 }

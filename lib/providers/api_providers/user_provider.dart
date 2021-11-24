@@ -19,6 +19,9 @@ class UserProvider extends ChangeNotifier {
   User _user;
   User get user => _user;
 
+  String _error = "";
+  String get error => _error;
+
   URLs _URLS = new URLs();
 
   bool _loading = false;
@@ -76,7 +79,6 @@ class UserProvider extends ChangeNotifier {
       notifyListeners();
       return -1;
     }
-    print("respones <----");
     print(response.body);
     // If the call to the server was successful, parse the JSON.
     if (response.statusCode >= 200 && response.statusCode < 300) {
@@ -86,8 +88,56 @@ class UserProvider extends ChangeNotifier {
       _user = user;
 
       _isUserLoaded = true;
+    } else {
+      _error = "";
+      Map<String, dynamic> decodedBody = jsonDecode(response.body);
+
+      if (decodedBody.containsKey('name'))
+        _error = _error + decodedBody['name'][0] + '\n';
+      if (decodedBody.containsKey('email'))
+        _error = _error + decodedBody['email'][0] + '\n';
+      if (decodedBody.containsKey('country'))
+        _error = _error + decodedBody['country'][0] + '\n';
+      if (decodedBody.containsKey('city'))
+        _error = _error + decodedBody['city'][0] + '\n';
+
+      print(_error);
     }
+
     return response.statusCode;
+  }
+
+  Future<int> addPicture(User user) async {
+    print("start load <----");
+    _loading = true;
+    notifyListeners();
+    String body;
+    body = "?password=${user.password}" + "&email=${user.email}";
+    http.Response response;
+    try {
+      response = await http.post(Uri.parse(_URLS.login + body));
+    } catch (_) {
+      print(_);
+      _loading = false;
+      notifyListeners();
+      return -1;
+    }
+    if (response.statusCode == 200) {
+      //loggedin
+      print(response.body);
+      Map<String, dynamic> decodedBody = jsonDecode(response.body);
+      User loggedIn = User.fromJson(decodedBody);
+      // Server.setToken(decodedBody["accessToken"]);
+      print(loggedIn.name);
+      _user = loggedIn;
+      print(_user);
+
+      return response.statusCode;
+    }
+    print("response <----");
+    print(response.body);
+    print(response.statusCode);
+    print(response.headers);
   }
 
   Future<int> login(User user) async {
@@ -109,6 +159,7 @@ class UserProvider extends ChangeNotifier {
       //loggedin
       print(response.body);
       Map<String, dynamic> decodedBody = jsonDecode(response.body);
+
       User loggedIn = User.fromJson(decodedBody);
       // Server.setToken(decodedBody["accessToken"]);
       print(loggedIn.name);

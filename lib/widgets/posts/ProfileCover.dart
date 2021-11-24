@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:petmatch/models/Pet.dart';
 import 'package:petmatch/models/User.dart';
+import 'package:petmatch/providers/api_providers/pet_provider.dart';
 import 'package:petmatch/providers/api_providers/user_provider.dart';
 import 'package:petmatch/theme/petsTheme.dart';
 import 'package:petmatch/widgets/custom/Pair.dart';
@@ -10,11 +11,13 @@ import 'package:petmatch/widgets/buttons/RoundButton.dart';
 import 'package:petmatch/widgets/main/UserAvatar.dart';
 import 'package:provider/provider.dart';
 
-abstract class ProfileCover extends StatelessWidget {
+abstract class ProfileCover extends StatefulWidget {
   factory ProfileCover() {
     switch (PetsTheme.accountType) {
       case AccountType.petOwner:
-        return PetOwnerProfileCover();
+        print("${PetOwnerProfileCover()} is the cover");
+        if (PetOwnerProfileCover() != null) return PetOwnerProfileCover();
+        break;
       case AccountType.trainer:
         return TrainerProfileCover();
       case AccountType.vet:
@@ -27,61 +30,88 @@ abstract class ProfileCover extends StatelessWidget {
   }
 }
 
-UserProvider userProvider;
+class PetOwnerProfileCover extends StatefulWidget implements ProfileCover {
+  @override
+  State<PetOwnerProfileCover> createState() => _PetOwnerProfileCoverState();
+}
 
-class PetOwnerProfileCover extends StatelessWidget implements ProfileCover {
+class _PetOwnerProfileCoverState extends State<PetOwnerProfileCover> {
+  UserProvider userProvider;
+  PetProvider petProvider;
+
+  List<Widget> petsWidgets = [];
+
+  int status;
+
+  bool done = false;
+  List<Pet> pets;
+  User mainUser;
+  void initState() {
+    Future.delayed(Duration.zero).then((value) => updatePets());
+    super.initState();
+  }
+
+  void updatePets() async {
+    /* whatever */
+
+    userProvider = Provider.of<UserProvider>(context, listen: false);
+    petProvider = Provider.of<PetProvider>(context, listen: false);
+
+    status = await petProvider.showMyPets(token: userProvider.user.token);
+
+    print('${status} these are the status');
+    if (status == 200) {
+      pets = petProvider.pets;
+
+      setState(() {
+        mainUser.addAllPet(pets);
+
+        done = true;
+        if (done)
+          petsWidgets = [
+            for (var pet in mainUser.pets)
+              GestureDetector(
+                child: Container(
+                  margin: EdgeInsets.only(right: PetsTheme.getLargePadMarg()),
+                  child: Column(
+                    children: [
+                      Container(
+                        height: 40,
+                        width: 40,
+                        margin: EdgeInsets.symmetric(
+                            vertical: PetsTheme.getSmallPadMarg()),
+                        child: UserAvatar(
+                          image: pet.image,
+                          imageRatio: 1,
+                        ),
+                      ),
+                      Text(
+                        pet.name,
+                        style: TextStyle(
+                            fontSize: PetsTheme.getMeduimFont(),
+                            color: Colors.white),
+                      ),
+                    ],
+                  ),
+                ),
+                onTap: () => Navigator.pushNamed(context, 'petProfile'),
+              )
+          ];
+        print("${done} it is");
+      });
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     userProvider = Provider.of<UserProvider>(context);
-    print(userProvider.user.image);
-    User mainUser = User(
+    petProvider = Provider.of<PetProvider>(context);
+
+    mainUser = User(
         name: userProvider.user.name,
         image: "https://icon-library.com/images/681517_man_512x512.png",
         email: userProvider.user.email);
-    List<Pet> pets = [
-      Pet(
-          name: "Bobby",
-          image:
-              "https://cdn.pixabay.com/photo/2017/09/25/13/12/dog-2785074__340.jpg",
-          owner: "Mina"),
-      Pet(
-          name: "Bobby",
-          image:
-              "https://cdn.pixabay.com/photo/2017/09/25/13/12/dog-2785074__340.jpg",
-          owner: "Mina"),
-      Pet(
-          name: "Bobby",
-          image:
-              "https://cdn.pixabay.com/photo/2017/09/25/13/12/dog-2785074__340.jpg",
-          owner: "Mina"),
-      Pet(
-          name: "Bobby",
-          image:
-              "https://cdn.pixabay.com/photo/2017/09/25/13/12/dog-2785074__340.jpg",
-          owner: "Mina"),
-      Pet(
-          name: "Bobby",
-          image:
-              "https://cdn.pixabay.com/photo/2017/09/25/13/12/dog-2785074__340.jpg",
-          owner: "Mina"),
-      Pet(
-          name: "Bobby",
-          image:
-              "https://cdn.pixabay.com/photo/2017/09/25/13/12/dog-2785074__340.jpg",
-          owner: "Mina"),
-      Pet(
-          name: "Bobby",
-          image:
-              "https://cdn.pixabay.com/photo/2017/09/25/13/12/dog-2785074__340.jpg",
-          owner: "Mina"),
-      Pet(
-          name: "Bobby",
-          image:
-              "https://cdn.pixabay.com/photo/2017/09/25/13/12/dog-2785074__340.jpg",
-          owner: "Mina"),
-    ];
-    mainUser.addAllPet(pets);
-    print(mainUser.pets.first);
+    // print(mainUser.pets.first);
 
     return Container(
       padding: EdgeInsets.symmetric(horizontal: 20),
@@ -114,38 +144,7 @@ class PetOwnerProfileCover extends StatelessWidget implements ProfileCover {
                       scrollDirection: Axis.horizontal,
                       child: Row(
                           mainAxisAlignment: MainAxisAlignment.start,
-                          children: [
-                            for (var pet in mainUser.pets)
-                              GestureDetector(
-                                child: Container(
-                                  margin: EdgeInsets.only(
-                                      right: PetsTheme.getLargePadMarg()),
-                                  child: Column(
-                                    children: [
-                                      Container(
-                                        height: 40,
-                                        width: 40,
-                                        margin: EdgeInsets.symmetric(
-                                            vertical:
-                                                PetsTheme.getSmallPadMarg()),
-                                        child: UserAvatar(
-                                          image: pet.image,
-                                          imageRatio: 1,
-                                        ),
-                                      ),
-                                      Text(
-                                        pet.name,
-                                        style: TextStyle(
-                                            fontSize: PetsTheme.getMeduimFont(),
-                                            color: Colors.white),
-                                      ),
-                                    ],
-                                  ),
-                                ),
-                                onTap: () =>
-                                    Navigator.pushNamed(context, 'petProfile'),
-                              )
-                          ]),
+                          children: petsWidgets),
                     ),
                   ],
                 ),
@@ -189,7 +188,8 @@ class PetOwnerProfileCover extends StatelessWidget implements ProfileCover {
                 radius: 15,
                 color: Colors.white,
                 backgroundColor: Color.fromRGBO(20, 44, 122, 0.5),
-                onPressed: () {},
+                onPressed: () =>
+                    Navigator.pushNamed(context, 'Pet/Registration'),
               ),
             ],
           ),
@@ -275,7 +275,12 @@ class PetOwnerProfileCover extends StatelessWidget implements ProfileCover {
   }
 }
 
-class TrainerProfileCover extends StatelessWidget implements ProfileCover {
+class TrainerProfileCover extends StatefulWidget implements ProfileCover {
+  @override
+  State<TrainerProfileCover> createState() => _TrainerProfileCoverState();
+}
+
+class _TrainerProfileCoverState extends State<TrainerProfileCover> {
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -375,7 +380,12 @@ class TrainerProfileCover extends StatelessWidget implements ProfileCover {
 }
 
 // Vet profile & Store Profile can be same widget
-class VetProfileCover extends StatelessWidget implements ProfileCover {
+class VetProfileCover extends StatefulWidget implements ProfileCover {
+  @override
+  State<VetProfileCover> createState() => _VetProfileCoverState();
+}
+
+class _VetProfileCoverState extends State<VetProfileCover> {
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -459,7 +469,12 @@ class VetProfileCover extends StatelessWidget implements ProfileCover {
   }
 }
 
-class StoreProfileCover extends StatelessWidget implements ProfileCover {
+class StoreProfileCover extends StatefulWidget implements ProfileCover {
+  @override
+  State<StoreProfileCover> createState() => _StoreProfileCoverState();
+}
+
+class _StoreProfileCoverState extends State<StoreProfileCover> {
   @override
   Widget build(BuildContext context) {
     return Container(

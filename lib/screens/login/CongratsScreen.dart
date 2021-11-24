@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:page_transition/page_transition.dart';
+import 'package:petmatch/screens/main_screen/main_tabs/HomeScreen.dart';
 import 'package:petmatch/screens/profile/ProfileScreen.dart';
 import 'package:petmatch/theme/petsTheme.dart';
 import 'package:petmatch/widgets/buttons/PetsButton.dart';
@@ -56,7 +57,7 @@ class CongratsScreen extends StatelessWidget {
               //ProfileScreen
               callBackFunction: () => Navigator.of(context).push(
                   new PageTransition(
-                      child: ProfileScreen(), type: PageTransitionType.fade)),
+                      child: HomeScreen(), type: PageTransitionType.fade)),
               bgColor: PetsTheme.currentMainColor,
               textColor: Colors.white,
               isBorder: false,

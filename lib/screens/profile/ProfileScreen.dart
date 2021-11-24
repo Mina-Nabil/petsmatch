@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:petmatch/models/Post.dart';
+import 'package:petmatch/providers/api_providers/pet_provider.dart';
 import 'package:petmatch/providers/api_providers/post_provider.dart';
 import 'package:petmatch/theme/petsTheme.dart';
 import 'package:petmatch/widgets/posts/AboutPost.dart';
@@ -19,6 +20,8 @@ class _ProfileScreenState extends State<ProfileScreen> {
   UserProvider userProvider;
 
   PostProvider postProvider;
+
+  PetProvider petProvider;
 
   List<RegularPost> posts;
 
@@ -42,6 +45,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
 
     userProvider = Provider.of<UserProvider>(context, listen: false);
     postProvider = Provider.of<PostProvider>(context, listen: false);
+    petProvider = Provider.of<PetProvider>(context, listen: false);
     bodyWidgets = [
       AboutPost(
         phoneNo: userProvider.user.phone,
@@ -66,7 +70,6 @@ class _ProfileScreenState extends State<ProfileScreen> {
         print(posts[0].commentsCount);
         if (done)
           bodyWidgets.addAll(posts.map((post) {
-            print(post);
             return RegularPostWidget(
               post,
               margin:
@@ -78,6 +81,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
             );
           }).toList());
         print("${done} it is");
+        petProvider.showMyPets(token: userProvider.user.token);
       });
     }
   }

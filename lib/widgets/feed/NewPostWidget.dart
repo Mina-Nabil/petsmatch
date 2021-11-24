@@ -1,28 +1,30 @@
 import 'package:flutter/material.dart';
 import 'package:petmatch/models/Post.dart';
 import 'package:petmatch/models/User.dart';
-import 'package:petmatch/providers/api_providers/family_provider.dart';
 import 'package:petmatch/providers/api_providers/post_provider.dart';
+import 'package:petmatch/screens/main_screen/main_tabs/HomeScreen.dart';
 import 'package:petmatch/settings/paths.dart';
 import 'package:petmatch/theme/petsTheme.dart';
 import 'package:petmatch/widgets/buttons/SubmitButton.dart';
 import 'package:petmatch/widgets/main/SizedCircularIconButton.dart';
 import 'package:petmatch/widgets/main/UserAvatar.dart';
-import 'package:petmatch/widgets/posts/ProfileCover.dart';
 import 'package:provider/provider.dart';
+import '../../providers/api_providers/user_provider.dart';
 
 class NewPostWidget extends StatelessWidget {
   final double maxHeightRatio = .2;
   final double minHeightRatio = .12;
   PostProvider postProvider;
-  // UserProvider userProvider;
+  UserProvider userProvider;
+  User user;
+  // const NewPostWidget({this.updatePost});
   final TextEditingController _postController = new TextEditingController();
 
-  final user = new User();
   @override
   Widget build(BuildContext context) {
     postProvider = Provider.of<PostProvider>(context);
-
+    userProvider = Provider.of<UserProvider>(context);
+    user = userProvider.user;
     return Container(
         width: MediaQuery.of(context).size.width,
         decoration: BoxDecoration(
@@ -60,6 +62,7 @@ class NewPostWidget extends StatelessWidget {
                             hintText: "Share your thoughts...",
                             hintStyle: TextStyle(fontFamily: "Roboto"),
                             border: InputBorder.none),
+                        controller: _postController,
                       ),
                     ),
                   ),
@@ -99,11 +102,23 @@ class NewPostWidget extends StatelessWidget {
               //         child: SetUserPhotoScreen(),
               //         type: PageTransitionType.fade)),
               callBackFunction: () async {
-                RegularPost antoin = new RegularPost();
+                PostOwner po = new UserPostOwner(
+                    id: user.id, name: user.name, imageUrl: user.image);
+                print(_postController.text.trim());
+                RegularPost post = new RegularPost(
+                    owner: po,
+                    postDate: new DateTime.now(),
+                    commentsCount: 0,
+                    lovesCount: 0,
+                    isLoved: false,
+                    image: "",
+                    text: _postController.text.trim());
                 print(context);
                 int status = await postProvider.createPost(
-                    antoin, userProvider.user.token);
-                if (status == 200) print(status);
+                    post, userProvider.user.token);
+                if (status == 200) {
+                  postProvider.posts.add(post);
+                }
               },
               buttonText: "Post",
               isShowPaws: false,

@@ -4,6 +4,7 @@ import 'package:petmatch/models/Post.dart';
 import 'package:petmatch/models/User.dart';
 import 'package:petmatch/providers/api_providers/family_provider.dart';
 import 'package:petmatch/providers/api_providers/post_provider.dart';
+import 'package:petmatch/screens/post_screens/PostScreen.dart';
 import 'package:petmatch/theme/petsTheme.dart';
 import 'package:petmatch/widgets/feed/UserNameRole.dart';
 import 'package:petmatch/widgets/main/UserAvatar.dart';
@@ -31,8 +32,7 @@ class RegularPostWidget extends StatefulWidget {
 class _RegularPostWidgetState extends State<RegularPostWidget> {
   @override
   Widget build(BuildContext context) {
-    User user;
-
+    postProvider = Provider.of<PostProvider>(context, listen: false);
     final int imageWidth = MediaQuery.of(context).size.width.toInt();
     final int imageHeight = 250;
 
@@ -157,9 +157,11 @@ class _RegularPostWidgetState extends State<RegularPostWidget> {
                             minWidth: 1,
                             splashColor: Colors.transparent,
                             highlightColor: Colors.transparent,
-                            onPressed: () => widget.enableCommentButton
-                                ? Navigator.of(context).pushNamed('post')
-                                : null,
+                            onPressed: () async {
+                              RegularPost activePost = widget.post;
+                              postProvider.setPost(activePost);
+                              Navigator.of(context).pushNamed('post');
+                            },
                             child: SvgPicture.asset(
                               "assets/images/icons/comment.svg",
                               color: Colors.grey,

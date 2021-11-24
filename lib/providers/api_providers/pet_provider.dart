@@ -11,7 +11,7 @@ class PetProvider extends ChangeNotifier {
   //reset provider data
   void reset() {
     _isLoaded = null;
-    _pet = null;
+    _pets = null;
   }
 
   bool _isLoaded;
@@ -22,8 +22,8 @@ class PetProvider extends ChangeNotifier {
     notifyListeners();
   }
 
-  List<Pet> _pet;
-  List<Pet> get pet => _pet;
+  List<Pet> _pets;
+  List<Pet> get pets => _pets;
 
   URLs _URLS = new URLs();
 
@@ -46,7 +46,7 @@ class PetProvider extends ChangeNotifier {
       // If the call to the server was successful, parse the JSON.
       print("200 <----");
       List jsonList = jsonDecode(response.body);
-      _pet = jsonList.map((i) => Pet.fromJson(i)).toList();
+      // _pet = jsonList.map((i) => Pet.fromJson(i)).toList();
       print("done <----");
       _isLoaded = true;
       notifyListeners();
@@ -60,13 +60,12 @@ class PetProvider extends ChangeNotifier {
     }
   }
 
-  Future<List<Pet>> showMyPets({@required String token}) async {
-    print("start load <----");
+  Future<int> showMyPets({@required String token}) async {
+    print("start load showMyPets <----");
     var response;
 
-    response = await http.get(
-      Uri.parse(_URLS.register),
-    );
+    response = await http.get(Uri.parse(_URLS.showMyPets),
+        headers: {'Authorization': 'Bearer $token'});
 
     print("Pet response <----");
     print(response.body);
@@ -75,9 +74,10 @@ class PetProvider extends ChangeNotifier {
       // If the call to the server was successful, parse the JSON.
       print("200 <----");
       List jsonList = jsonDecode(response.body);
-      List<Pet> _pets = jsonList.map((i) => Pet.fromJson(i)).toList();
+      if (_pets == null) _pets = [];
+      _pets = jsonList.map((i) => Pet.fromJson(i)).toList();
       print("done <----");
-      return _pets;
+      return response.statusCode;
     } else {
       // If that call was not successful, throw an error.
       print("error");
@@ -110,14 +110,13 @@ class PetProvider extends ChangeNotifier {
     }
   }
 
-  Future<List<Pet>> addPet(Pet pet, {@required String token}) async {
+  Future<int> addPet(Pet pet, String token) async {
     print("start load <----");
     var response;
     String body;
     body = "?name=${pet.name}" + "&image=${pet.image}" + "&dob=${pet.dob}";
-    response = await http.post(
-      Uri.parse(_URLS.register + body),
-    );
+    response = await http.post(Uri.parse(_URLS.createPet + body),
+        headers: {'Authorization': 'Bearer $token'});
 
     print("Pet response <----");
     print(response.body);
@@ -125,10 +124,14 @@ class PetProvider extends ChangeNotifier {
     if (response.statusCode >= 200 && response.statusCode < 300) {
       // If the call to the server was successful, parse the JSON.
       print("200 <----");
-      List jsonList = jsonDecode(response.body);
-      List<Pet> _pets = jsonList.map((i) => Pet.fromJson(i)).toList();
+      Map<String, dynamic> decodedBody = jsonDecode(response.body);
+      print(decodedBody);
+      Pet decodedPet = Pet.fromJson(decodedBody);
+      print(_pets);
+      if (_pets == null) _pets = [];
+      _pets.insert(0, decodedPet);
       print("done <----");
-      return _pets;
+      return response.statusCode;
     } else {
       // If that call was not successful, throw an error.
       print("error");

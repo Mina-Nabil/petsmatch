@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:intl/intl.dart';
+import 'package:petmatch/providers/api_providers/api_url.dart';
 
 abstract class Post {
   Post({
@@ -65,6 +66,7 @@ class RegularPost extends Post {
 
   final String image;
   final String text;
+  URLs _URLS = new URLs();
 
   // factory RegularPost.fromJson(Map<String, dynamic> parsedJson) {
   //   return new RegularPost(
@@ -78,19 +80,19 @@ class RegularPost extends Post {
   // }
   factory RegularPost.fromJson(Map<String, dynamic> parsedJson) {
     String gender = "Female";
+    print("${parsedJson['user']} this is the gender of the parsedJSON");
     if (parsedJson['user']['gender'] == 1) gender = "Male";
     DateFormat dateFormat = DateFormat("yyyy-MM-dd");
+    String image = 'https://petsmatch-be.herokuapp.com' + parsedJson['image'];
     PostOwner po = new UserPostOwner(
-        id: parsedJson['user']['id'],
-        name: parsedJson['user']['name'],
-        imageUrl: parsedJson['user']['image']);
-
-    print('${po} this is the PO');
-
+      id: parsedJson['user']['id'],
+      name: parsedJson['user']['name'],
+    );
+    print(parsedJson['image']);
     return new RegularPost(
       postDate: dateFormat.parse(parsedJson['created_at']),
       text: parsedJson['content'],
-      image: parsedJson['image'],
+      image: image,
       owner: po,
       commentsCount: parsedJson['comments'].length,
       sharesCount: parsedJson['shares'].length,
@@ -129,10 +131,16 @@ class UserPostOwner extends PostOwner {
   }) : super(id: id, name: name, imageUrl: imageUrl);
 
   String whoIAm() {
-    String role = "Owner of ";
-    for (var pet in pets) {
-      role += pet + ", ";
+    String role;
+    if (pets != null) {
+      role = "Owner of ";
+      for (var pet in pets) {
+        role += pet + ", ";
+      }
+    } else {
+      role = "No pets yet";
     }
+
     return role.substring(
         0,
         role.length -

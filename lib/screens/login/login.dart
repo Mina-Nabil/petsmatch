@@ -107,171 +107,182 @@ class _LoginScreenState extends State<LoginScreen> {
       }
     }
 
-    return LoginScreenSetup(
-        backgroundColor: bgColor.blue,
-        isSmallTopArea: false,
-        showLogo: true,
-        isPortraitLock: true,
-        topbarSubtitle: "All Pets, One Place...",
-        formTitle: "Welcome to PetMatch!",
-        topbarTitle: "Welcome to PetMatch",
-        formWidget: Column(
-          mainAxisSize: MainAxisSize.max,
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          crossAxisAlignment: CrossAxisAlignment.center,
-          children: [
-            //Email Field - flex 5
-            Flexible(
-              flex: 5,
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: <Widget>[
-                  Container(
-                    constraints: BoxConstraints(maxWidth: fieldsWidth),
-                    margin:
-                        EdgeInsets.only(bottom: PetsTheme.getSmallerPadMarg()),
-                    child: Padding(
-                        padding:
-                            EdgeInsets.only(left: PetsTheme.getMeduimPadMarg()),
-                        child: TextFormField(
-                          decoration: InputDecoration(
-                              hintText: "E-mail",
-                              hintStyle: TextStyle(
-                                  fontFamily: "Segoe",
-                                  fontSize: 16,
-                                  color: PetsTheme.petsTextGrayColor)),
-                          controller: _emailController,
-                          style: TextStyle(fontFamily: "Segoe", fontSize: 16),
-                        )),
-                  ),
-                ],
-              ),
-            ),
-            //Password - flex 5
-            Flexible(
-              flex: 5,
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.center,
-                mainAxisAlignment: MainAxisAlignment.start,
-                children: [
-                  Row(
+    return CupertinoPageScaffold(
+        child: LoginScreenSetup(
+            backgroundColor: bgColor.blue,
+            isSmallTopArea: false,
+            showLogo: true,
+            isPortraitLock: true,
+            topbarSubtitle: "All Pets, One Place...",
+            formTitle: "Welcome to PetMatch!",
+            topbarTitle: "Welcome to PetMatch",
+            formWidget: Column(
+              mainAxisSize: MainAxisSize.max,
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: [
+                //Email Field - flex 5
+                Flexible(
+                  flex: 5,
+                  child: Row(
                     mainAxisAlignment: MainAxisAlignment.center,
-                    mainAxisSize: MainAxisSize.max,
                     children: <Widget>[
                       Container(
-                        width: fieldsWidth,
-                        margin:
-                            EdgeInsets.only(top: PetsTheme.getSmallPadMarg()),
+                        constraints: BoxConstraints(maxWidth: fieldsWidth),
+                        margin: EdgeInsets.only(
+                            bottom: PetsTheme.getSmallerPadMarg()),
                         child: Padding(
                             padding: EdgeInsets.only(
-                                left: PetsTheme.getLargePadMarg()),
-                            child: Stack(
-                              fit: StackFit.loose,
-                              alignment: Alignment.centerRight,
-                              children: [
-                                TextFormField(
-                                  decoration: InputDecoration(
-                                      hintText: "Password",
-                                      hintStyle: TextStyle(
-                                          fontFamily: "Segoe",
-                                          fontSize: 16,
-                                          color: PetsTheme.petsTextGrayColor)),
-                                  obscureText: obscureTextFlag,
-                                  controller: _passwordController,
-                                  style: TextStyle(
-                                      fontFamily: "Segoe", fontSize: 16),
-                                ),
-                                SizedBox(
-                                  child: ButtonTheme(
-                                      padding: EdgeInsets.all(PetsTheme
-                                          .getSmallerPadMarg()), //adds padding inside the button
-
-                                      materialTapTargetSize: MaterialTapTargetSize
-                                          .shrinkWrap, //limits the touch area to the button area
-                                      minWidth: 0, //wraps child's width
-                                      height: 0, //wraps child's height
-                                      child: FlatButton(
-                                        highlightColor: Colors.transparent,
-                                        splashColor: Colors.transparent,
-                                        child: SizedBox(
-                                          child: Icon(
-                                            FontAwesomeIcons.solidEye,
-                                            color: obscureTextColor,
-                                          ),
-                                        ),
-                                        onPressed: _togglePW,
-                                      )),
-                                ),
-                              ],
+                                left: PetsTheme.getMeduimPadMarg()),
+                            child: TextFormField(
+                              decoration: InputDecoration(
+                                  hintText: "E-mail",
+                                  hintStyle: TextStyle(
+                                      fontFamily: "Segoe",
+                                      fontSize: 16,
+                                      color: PetsTheme.petsTextGrayColor)),
+                              controller: _emailController,
+                              style:
+                                  TextStyle(fontFamily: "Segoe", fontSize: 16),
                             )),
                       ),
                     ],
                   ),
-                  Container(
-                      width: fieldsWidth,
-                      margin:
-                          EdgeInsets.only(top: PetsTheme.getMeduimPadMarg()),
-                      alignment: Alignment.centerRight,
-                      child: SizedBox(
-                        child: Text(
-                          "Forgot password?",
-                          style: TextStyle(
-                              fontFamily: "Roboto",
-                              fontSize: PetsTheme.getSmallFont(),
-                              color:
-                                  PetsTheme.petsTextGrayColor.withOpacity(0.5)),
-                        ),
-                      ))
-                ],
-              ),
-            ),
-            //Sign in button - flex 2
-            Flexible(
-              flex: 2,
-              fit: FlexFit.tight,
-              child: SubmitButtonSign(
-                  fieldsWidth: fieldsWidth,
-                  callBackFunction: () async {
-                    User _user = new User(
-                      password: _passwordController.text.trim(),
-                      email: _emailController.text.trim(),
-                    );
-                    print(context);
-                    int status = await userProvider.login(_user);
-                    print(status);
-                    if (status == 200) {
-                      Navigator.of(context).push(new PageTransition(
-                          child: CongratsScreen(),
-                          type: PageTransitionType.fade));
-                    } else {
-                      new CupertinoAlertDialog(
-                        title: new Text("Dialog Title"),
-                        content: new Text("This is my content"),
-                        actions: <Widget>[
-                          CupertinoDialogAction(
-                            isDefaultAction: true,
-                            child: Text("Yes"),
-                          ),
-                          CupertinoDialogAction(
-                            child: Text("No"),
-                          )
-                        ],
-                      );
-                    }
-                  }),
-            ),
-            Flexible(
-              flex: 2,
-              fit: FlexFit.tight,
-              child: SubmitButton(
-                fieldsWidth: fieldsWidth,
-                callBackFunction: signUp,
-              ),
-            ),
-            SizedBox(height: 100),
+                ),
+                //Password - flex 5
+                Flexible(
+                  flex: 5,
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    children: [
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        mainAxisSize: MainAxisSize.max,
+                        children: <Widget>[
+                          Container(
+                            width: fieldsWidth,
+                            margin: EdgeInsets.only(
+                                top: PetsTheme.getSmallPadMarg()),
+                            child: Padding(
+                                padding: EdgeInsets.only(
+                                    left: PetsTheme.getLargePadMarg()),
+                                child: Stack(
+                                  fit: StackFit.loose,
+                                  alignment: Alignment.centerRight,
+                                  children: [
+                                    TextFormField(
+                                      decoration: InputDecoration(
+                                          hintText: "Password",
+                                          hintStyle: TextStyle(
+                                              fontFamily: "Segoe",
+                                              fontSize: 16,
+                                              color:
+                                                  PetsTheme.petsTextGrayColor)),
+                                      obscureText: obscureTextFlag,
+                                      controller: _passwordController,
+                                      style: TextStyle(
+                                          fontFamily: "Segoe", fontSize: 16),
+                                    ),
+                                    SizedBox(
+                                      child: ButtonTheme(
+                                          padding: EdgeInsets.all(PetsTheme
+                                              .getSmallerPadMarg()), //adds padding inside the button
 
-            //Other sign in options
-            /*Flexible(
+                                          materialTapTargetSize:
+                                              MaterialTapTargetSize
+                                                  .shrinkWrap, //limits the touch area to the button area
+                                          minWidth: 0, //wraps child's width
+                                          height: 0, //wraps child's height
+                                          child: FlatButton(
+                                            highlightColor: Colors.transparent,
+                                            splashColor: Colors.transparent,
+                                            child: SizedBox(
+                                              child: Icon(
+                                                FontAwesomeIcons.solidEye,
+                                                color: obscureTextColor,
+                                              ),
+                                            ),
+                                            onPressed: _togglePW,
+                                          )),
+                                    ),
+                                  ],
+                                )),
+                          ),
+                        ],
+                      ),
+                      Container(
+                          width: fieldsWidth,
+                          margin: EdgeInsets.only(
+                              top: PetsTheme.getMeduimPadMarg()),
+                          alignment: Alignment.centerRight,
+                          child: SizedBox(
+                            child: Text(
+                              "Forgot password?",
+                              style: TextStyle(
+                                  fontFamily: "Roboto",
+                                  fontSize: PetsTheme.getSmallFont(),
+                                  color: PetsTheme.petsTextGrayColor
+                                      .withOpacity(0.5)),
+                            ),
+                          ))
+                    ],
+                  ),
+                ),
+                //Sign in button - flex 2
+                Flexible(
+                  flex: 2,
+                  fit: FlexFit.tight,
+                  child: SubmitButtonSign(
+                      fieldsWidth: fieldsWidth,
+                      callBackFunction: () async {
+                        User _user = new User(
+                          password: _passwordController.text.trim(),
+                          email: _emailController.text.trim(),
+                        );
+                        print(context);
+                        int status = await userProvider.login(_user);
+                        print(status);
+                        if (status == 200) {
+                          Navigator.of(context).push(new PageTransition(
+                              child: CongratsScreen(),
+                              type: PageTransitionType.fade));
+                        } else {
+                          print(status);
+                          showModalBottomSheet(
+                            context: context,
+                            builder: (
+                              BuildContext context,
+                            ) =>
+                                CupertinoPopupSurface(
+                              child: Center(
+                                child: Container(
+                                  height: 50,
+                                  width: 200,
+                                  child: Center(
+                                    child: Text(
+                                      "The email or password you have entered are invalid",
+                                    ),
+                                  ),
+                                ),
+                              ),
+                            ),
+                          );
+                        }
+                      }),
+                ),
+                Flexible(
+                  flex: 2,
+                  fit: FlexFit.tight,
+                  child: SubmitButton(
+                    fieldsWidth: fieldsWidth,
+                    callBackFunction: signUp,
+                  ),
+                ),
+                SizedBox(height: 100),
+
+                //Other sign in options
+                /*Flexible(
                 flex: 5,
                 child: Container(
                   width: fieldsWidth * 0.5,
@@ -337,7 +348,7 @@ class _LoginScreenState extends State<LoginScreen> {
                         )
                       ]),
                 ))*/
-          ],
-        ));
+              ],
+            )));
   }
 }

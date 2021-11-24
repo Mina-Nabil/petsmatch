@@ -1,7 +1,9 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:petmatch/models/User.dart';
+import 'package:petmatch/providers/api_providers/pet_provider.dart';
 import 'package:petmatch/providers/api_providers/post_provider.dart';
+import 'package:petmatch/screens/login/petRegistration.dart';
 import 'package:petmatch/screens/main_screen/main_tabs/HomeScreen.dart';
 import 'package:petmatch/screens/profile/ProfileScreen.dart';
 import 'package:petmatch/screens/main_screen/SearchScreen.dart';
@@ -33,6 +35,7 @@ class MyApp extends StatelessWidget {
         providers: [
           Provider<UserProvider>(create: (_) => UserProvider()),
           Provider<PostProvider>(create: (_) => PostProvider()),
+          Provider<PetProvider>(create: (_) => PetProvider()),
         ],
         child: CupertinoApp(
           localizationsDelegates: [
@@ -93,6 +96,11 @@ class MyApp extends StatelessWidget {
               case 'Mating/PetReviews':
                 return CupertinoPageRoute(
                     builder: (_) => PetReviewsScreen(), settings: settings);
+              case 'Pet/Registration':
+                return CupertinoPageRoute(
+                    builder: (_) => PetRegistrationScreen(),
+                    settings: settings);
+
               default:
                 return null;
             }
