@@ -1,11 +1,17 @@
+import 'dart:io';
+
+import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:image_picker/image_picker.dart';
 import 'package:page_transition/page_transition.dart';
 import 'package:petmatch/models/User.dart';
 import 'package:petmatch/providers/api_providers/user_provider.dart';
 import 'package:petmatch/screens/login/CongratsScreen.dart';
 import 'package:petmatch/screens/login/setUserPhoto.dart';
 import 'package:petmatch/theme/petsTheme.dart';
+import 'package:petmatch/widgets/buttons/RemoveImageButton.dart';
+import 'package:petmatch/widgets/buttons/UploadImageButton.dart';
 import 'package:petmatch/widgets/form/LabelledFormField.dart';
 import 'package:petmatch/widgets/screens/LoginScreenSetup.dart';
 import 'package:petmatch/widgets/buttons/SkipButton.dart';
@@ -38,6 +44,10 @@ class _TrainerRegistrationScreenState extends State<TrainerRegistrationScreen> {
   String dropdownValueCountry = 'Egypt';
   String dropdownValueCity = 'Cairo';
   String dropdownValueTraining = 'Protection';
+  String profilePicture;
+  String firebase_token;
+  FirebaseMessaging _firebaseMessaging = FirebaseMessaging();
+
   final List<DropdownMenuItem> genderItems = <DropdownMenuItem>[
     DropdownMenuItem(
       child: Text("Male"),
@@ -51,6 +61,45 @@ class _TrainerRegistrationScreenState extends State<TrainerRegistrationScreen> {
   ];
 
   UserProvider userProvider;
+
+  void initState() {
+    // blocking change in screen orientation
+    super.initState();
+    firebaseCloudMessaging_Listeners();
+  }
+
+  void firebaseCloudMessaging_Listeners() {
+    if (Platform.isIOS) iOS_Permission();
+
+    _firebaseMessaging.getToken().then((token) {
+      setState(() {
+        firebase_token = token;
+      });
+      print(token);
+    });
+
+    _firebaseMessaging.configure(
+      onMessage: (Map<String, dynamic> message) async {
+        print('on message $message');
+      },
+      onResume: (Map<String, dynamic> message) async {
+        print('on resume $message');
+      },
+      onLaunch: (Map<String, dynamic> message) async {
+        print('on launch $message');
+      },
+    );
+  }
+
+  void iOS_Permission() {
+    _firebaseMessaging.requestNotificationPermissions(
+        IosNotificationSettings(sound: true, badge: true, alert: true));
+    _firebaseMessaging.onIosSettingsRegistered
+        .listen((IosNotificationSettings settings) {
+      print("Settings registered: $settings");
+    });
+  }
+
   //Submit Form Function
   void submitForm() {
     print("Submit aho");
@@ -152,6 +201,31 @@ class _TrainerRegistrationScreenState extends State<TrainerRegistrationScreen> {
                   );
                 }).toList(),
               )),
+          profilePicture == null
+              ? UploadImageButton(
+                  fieldsWidth: fieldsWidth,
+                  callBackFunction: () async {
+                    final ImagePicker _picker = ImagePicker();
+                    final pickedFile =
+                        await _picker.pickImage(source: ImageSource.gallery);
+                    setState(() {
+                      profilePicture = pickedFile.path.toString();
+                    });
+                  })
+              : Column(children: [
+                  CircleAvatar(
+                    radius: 30.0,
+                    backgroundColor: Colors.transparent,
+                    backgroundImage: FileImage(File(profilePicture)),
+                  ),
+                  RemoveImageButton(
+                      fieldsWidth: fieldsWidth,
+                      callBackFunction: () async {
+                        setState(() {
+                          profilePicture = null;
+                        });
+                      })
+                ]),
           //DatePicker Widget
           LabelledFormField(
             label: "Birth Date",
@@ -296,20 +370,30 @@ class _TrainerRegistrationScreenState extends State<TrainerRegistrationScreen> {
                   ),
                 );
               else {
+                String aboutController = _aboutController.text.trim();
+                String relatedOrgController = _relatedOrgController.text.trim();
+                String yearsExpController = _yearsExpController.text.trim();
+                print("$relatedOrgController");
+
                 User antoin = new User(
-                    name: _firstNameController.text + _lastNameController.text,
-                    password: _passwordNameController.text.trim(),
-                    email: _emailController.text.trim(),
-                    usertype: "Trainer",
-                    gender: dropdownValueGender,
-                    dateOfBirth: _dateOfBirth,
-                    country: dropdownValueCountry,
-                    city: dropdownValueCity,
-                    token: "");
+                  name: _firstNameController.text + _lastNameController.text,
+                  password: _passwordNameController.text.trim(),
+                  email: _emailController.text.trim(),
+                  usertype: "Trainer",
+                  gender: dropdownValueGender,
+                  dateOfBirth: _dateOfBirth,
+                  image: profilePicture,
+                  country: dropdownValueCountry,
+                  city: dropdownValueCity,
+                  about: aboutController,
+                  orgainzation: relatedOrgController,
+                  experience: int.parse(yearsExpController),
+                  token: "",
+                  firebase_token: firebase_token,
+                );
                 print(context);
                 int status = await userProvider.signUp(antoin);
-                print(userProvider.user.email);
-                if (status == 200)
+                if (status >= 200 && status < 300)
                   Navigator.of(context).push(new PageTransition(
                       child: CongratsScreen(), type: PageTransitionType.fade));
               }

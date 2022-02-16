@@ -36,8 +36,11 @@ class PetsButton extends StatelessWidget {
         flex: (isFullWidth) ? 1 : 2,
         fit: FlexFit.tight,
         child: Container(
-          padding: (isFullWidth) ? EdgeInsets.symmetric(horizontal: PetsTheme.getMoreSmallerPadMarg()) : EdgeInsets.all(PetsTheme.getSmallPadMarg()),
-          alignment: (isFullWidth) ? Alignment.center : Alignment.centerRight ,
+          padding: (isFullWidth)
+              ? EdgeInsets.symmetric(
+                  horizontal: PetsTheme.getMoreSmallerPadMarg())
+              : EdgeInsets.all(PetsTheme.getSmallPadMarg()),
+          alignment: (isFullWidth) ? Alignment.center : Alignment.centerRight,
           child: SizedBox(child: trailingWidget),
         ),
       ));
@@ -47,11 +50,17 @@ class PetsButton extends StatelessWidget {
       fit: FlexFit.tight,
       child: Container(
         padding: EdgeInsets.symmetric(vertical: PetsTheme.getSmallPadMarg()),
-        alignment: (hasTrailing && !isFullWidth) ? Alignment.centerLeft : Alignment.center,
+        alignment: (hasTrailing && !isFullWidth)
+            ? Alignment.centerLeft
+            : Alignment.center,
         child: FittedBox(
           child: Text(
             buttonText,
-            style: TextStyle(color: textColor, fontFamily: "Roboto", fontWeight: FontWeight.w500, fontSize: PetsTheme.getSmallFont()),
+            style: TextStyle(
+                color: textColor,
+                fontFamily: "Roboto",
+                fontWeight: FontWeight.w500,
+                fontSize: PetsTheme.getSmallFont()),
           ),
         ),
       ),
@@ -62,8 +71,15 @@ class PetsButton extends StatelessWidget {
       width: fieldsWidth,
       height: MediaQuery.of(context).size.height * 0.07,
       margin: EdgeInsets.all(PetsTheme.getSmallerPadMarg()),
-      constraints: BoxConstraints(maxWidth: fieldsWidth, maxHeight: MediaQuery.of(context).size.height * 0.07),
-      decoration: BoxDecoration(color: bgColor, border: Border.all(color: (isBorder) ? PetsTheme.currentMainColor : Colors.transparent), borderRadius: BorderRadius.circular(PetsTheme.getMuchLargerFont())),
+      constraints: BoxConstraints(
+          maxWidth: fieldsWidth,
+          maxHeight: MediaQuery.of(context).size.height * 0.07),
+      decoration: BoxDecoration(
+          color: bgColor,
+          border: Border.all(
+              color:
+                  (isBorder) ? PetsTheme.currentMainColor : Colors.transparent),
+          borderRadius: BorderRadius.circular(PetsTheme.getMuchLargerFont())),
       child: FlatButton(
         onPressed: callBackFunction,
         child: Row(

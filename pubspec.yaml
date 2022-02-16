@@ -61,6 +61,8 @@ dependencies:
   flutter_rating_bar: ^4.0.0
   google_sign_in: ^4.0.1+1
   flutter_secure_storage: ^3.3.5
+  firebase_messaging: ^6.0.16
+
 
 dev_dependencies:
   # app logo

@@ -75,7 +75,8 @@ class _PetMatchSingleScreenState extends State<PetMatchSingleScreen> {
     backgroundImage = DecorationImage(
       image: Image.asset(bgMaskPath).image,
       fit: BoxFit.cover,
-      colorFilter: ColorFilter.mode(PetsTheme.currentBgMainColor.withOpacity(1.0), BlendMode.srcOut),
+      colorFilter: ColorFilter.mode(
+          PetsTheme.currentBgMainColor.withOpacity(1.0), BlendMode.srcOut),
     );
 
     if (widget.enableRotation)
@@ -104,7 +105,13 @@ class _PetMatchSingleScreenState extends State<PetMatchSingleScreen> {
         child: Material(
           color: Colors.transparent,
           child: Stack(children: [
-            Container(child: SafeArea(top: false, bottom: false, right: true, left: true, child: _buildScreenWidget())),
+            Container(
+                child: SafeArea(
+                    top: false,
+                    bottom: false,
+                    right: true,
+                    left: true,
+                    child: _buildScreenWidget())),
             if (widget.backArrow || widget.title != null)
               PetMatchAppBar(
                 title: widget.title,
@@ -139,7 +146,9 @@ class _PetMatchSingleScreenState extends State<PetMatchSingleScreen> {
     bool appBarExists = (widget.backArrow || widget.title != null);
 
     return Container(
-      padding: appBarExists ? EdgeInsets.only(top: (56 + MediaQuery.of(context).padding.top)) : EdgeInsets.only(top: MediaQuery.of(context).padding.top),
+      padding: appBarExists
+          ? EdgeInsets.only(top: (56 + MediaQuery.of(context).padding.top))
+          : EdgeInsets.only(top: MediaQuery.of(context).padding.top),
       width: double.infinity,
       decoration: BoxDecoration(
         color: Colors.black.withOpacity(0.9),
@@ -155,8 +164,12 @@ class _PetMatchSingleScreenState extends State<PetMatchSingleScreen> {
         color: PetsTheme.currentBgMainColor.withOpacity(1),
       ),
       child: ClipRRect(
-          borderRadius: BorderRadius.only(topLeft: Radius.circular(20), topRight: Radius.circular(20)),
-          child: Container(width: double.infinity, color: widget.bodyBackgroundColor ?? Colors.grey[100], child: widget.body)),
+          borderRadius: BorderRadius.only(
+              topLeft: Radius.circular(20), topRight: Radius.circular(20)),
+          child: Container(
+              width: double.infinity,
+              color: widget.bodyBackgroundColor ?? Colors.grey[100],
+              child: widget.body)),
     );
   }
 
@@ -166,7 +179,8 @@ class _PetMatchSingleScreenState extends State<PetMatchSingleScreen> {
         color: PetsTheme.currentBgMainColor.withOpacity(1),
       ),
       child: ClipRRect(
-          borderRadius: BorderRadius.only(topLeft: Radius.circular(20), topRight: Radius.circular(20)),
+          borderRadius: BorderRadius.only(
+              topLeft: Radius.circular(20), topRight: Radius.circular(20)),
           child: Container(
               width: double.infinity,
               color: widget.bodyBackgroundColor ?? Colors.grey[100],
@@ -198,7 +212,10 @@ class PetMatchAppBar extends StatelessWidget {
           children: [
             if (title != null)
               Container(
-                padding: EdgeInsets.only(left: backArrow ? appBarLeftPadding * 2.5 : appBarLeftPadding),
+                padding: EdgeInsets.only(
+                    left: backArrow
+                        ? appBarLeftPadding * 2.5
+                        : appBarLeftPadding),
                 alignment: Alignment.centerLeft,
                 child: title,
               ),

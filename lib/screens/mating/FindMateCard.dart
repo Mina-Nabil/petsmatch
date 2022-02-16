@@ -1,24 +1,65 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:petmatch/models/Pet.dart';
+import 'package:petmatch/providers/api_providers/crush_provider.dart';
 import 'package:petmatch/theme/petsTheme.dart';
 import 'package:petmatch/widgets/custom/Pair.dart';
 import 'package:petmatch/widgets/custom/PetMatchRating.dart';
 import 'package:petmatch/widgets/buttons/CircularMoreButton.dart';
+import 'package:provider/provider.dart';
 
-class FindMatingCard extends StatelessWidget {
+class FindMatingCard extends StatefulWidget {
   FindMatingCard(this.pet);
   final Pet pet;
+
+  @override
+  State<FindMatingCard> createState() => _FindMatingCardState();
+}
+
+class _FindMatingCardState extends State<FindMatingCard> {
+  void initState() {
+    crushProvider = Provider.of<CrushProvider>(context, listen: false);
+    circularButton = CircularButton(
+        child: SvgPicture.asset(matingImg),
+        radius: PetsTheme.radius3,
+        backgroundColor: Colors.red[50],
+        onPressed: () {
+          crush();
+        });
+    super.initState();
+  }
+
+  String matingImg = "assets/images/icons/mating/matingLove.svg";
+
+  CrushProvider crushProvider;
+  void crush() async {
+    print(widget.pet);
+    int status = await crushProvider.createCrush(widget.pet, context);
+    if (status > 200 && status < 300) {
+      matingImg = "assets/images/icons/mating/matingLoved.png";
+      circularButton = CircularButton(
+          child: SvgPicture.asset(matingImg),
+          radius: PetsTheme.radius3,
+          backgroundColor: Colors.green[50],
+          onPressed: () {
+            crush();
+          });
+    }
+  }
+
+  Widget circularButton;
   @override
   Widget build(BuildContext context) {
-    return Container(
+    return CupertinoPageScaffold(
+        child: Container(
       child: Column(
         children: [
           Expanded(
               child: ClipRRect(
             child: Image.network(
-              pet.image,
+              widget.pet.image,
               fit: BoxFit.cover,
             ),
             borderRadius: BorderRadius.circular(20),
@@ -27,7 +68,8 @@ class FindMatingCard extends StatelessWidget {
             height: PetsTheme.getMeduimPadMarg(),
           ),
           ClipRRect(
-            borderRadius: BorderRadius.only(topLeft: Radius.circular(20), topRight: Radius.circular(20)),
+            borderRadius: BorderRadius.only(
+                topLeft: Radius.circular(20), topRight: Radius.circular(20)),
             child: Container(
               color: Colors.white,
               padding: EdgeInsets.symmetric(horizontal: 20, vertical: 10),
@@ -38,41 +80,45 @@ class FindMatingCard extends StatelessWidget {
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
-                        Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
-                          Text(
-                            pet.name,
-                            style: TextStyle(
-                                fontSize: PetsTheme.getLargerFont(),
-                                fontWeight: FontWeight.bold,
-                                color: PetsTheme.blackTextColor),
-                          ),
-                          Text("20 Miles away",
-                              style: TextStyle(
-                                fontSize: PetsTheme.getMeduimFont(),
-                                color: Colors.grey[600],
-                              )),
-                        ]),
-                        CircularButton(
-                            child: SvgPicture.asset('assets/images/icons/mating/matingLove.svg'),
-                            radius: PetsTheme.radius3,
-                            backgroundColor: Colors.red[50],
-                            onPressed: null)
+                        Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Text(
+                                widget.pet.name,
+                                style: TextStyle(
+                                    fontSize: PetsTheme.getLargerFont(),
+                                    fontWeight: FontWeight.bold,
+                                    color: PetsTheme.blackTextColor),
+                              ),
+                              Text("20 Miles away",
+                                  style: TextStyle(
+                                    fontSize: PetsTheme.getMeduimFont(),
+                                    color: Colors.grey[600],
+                                  )),
+                            ]),
+                        circularButton
                       ],
                     ),
                   ),
                   Padding(
-                    padding: EdgeInsets.symmetric(vertical: PetsTheme.getSmallPadMarg()),
+                    padding: EdgeInsets.symmetric(
+                        vertical: PetsTheme.getSmallPadMarg()),
                     child: Text("View profile",
                         style: TextStyle(
-                            fontSize: PetsTheme.getMeduimFont(), color: PetsTheme.currentMainColor, fontWeight: FontWeight.w500)),
+                            fontSize: PetsTheme.getMeduimFont(),
+                            color: PetsTheme.currentMainColor,
+                            fontWeight: FontWeight.w500)),
                   ),
                   Row(
                     children: [
                       Flexible(
                           flex: 2,
                           child: Container(
-                            margin: EdgeInsets.only(right: PetsTheme.getSmallPadMarg()),
-                            decoration: BoxDecoration(color: PetsTheme.commentBgColor, borderRadius: BorderRadius.circular(10)),
+                            margin: EdgeInsets.only(
+                                right: PetsTheme.getSmallPadMarg()),
+                            decoration: BoxDecoration(
+                                color: PetsTheme.commentBgColor,
+                                borderRadius: BorderRadius.circular(10)),
                             child: Container(
                               padding: const EdgeInsets.all(10),
                               child: Row(
@@ -87,14 +133,16 @@ class FindMatingCard extends StatelessWidget {
                                     width: PetsTheme.getSmallPadMarg(),
                                   ),
                                   Column(
-                                    crossAxisAlignment: CrossAxisAlignment.start,
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
                                     children: [
                                       FittedBox(
                                           child: Text(
                                         "Owner",
-                                        style: TextStyle(color: PetsTheme.currentMainColor),
+                                        style: TextStyle(
+                                            color: PetsTheme.currentMainColor),
                                       )),
-                                      FittedBox(child: Text(pet.owner)),
+                                      FittedBox(child: Text(widget.pet.owner)),
                                     ],
                                   )
                                 ],
@@ -105,14 +153,17 @@ class FindMatingCard extends StatelessWidget {
                           flex: 1,
                           child: Container(
                             margin: EdgeInsets.all(PetsTheme.getSmallPadMarg()),
-                            decoration: BoxDecoration(color: PetsTheme.commentBgColor, borderRadius: BorderRadius.circular(10)),
+                            decoration: BoxDecoration(
+                                color: PetsTheme.commentBgColor,
+                                borderRadius: BorderRadius.circular(10)),
                             child: Padding(
                               padding: const EdgeInsets.all(10),
                               child: Pair(
                                 FittedBox(
                                     child: Text(
                                   "Breed",
-                                  style: TextStyle(color: PetsTheme.currentMainColor),
+                                  style: TextStyle(
+                                      color: PetsTheme.currentMainColor),
                                 )),
                                 FittedBox(child: Text("Golden")),
                               ),
@@ -122,14 +173,17 @@ class FindMatingCard extends StatelessWidget {
                           flex: 1,
                           child: Container(
                             margin: EdgeInsets.all(PetsTheme.getSmallPadMarg()),
-                            decoration: BoxDecoration(color: PetsTheme.commentBgColor, borderRadius: BorderRadius.circular(10)),
+                            decoration: BoxDecoration(
+                                color: PetsTheme.commentBgColor,
+                                borderRadius: BorderRadius.circular(10)),
                             child: Padding(
                               padding: const EdgeInsets.all(10),
                               child: Pair(
                                 FittedBox(
                                     child: Text(
                                   "Age",
-                                  style: TextStyle(color: PetsTheme.currentMainColor),
+                                  style: TextStyle(
+                                      color: PetsTheme.currentMainColor),
                                 )),
                                 FittedBox(child: Text("6 months")),
                               ),
@@ -177,7 +231,8 @@ class FindMatingCard extends StatelessWidget {
                           "40 Reviews",
                           style: TextStyle(color: PetsTheme.currentMainColor),
                         ),
-                        onTap: () => Navigator.of(context).pushNamed("Mating/PetReviews"),
+                        onTap: () => Navigator.of(context)
+                            .pushNamed("Mating/PetReviews"),
                       )
                     ],
                   )
@@ -187,6 +242,6 @@ class FindMatingCard extends StatelessWidget {
           )
         ],
       ),
-    );
+    ));
   }
 }

@@ -1,23 +1,35 @@
 class URLs {
-  static final String host = "https://petsmatch-be.herokuapp.com/api";
+  static final String host = "https://petmatch.msquare.app/api";
+  // static final String host = "http://127.0.0.1:8000/api";
   String media;
+  String mediaLocal;
   String login;
+  String me;
+  String notifications;
   String register;
   String createPet;
   String showMyPets;
   String showOtherPets;
   String getAPet;
   String createPost;
+  String postPet;
+  String lovePost;
   String getAPost;
   String getNewsFeed;
   String getYourPosts;
   String createComment;
   String getPostComments;
   String getAComment;
-  String updateUserData; // ?uid=30
-  String crush; // ?uid=30
-  String family; // ?uid=30
-  String mate; // ?uid=30
+  String search;
+  String updateUserData;
+  String crush;
+  String myCrush;
+  String crushOnMe;
+  String family;
+  String mate;
+  static final String sendMessage = "$host/message";
+  static final String getChat = "$host/chat";
+  static final String getMyChats = "$host/chats";
   static final String getUserAlbums =
       "$host/api/return/user/portfolio"; // ?uid=53
   static final String addAlbum = "$host/api/handle/new/portfolio"; // post
@@ -52,12 +64,19 @@ class URLs {
       "$host/api/return/quote/data"; // ?uid=37&id=573
   URLs() {
     showMyPets = "$host/subprofile";
-    media = "https://petsmatch-be.herokuapp.com";
-    showOtherPets = "$host/show/pets";
+    media = "https://petmatch.msquare.app";
+    mediaLocal = "http://127.0.0.1:8001";
+    // "https://petsmatch-be.herokuapp.com";
+    showOtherPets = "$host/show/subprofile";
     crush = "$host/crush";
+    me = "$host/me";
+    myCrush = "$host/crushes";
+    crushOnMe = "$host/crush";
     family = "$host/family";
-    family = "$host/mate";
+    mate = "$host/mate";
+    notifications = "$host/notifications";
     login = "$host/login";
+    lovePost = "$host/love";
     //login = "$host/my-api/login-user.json";
     register = "$host/register";
     createPet =
@@ -65,12 +84,14 @@ class URLs {
     getAPet =
         "$host/api/pet"; // ?nid=440&title=333&working_hour=33&postal_code=22&lat=2&lng=5
     createPost = "$host/post"; // ?uid=53
+    postPet = "$host/pet/post"; // ?uid=53
     getAPost = "$host/post"; // ?uid=53
     getYourPosts = "$host/api/post"; // ?uid=53
     getNewsFeed = "$host/news-feed"; // ?uid=53
     createComment = "$host/api/comment"; // ?uid=53
-    getPostComments = "$host/api/comment"; // ?uid=53
+    getPostComments = "$host/post/comments"; // ?uid=53
     getAComment = "$host/api/news-feed"; // ?uid=53
     updateUserData = "$host/api/me"; // ?uid=30
+    search = "$host/search"; // ?uid=30
   }
 }

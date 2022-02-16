@@ -13,6 +13,7 @@ class LoginScreenSetup extends StatelessWidget {
   final String formSubtitle;
   final bgColor backgroundColor;
   final bgMask backgroundMask;
+  final bool backArrow;
   final bool isSmallTopArea;
   final bool isBottomScrollable;
   final bool smalFormTitle;
@@ -21,9 +22,9 @@ class LoginScreenSetup extends StatelessWidget {
   final bool isPortraitLock;
 
   LoginScreenSetup(
-      {
-      @required this.topbarTitle,
+      {@required this.topbarTitle,
       @required this.formWidget,
+      this.backArrow = false,
       this.formTitle = '',
       this.formSubtitle = '',
       this.showLogo = true,
@@ -35,7 +36,7 @@ class LoginScreenSetup extends StatelessWidget {
       this.isBottomScrollable = false,
       this.formTitleAlignment = Alignment.center,
       this.formTitleTextAlignment = TextAlign.center,
-      this.topbarSubtitle = ''}) ;
+      this.topbarSubtitle = ''});
   @override
   Widget build(BuildContext context) {
     //Screen dimentions
@@ -53,7 +54,7 @@ class LoginScreenSetup extends StatelessWidget {
       isFormSubtitle = true;
     }
 
-    if(this.formTitle != '') {
+    if (this.formTitle != '') {
       isFormTitle = true;
     }
 
@@ -61,7 +62,7 @@ class LoginScreenSetup extends StatelessWidget {
 
     if (showLogo) {
       Widget logoWidget = Container(
-        margin: EdgeInsets.all(PetsTheme.getLargePadMarg()),
+          margin: EdgeInsets.all(PetsTheme.getLargePadMarg()),
           alignment: Alignment.bottomCenter,
           constraints: BoxConstraints(maxHeight: logoMaxHeight),
           child: Hero(
@@ -84,17 +85,23 @@ class LoginScreenSetup extends StatelessWidget {
             child: Text(
               this.topbarTitle,
               style: TextStyle(
-                  fontFamily: "Roboto", color: PetsTheme.whiteBarColor, fontWeight: FontWeight.bold, fontSize: PetsTheme.getEvenMuchLargerFont()),
+                  fontFamily: "Roboto",
+                  color: PetsTheme.whiteBarColor,
+                  fontWeight: FontWeight.bold,
+                  fontSize: PetsTheme.getEvenMuchLargerFont()),
             ),
           ),
           (this.topbarSubtitle != '')
               ? SizedBox(
-                child: Text(
-                  this.topbarSubtitle,
-                  style: TextStyle(
-                      fontFamily: "Roboto", color: PetsTheme.whiteBarColor, fontWeight: FontWeight.normal, fontSize: PetsTheme.getLargeFont()),
-                ),
-              )
+                  child: Text(
+                    this.topbarSubtitle,
+                    style: TextStyle(
+                        fontFamily: "Roboto",
+                        color: PetsTheme.whiteBarColor,
+                        fontWeight: FontWeight.normal,
+                        fontSize: PetsTheme.getLargeFont()),
+                  ),
+                )
               : Container(),
         ],
       ),
@@ -106,25 +113,28 @@ class LoginScreenSetup extends StatelessWidget {
         flex: 1,
         child: Container(),
       ),
-      (isFormTitle) ? 
-      Flexible(
-        flex: formTitleFlex,
-        child: Container(
-          alignment: formTitleAlignment,
-          child: SizedBox(
-            child: Text(
-              this.formTitle,
-              textAlign: formTitleTextAlignment,
-              overflow: TextOverflow.clip,
-              style: TextStyle(
-                  color: PetsTheme.currentMainColor,
-                  fontFamily: "Roboto",
-                  fontWeight: FontWeight.bold,
-                  fontSize: (!this.smalFormTitle) ? PetsTheme.getMuchLargerFont() : PetsTheme.getMeduimFont()),
-            ),
-          ),
-        ),
-      ) :  Container(),
+      (isFormTitle)
+          ? Flexible(
+              flex: formTitleFlex,
+              child: Container(
+                alignment: formTitleAlignment,
+                child: SizedBox(
+                  child: Text(
+                    this.formTitle,
+                    textAlign: formTitleTextAlignment,
+                    overflow: TextOverflow.clip,
+                    style: TextStyle(
+                        color: PetsTheme.currentMainColor,
+                        fontFamily: "Roboto",
+                        fontWeight: FontWeight.bold,
+                        fontSize: (!this.smalFormTitle)
+                            ? PetsTheme.getMuchLargerFont()
+                            : PetsTheme.getMeduimFont()),
+                  ),
+                ),
+              ),
+            )
+          : Container(),
     ];
 
     if (isFormSubtitle) {
@@ -135,8 +145,11 @@ class LoginScreenSetup extends StatelessWidget {
           child: FittedBox(
             child: Text(
               this.formSubtitle,
-              style:
-                  TextStyle(color: PetsTheme.currentMainColor, fontFamily: "Roboto", fontWeight: FontWeight.normal, fontSize: PetsTheme.getMeduimFont()),
+              style: TextStyle(
+                  color: PetsTheme.currentMainColor,
+                  fontFamily: "Roboto",
+                  fontWeight: FontWeight.normal,
+                  fontSize: PetsTheme.getMeduimFont()),
             ),
           ),
         ),
@@ -163,7 +176,8 @@ class LoginScreenSetup extends StatelessWidget {
                   : SingleChildScrollView(
                       child: Container(
                         //  height: MediaQuery.of(context).size.height,
-                        constraints: BoxConstraints(maxHeight: MediaQuery.of(context).size.height*4),
+                        constraints: BoxConstraints(
+                            maxHeight: MediaQuery.of(context).size.height * 4),
                         child: formWidget,
                       ),
                     )),
@@ -171,9 +185,9 @@ class LoginScreenSetup extends StatelessWidget {
       ),
     );
 
-    return  PetMatchSingleScreen(
+    return PetMatchSingleScreen(
       //top Area Widget
-     header: Container(
+      header: Container(
           width: MediaQuery.of(context).size.width,
           child: Column(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -182,13 +196,12 @@ class LoginScreenSetup extends StatelessWidget {
               children: topAreaWidgets)),
 
       //Bottom Area widget
-      body:bottomAreaRootWidget,
+      body: bottomAreaRootWidget,
       //Configurations
       //screenBgColor: this.backgroundColor,
       //screenBgMask: this.backgroundMask,
       //isSmallTop: this.isSmallTopArea,
       enableRotation: isPortraitLock,
     );
-
   }
 }

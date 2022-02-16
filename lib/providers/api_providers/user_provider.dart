@@ -1,11 +1,16 @@
 import 'dart:async';
 import 'dart:convert';
+import 'dart:io';
+import 'dart:io' as Io;
+import 'package:path/path.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:petmatch/global.dart';
+import 'package:petmatch/models/NotificationModel.dart';
 import 'api_url.dart';
 import 'package:petmatch/models/User.dart';
+import 'package:async/async.dart';
 
 class UserProvider extends ChangeNotifier {
   //reset provider data
@@ -19,8 +24,14 @@ class UserProvider extends ChangeNotifier {
   User _user;
   User get user => _user;
 
+  List<NotificationModel> _notifications;
+  List<NotificationModel> get notifications => _notifications;
+
   String _error = "";
   String get error => _error;
+  void setUser(user) {
+    _user = user;
+  }
 
   URLs _URLS = new URLs();
 
@@ -43,68 +54,161 @@ class UserProvider extends ChangeNotifier {
     return token != null;
   }
 
+  Future<int> me() async {
+    notifyListeners();
+    http.Response response;
+    String token = await Server.token;
+    try {
+      response = await http.get(Uri.parse(_URLS.me), headers: {
+        'Authorization': 'Bearer $token',
+      });
+    } catch (_) {
+      // print(response.statusCode);
+      print(_);
+      _loading = false;
+      notifyListeners();
+      return 400;
+    }
+    if (response.statusCode > 300) return response.statusCode;
+
+    Map<String, dynamic> decodedBody = jsonDecode(response.body);
+
+    User loggedIn = User.fromJson(decodedBody);
+    // Server.setToken(decodedBody["accessToken"]);
+    print(loggedIn.name);
+    _user = loggedIn;
+    Server.setToken(_user.token);
+    return response.statusCode;
+    print(response.statusCode);
+  }
+
+  void updateFirebase(firebase_token) async {
+    notifyListeners();
+    http.Response response;
+    String token = await Server.token;
+    try {
+      response = await http.post(Uri.parse(_URLS.me), headers: {
+        'Authorization': 'Bearer $token',
+      }, body: {
+        'firebase': firebase_token
+      });
+    } catch (_) {
+      // print(response.statusCode);
+      print(_);
+      _loading = false;
+      notifyListeners();
+    }
+
+    print(response);
+  }
+
+  Future<int> getNotifications() async {
+    notifyListeners();
+    http.Response response;
+    String token = await Server.token;
+    try {
+      response = await http.get(Uri.parse(_URLS.notifications), headers: {
+        'Authorization': 'Bearer $token',
+      });
+    } catch (_) {
+      // print(response.statusCode);
+      print(_);
+      _loading = false;
+      notifyListeners();
+    }
+    print(response.statusCode);
+
+    List<dynamic> data = jsonDecode(response.body);
+    _notifications = data.map((i) => NotificationModel.fromJson(i)).toList();
+
+    return response.statusCode;
+  }
+
   Future<int> signUp(User user) async {
     print("start load <----");
     _loading = true;
     notifyListeners();
-    String body;
+
     int type = 0;
     int gender = 0;
-    if (user.usertype == "Pet Owner") type = 1;
-    if (user.usertype == "Trainer") type = 2;
-    if (user.usertype == "Vet") type = 3;
-    if (user.usertype == "Store") type = 4;
-
-    if (user.gender == "Male") gender = 1;
-    body = "?name=${user.name}" +
+    String body = "?name=${user.name}" +
         "&password=${user.password}" +
         "&email=${user.email}" +
-        "&image=${user.image}" +
-        "&gender=${gender}" +
         "&phone=${user.phone}" +
         "&dateOfBirth=${user.dateOfBirth}" +
         "&country=${user.country}" +
         "&city=${user.city}" +
-        "&token=${user.token}" +
-        "&usertype=${type}";
-    var response;
+        "&firebase_token=${user.firebase_token}";
+    if (user.usertype == "Pet Owner") type = 1;
+    if (user.usertype == "Trainer") {
+      type = 2;
+      body = body +
+          "&orgainzation=${user.orgainzation}&about=${user.about}&experience=${user.experience}";
+    }
+    if (user.usertype == "Vet") type = 3;
+    if (user.usertype == "Store") type = 4;
+
+    if (user.gender == "Male") gender = 1;
+    body = body + "&userType=${type}" + "&gender=${gender}";
+
+    print(body);
     try {
-      response = await http.post(
+      File imageFile = Io.File(user.image);
+      var stream =
+          new http.ByteStream(DelegatingStream.typed(imageFile.openRead()));
+
+      var request = new http.MultipartRequest(
+        "POST",
         Uri.parse(_URLS.register + body),
       );
-      print("the respones is ${response}");
+      var length = await imageFile.length();
+
+      var multipartFile = new http.MultipartFile('image', stream, length,
+          filename: basename(imageFile.path));
+      request.files.add(multipartFile);
+      var response = await request.send();
+      print("statusCode ${response.statusCode}");
+      response.stream.transform(utf8.decoder).listen((value) {
+        print('The value of the stream ${value}');
+        if (response.statusCode >= 200 && response.statusCode < 300) {
+          var body = json.decode(value);
+          _user = User.fromJson(body);
+        } else {
+          Map<String, dynamic> decodedBody = jsonDecode(value);
+
+          if (decodedBody.containsKey('name'))
+            _error = _error + decodedBody['name'][0] + '\n';
+          if (decodedBody.containsKey('email'))
+            _error = _error + decodedBody['email'][0] + '\n';
+          if (decodedBody.containsKey('country'))
+            _error = _error + decodedBody['country'][0] + '\n';
+          if (decodedBody.containsKey('city'))
+            _error = _error + decodedBody['city'][0] + '\n';
+        }
+      });
+
+      // print(respStr);
+      // If the call to the server was successful, parse the JSON.
+      if (response.statusCode >= 200 && response.statusCode < 300) {
+        // If the call to the server was successful, parse the JSON.
+        print("200 <----");
+
+        _user = user;
+        Server.setToken(_user.token);
+        _isUserLoaded = true;
+      } //else {
+      //   _error = "";
+
+      //   print(_error);
+      // }
+
+      return response.statusCode;
     } catch (_) {
       print("the error is ${_}");
       _loading = false;
       notifyListeners();
       return -1;
     }
-    print(response.body);
-    // If the call to the server was successful, parse the JSON.
-    if (response.statusCode >= 200 && response.statusCode < 300) {
-      // If the call to the server was successful, parse the JSON.
-      print("200 <----");
-
-      _user = user;
-
-      _isUserLoaded = true;
-    } else {
-      _error = "";
-      Map<String, dynamic> decodedBody = jsonDecode(response.body);
-
-      if (decodedBody.containsKey('name'))
-        _error = _error + decodedBody['name'][0] + '\n';
-      if (decodedBody.containsKey('email'))
-        _error = _error + decodedBody['email'][0] + '\n';
-      if (decodedBody.containsKey('country'))
-        _error = _error + decodedBody['country'][0] + '\n';
-      if (decodedBody.containsKey('city'))
-        _error = _error + decodedBody['city'][0] + '\n';
-
-      print(_error);
-    }
-
-    return response.statusCode;
   }
 
   Future<int> addPicture(User user) async {
@@ -145,7 +249,10 @@ class UserProvider extends ChangeNotifier {
     _loading = true;
     notifyListeners();
     String body;
-    body = "?password=${user.password}" + "&email=${user.email}";
+    body = "?password=${user.password}" +
+        "&email=${user.email}" +
+        "&firebase_token=${user.firebase_token}";
+    print(body);
     http.Response response;
     try {
       response = await http.post(Uri.parse(_URLS.login + body));
@@ -164,6 +271,7 @@ class UserProvider extends ChangeNotifier {
       // Server.setToken(decodedBody["accessToken"]);
       print(loggedIn.name);
       _user = loggedIn;
+      Server.setToken(_user.token);
       print(_user);
 
       return response.statusCode;

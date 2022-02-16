@@ -4,11 +4,13 @@ import 'package:flutter/material.dart';
 import 'package:petmatch/models/Pet.dart';
 import 'package:petmatch/models/Post.dart';
 import 'package:petmatch/models/User.dart';
+import 'package:petmatch/providers/api_providers/search_provider.dart';
 import 'package:petmatch/widgets/feed/RegularPostWidget.dart';
 import 'package:petmatch/widgets/feed/UserNameRole.dart';
 import 'package:petmatch/widgets/main/UserAvatar.dart';
 import 'package:petmatch/widgets/screens/PetMatchSingleScreen.dart';
 import 'package:petmatch/theme/petsTheme.dart';
+import 'package:provider/provider.dart';
 
 class SearchScreen extends StatefulWidget {
   @override
@@ -16,79 +18,78 @@ class SearchScreen extends StatefulWidget {
 }
 
 class _SearchScreen extends State<SearchScreen> {
-  List<User> searchResultsPeople = [
-    User(
-        name: "Ahmed Abbas",
-        image:
-            "https://upload.wikimedia.org/wikipedia/en/thumb/a/a1/NafSadh_Profile.jpg/768px-NafSadh_Profile.jpg",
-        email: "_email",
-        pets: [
-          Pet(
-              name: "Roy",
-              image:
-                  "https://connected-vet.com/wp-content/uploads/2020/11/e2ecf5d1-d17f-4fab-97cf-a77322c5566d.jpg",
-              owner: "Ahmed Abbas"),
-        ]),
-    User(
-        name: "Aya Ahmed",
-        image:
-            "https://static.jobscan.co/blog/uploads/linkedin-profile-picture-1280x720.jpg",
-        email: "_email",
-        pets: [
-          Pet(
-              name: "Lilly",
-              image:
-                  "https://hips.hearstapps.com/hmg-prod.s3.amazonaws.com/images/why-cats-are-best-pets-worshipped-animals-1559234295.jpg",
-              owner: "Aya Ahmed"),
-        ]),
-  ];
+  List<User> searchResultsPeople = [];
 
-  List<User> searchResultsTrainers = [
-    User(
-        name: "Ahmed Abbas",
-        image:
-            "https://upload.wikimedia.org/wikipedia/en/thumb/a/a1/NafSadh_Profile.jpg/768px-NafSadh_Profile.jpg",
-        email: "_email",
-        pets: [
-          Pet(
-              name: "Roy",
-              image:
-                  "https://connected-vet.com/wp-content/uploads/2020/11/e2ecf5d1-d17f-4fab-97cf-a77322c5566d.jpg",
-              owner: "Ahmed Abbas"),
-        ]),
-    User(
-        name: "Aya Ahmed",
-        image:
-            "https://static.jobscan.co/blog/uploads/linkedin-profile-picture-1280x720.jpg",
-        email: "_email",
-        pets: [
-          Pet(
-              name: "Lilly",
-              image:
-                  "https://hips.hearstapps.com/hmg-prod.s3.amazonaws.com/images/why-cats-are-best-pets-worshipped-animals-1559234295.jpg",
-              owner: "Aya Ahmed"),
-        ]),
-  ];
+  List<Pet> searchResultsPets = [];
 
-  List<Post> searchResultsPosts = [
-    RegularPost(
-      owner: UserPostOwner(
-          id: 1,
-          name: "Ahmed Mahmoud",
-          imageUrl:
-              "https://www.leisureopportunities.co.uk/images/995586_746594.jpg",
-          pets: ["Rex"]),
-      commentsCount: 5,
-      lovesCount: 2,
-      sharesCount: 0,
-      postDate: DateTime.now(),
-      isLoved: false,
-      text: "Any recommendations for good vets ?!",
-    ),
-  ];
+  List<Post> searchResultsPosts = [];
+
+  FocusNode myFocusNode;
+
+  List<Widget> searchResultWidgets = [];
+
+  SearchProvider searchProvider;
+  showSearch(String value) async {
+    print("${value} in the show search");
+    int status = await searchProvider.search(searchContent: value);
+    if (status >= 200 && status < 300)
+      searchResultsPeople = searchProvider.searchedUsers;
+
+    print(status);
+    // searchResultsPets = searchProvider.searchedPets;
+    // searchResultsPosts = searchProvider.searchedPosts;
+    setState(() {
+      // print(searchResultsPeople);
+      // searchResultWidgets = [];
+      // searchResultWidgets.addAll([
+      //   Container(
+      //       margin: EdgeInsets.only(bottom: PetsTheme.getMeduimPadMarg()),
+      //       child: Text(
+      //         "People",
+      //         style: TextStyle(
+      //             fontSize: PetsTheme.getMeduimFont(),
+      //             fontWeight: FontWeight.bold),
+      //       )),
+      //   ...searchResultsPeople.map((e) {
+      //     return Padding(
+      //       padding:
+      //           EdgeInsets.symmetric(vertical: PetsTheme.getSmallPadMarg()),
+      //       child: Expanded(
+      //           child: ListTile(
+      //         contentPadding: EdgeInsets.zero,
+      //         leading: UserAvatar(
+      //           imageRatio: 1,
+      //         ),
+      //         title: UserNameRole(name: e.name, role: e.whoIAm()),
+      //       )),
+      //     );
+      //   }).toList(),
+      //   //],
+      //   // ),
+      //   // ),
+      // ]);
+    });
+  }
+
+  @override
+  void initState() {
+    super.initState();
+
+    myFocusNode = FocusNode();
+  }
+
+  @override
+  void dispose() {
+    // Clean up the focus node when the Form is disposed.
+    myFocusNode.dispose();
+
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
+    searchProvider = Provider.of<SearchProvider>(context, listen: false);
+
     return PetMatchSingleScreen(
       backArrow: true,
       //scrollableHeader: false,
@@ -103,6 +104,11 @@ class _SearchScreen extends State<SearchScreen> {
       header: Container(
         padding: EdgeInsets.only(bottom: 20, right: 20, left: 20),
         child: TextField(
+          onSubmitted: (txt) {
+            print("${txt} is the value of the text field");
+            Future.delayed(Duration.zero).then((value) => showSearch(txt));
+          },
+          focusNode: myFocusNode,
           textAlignVertical: TextAlignVertical.center,
           style: TextStyle(fontSize: PetsTheme.getMeduimFont()),
           decoration: InputDecoration(
@@ -152,13 +158,23 @@ class _SearchScreen extends State<SearchScreen> {
                     return Padding(
                       padding: EdgeInsets.symmetric(
                           vertical: PetsTheme.getSmallPadMarg()),
-                      child: ListTile(
-                        contentPadding: EdgeInsets.zero,
-                        leading: UserAvatar(
-                          image: e.image,
-                          imageRatio: 1,
+                      child: new GestureDetector(
+                        onTap: () {
+                          Navigator.of(context).pushNamed(
+                            'profile',
+                            arguments: <String, dynamic>{
+                              'data': e,
+                            },
+                          );
+                        },
+                        child: ListTile(
+                          contentPadding: EdgeInsets.zero,
+                          leading: UserAvatar(
+                            image: e.image,
+                            imageRatio: 0.1,
+                          ),
+                          title: UserNameRole(name: e.name, role: e.whoIAm()),
                         ),
-                        title: UserNameRole(name: e.name, role: e.whoIAm()),
                       ),
                     );
                   }).toList(),
@@ -166,8 +182,9 @@ class _SearchScreen extends State<SearchScreen> {
               ),
             ),
 
+          // if (searchResultWidgets.isNotEmpty) searchResultWidgets[0],
           // trainers
-          if (searchResultsTrainers.isNotEmpty)
+          if (searchResultsPets.isNotEmpty)
             Container(
               margin: EdgeInsets.only(bottom: PetsTheme.getLargerPadMarg()),
               padding: EdgeInsets.all(PetsTheme.getLargerPadMarg()),
@@ -187,7 +204,7 @@ class _SearchScreen extends State<SearchScreen> {
                             fontSize: PetsTheme.getMeduimFont(),
                             fontWeight: FontWeight.bold),
                       )),
-                  ...searchResultsTrainers.map((e) {
+                  ...searchResultsPets.map((e) {
                     return Padding(
                       padding: EdgeInsets.symmetric(
                           vertical: PetsTheme.getSmallPadMarg()),

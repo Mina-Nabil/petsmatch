@@ -1,10 +1,14 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:petmatch/models/User.dart';
+import 'package:petmatch/global.dart';
+import 'package:petmatch/providers/api_providers/comment_provider.dart';
+import 'package:petmatch/providers/api_providers/crush_provider.dart';
+import 'package:petmatch/providers/api_providers/mate_provider.dart';
+import 'package:petmatch/providers/api_providers/message_provider.dart';
 import 'package:petmatch/providers/api_providers/pet_provider.dart';
 import 'package:petmatch/providers/api_providers/post_provider.dart';
+import 'package:petmatch/providers/api_providers/search_provider.dart';
 import 'package:petmatch/screens/login/petRegistration.dart';
-import 'package:petmatch/screens/main_screen/main_tabs/HomeScreen.dart';
 import 'package:petmatch/screens/profile/ProfileScreen.dart';
 import 'package:petmatch/screens/main_screen/SearchScreen.dart';
 import 'package:petmatch/screens/main_screen/ConversationScreen.dart';
@@ -31,11 +35,18 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     Provider.debugCheckInvalidValueType = null;
+    // Server s = new Server();
+
     return MultiProvider(
         providers: [
           Provider<UserProvider>(create: (_) => UserProvider()),
           Provider<PostProvider>(create: (_) => PostProvider()),
           Provider<PetProvider>(create: (_) => PetProvider()),
+          Provider<SearchProvider>(create: (_) => SearchProvider()),
+          Provider<CrushProvider>(create: (_) => CrushProvider()),
+          Provider<MessagesProvider>(create: (_) => MessagesProvider()),
+          Provider<MateProvider>(create: (_) => MateProvider()),
+          Provider<CommentProvider>(create: (_) => CommentProvider()),
         ],
         child: CupertinoApp(
           localizationsDelegates: [

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:petmatch/models/Post.dart';
+import 'package:petmatch/models/User.dart';
 import 'package:petmatch/providers/api_providers/pet_provider.dart';
 import 'package:petmatch/providers/api_providers/post_provider.dart';
 import 'package:petmatch/theme/petsTheme.dart';
@@ -14,6 +15,8 @@ import '../../providers/api_providers/user_provider.dart';
 class ProfileScreen extends StatefulWidget {
   @override
   State<ProfileScreen> createState() => _ProfileScreenState();
+  final String id;
+  ProfileScreen({Key key, this.id}) : super(key: key);
 }
 
 class _ProfileScreenState extends State<ProfileScreen> {
@@ -28,6 +31,8 @@ class _ProfileScreenState extends State<ProfileScreen> {
   List<Widget> bodyWidgets;
 
   int status;
+
+  User activeUser;
 
   bool done = false;
 
@@ -48,26 +53,24 @@ class _ProfileScreenState extends State<ProfileScreen> {
     petProvider = Provider.of<PetProvider>(context, listen: false);
     bodyWidgets = [
       AboutPost(
-        phoneNo: userProvider.user.phone,
-        address: userProvider.user.city,
+        phoneNo: activeUser.phone,
+        address: activeUser.city,
         website: "www.vetpoint.com",
-        mail: userProvider.user.email,
+        mail: activeUser.email,
         workingHours: "10:00 am - 10:00 pm",
       ),
       SizedBox(
         height: PetsTheme.getMeduimPadMarg() * 2,
       ),
-      NewPostWidget()
+      activeUser.id == userProvider.user.id ? NewPostWidget() : Row()
     ];
-    status = await postProvider.getNewsFeed(userProvider.user.token);
-    print('${status} these are the status');
+    status = await postProvider
+        .getPosts(activeUser == null ? userProvider.user.id : activeUser.id);
     if (status == 200) {
       posts = postProvider.posts;
-      print('${posts} these are the posts');
 
       setState(() {
         done = true;
-        print(posts[0].commentsCount);
         if (done)
           bodyWidgets.addAll(posts.map((post) {
             return RegularPostWidget(
@@ -80,24 +83,20 @@ class _ProfileScreenState extends State<ProfileScreen> {
                   bottom: PetsTheme.getLargePadMarg()),
             );
           }).toList());
-        print("${done} it is");
         petProvider.showMyPets(token: userProvider.user.token);
       });
     }
   }
 
-  // void setState() {
-  //   print("${done} it is");
-  //   done = true;
-  // }
-
   @override
   Widget build(BuildContext context) {
-    // userProvider.getUserData(token: userProvider.user.token);
+    final arguments = ModalRoute.of(context).settings.arguments as Map;
+    arguments == null ? false : activeUser = arguments['data'];
+    print(activeUser.name);
     return PetMatchSingleScreen.scrollable(
       backArrow: true,
       //scrollableHeader: true,
-      header: ProfileCover(),
+      header: ProfileCover(activeUser),
       bodyWidgets: bodyWidgets,
     );
   }

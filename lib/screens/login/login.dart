@@ -1,5 +1,7 @@
+import 'dart:io';
 import 'dart:ui';
 
+import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -13,6 +15,7 @@ import 'package:petmatch/theme/petsTheme.dart';
 import 'package:petmatch/widgets/buttons/SubmitButtonSign.dart';
 import 'package:petmatch/widgets/screens/LoginScreenSetup.dart';
 import 'package:petmatch/widgets/buttons/SubmitButton.dart';
+import 'package:petmatch/widgets/screens/PetMatchTabsScreen.dart';
 import '../../providers/api_providers/user_provider.dart';
 import 'package:provider/provider.dart';
 
@@ -30,6 +33,8 @@ class _LoginScreenState extends State<LoginScreen> {
   //form controllers
   final TextEditingController _emailController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
+  FirebaseMessaging _firebaseMessaging = FirebaseMessaging();
+  String firebase_token;
   bool obscureTextFlag = true;
   Color obscureTextColor = PetsTheme.petsTextGrayColor;
   bool IsAuth = false;
@@ -38,6 +43,7 @@ class _LoginScreenState extends State<LoginScreen> {
   void initState() {
     // blocking change in screen orientation
     super.initState();
+    firebaseCloudMessaging_Listeners();
 
     googlesignin.onCurrentUserChanged.listen((GoogleSignInAccount account) {
       if (account != null) {
@@ -51,6 +57,38 @@ class _LoginScreenState extends State<LoginScreen> {
     ]);
   }
 
+  void firebaseCloudMessaging_Listeners() {
+    if (Platform.isIOS) iOS_Permission();
+
+    _firebaseMessaging.getToken().then((token) {
+      setState(() {
+        firebase_token = token;
+      });
+      print(token);
+    });
+
+    _firebaseMessaging.configure(
+      onMessage: (Map<String, dynamic> message) async {
+        print('on message $message');
+      },
+      onResume: (Map<String, dynamic> message) async {
+        print('on resume $message');
+      },
+      onLaunch: (Map<String, dynamic> message) async {
+        print('on launch $message');
+      },
+    );
+  }
+
+  void iOS_Permission() {
+    _firebaseMessaging.requestNotificationPermissions(
+        IosNotificationSettings(sound: true, badge: true, alert: true));
+    _firebaseMessaging.onIosSettingsRegistered
+        .listen((IosNotificationSettings settings) {
+      print("Settings registered: $settings");
+    });
+  }
+
   login() {
     googlesignin.signIn();
   }
@@ -62,7 +100,6 @@ class _LoginScreenState extends State<LoginScreen> {
     userProvider = Provider.of<UserProvider>(context);
 
     void _togglePW() {
-      print("GET HENAA");
       setState(() {
         obscureTextFlag = !obscureTextFlag;
         if (obscureTextFlag)
@@ -107,7 +144,9 @@ class _LoginScreenState extends State<LoginScreen> {
       }
     }
 
+    bool isLoading = false;
     return CupertinoPageScaffold(
+        resizeToAvoidBottomInset: false,
         child: LoginScreenSetup(
             backgroundColor: bgColor.blue,
             isSmallTopArea: false,
@@ -230,56 +269,104 @@ class _LoginScreenState extends State<LoginScreen> {
                   ),
                 ),
                 //Sign in button - flex 2
-                Flexible(
-                  flex: 2,
-                  fit: FlexFit.tight,
-                  child: SubmitButtonSign(
-                      fieldsWidth: fieldsWidth,
-                      callBackFunction: () async {
-                        User _user = new User(
-                          password: _passwordController.text.trim(),
-                          email: _emailController.text.trim(),
-                        );
-                        print(context);
-                        int status = await userProvider.login(_user);
-                        print(status);
-                        if (status == 200) {
-                          Navigator.of(context).push(new PageTransition(
-                              child: CongratsScreen(),
-                              type: PageTransitionType.fade));
-                        } else {
-                          print(status);
-                          showModalBottomSheet(
-                            context: context,
-                            builder: (
-                              BuildContext context,
-                            ) =>
-                                CupertinoPopupSurface(
-                              child: Center(
-                                child: Container(
-                                  height: 50,
-                                  width: 200,
-                                  child: Center(
-                                    child: Text(
-                                      "The email or password you have entered are invalid",
+                MediaQuery.of(context).viewInsets.bottom < 200
+                    ? Column(children: [
+                        SubmitButtonSign(
+                            fieldsWidth: fieldsWidth,
+                            callBackFunction: () async {
+                              isLoading = true;
+                              User _user = new User(
+                                password: _passwordController.text.trim(),
+                                email: _emailController.text.trim(),
+                                firebase_token: firebase_token,
+                              );
+                              print(context);
+                              int status = await userProvider.login(_user);
+                              print(status);
+                              if (status == 200) {
+                                isLoading = false;
+                                Navigator.of(context).push(new PageTransition(
+                                    child: PetMatchMainScreen(),
+                                    type: PageTransitionType.fade));
+                              } else {
+                                isLoading = false;
+
+                                print(status);
+                                showModalBottomSheet(
+                                  context: context,
+                                  builder: (
+                                    BuildContext context,
+                                  ) =>
+                                      CupertinoPopupSurface(
+                                    child: Center(
+                                      child: Container(
+                                        height: 50,
+                                        width: 200,
+                                        child: Center(
+                                          child: Text(
+                                            "The email or password you have entered are invalid",
+                                          ),
+                                        ),
+                                      ),
                                     ),
                                   ),
-                                ),
-                              ),
-                            ),
-                          );
-                        }
-                      }),
-                ),
-                Flexible(
-                  flex: 2,
-                  fit: FlexFit.tight,
-                  child: SubmitButton(
-                    fieldsWidth: fieldsWidth,
-                    callBackFunction: signUp,
-                  ),
-                ),
-                SizedBox(height: 100),
+                                );
+                              }
+                            }),
+                        SubmitButton(
+                          fieldsWidth: fieldsWidth,
+                          callBackFunction: signUp,
+                        ),
+                      ])
+                    : Row(children: [
+                        SubmitButtonSign(
+                            fieldsWidth: fieldsWidth / 1.8,
+                            callBackFunction: () async {
+                              isLoading = true;
+                              User _user = new User(
+                                password: _passwordController.text.trim(),
+                                email: _emailController.text.trim(),
+                                firebase_token: firebase_token,
+                              );
+                              print(context);
+                              int status = await userProvider.login(_user);
+                              print(status);
+                              if (status == 200) {
+                                isLoading = false;
+                                Navigator.of(context).push(new PageTransition(
+                                    child: PetMatchMainScreen(),
+                                    type: PageTransitionType.fade));
+                              } else {
+                                isLoading = false;
+
+                                print(status);
+                                showModalBottomSheet(
+                                  context: context,
+                                  builder: (
+                                    BuildContext context,
+                                  ) =>
+                                      CupertinoPopupSurface(
+                                    child: Center(
+                                      child: Container(
+                                        height: 50,
+                                        width: 200,
+                                        child: Center(
+                                          child: Text(
+                                            "The email or password you have entered are invalid",
+                                          ),
+                                        ),
+                                      ),
+                                    ),
+                                  ),
+                                );
+                              }
+                            }),
+                        SubmitButton(
+                          fieldsWidth: fieldsWidth / 1.8,
+                          callBackFunction: signUp,
+                        ),
+                      ]),
+                SizedBox(height: 20),
 
                 //Other sign in options
                 /*Flexible(

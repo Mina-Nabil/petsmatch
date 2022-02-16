@@ -1,8 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:page_transition/page_transition.dart';
 import 'package:petmatch/models/Pet.dart';
 import 'package:petmatch/models/User.dart';
 import 'package:petmatch/providers/api_providers/pet_provider.dart';
 import 'package:petmatch/providers/api_providers/user_provider.dart';
+import 'package:petmatch/screens/login/petRegistration.dart';
+import 'package:petmatch/screens/post_screens/PostScreen.dart';
 import 'package:petmatch/theme/petsTheme.dart';
 import 'package:petmatch/widgets/custom/Pair.dart';
 import 'package:petmatch/widgets/custom/PetMatchRating.dart';
@@ -12,25 +15,27 @@ import 'package:petmatch/widgets/main/UserAvatar.dart';
 import 'package:provider/provider.dart';
 
 abstract class ProfileCover extends StatefulWidget {
-  factory ProfileCover() {
+  factory ProfileCover(User activeUser) {
+    print(activeUser.name);
     switch (PetsTheme.accountType) {
       case AccountType.petOwner:
-        print("${PetOwnerProfileCover()} is the cover");
-        if (PetOwnerProfileCover() != null) return PetOwnerProfileCover();
+        if (activeUser != null) return PetOwnerProfileCover(activeUser);
         break;
       case AccountType.trainer:
-        return TrainerProfileCover();
+        return TrainerProfileCover(activeUser);
       case AccountType.vet:
-        return VetProfileCover();
+        return VetProfileCover(activeUser);
       case AccountType.store:
-        return StoreProfileCover();
+        return StoreProfileCover(activeUser);
       default:
-        return PetOwnerProfileCover();
+        return PetOwnerProfileCover(activeUser);
     }
   }
 }
 
 class PetOwnerProfileCover extends StatefulWidget implements ProfileCover {
+  User activeUser;
+  PetOwnerProfileCover(this.activeUser);
   @override
   State<PetOwnerProfileCover> createState() => _PetOwnerProfileCoverState();
 }
@@ -56,11 +61,12 @@ class _PetOwnerProfileCoverState extends State<PetOwnerProfileCover> {
 
     userProvider = Provider.of<UserProvider>(context, listen: false);
     petProvider = Provider.of<PetProvider>(context, listen: false);
-
-    status = await petProvider.showMyPets(token: userProvider.user.token);
+    mainUser.id == userProvider.user.id
+        ? status = await petProvider.showMyPets(token: userProvider.user.token)
+        : status = 404;
 
     print('${status} these are the status');
-    if (status == 200) {
+    if (status >= 200 && status < 300) {
       pets = petProvider.pets;
 
       setState(() {
@@ -94,7 +100,11 @@ class _PetOwnerProfileCoverState extends State<PetOwnerProfileCover> {
                     ],
                   ),
                 ),
-                onTap: () => Navigator.pushNamed(context, 'petProfile'),
+                onTap: (() {
+                  print(pet);
+                  petProvider.setSelectedPet(pet);
+                  Navigator.pushNamed(context, 'petProfile');
+                }),
               )
           ];
         print("${done} it is");
@@ -106,11 +116,12 @@ class _PetOwnerProfileCoverState extends State<PetOwnerProfileCover> {
   Widget build(BuildContext context) {
     userProvider = Provider.of<UserProvider>(context);
     petProvider = Provider.of<PetProvider>(context);
+    mainUser = widget.activeUser;
 
-    mainUser = User(
-        name: userProvider.user.name,
-        image: "https://icon-library.com/images/681517_man_512x512.png",
-        email: userProvider.user.email);
+    // mainUser = User(
+    //     name: userProvider.user.name,
+    //     image: userProvider.user.image,
+    //     email: userProvider.user.email);
     // print(mainUser.pets.first);
 
     return Container(
@@ -156,43 +167,50 @@ class _PetOwnerProfileCoverState extends State<PetOwnerProfileCover> {
             height: PetsTheme.getLargerPadMarg(),
           ),
           //buttons
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              RoundButton(
-                child: FittedBox(
-                    child: Text(
-                  "Send a message",
-                  style: TextStyle(
-                      fontSize: PetsTheme.getSmallFont(),
-                      color: PetsTheme.currentMainColor),
-                )),
-                color: Colors.white,
-                height: 30,
-                width:
-                    MediaQuery.of(context).size.width / 3, // good for SmallFont
-              ),
-              RoundButton(
-                child: FittedBox(
-                    child: Text(
-                  "Friends",
-                  style: TextStyle(
-                      fontSize: PetsTheme.getSmallFont(), color: Colors.white),
-                )),
-                borderColor: Colors.white,
-                height: 30,
-                width:
-                    MediaQuery.of(context).size.width / 3, // good for SmallFont
-              ),
-              CircularMoreButton(
-                radius: 15,
-                color: Colors.white,
-                backgroundColor: Color.fromRGBO(20, 44, 122, 0.5),
-                onPressed: () =>
-                    Navigator.pushNamed(context, 'Pet/Registration'),
-              ),
-            ],
-          ),
+          mainUser.id == userProvider.user.id
+              ? Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    RoundButton(
+                      child: FittedBox(
+                          child: Text(
+                        "Add a pet",
+                        style: TextStyle(
+                            fontSize: PetsTheme.getSmallFont(),
+                            color: PetsTheme.currentMainColor),
+                      )),
+                      onPressed: () => Navigator.of(context).pushReplacement(
+                          new PageTransition(
+                              child: PetRegistrationScreen(),
+                              type: PageTransitionType.fade)),
+                      color: Colors.white,
+                      height: 30,
+                      width: MediaQuery.of(context).size.width /
+                          3, // good for SmallFont
+                    ),
+                    RoundButton(
+                      child: FittedBox(
+                          child: Text(
+                        "Friends",
+                        style: TextStyle(
+                            fontSize: PetsTheme.getSmallFont(),
+                            color: Colors.white),
+                      )),
+                      borderColor: Colors.white,
+                      height: 30,
+                      width: MediaQuery.of(context).size.width /
+                          3, // good for SmallFont
+                    ),
+                    CircularMoreButton(
+                      radius: 15,
+                      color: Colors.white,
+                      backgroundColor: Color.fromRGBO(20, 44, 122, 0.5),
+                      onPressed: () =>
+                          Navigator.pushNamed(context, 'Pet/Registration'),
+                    ),
+                  ],
+                )
+              : Row(),
 
           SizedBox(
             height: PetsTheme.getLargerPadMarg(),
@@ -276,6 +294,8 @@ class _PetOwnerProfileCoverState extends State<PetOwnerProfileCover> {
 }
 
 class TrainerProfileCover extends StatefulWidget implements ProfileCover {
+  User activeUser;
+  TrainerProfileCover(this.activeUser);
   @override
   State<TrainerProfileCover> createState() => _TrainerProfileCoverState();
 }
@@ -283,17 +303,18 @@ class TrainerProfileCover extends StatefulWidget implements ProfileCover {
 class _TrainerProfileCoverState extends State<TrainerProfileCover> {
   @override
   Widget build(BuildContext context) {
+    userProvider = Provider.of<UserProvider>(context);
+
     return Container(
       padding: EdgeInsets.symmetric(horizontal: 20),
       child: Column(
         children: [
           CommercialCover(
-            name: "Mohamed Mortada",
-            image:
-                "https://static.toiimg.com/thumb/msid-66987080,imgsize-1017159,width-800,height-600,resizemode-75/66987080.jpg",
-            rate: 3.5,
-            title: "Certified Trainer",
-            shortDescription: "Lorem Ipsum is simply dummy text",
+            name: userProvider.user.name,
+            image: userProvider.user.image,
+            rate: 5,
+            title: "Trainer",
+            shortDescription: userProvider.user.about,
           ),
 
           SizedBox(
@@ -381,6 +402,8 @@ class _TrainerProfileCoverState extends State<TrainerProfileCover> {
 
 // Vet profile & Store Profile can be same widget
 class VetProfileCover extends StatefulWidget implements ProfileCover {
+  User activeUser;
+  VetProfileCover(this.activeUser);
   @override
   State<VetProfileCover> createState() => _VetProfileCoverState();
 }
@@ -470,6 +493,8 @@ class _VetProfileCoverState extends State<VetProfileCover> {
 }
 
 class StoreProfileCover extends StatefulWidget implements ProfileCover {
+  User activeUser;
+  StoreProfileCover(this.activeUser);
   @override
   State<StoreProfileCover> createState() => _StoreProfileCoverState();
 }

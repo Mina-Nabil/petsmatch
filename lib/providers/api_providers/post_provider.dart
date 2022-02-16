@@ -5,8 +5,13 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:petmatch/models/Comment.dart';
+import 'package:petmatch/models/Pet.dart';
 import 'api_url.dart';
 import '../../models/Post.dart';
+import 'dart:io';
+import 'dart:io' as Io;
+import 'package:path/path.dart';
+import 'package:async/async.dart';
 
 class PostProvider extends ChangeNotifier {
   //reset provider data
@@ -22,8 +27,10 @@ class PostProvider extends ChangeNotifier {
   List<Comment> get comments => _comments;
 
   List<RegularPost> _posts;
+  List<RegularPost> _postsPet;
 
   List<RegularPost> get posts => _posts;
+  List<RegularPost> get postsPet => _postsPet;
 
   URLs _URLS = new URLs();
 
@@ -71,8 +78,8 @@ class PostProvider extends ChangeNotifier {
       print("200 <----");
 
       print(json.decode(response.body));
-      Map<String, dynamic> jsonMap = jsonDecode(response.body);
-      List<dynamic> data = jsonMap["data"];
+      List<dynamic> data = jsonDecode(response.body);
+
       print('${data} this is the data');
       data.map((e) => e.image = _URLS.media + e.image);
       _posts = data.map((i) => RegularPost.fromJson(i)).toList();
@@ -85,36 +92,173 @@ class PostProvider extends ChangeNotifier {
     }
   }
 
-  Future<int> createPost(RegularPost post, String token) async {
+  Future<int> getPetsFeed(Pet pet) async {
     print("start load <----");
     _loading = true;
     notifyListeners();
     http.Response response;
-    var map = new Map<String, dynamic>();
-    map['content'] = post.text;
-    map['image'] = post.image;
+    String body = "?subprofile_id=${pet.id}";
     try {
-      response = await http.post(Uri.parse(_URLS.createPost),
-          headers: {
-            'Authorization': 'Bearer $token',
-          },
-          body: map);
-    } catch (_) {
-      print(_);
-      _loading = false;
-      notifyListeners();
-      return -1;
+      response = await http.get(Uri.parse(_URLS.postPet + body));
     } catch (_) {
       print(_);
       _loading = false;
       notifyListeners();
       return -1;
     }
-
-    print("response <----");
+    print("respones <----");
     print(response.body);
-    print(response.statusCode);
-    print(response.headers);
+    // If the call to the server was successful, parse the JSON.
+    if (response.statusCode >= 200 && response.statusCode < 300) {
+      // If the call to the server was successful, parse the JSON.
+      print("200 <----");
+
+      print(json.decode(response.body));
+      List<dynamic> data = jsonDecode(response.body);
+
+      print('${data} this is the data');
+      data.map((e) => e.image = _URLS.media + e.image);
+      _postsPet = data.map((i) => RegularPost.fromJson(i)).toList();
+
+      return response.statusCode;
+
+      _ispostLoaded = true;
+    }
+  }
+
+  Future<int> getPosts(int id) async {
+    print("start load <---- ${id}");
+    _loading = true;
+    notifyListeners();
+    http.Response response;
+    String body = "/my?id=${id}";
+    print(Uri.parse(_URLS.createPost + body));
+    try {
+      response = await http.get(Uri.parse(_URLS.createPost + body));
+    } catch (_) {
+      print(_);
+      _loading = false;
+      notifyListeners();
+      return -1;
+    }
+    print("respones <----");
+    print(response.body);
+    // If the call to the server was successful, parse the JSON.
+    if (response.statusCode >= 200 && response.statusCode < 300) {
+      // If the call to the server was successful, parse the JSON.
+      print("200 <----");
+
+      List<dynamic> data = jsonDecode(response.body);
+
+      print('${data} this is the data');
+      data.map((e) => e.image = _URLS.media + e.image);
+      _posts = data.map((i) => RegularPost.fromJson(i)).toList();
+
+      return response.statusCode;
+
+      _ispostLoaded = true;
+    }
+  }
+
+  Future<int> createPost(RegularPost post, String token) async {
+    _loading = true;
+    notifyListeners();
+    try {
+      print("start load <----");
+      var image = post.image;
+      File imageFile;
+      var stream;
+      if (image == null)
+        imageFile = null;
+      else {
+        imageFile = Io.File(post.image);
+        stream =
+            new http.ByteStream(DelegatingStream.typed(imageFile.openRead()));
+      }
+      String body;
+      body = "?content=${post.text.toString()}" + "&image=${post.image}";
+
+      print(body);
+
+      var request =
+          new http.MultipartRequest("POST", Uri.parse(_URLS.createPost + body));
+      request.headers['Authorization'] = 'Bearer $token';
+
+      if (imageFile != null) {
+        var length = await imageFile.length();
+        var multipartFile = new http.MultipartFile('image', stream, length,
+            filename: basename(imageFile.path));
+        request.files.add(multipartFile);
+      }
+      var response = await request.send();
+      response.stream.transform(utf8.decoder).listen((value) {
+        if (response.statusCode >= 200 && response.statusCode < 300) {
+          Map<String, dynamic> data = json.decode(value);
+          print("The data is ${data}");
+          _posts.add(RegularPost.fromJson(data));
+          return response.statusCode;
+        }
+        print(response.statusCode);
+        print(value);
+        return response.statusCode;
+      });
+    } catch (_) {
+      print(_);
+      _loading = false;
+      notifyListeners();
+      return -1;
+    }
+    print("response <----");
+  }
+
+  Future<int> createPetPost(RegularPost post, int id) async {
+    _loading = true;
+    notifyListeners();
+    try {
+      print("start load <----");
+      var image = post.image;
+      File imageFile;
+      var stream;
+      if (image == null)
+        imageFile = null;
+      else {
+        imageFile = Io.File(post.image);
+        stream =
+            new http.ByteStream(DelegatingStream.typed(imageFile.openRead()));
+      }
+      String body;
+      body = "?content=${post.text.toString()}" +
+          "&image=${post.image}" +
+          "&subprofile_id=${id}";
+      print(body);
+
+      var request =
+          new http.MultipartRequest("POST", Uri.parse(_URLS.postPet + body));
+
+      if (imageFile != null) {
+        var length = await imageFile.length();
+        var multipartFile = new http.MultipartFile('image', stream, length,
+            filename: basename(imageFile.path));
+        request.files.add(multipartFile);
+      }
+      var response = await request.send();
+      response.stream.transform(utf8.decoder).listen((value) {
+        if (response.statusCode >= 200 && response.statusCode < 300) {
+          Map<String, dynamic> data = json.decode(value);
+          print("The data is ${data}");
+          _posts.add(RegularPost.fromJson(data));
+          return response.statusCode;
+        }
+        print(response.statusCode);
+        return response.statusCode;
+      });
+    } catch (_) {
+      print(_);
+      _loading = false;
+      notifyListeners();
+      return -1;
+    }
+    print("response <----");
   }
 
   void setPost(RegularPost post) {
@@ -157,6 +301,33 @@ class PostProvider extends ChangeNotifier {
     print(response.body);
     print(response.statusCode);
     print(response.headers);
+  }
+
+  Future<int> lovePost(int post_id, String token) async {
+    print("start load <----");
+    _loading = true;
+    notifyListeners();
+    http.Response response;
+    var map = new Map<String, dynamic>();
+    map['post_id'] = post_id.toString();
+    try {
+      response = await http.post(Uri.parse(_URLS.lovePost),
+          headers: {
+            'Authorization': 'Bearer $token',
+          },
+          body: map);
+    } catch (_) {
+      print(_);
+      _loading = false;
+      notifyListeners();
+      return -1;
+    }
+
+    print("response <----");
+    print(response.body);
+    print(response.statusCode);
+    print(response.headers);
+    return response.statusCode;
   }
 
   // Future<int> getpostData({

@@ -1,9 +1,11 @@
+import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:petmatch/models/Pet.dart';
 import 'package:petmatch/models/Post.dart';
 import 'package:petmatch/models/Profile.dart';
 import 'package:petmatch/models/User.dart';
+import 'package:petmatch/providers/api_providers/pet_provider.dart';
 import 'package:petmatch/providers/api_providers/post_provider.dart';
 import 'package:petmatch/providers/api_providers/user_provider.dart';
 import 'package:petmatch/settings/paths.dart';
@@ -11,8 +13,6 @@ import 'package:petmatch/theme/petsTheme.dart';
 import 'package:petmatch/widgets/buttons/CircularButton.dart';
 import 'package:petmatch/widgets/feed/NewPostWidget.dart';
 import 'package:petmatch/widgets/feed/RegularPostWidget.dart';
-import 'package:petmatch/widgets/feed/SuggestedIcon.dart';
-import 'package:petmatch/widgets/feed/SuggestionsIconsList.dart';
 import 'package:petmatch/widgets/main/UserAvatar.dart';
 import 'package:petmatch/widgets/screens/PetMatchSingleScreen.dart';
 import 'package:provider/provider.dart';
@@ -24,6 +24,7 @@ class HomeScreen extends StatefulWidget {
 
 class _HomeScreenState extends State<HomeScreen> {
   PostProvider postProvider;
+  PetProvider petProvider;
   UserProvider userProvider;
 
   List<RegularPost> posts;
@@ -33,13 +34,27 @@ class _HomeScreenState extends State<HomeScreen> {
   List<Profile> suggests;
   List<Pet> pets;
 
+  FirebaseMessaging _firebaseMessaging = FirebaseMessaging();
+
   int status;
   bool done = false;
   // UserProvider _userProvider;
+
+  void updatePets() async {
+    /* whatever */
+
+    userProvider = Provider.of<UserProvider>(context, listen: false);
+    petProvider = Provider.of<PetProvider>(context, listen: false);
+
+    status = await petProvider.showMyPets(token: userProvider.user.token);
+    print("{$status} is my pet status");
+  }
+
   @override
   void initState() {
     userProvider = Provider.of<UserProvider>(context, listen: false);
     postProvider = Provider.of<PostProvider>(context, listen: false);
+    firebaseCloudMessaging_Listeners();
 
     print("suggests 1");
     super.initState();
@@ -47,56 +62,34 @@ class _HomeScreenState extends State<HomeScreen> {
     Future.delayed(Duration.zero).then((value) => updatePosts());
 
     postWidgets = [
-      NewPostWidget(),
-      // SuggesionsIconsList([
-      // SuggestedIcon(mainUser),
-      // ...pets.map((element) {
-      //   return SuggestedIcon(element);
-      // })
-      // ]),
+      NewPostWidget(
+        onNewPost: (RegularPost post) {
+          print(post);
+          setState(() {
+            postWidgets.add(RegularPostWidget(
+              post,
+              margin:
+                  EdgeInsets.symmetric(vertical: PetsTheme.getMeduimPadMarg()),
+              contentPadding: EdgeInsets.only(
+                  left: PetsTheme.getMuchLargerPadMarg(),
+                  right: PetsTheme.getMuchLargerPadMarg(),
+                  bottom: PetsTheme.getLargePadMarg()),
+            ));
+          });
+        },
+      ),
     ];
-    //   Pet(
-    //       name: "Bobby",
-    //       image:
-    //           "https://cdn.pixabay.com/photo/2017/09/25/13/12/dog-2785074__340.jpg",
-    //       owner: "Mina"),
-    //   Pet(
-    //       name: "Bobby",
-    //       image:
-    //           "https://hips.hearstapps.com/hmg-prod.s3.amazonaws.com/images/dog-puppy-on-garden-royalty-free-image-1586966191.jpg",
-    //       owner: "Mina"),
-    //   Pet(
-    //       name: "Bobby",
-    //       image:
-    //           "https://post.greatist.com/wp-content/uploads/sites/3/2020/02/322868_1100-800x825.jpg",
-    //       owner: "Mina"),
-    //   Pet(
-    //       name: "Bobby",
-    //       image:
-    //           "https://www.cesarsway.com/wp-content/uploads/2019/10/AdobeStock_190562703.jpeg",
-    //       owner: "Mina"),
-    //   Pet(
-    //       name: "Bobby",
-    //       image:
-    //           "https://www.thesprucepets.com/thmb/sfuyyLvyUx636_Oq3Fw5_mt-PIc=/3760x2820/smart/filters:no_upscale()/adorable-white-pomeranian-puppy-spitz-921029690-5c8be25d46e0fb000172effe.jpg",
-    //       owner: "Mina"),
-    //   Pet(
-    //       name: "Bobby",
-    //       image:
-    //           "https://i.insider.com/5efe3d7faee6a8324a656478?width=1100&format=jpeg&auto=webp",
-    //       owner: "Mina"),
-    //   Pet(
-    //       name: "Bobby",
-    //       image: "https://scx2.b-cdn.net/gfx/news/hires/2018/2-dog.jpg",
-    //       owner: "Mina"),
-    //   Pet(
-    //       name: "Bobby",
-    //       image:
-    //           "https://cdn.pixabay.com/photo/2017/09/25/13/12/dog-2785074__340.jpg",
-    //       owner: "Mina"),
-    // ];
-    // mainUser.addAllPet(pets);
     print(suggests);
+
+    updatePets();
+  }
+
+  void firebaseCloudMessaging_Listeners() {
+    _firebaseMessaging.configure(
+      onMessage: (Map<String, dynamic> message) async {
+        print("notification reecieved");
+      },
+    );
   }
 
   void updatePosts() async {
@@ -142,76 +135,57 @@ class _HomeScreenState extends State<HomeScreen> {
     }
 
     return PetMatchSingleScreen.scrollable(
-        //scrollableHeader: true,
-        header: Container(
-          padding: EdgeInsets.all(20),
-          child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              mainAxisSize: MainAxisSize.min,
-              children: [
-                Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      GestureDetector(
-                        child: Container(
-                          width: 45,
-                          height: 45,
-                          child: UserAvatar(
-                              image: mainUser.image == null
-                                  ? "https://cdn.pixabay.com/photo/2017/09/25/13/12/dog-2785074__340.jpg"
-                                  : mainUser.image,
-                              imageRatio: 1),
-                        ),
-                        onTap: () => Navigator.of(context).pushNamed('profile'),
-                      ),
-                      Container(
-                          height: 55,
-                          width: 55,
-                          child: GestureDetector(
-                            child: CircularPetButton(
-                                PetsTheme.currentMainColor.withOpacity(.2),
-                                Paths.search_icon_path,
-                                Colors.white),
-                            onTap: () =>
-                                Navigator.of(context).pushNamed('search'),
-                          ))
-                    ]),
-                SizedBox(
-                  height: 10,
+      //scrollableHeader: true,
+      header: Container(
+        padding: EdgeInsets.all(20),
+        child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
+                GestureDetector(
+                  child: Container(
+                    width: 45,
+                    height: 45,
+                    child: UserAvatar(
+                        image: mainUser.image == null
+                            ? "https://cdn.pixabay.com/photo/2017/09/25/13/12/dog-2785074__340.jpg"
+                            : mainUser.image,
+                        imageRatio: 1),
+                  ),
+                  onTap: () => Navigator.of(context).pushNamed(
+                    'profile',
+                    arguments: <String, dynamic>{
+                      'data': mainUser,
+                    },
+                  ),
                 ),
                 Container(
-                  width: double.infinity,
-                  child: SingleChildScrollView(
-                    scrollDirection: Axis.horizontal,
-                    child: Row(
-                      children: petImages,
-                    ),
-                  ),
-                )
+                    height: 55,
+                    width: 55,
+                    child: GestureDetector(
+                      child: CircularPetButton(
+                          PetsTheme.currentMainColor.withOpacity(.2),
+                          Paths.search_icon_path,
+                          Colors.white),
+                      onTap: () => Navigator.of(context).pushNamed('search'),
+                    ))
               ]),
-        ),
-        bodyWidgets: postWidgets
-        // [
-        //   NewPostWidget(),
-        //   SuggesionsIconsList([
-        //     SuggestedIcon(mainUser),
-        //     ...pets.map((element) {
-        //       return SuggestedIcon(element);
-        //     })
-        //   ]),
-        //   if (done)
-        //     ...posts.map((post) {
-        //       return RegularPostWidget(
-        //         post,
-        //         margin:
-        //             EdgeInsets.symmetric(vertical: PetsTheme.getMeduimPadMarg()),
-        //         contentPadding: EdgeInsets.only(
-        //             left: PetsTheme.getMuchLargerPadMarg(),
-        //             right: PetsTheme.getMuchLargerPadMarg(),
-        //             bottom: PetsTheme.getLargePadMarg()),
-        //       );
-        //     }).toList(),
-        // ],
-        );
+              SizedBox(
+                height: 10,
+              ),
+              Container(
+                width: double.infinity,
+                child: SingleChildScrollView(
+                  scrollDirection: Axis.horizontal,
+                  child: Row(
+                    children: petImages,
+                  ),
+                ),
+              )
+            ]),
+      ),
+      bodyWidgets: postWidgets,
+    );
   }
 }

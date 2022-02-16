@@ -1,11 +1,17 @@
+import 'dart:io';
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:image_picker/image_picker.dart';
 import 'package:page_transition/page_transition.dart';
 import 'package:petmatch/models/Pet.dart';
 import 'package:petmatch/models/User.dart';
 import 'package:petmatch/providers/api_providers/pet_provider.dart';
 import 'package:petmatch/screens/login/CongratsScreen.dart';
+import 'package:petmatch/screens/main_screen/main_tabs/HomeScreen.dart';
 import 'package:petmatch/screens/profile/ProfileScreen.dart';
+import 'package:petmatch/widgets/buttons/RemoveImageButton.dart';
+import 'package:petmatch/widgets/buttons/UploadImageButton.dart';
 import 'package:petmatch/widgets/form/LabelledFormField.dart';
 import 'package:petmatch/widgets/screens/LoginScreenSetup.dart';
 import 'package:petmatch/widgets/buttons/SkipButton.dart';
@@ -33,7 +39,7 @@ class _PetRegistrationScreen extends State<PetRegistrationScreen> {
   PetProvider petProvider;
 
   User mainUser;
-
+  String profilePicture;
   String _genderController;
   DateTime _dateOfBirth = new DateTime(2000, 1, 1);
   String _country;
@@ -75,8 +81,21 @@ class _PetRegistrationScreen extends State<PetRegistrationScreen> {
       userProvider = Provider.of<UserProvider>(context, listen: false);
       petProvider = Provider.of<PetProvider>(context, listen: false);
       mainUser = userProvider.user;
-      print(mainUser.token);
     });
+  }
+
+  addPet() async {
+    Pet pet = new Pet(
+        id: 0,
+        name: _firstNameController.text,
+        dob: _dateOfBirth,
+        owner: "owner",
+        image: profilePicture);
+    int status = await petProvider.addPet(pet, mainUser.token);
+    print('${status} is the status before tgbhe if');
+    if (status >= 200 && status < 300)
+      Navigator.of(context).push(new PageTransition(
+          child: HomeScreen(), type: PageTransitionType.fade));
   }
 
   @override
@@ -116,11 +135,34 @@ class _PetRegistrationScreen extends State<PetRegistrationScreen> {
             label: "Age",
             maxFieldHeight: maxFieldHeight,
             minFieldHeight: minFieldHeight,
-            obscureText: true,
             controller: _passwordNameController,
             fieldsWidth: fieldsWidth,
           ),
-
+          profilePicture == null
+              ? UploadImageButton(
+                  fieldsWidth: fieldsWidth,
+                  callBackFunction: () async {
+                    final ImagePicker _picker = ImagePicker();
+                    final pickedFile =
+                        await _picker.pickImage(source: ImageSource.gallery);
+                    setState(() {
+                      profilePicture = pickedFile.path.toString();
+                    });
+                  })
+              : Column(children: [
+                  CircleAvatar(
+                    radius: 30.0,
+                    backgroundColor: Colors.transparent,
+                    backgroundImage: FileImage(File(profilePicture)),
+                  ),
+                  RemoveImageButton(
+                      fieldsWidth: fieldsWidth,
+                      callBackFunction: () async {
+                        setState(() {
+                          profilePicture = null;
+                        });
+                      })
+                ]),
           LabelledFormField(
               label: "Gender",
               fieldHeight: maxFieldHeight,
@@ -299,48 +341,14 @@ class _PetRegistrationScreen extends State<PetRegistrationScreen> {
                   );
                 }).toList(),
               )),
-
           SubmitButton(
-            callBackFunction: () async {
-              print('before pet');
-              Pet pet = new Pet(
-                  name: _firstNameController.text,
-                  dob: _dateOfBirth,
-                  owner: "owner",
-                  image: "");
-              print(mainUser.token);
-              int status = await petProvider.addPet(pet, mainUser.token);
-              if (status >= 200 && status < 300)
-                Navigator.of(context).push(new PageTransition(
-                    child: ProfileScreen(), type: PageTransitionType.fade));
-              else
-                showModalBottomSheet(
-                  context: context,
-                  builder: (
-                    BuildContext context,
-                  ) =>
-                      CupertinoPopupSurface(
-                    child: Center(
-                      child: Container(
-                        height: 50,
-                        width: 200,
-                        child: Center(
-                          child: Text(
-                            userProvider.error,
-                          ),
-                        ),
-                      ),
-                    ),
-                  ),
-                );
-            },
-            buttonText: "Next",
-            isShowPaws: false,
+            callBackFunction: () => addPet(),
+            isShowPaws: true,
           ),
           SkipButton(
               callBackFunction: () => Navigator.of(context).push(
                   new PageTransition(
-                      child: ProfileScreen(), type: PageTransitionType.fade))),
+                      child: HomeScreen(), type: PageTransitionType.fade))),
         ],
       ),
     );

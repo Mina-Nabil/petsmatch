@@ -1,11 +1,16 @@
 import 'package:flutter/material.dart';
+import 'package:petmatch/providers/api_providers/pet_provider.dart';
 import 'package:petmatch/theme/petsTheme.dart';
 import 'package:petmatch/widgets/buttons/RoundButton.dart';
 import 'package:petmatch/widgets/screens/PetMatchSingleScreen.dart';
+import 'package:provider/provider.dart';
 
 class FindMateStartScreen extends StatelessWidget {
+  PetProvider petProvider;
   @override
   Widget build(BuildContext context) {
+    petProvider = Provider.of<PetProvider>(context, listen: true);
+
     return PetMatchSingleScreen(
       backgroundMask: bgMask.mating,
       backArrow: true,
@@ -21,14 +26,13 @@ class FindMateStartScreen extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: [
                 CircleAvatar(
-                  backgroundImage: Image.network(
-                          "https://cdn.pixabay.com/photo/2017/09/25/13/12/dog-2785074__340.jpg")
-                      .image,
+                  backgroundImage:
+                      Image.network(petProvider.selectedPet.image).image,
                   radius: PetsTheme.radius6,
                 ),
                 Column(
                   children: [
-                    Text("Bella",
+                    Text(petProvider.selectedPet.name,
                         style: TextStyle(
                             fontSize: PetsTheme.getLargeFont(),
                             color: Colors.white,
@@ -62,11 +66,11 @@ class FindMateStartScreen extends StatelessWidget {
             RoundButton(
               child: FittedBox(
                   child: Text(
-                    "Select a breed",
-                    style: TextStyle(
-                        fontSize: PetsTheme.getMeduimFont(),
-                        color: PetsTheme.currentMainColor),
-                  )),
+                "Select a breed",
+                style: TextStyle(
+                    fontSize: PetsTheme.getMeduimFont(),
+                    color: PetsTheme.currentMainColor),
+              )),
               borderColor: PetsTheme.currentMainColor,
               width: double.infinity,
               onPressed: () {},
@@ -77,10 +81,10 @@ class FindMateStartScreen extends StatelessWidget {
             RoundButton(
               child: FittedBox(
                   child: Text(
-                    "Let's start",
-                    style: TextStyle(
-                        fontSize: PetsTheme.getMeduimFont(), color: Colors.white),
-                  )),
+                "Let's start",
+                style: TextStyle(
+                    fontSize: PetsTheme.getMeduimFont(), color: Colors.white),
+              )),
               borderColor: Colors.white,
               color: PetsTheme.currentMainColor,
               width: double.infinity, // good for SmallFont

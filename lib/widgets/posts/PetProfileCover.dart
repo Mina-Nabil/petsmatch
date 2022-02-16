@@ -1,15 +1,21 @@
 import 'package:flutter/material.dart';
 import 'package:petmatch/models/Pet.dart';
+import 'package:petmatch/providers/api_providers/pet_provider.dart';
 import 'package:petmatch/theme/petsTheme.dart';
 import 'package:petmatch/widgets/custom/Pair.dart';
 import 'package:petmatch/widgets/buttons/CircularMoreButton.dart';
 import 'package:petmatch/widgets/buttons/RoundButton.dart';
 import 'package:petmatch/widgets/main/UserAvatar.dart';
+import 'package:provider/provider.dart';
 
 class PetProfileCover extends StatelessWidget {
   @override
+  PetProvider petProvider;
+
   Widget build(BuildContext context) {
-    Pet pet = Pet();
+    petProvider = Provider.of<PetProvider>(context);
+
+    Pet pet = petProvider.selectedPet;
 
     return Container(
       padding: EdgeInsets.symmetric(horizontal: 20),
@@ -46,8 +52,7 @@ class PetProfileCover extends StatelessWidget {
                         height: PetsTheme.radius5,
                         width: PetsTheme.radius5,
                         child: UserAvatar(
-                          image:
-                              "https://lh3.googleusercontent.com/9AY45-uFNsXWwvtQmZFRWrpy1koWGBLs5XDVYjy3xg-G6fjlekANnsSbhYYU-E0CDw",
+                          image: "",
                           imageRatio: 1,
                         ),
                       ),
@@ -55,7 +60,7 @@ class PetProfileCover extends StatelessWidget {
                         padding:
                             EdgeInsets.only(left: PetsTheme.getSmallPadMarg()),
                         child: Text(
-                          "AHmed Abdallah",
+                          "${pet.owner}'s pet",
                           style: TextStyle(
                               color: Colors.white,
                               fontSize: PetsTheme.getMeduimFont()),

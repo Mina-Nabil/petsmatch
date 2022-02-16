@@ -11,5 +11,5 @@ abstract class Profile {
   * whoIAm method should return a string represent the role of this profile owner (like: Owner of Rex, Mike's Pet)
   * Must be implemented by any class that inherent from Profile
   */
-  String whoIAm ();
+  String whoIAm();
 }

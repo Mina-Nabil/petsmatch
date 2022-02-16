@@ -1,12 +1,15 @@
+import 'dart:io';
+
+import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:image_picker/image_picker.dart';
 import 'package:page_transition/page_transition.dart';
 import 'package:petmatch/screens/login/CongratsScreen.dart';
-import 'package:petmatch/screens/login/setUserPhoto.dart';
-import 'package:petmatch/theme/petsTheme.dart';
+import 'package:petmatch/widgets/buttons/RemoveImageButton.dart';
+import 'package:petmatch/widgets/buttons/UploadImageButton.dart';
 import 'package:petmatch/widgets/form/LabelledFormField.dart';
 import 'package:petmatch/widgets/screens/LoginScreenSetup.dart';
-import 'package:petmatch/widgets/buttons/SkipButton.dart';
 import 'package:petmatch/widgets/buttons/SubmitButton.dart';
 import 'package:petmatch/widgets/form/regTextField.dart';
 import 'package:petmatch/models/User.dart';
@@ -37,8 +40,10 @@ class _OwnerRegistrationScreenState extends State<OwnerRegistrationScreen> {
   String dropdownValueGender = 'Male';
   String dropdownValueCountry = 'Egypt';
   String dropdownValueCity = 'Cairo';
-
+  String profilePicture;
   DateTime birthDate = null;
+  String firebase_token;
+  FirebaseMessaging _firebaseMessaging = FirebaseMessaging();
 
   final List<DropdownMenuItem> genderItems = <DropdownMenuItem>[
     DropdownMenuItem(
@@ -56,6 +61,44 @@ class _OwnerRegistrationScreenState extends State<OwnerRegistrationScreen> {
   }
 
   citySelected(selected) {}
+
+  void initState() {
+    // blocking change in screen orientation
+    super.initState();
+    firebaseCloudMessaging_Listeners();
+  }
+
+  void firebaseCloudMessaging_Listeners() {
+    if (Platform.isIOS) iOS_Permission();
+
+    _firebaseMessaging.getToken().then((token) {
+      setState(() {
+        firebase_token = token;
+      });
+      print(token);
+    });
+
+    _firebaseMessaging.configure(
+      onMessage: (Map<String, dynamic> message) async {
+        print('on message $message');
+      },
+      onResume: (Map<String, dynamic> message) async {
+        print('on resume $message');
+      },
+      onLaunch: (Map<String, dynamic> message) async {
+        print('on launch $message');
+      },
+    );
+  }
+
+  void iOS_Permission() {
+    _firebaseMessaging.requestNotificationPermissions(
+        IosNotificationSettings(sound: true, badge: true, alert: true));
+    _firebaseMessaging.onIosSettingsRegistered
+        .listen((IosNotificationSettings settings) {
+      print("Settings registered: $settings");
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -106,6 +149,7 @@ class _OwnerRegistrationScreenState extends State<OwnerRegistrationScreen> {
             controller: _passwordNameController,
             fieldsWidth: fieldsWidth,
           ),
+
           RegTextField(
             label: "Confirm Password",
             maxFieldHeight: maxFieldHeight,
@@ -114,6 +158,32 @@ class _OwnerRegistrationScreenState extends State<OwnerRegistrationScreen> {
             controller: _confirmPasswordNameController,
             fieldsWidth: fieldsWidth,
           ),
+          profilePicture == null
+              ? UploadImageButton(
+                  fieldsWidth: fieldsWidth,
+                  callBackFunction: () async {
+                    final ImagePicker _picker = ImagePicker();
+                    final pickedFile =
+                        await _picker.pickImage(source: ImageSource.gallery);
+                    setState(() {
+                      profilePicture = pickedFile.path.toString();
+                    });
+                  })
+              : Column(children: [
+                  CircleAvatar(
+                    radius: 30.0,
+                    backgroundColor: Colors.transparent,
+                    backgroundImage: FileImage(File(profilePicture)),
+                  ),
+                  RemoveImageButton(
+                      fieldsWidth: fieldsWidth,
+                      callBackFunction: () async {
+                        setState(() {
+                          profilePicture = null;
+                        });
+                      })
+                ]),
+
           LabelledFormField(
               label: "Gender",
               fieldHeight: maxFieldHeight,
@@ -236,18 +306,21 @@ class _OwnerRegistrationScreenState extends State<OwnerRegistrationScreen> {
                 );
               else {
                 User antoin = new User(
-                    name: _firstNameController.text + _lastNameController.text,
-                    password: _passwordNameController.text.trim(),
-                    email: _emailController.text.trim(),
-                    usertype: "Pet Owner",
-                    gender: dropdownValueGender,
-                    dateOfBirth: _dateOfBirth,
-                    country: dropdownValueCountry,
-                    city: dropdownValueCity,
-                    token: "");
+                  name: _firstNameController.text + _lastNameController.text,
+                  password: _passwordNameController.text.trim(),
+                  email: _emailController.text.trim(),
+                  usertype: "Pet Owner",
+                  image: profilePicture,
+                  gender: dropdownValueGender,
+                  dateOfBirth: _dateOfBirth,
+                  country: dropdownValueCountry,
+                  city: dropdownValueCity,
+                  token: "",
+                  firebase_token: firebase_token,
+                );
                 print(context);
                 int status = await userProvider.signUp(antoin);
-                if (status == 200)
+                if (status >= 200 && status < 300)
                   Navigator.of(context).push(new PageTransition(
                       child: CongratsScreen(), type: PageTransitionType.fade));
                 else
@@ -275,7 +348,6 @@ class _OwnerRegistrationScreenState extends State<OwnerRegistrationScreen> {
             buttonText: "Next",
             isShowPaws: false,
           ),
-          SkipButton(callBackFunction: null),
         ],
       ),
     );

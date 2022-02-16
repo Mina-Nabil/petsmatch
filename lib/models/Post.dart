@@ -4,6 +4,7 @@ import 'package:petmatch/providers/api_providers/api_url.dart';
 
 abstract class Post {
   Post({
+    @required this.id,
     @required this.owner,
     @required this.postDate,
     @required this.commentsCount,
@@ -39,12 +40,14 @@ abstract class Post {
   final DateTime postDate;
   final int commentsCount;
   final int sharesCount;
+  final int id;
   int lovesCount;
   bool _isLoved;
 }
 
 class RegularPost extends Post {
   RegularPost({
+    @required int id,
     @required PostOwner owner,
     @required DateTime postDate,
     @required int commentsCount,
@@ -54,6 +57,7 @@ class RegularPost extends Post {
     this.image,
     this.text,
   }) : super(
+            id: id,
             owner: owner,
             lovesCount: lovesCount,
             commentsCount: commentsCount,
@@ -79,26 +83,68 @@ class RegularPost extends Post {
   //   );
   // }
   factory RegularPost.fromJson(Map<String, dynamic> parsedJson) {
-    String gender = "Female";
-    print("${parsedJson['user']} this is the gender of the parsedJSON");
-    if (parsedJson['user']['gender'] == 1) gender = "Male";
-    DateFormat dateFormat = DateFormat("yyyy-MM-dd");
-    String image = 'https://petsmatch-be.herokuapp.com' + parsedJson['image'];
-    PostOwner po = new UserPostOwner(
-      id: parsedJson['user']['id'],
-      name: parsedJson['user']['name'],
-    );
-    print(parsedJson['image']);
-    return new RegularPost(
-      postDate: dateFormat.parse(parsedJson['created_at']),
-      text: parsedJson['content'],
-      image: image,
-      owner: po,
-      commentsCount: parsedJson['comments'].length,
-      sharesCount: parsedJson['shares'].length,
-      lovesCount: 0,
-      isLoved: false,
-    );
+    URLs _URLS;
+    if (parsedJson['sub_profile'] == null) {
+      String gender = "Female";
+      if (parsedJson['user']['gender'] == 1) gender = "Male";
+      DateFormat dateFormat = DateFormat("yyyy-MM-dd");
+      _URLS = new URLs();
+      String image = _URLS.media + parsedJson['image'];
+      print(parsedJson);
+      String Userimage;
+      if (parsedJson['user']['image'] != null)
+        Userimage = _URLS.media + parsedJson['user']['image'];
+      else
+        Userimage = "";
+      PostOwner po = new UserPostOwner(
+        id: parsedJson['user']['id'],
+        name: parsedJson['user']['name'],
+        imageUrl: Userimage,
+      );
+      print(parsedJson['image']);
+      return new RegularPost(
+        id: parsedJson['id'],
+        postDate: dateFormat.parse(parsedJson['created_at']),
+        text: parsedJson['content'],
+        image: image,
+        owner: po,
+        commentsCount: parsedJson['comments'].length,
+        sharesCount: parsedJson['shares'].length,
+        lovesCount: parsedJson['loveCount'],
+        isLoved: false,
+      );
+    } else {
+      DateFormat dateFormat = DateFormat("yyyy-MM-dd");
+
+      _URLS = new URLs();
+      String image;
+      if (parsedJson['image'] != null)
+        image = _URLS.media + parsedJson['image'];
+      else
+        image = "";
+      print(parsedJson);
+      String petImage;
+      if (parsedJson['sub_profile']['image'] != null)
+        petImage = _URLS.media + parsedJson['sub_profile']['image'];
+      else
+        petImage = "";
+      PostOwner po = new PetPostOwner(
+          id: parsedJson['sub_profile']['id'],
+          name: parsedJson['sub_profile']['name'],
+          imageUrl: petImage,
+          owner: parsedJson['sub_profile']['owner']['name']);
+      return new RegularPost(
+        id: parsedJson['id'],
+        postDate: dateFormat.parse(parsedJson['created_at']),
+        text: parsedJson['content'],
+        image: image,
+        owner: po,
+        commentsCount: parsedJson['comments'].length,
+        sharesCount: parsedJson['shares'].length,
+        lovesCount: parsedJson['loveCount'],
+        isLoved: false,
+      );
+    }
   }
 }
 

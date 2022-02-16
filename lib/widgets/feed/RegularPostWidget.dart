@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:petmatch/models/Post.dart';
 import 'package:petmatch/models/User.dart';
-import 'package:petmatch/providers/api_providers/family_provider.dart';
 import 'package:petmatch/providers/api_providers/post_provider.dart';
+import 'package:petmatch/providers/api_providers/user_provider.dart';
 import 'package:petmatch/screens/post_screens/PostScreen.dart';
 import 'package:petmatch/theme/petsTheme.dart';
 import 'package:petmatch/widgets/feed/UserNameRole.dart';
@@ -30,9 +30,16 @@ class RegularPostWidget extends StatefulWidget {
 }
 
 class _RegularPostWidgetState extends State<RegularPostWidget> {
+  PostProvider postProvider;
+  UserProvider userProvider;
+  void likePost() async {
+    await postProvider.lovePost(widget.post.id, userProvider.user.token);
+  }
+
   @override
   Widget build(BuildContext context) {
     postProvider = Provider.of<PostProvider>(context, listen: false);
+    userProvider = Provider.of<UserProvider>(context, listen: false);
     final int imageWidth = MediaQuery.of(context).size.width.toInt();
     final int imageHeight = 250;
 
@@ -143,6 +150,7 @@ class _RegularPostWidgetState extends State<RegularPostWidget> {
                             height: PetsTheme.smallIconSize(),
                           ),
                           onPressed: () {
+                            likePost();
                             setState(() {
                               widget.post.toggleLove();
                             });

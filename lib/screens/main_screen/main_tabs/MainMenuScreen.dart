@@ -1,12 +1,26 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:page_transition/page_transition.dart';
+import 'package:petmatch/global.dart';
+import 'package:petmatch/providers/api_providers/user_provider.dart';
+import 'package:petmatch/screens/login/login.dart';
+import 'package:petmatch/screens/login/splash.dart';
 import 'package:petmatch/theme/petsTheme.dart';
 import 'package:petmatch/widgets/main/UserAvatar.dart';
 import 'package:petmatch/widgets/screens/PetMatchSingleScreen.dart';
+import 'package:provider/provider.dart';
 
 class MainMenuScreen extends StatelessWidget {
+  UserProvider userProvider;
+  CupertinoTabController _tabController;
+
   @override
   Widget build(BuildContext context) {
+    _tabController = new CupertinoTabController(initialIndex: 1);
+
+    userProvider = Provider.of<UserProvider>(context);
+
     return PetMatchSingleScreen(
       //scrollableHeader: false,
       header: Container(
@@ -22,125 +36,18 @@ class MainMenuScreen extends StatelessWidget {
                       height: 45,
                       width: 45,
                       child: UserAvatar(
-                        image:
-                            "https://lh3.googleusercontent.com/9AY45-uFNsXWwvtQmZFRWrpy1koWGBLs5XDVYjy3xg-G6fjlekANnsSbhYYU-E0CDw",
+                        image: userProvider.user.image,
                         imageRatio: 1,
                       )),
                   SizedBox(
                     width: PetsTheme.getLargePadMarg(),
                   ),
-                  Text("Mina Kamal",
+                  Text(userProvider.user.name,
                       style: TextStyle(
                           fontSize: PetsTheme.getLargerFont(),
                           color: Colors.white,
                           fontWeight: FontWeight.bold))
                 ],
-              ),
-            ),
-            Container(
-              alignment: Alignment.center,
-              child: SingleChildScrollView(
-                scrollDirection: Axis.horizontal,
-                child: Row(
-                  children: [
-                    Container(
-                      margin: EdgeInsets.symmetric(
-                          horizontal: PetsTheme.getSmallPadMarg()),
-                      child: Column(
-                        children: [
-                          Container(
-                            height: 35,
-                            width: 35,
-                            margin: EdgeInsets.all(PetsTheme.getSmallPadMarg()),
-                            child: UserAvatar(
-                              image:
-                                  "https://cdn.pixabay.com/photo/2017/09/25/13/12/dog-2785074__340.jpg",
-                              imageRatio: 1,
-                            ),
-                          ),
-                          Text(
-                            "Bella",
-                            style: TextStyle(
-                                fontSize: PetsTheme.getMeduimFont(),
-                                color: Colors.white),
-                          ),
-                        ],
-                      ),
-                    ),
-                    Container(
-                      margin: EdgeInsets.symmetric(
-                          horizontal: PetsTheme.getSmallPadMarg()),
-                      child: Column(
-                        children: [
-                          Container(
-                            height: 35,
-                            width: 35,
-                            margin: EdgeInsets.all(PetsTheme.getSmallPadMarg()),
-                            child: UserAvatar(
-                              image:
-                                  "https://cdn.pixabay.com/photo/2017/09/25/13/12/dog-2785074__340.jpg",
-                              imageRatio: 1,
-                            ),
-                          ),
-                          Text(
-                            "Rusty",
-                            style: TextStyle(
-                                fontSize: PetsTheme.getMeduimFont(),
-                                color: Colors.white),
-                          ),
-                        ],
-                      ),
-                    ),
-                    Container(
-                      margin: EdgeInsets.symmetric(
-                          horizontal: PetsTheme.getSmallPadMarg()),
-                      child: Column(
-                        children: [
-                          Container(
-                            height: 35,
-                            width: 35,
-                            margin: EdgeInsets.all(PetsTheme.getSmallPadMarg()),
-                            child: UserAvatar(
-                              image:
-                                  "https://cdn.pixabay.com/photo/2017/09/25/13/12/dog-2785074__340.jpg",
-                              imageRatio: 1,
-                            ),
-                          ),
-                          Text(
-                            "Rex",
-                            style: TextStyle(
-                                fontSize: PetsTheme.getMeduimFont(),
-                                color: Colors.white),
-                          ),
-                        ],
-                      ),
-                    ),
-                    Container(
-                      margin: EdgeInsets.symmetric(
-                          horizontal: PetsTheme.getSmallPadMarg()),
-                      child: Column(
-                        children: [
-                          Container(
-                            height: 35,
-                            width: 35,
-                            margin: EdgeInsets.all(PetsTheme.getSmallPadMarg()),
-                            child: UserAvatar(
-                              image:
-                                  "https://cdn.pixabay.com/photo/2017/09/25/13/12/dog-2785074__340.jpg",
-                              imageRatio: 1,
-                            ),
-                          ),
-                          Text(
-                            "Lucky",
-                            style: TextStyle(
-                                fontSize: PetsTheme.getMeduimFont(),
-                                color: Colors.white),
-                          ),
-                        ],
-                      ),
-                    ),
-                  ],
-                ),
               ),
             ),
           ],
@@ -202,7 +109,15 @@ class MainMenuScreen extends StatelessWidget {
                   margin: EdgeInsets.symmetric(
                       vertical: PetsTheme.getLargePadMarg()),
                   text: "Logout",
-                  iconPath: "assets/images/icons/menu/logout.svg"),
+                  iconPath: "assets/images/icons/menu/logout.svg",
+                  onTap: () {
+                    Server.setToken(null);
+                    userProvider.setUser(null);
+                    _tabController.dispose();
+
+                    Navigator.of(context).push(new PageTransition(
+                        child: LoginScreen(), type: PageTransitionType.fade));
+                  }),
               Divider(
                 thickness: 1,
               ),

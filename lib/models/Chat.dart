@@ -1,17 +1,23 @@
-import 'package:flutter/material.dart';
-import 'User.dart';
+import 'package:intl/intl.dart';
 
 class Chat {
-  Chat({this.user, this.lastText, this.dateTime});
-  User user;
-  String lastText;
-  DateTime dateTime;
+  String senderName;
+  int senderId;
+  String senderImage;
+  String senderRole;
+  DateTime date;
+  List senderMessage;
 
-  factory Chat.fromJson(Map<String, dynamic> parsedJson) {
-    return new Chat(
-      user: parsedJson['sender_user']['name'],
-      lastText: parsedJson['latest_message']['content'],
-      dateTime: parsedJson['updated_at'],
-    );
+  // Chat(this.senderName, this.senderId, this.senderImage, this.senderMessage);
+  fromJson(Map<String, dynamic> json) {
+    DateFormat dateFormat = DateFormat("yyyy-MM-dd");
+
+    this.senderName = json['participant']["user"]["name"];
+    senderId = json['participant']["user"]["id"];
+    senderImage = json['participant']["user"]["image"];
+    senderRole = json['participant']["user"]["usertype_id"];
+    senderMessage = json["messages"];
+    date = dateFormat.parse(json['created_at']);
+    return this;
   }
 }
