@@ -31,8 +31,17 @@ class _SearchScreen extends State<PostScreen> {
   FirebaseMessaging _firebaseMessaging = FirebaseMessaging();
 
   void addComment() async {
-    commentProvider.addComment(_commentController.text.trim(),
-        postProvider.post.id.toString(), userProvider.user.token);
+    await commentProvider.addComment(_commentController.text.trim(),
+            postProvider.post.id.toString(), userProvider.user.token)
+        ? setState(() {
+            commentProvider.addCommentToList(new Comment(
+                owner: userProvider.user,
+                imageUrl: userProvider.user.image,
+                text: _commentController.text.trim()));
+            comments = commentProvider.comments;
+            _commentController.clear();
+          })
+        : false;
   }
 
   void getComments() async {
@@ -95,34 +104,29 @@ class _SearchScreen extends State<PostScreen> {
           Expanded(
             child: ListView(
               padding: EdgeInsets.zero,
-              children: commentsWidget,
-              // Comment(
-              //   text: "This is a comment area",
-              //   imageUrl:
-              //       "https://expertphotography.com/wp-content/uploads/2018/10/cool-profile-pictures-retouching-1.jpg",
-              //   margin: EdgeInsets.symmetric(
-              //       vertical: PetsTheme.getSmallestPadMarg(),
-              //       horizontal: PetsTheme.getLargerPadMarg()),
-              //   padding: EdgeInsets.all(PetsTheme.getMeduimPadMarg()),
-              // ),
-              // Comment(
-              //   text: "This is another comment",
-              //   imageUrl:
-              //       "https://expertphotography.com/wp-content/uploads/2018/10/cool-profile-pictures-retouching-1.jpg",
-              //   margin: EdgeInsets.symmetric(
-              //       vertical: PetsTheme.getSmallestPadMarg(),
-              //       horizontal: PetsTheme.getLargerPadMarg()),
-              //   padding: EdgeInsets.all(PetsTheme.getMeduimPadMarg()),
-              // ),
-              // Comment(
-              //   text: "This is another comment",
-              //   imageUrl:
-              //       "https://expertphotography.com/wp-content/uploads/2018/10/cool-profile-pictures-retouching-1.jpg",
-              //   margin: EdgeInsets.symmetric(
-              //       vertical: PetsTheme.getSmallestPadMarg(),
-              //       horizontal: PetsTheme.getLargerPadMarg()),
-              //   padding: EdgeInsets.all(PetsTheme.getMeduimPadMarg()),
-              // ),
+              children: [
+                RegularPostWidget(
+                  _post,
+                  contentPadding: EdgeInsets.only(
+                      left: PetsTheme.getLargerPadMarg(),
+                      right: PetsTheme.getLargerPadMarg(),
+                      bottom: PetsTheme.getLargerPadMarg()),
+                  enableCommentButton: false,
+                ),
+                Column(
+                  children: comments.map((e) {
+                    return Comment(
+                      owner: e.owner,
+                      text: e.text,
+                      imageUrl: e.imageUrl,
+                      margin: EdgeInsets.symmetric(
+                          vertical: PetsTheme.getSmallestPadMarg(),
+                          horizontal: PetsTheme.getLargerPadMarg()),
+                      padding: EdgeInsets.all(PetsTheme.getMeduimPadMarg()),
+                    );
+                  }).toList(),
+                )
+              ],
             ),
           ),
           Container(
@@ -160,8 +164,8 @@ class _SearchScreen extends State<PostScreen> {
                         Icons.send,
                         color: PetsTheme.currentBgMainColor,
                       ),
-                      onTap: () async {
-                        // int status = await commentProvider.addComment(_post.id,_commentController.text.trim())
+                      onTap: () {
+                        addComment();
                       },
                     ),
                   ),
@@ -190,7 +194,7 @@ class Comment extends StatelessWidget {
     User user = User.fromSearchJson(parsedJson['user']);
     return Comment(
       owner: user,
-      imageUrl: parsedJson["image"],
+      imageUrl: user.image,
       text: parsedJson["content"],
     );
   }

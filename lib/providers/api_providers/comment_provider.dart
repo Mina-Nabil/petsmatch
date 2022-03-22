@@ -22,6 +22,10 @@ class CommentProvider extends ChangeNotifier {
   List<Comment> _comments;
   List<Comment> get comments => _comments;
 
+  void addCommentToList(Comment comment) {
+    _comments.add(comment);
+  }
+
   URLs _URLS = new URLs();
 
   Future<int> getComment({@required String postID}) async {
@@ -38,32 +42,34 @@ class CommentProvider extends ChangeNotifier {
       return -1;
     }
     print("respones <----");
-    print(response.body);
+    // print(response.body);
     // If the call to the server was successful, parse the JSON.
     if (response.statusCode >= 200 && response.statusCode < 300) {
       // If the call to the server was successful, parse the JSON.
       print("200 <----");
       List jsonList = jsonDecode(response.body);
       _comments = jsonList.map((i) => Comment.fromJson(i)).toList();
-      print("done <----");
+      print(_comments);
       _isLoaded = true;
       notifyListeners();
-      return 1;
+      return response.statusCode;
     } else {
       // If that call was not successful, throw an error.
       print("error");
       _isLoaded = false;
       notifyListeners();
-      return 0;
+      return response.statusCode;
     }
   }
 
   Future<bool> addComment(String comment, String postID, String token) async {
     print("start load <----");
+    print(Uri.parse(_URLS.createComment));
+
     var response;
     try {
       response = await http.post(Uri.parse(_URLS.createComment),
-          body: {"post_id": postID, "comment": comment},
+          body: {"post_id": postID, "content": comment},
           headers: {'Authorization': 'Bearer $token'});
     } catch (e) {
       print(e);
@@ -75,8 +81,7 @@ class CommentProvider extends ChangeNotifier {
     // If the call to the server was successful, parse the JSON.
     if (response.statusCode >= 200 && response.statusCode < 300) {
       // If the call to the server was successful, parse the JSON.
-      Comment _comment = Comment.fromJson(jsonDecode(response.body));
-      _comments.add(_comment);
+
       notifyListeners();
       print("200 <----");
       print("done <----");

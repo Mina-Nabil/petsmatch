@@ -24,6 +24,9 @@ class UserProvider extends ChangeNotifier {
   User _user;
   User get user => _user;
 
+  List<User> _follows;
+  List<User> get follows => _follows;
+
   List<NotificationModel> _notifications;
   List<NotificationModel> get notifications => _notifications;
 
@@ -122,6 +125,48 @@ class UserProvider extends ChangeNotifier {
     _notifications = data.map((i) => NotificationModel.fromJson(i)).toList();
 
     return response.statusCode;
+  }
+
+  Future<int> getfollowers() async {
+    notifyListeners();
+    http.Response response;
+    String token = await Server.token;
+    try {
+      response = await http.get(Uri.parse(_URLS.follow), headers: {
+        'Authorization': 'Bearer $token',
+      });
+    } catch (_) {
+      // print(response.statusCode);
+      print(_);
+      _loading = false;
+      notifyListeners();
+    }
+    print(response.statusCode);
+
+    List<dynamic> data = jsonDecode(response.body);
+    _follows = data.map((i) => User.fromSearchJson(i)).toList();
+
+    return response.statusCode;
+  }
+
+  void follow(int user_id) async {
+    notifyListeners();
+    http.Response response;
+    String token = await Server.token;
+    try {
+      response = await http.post(Uri.parse(_URLS.follow), headers: {
+        'Authorization': 'Bearer $token',
+      }, body: {
+        'user_id': user_id.toString()
+      });
+    } catch (_) {
+      // print(response.statusCode);
+      print(_);
+      _loading = false;
+      notifyListeners();
+    }
+
+    print(response);
   }
 
   Future<int> signUp(User user) async {

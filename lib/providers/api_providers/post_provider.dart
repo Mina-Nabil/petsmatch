@@ -26,7 +26,7 @@ class PostProvider extends ChangeNotifier {
   List<Comment> _comments;
   List<Comment> get comments => _comments;
 
-  List<RegularPost> _posts;
+  List<RegularPost> _posts = [];
   List<RegularPost> _postsPet;
 
   List<RegularPost> get posts => _posts;
@@ -200,12 +200,13 @@ class PostProvider extends ChangeNotifier {
         }
         print(response.statusCode);
         print(value);
+        notifyListeners();
+
         return response.statusCode;
       });
     } catch (_) {
       print(_);
       _loading = false;
-      notifyListeners();
       return -1;
     }
     print("response <----");
@@ -279,6 +280,7 @@ class PostProvider extends ChangeNotifier {
     var map = new Map<String, dynamic>();
     map['content'] = text;
     map['post_id'] = post_id;
+    print(Uri.parse(_URLS.createComment));
     try {
       response = await http.post(Uri.parse(_URLS.createComment),
           headers: {

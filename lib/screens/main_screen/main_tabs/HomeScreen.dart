@@ -104,7 +104,9 @@ class _HomeScreenState extends State<HomeScreen> {
         done = true;
         print(posts[0].commentsCount);
         if (done)
-          postWidgets.addAll(posts.map((post) {
+          // Consumer<PostProvider>(builder: (context, postProvider, child) {
+          //   setState(() {
+          postWidgets.addAll(postProvider.posts.map((post) {
             return RegularPostWidget(
               post,
               margin:
@@ -115,6 +117,8 @@ class _HomeScreenState extends State<HomeScreen> {
                   bottom: PetsTheme.getLargePadMarg()),
             );
           }).toList());
+        //   });
+        // });
       });
     }
   }

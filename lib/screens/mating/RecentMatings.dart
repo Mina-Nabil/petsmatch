@@ -65,7 +65,24 @@ class _RecentMatingsState extends State<RecentMatings> {
   @override
   Widget build(BuildContext context) {
     return isThereMate
-        ? false
+        ? ListView(
+            children: mates.map((e) {
+            return MatingTile(
+              image1: e.mate_on.image,
+              petName1: e.mate_on.name,
+              image2: e.mate_from.image,
+              petName2: e.mate_from.name,
+              trailing: CircularButton(
+                child: SvgPicture.asset(
+                  "assets/images/icons/setupDate.svg",
+                  color: PetsTheme.currentMainColor,
+                ),
+                backgroundColor: PetsTheme.currentMainColor.withOpacity(0.2),
+                onPressed: () {},
+                radius: PetsTheme.radius2,
+              ),
+            );
+          }).toList())
         : Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [

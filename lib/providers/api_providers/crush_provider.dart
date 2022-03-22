@@ -78,7 +78,7 @@ class CrushProvider extends ChangeNotifier {
     try {
       response = await http.get(
           Uri.parse(
-            _URLS.myCrush,
+            _URLS.crushOnMe,
           ),
           headers: {'Authorization': 'Bearer $token'});
     } catch (_) {
@@ -87,7 +87,13 @@ class CrushProvider extends ChangeNotifier {
       notifyListeners();
       return -1;
     }
+    if (response.statusCode >= 200 && response.statusCode < 300) {
+      List<dynamic> data = jsonDecode(response.body)[0];
+      _crushes = data.map((i) => Crush.fromJson(i)).toList();
+      print(_crushes);
 
+      return response.statusCode;
+    }
     print("response <----");
     print(response.body);
     print(response.statusCode);
@@ -115,10 +121,12 @@ class CrushProvider extends ChangeNotifier {
     if (response.statusCode >= 200 && response.statusCode < 300) {
       List<dynamic> data = jsonDecode(response.body)[0];
       _crushes = data.map((i) => Crush.fromJson(i)).toList();
-      print(_crushes);
+      print("_crushes");
 
       return response.statusCode;
     }
+    return response.statusCode;
+
     print("response <----");
     print(response.body);
     print(response.statusCode);

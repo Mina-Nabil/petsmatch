@@ -5,7 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:petmatch/models/Mate.dart';
 import 'api_url.dart';
-import '../../models/pet.dart';
+import '../../models/Pet.dart';
 
 class MateProvider extends ChangeNotifier {
   //reset provider data

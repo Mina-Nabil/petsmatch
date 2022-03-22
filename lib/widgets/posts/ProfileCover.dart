@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:page_transition/page_transition.dart';
+import 'package:petmatch/models/Chat.dart';
 import 'package:petmatch/models/Pet.dart';
 import 'package:petmatch/models/User.dart';
+import 'package:petmatch/providers/api_providers/message_provider.dart';
 import 'package:petmatch/providers/api_providers/pet_provider.dart';
 import 'package:petmatch/providers/api_providers/user_provider.dart';
 import 'package:petmatch/screens/login/petRegistration.dart';
@@ -43,11 +45,12 @@ class PetOwnerProfileCover extends StatefulWidget implements ProfileCover {
 class _PetOwnerProfileCoverState extends State<PetOwnerProfileCover> {
   UserProvider userProvider;
   PetProvider petProvider;
-
+  MessagesProvider messagesProvider;
   List<Widget> petsWidgets = [];
 
   int status;
 
+  bool following = false;
   bool done = false;
   List<Pet> pets;
   User mainUser;
@@ -61,6 +64,7 @@ class _PetOwnerProfileCoverState extends State<PetOwnerProfileCover> {
 
     userProvider = Provider.of<UserProvider>(context, listen: false);
     petProvider = Provider.of<PetProvider>(context, listen: false);
+    messagesProvider = Provider.of<MessagesProvider>(context, listen: false);
     mainUser.id == userProvider.user.id
         ? status = await petProvider.showMyPets(token: userProvider.user.token)
         : status = 404;
@@ -167,11 +171,11 @@ class _PetOwnerProfileCoverState extends State<PetOwnerProfileCover> {
             height: PetsTheme.getLargerPadMarg(),
           ),
           //buttons
-          mainUser.id == userProvider.user.id
-              ? Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    RoundButton(
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              mainUser.id == userProvider.user.id
+                  ? RoundButton(
                       child: FittedBox(
                           child: Text(
                         "Add a pet",
@@ -187,30 +191,57 @@ class _PetOwnerProfileCoverState extends State<PetOwnerProfileCover> {
                       height: 30,
                       width: MediaQuery.of(context).size.width /
                           3, // good for SmallFont
-                    ),
-                    RoundButton(
+                    )
+                  : RoundButton(
                       child: FittedBox(
                           child: Text(
-                        "Friends",
+                        following ? "Followed" : "Follow " + mainUser.name,
                         style: TextStyle(
                             fontSize: PetsTheme.getSmallFont(),
-                            color: Colors.white),
+                            color: PetsTheme.currentMainColor),
                       )),
-                      borderColor: Colors.white,
+                      onPressed: () async {
+                        await userProvider.follow(mainUser.id);
+                        setState(() {
+                          following = true;
+                        });
+                      },
+                      color: Colors.white,
                       height: 30,
                       width: MediaQuery.of(context).size.width /
                           3, // good for SmallFont
                     ),
-                    CircularMoreButton(
-                      radius: 15,
-                      color: Colors.white,
-                      backgroundColor: Color.fromRGBO(20, 44, 122, 0.5),
-                      onPressed: () =>
-                          Navigator.pushNamed(context, 'Pet/Registration'),
-                    ),
-                  ],
-                )
-              : Row(),
+              RoundButton(
+                onPressed: () {
+                  messagesProvider.setSelectedChat(new Chat(
+                      senderName: mainUser.name,
+                      senderId: mainUser.id,
+                      senderImage: mainUser.image,
+                      senderRole: mainUser.usertype,
+                      date: new DateTime(2022),
+                      senderMessage: []));
+                  Navigator.of(context).pushNamed('conversation');
+                },
+                child: FittedBox(
+                    child: Text(
+                  "Send a message",
+                  style: TextStyle(
+                      fontSize: PetsTheme.getSmallFont(), color: Colors.white),
+                )),
+                borderColor: Colors.white,
+                height: 30,
+                width:
+                    MediaQuery.of(context).size.width / 3, // good for SmallFont
+              ),
+              CircularMoreButton(
+                radius: 15,
+                color: Colors.white,
+                backgroundColor: Color.fromRGBO(20, 44, 122, 0.5),
+                onPressed: () =>
+                    Navigator.pushNamed(context, 'Pet/Registration'),
+              ),
+            ],
+          ),
 
           SizedBox(
             height: PetsTheme.getLargerPadMarg(),

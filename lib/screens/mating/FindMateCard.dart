@@ -21,31 +21,19 @@ class FindMatingCard extends StatefulWidget {
 class _FindMatingCardState extends State<FindMatingCard> {
   void initState() {
     crushProvider = Provider.of<CrushProvider>(context, listen: false);
-    circularButton = CircularButton(
-        child: SvgPicture.asset(matingImg),
-        radius: PetsTheme.radius3,
-        backgroundColor: Colors.red[50],
-        onPressed: () {
-          crush();
-        });
     super.initState();
   }
 
-  String matingImg = "assets/images/icons/mating/matingLove.svg";
+  bool crushed = false;
 
   CrushProvider crushProvider;
   void crush() async {
     print(widget.pet);
     int status = await crushProvider.createCrush(widget.pet, context);
-    if (status > 200 && status < 300) {
-      matingImg = "assets/images/icons/mating/matingLoved.png";
-      circularButton = CircularButton(
-          child: SvgPicture.asset(matingImg),
-          radius: PetsTheme.radius3,
-          backgroundColor: Colors.green[50],
-          onPressed: () {
-            crush();
-          });
+    if (status >= 200 && status < 300) {
+      setState(() {
+        crushed = true;
+      });
     }
   }
 
@@ -96,7 +84,16 @@ class _FindMatingCardState extends State<FindMatingCard> {
                                     color: Colors.grey[600],
                                   )),
                             ]),
-                        circularButton
+                        CircularButton(
+                            child: SvgPicture.asset(
+                                "assets/images/icons/mating/matingLove.svg"),
+                            radius: PetsTheme.radius3,
+                            backgroundColor:
+                                crushed ? Colors.green[50] : Colors.red[50],
+                            onPressed: () {
+                              Future.delayed(Duration.zero)
+                                  .then((value) => crush());
+                            }),
                       ],
                     ),
                   ),

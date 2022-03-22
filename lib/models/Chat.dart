@@ -7,7 +7,14 @@ class Chat {
   String senderRole;
   DateTime date;
   List senderMessage;
-
+  Chat({
+    this.senderId,
+    this.senderName,
+    this.senderImage,
+    this.senderRole,
+    this.date,
+    this.senderMessage,
+  });
   // Chat(this.senderName, this.senderId, this.senderImage, this.senderMessage);
   fromJson(Map<String, dynamic> json) {
     DateFormat dateFormat = DateFormat("yyyy-MM-dd");

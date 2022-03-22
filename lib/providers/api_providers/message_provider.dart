@@ -82,6 +82,7 @@ class MessagesProvider extends ChangeNotifier {
   Future<int> sendMessage(user_id, message, token) async {
     Response response;
     try {
+      print(user_id);
       response = await post(
           Uri.parse(URLs.sendMessage + "?user_id=$user_id&message=$message"),
           headers: {'Authorization': 'Bearer $token'});

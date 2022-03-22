@@ -27,6 +27,7 @@ class URLs {
   String crushOnMe;
   String family;
   String mate;
+  String follow;
   static final String sendMessage = "$host/message";
   static final String getChat = "$host/chat";
   static final String getMyChats = "$host/chats";
@@ -71,7 +72,7 @@ class URLs {
     crush = "$host/crush";
     me = "$host/me";
     myCrush = "$host/crushes";
-    crushOnMe = "$host/crush";
+    crushOnMe = "$host/my/crush";
     family = "$host/family";
     mate = "$host/mate";
     notifications = "$host/notifications";
@@ -88,10 +89,11 @@ class URLs {
     getAPost = "$host/post"; // ?uid=53
     getYourPosts = "$host/api/post"; // ?uid=53
     getNewsFeed = "$host/news-feed"; // ?uid=53
-    createComment = "$host/api/comment"; // ?uid=53
+    createComment = "$host/comment"; // ?uid=53
     getPostComments = "$host/post/comments"; // ?uid=53
     getAComment = "$host/api/news-feed"; // ?uid=53
     updateUserData = "$host/api/me"; // ?uid=30
     search = "$host/search"; // ?uid=30
+    follow = "$host/follow";
   }
 }

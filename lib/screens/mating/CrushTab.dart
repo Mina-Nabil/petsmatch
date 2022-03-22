@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:petmatch/models/Crush.dart';
+import 'package:petmatch/models/Pet.dart';
 import 'package:petmatch/providers/api_providers/crush_provider.dart';
+import 'package:petmatch/providers/api_providers/mate_provider.dart';
 import 'package:petmatch/providers/api_providers/user_provider.dart';
 
 import 'package:petmatch/theme/petsTheme.dart';
@@ -17,6 +19,7 @@ class CrushTab extends StatefulWidget {
 class _CrushTabState extends State<CrushTab> {
   CrushProvider crushProvider;
   UserProvider userProvider;
+  MateProvider mateProvider;
   bool isLoading = true;
   List<Crush> crushes;
   List<Widget> matingTileWidget = [];
@@ -25,41 +28,28 @@ class _CrushTabState extends State<CrushTab> {
 
     crushProvider = Provider.of<CrushProvider>(context, listen: false);
 
+    mateProvider = Provider.of<MateProvider>(context, listen: false);
+    print(mateProvider);
     Future.delayed(Duration.zero).then((value) => updateCrushes());
 
     super.initState();
   }
 
+  void mate(Pet from, Pet to) async {
+    print(from);
+    int status = await mateProvider.createmate(to, from, context);
+    if (status >= 200 && status < 300) {}
+  }
+
   void updateCrushes() async {
     int status =
-        await crushProvider.getCrushOnMe(userProvider.user.token, context);
-    setState(() {
-      if (status >= 200 && status < 300) {
+        await crushProvider.getCrushes(userProvider.user.token, context);
+    if (status >= 200 && status < 300) {
+      setState(() {
         isLoading = false;
         crushes = crushProvider.crushes;
-        print(crushes[0].crush_from.name);
-        matingTileWidget.addAll(crushes.map((e) {
-          MatingTile(
-            image1: e.crush_from.image,
-            petName1: e.crush_from.name,
-            image2: e.crush_on.image,
-            petName2: e.crush_on.name,
-            trailing: CircularButton(
-              child: SvgPicture.asset(
-                "assets/images/icons/setupDate.svg",
-                color: PetsTheme.currentMainColor,
-              ),
-              backgroundColor: PetsTheme.currentMainColor.withOpacity(0.2),
-              onPressed: () {},
-              radius: PetsTheme.radius2,
-            ),
-          );
-          Divider(
-            thickness: 1,
-          );
-        }).toList());
-      }
-    });
+      });
+    }
   }
 
   @override
@@ -67,49 +57,30 @@ class _CrushTabState extends State<CrushTab> {
     return (isLoading)
         ? Center(child: CircularProgressIndicator())
         : ListView(
-            children: matingTileWidget,
-            // MatingTile(
-            //   image1:
-            //       "https://cdn.pixabay.com/photo/2017/09/25/13/12/dog-2785074__340.jpg",
-            //   petName1: "Roy",
-            //   image2:
-            //       "https://hips.hearstapps.com/hmg-prod.s3.amazonaws.com/images/dog-puppy-on-garden-royalty-free-image-1586966191.jpg",
-            //   petName2: "Bella",
-            //   trailing: CircularButton(
-            //     child: SvgPicture.asset(
-            //       "assets/images/icons/setupDate.svg",
-            //       color: PetsTheme.currentMainColor,
-            //     ),
-            //     backgroundColor: PetsTheme.currentMainColor.withOpacity(0.2),
-            //     onPressed: () {},
-            //     radius: PetsTheme.radius2,
-            //   ),
-            // ),
-            //   Divider(
-            //     thickness: 1,
-            //   ),
-            //   MatingTile(
-            //     image1:
-            //         "https://post.greatist.com/wp-content/uploads/sites/3/2020/02/322868_1100-800x825.jpg",
-            //     petName1: "Rusty",
-            //     image2:
-            //         "https://hips.hearstapps.com/hmg-prod.s3.amazonaws.com/images/dog-puppy-on-garden-royalty-free-image-1586966191.jpg",
-            //     petName2: "Bella",
-            //     trailing: CircularButton(
-            //       child: SvgPicture.asset(
-            //         "assets/images/icons/setupDate.svg",
-            //         color: PetsTheme.currentMainColor,
-            //       ),
-            //       backgroundColor: PetsTheme.currentMainColor.withOpacity(0.2),
-            //       onPressed: () {},
-            //       radius: PetsTheme.radius2,
-            //     ),
-            //   ),
-            //   Divider(
-            //     thickness: 1,
-            //   ),
-            // ],
-          );
+            children: //matingTileWidget,
+                crushes != []
+                    ? crushes.map((e) {
+                        return MatingTile(
+                          image1: e.crush_on.image,
+                          petName1: e.crush_on.name,
+                          image2: e.crush_from.image,
+                          petName2: e.crush_from.name,
+                          trailing: CircularButton(
+                            child: SvgPicture.asset(
+                              "assets/images/icons/setupDate.svg",
+                              color: PetsTheme.currentMainColor,
+                            ),
+                            backgroundColor:
+                                PetsTheme.currentMainColor.withOpacity(0.2),
+                            onPressed: () {
+                              Future.delayed(Duration.zero).then(
+                                  (value) => mate(e.crush_from, e.crush_on));
+                            },
+                            radius: PetsTheme.radius2,
+                          ),
+                        );
+                      }).toList()
+                    : Column());
   }
 }
 

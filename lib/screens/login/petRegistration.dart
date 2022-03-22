@@ -94,7 +94,7 @@ class _PetRegistrationScreen extends State<PetRegistrationScreen> {
     int status = await petProvider.addPet(pet, mainUser.token);
     print('${status} is the status before tgbhe if');
     if (status >= 200 && status < 300)
-      Navigator.of(context).push(new PageTransition(
+      Navigator.of(context).pushReplacement(new PageTransition(
           child: HomeScreen(), type: PageTransitionType.fade));
   }
 
