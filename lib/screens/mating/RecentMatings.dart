@@ -25,7 +25,9 @@ class _RecentMatingsState extends State<RecentMatings> {
   List<Mate> mates;
   List<Widget> matingTileWidget;
   void initState() {
+    userProvider = Provider.of<UserProvider>(context, listen: false);
     petProvider = Provider.of<PetProvider>(context, listen: false);
+    mateProvider = Provider.of<MateProvider>(context, listen: false);
     print(petProvider.pets);
     Future.delayed(Duration.zero).then((value) => updateMates());
 
@@ -35,6 +37,7 @@ class _RecentMatingsState extends State<RecentMatings> {
   void updateMates() async {
     int status = await mateProvider.getmates(userProvider.user.token, context);
     setState(() {
+      print(status.toString() + "is the status");
       mates = mateProvider.mates;
       if (status >= 200 && status < 300 && !mates.isEmpty) {
         isThereMate = true;

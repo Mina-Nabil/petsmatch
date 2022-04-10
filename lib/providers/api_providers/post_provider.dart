@@ -168,7 +168,7 @@ class PostProvider extends ChangeNotifier {
       var image = post.image;
       File imageFile;
       var stream;
-      if (image == null)
+      if (image == null || image.isEmpty)
         imageFile = null;
       else {
         imageFile = Io.File(post.image);
@@ -176,9 +176,10 @@ class PostProvider extends ChangeNotifier {
             new http.ByteStream(DelegatingStream.typed(imageFile.openRead()));
       }
       String body;
-      body = "?content=${post.text.toString()}" + "&image=${post.image}";
+      body =
+          "?content=${post.text}" + image == null ? "&image=${post.image}" : "";
 
-      print(body);
+      print(post.text);
 
       var request =
           new http.MultipartRequest("POST", Uri.parse(_URLS.createPost + body));

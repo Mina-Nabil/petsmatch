@@ -79,7 +79,7 @@ class MateProvider extends ChangeNotifier {
     }
 
     if (response.statusCode >= 200 && response.statusCode < 300) {
-      List<dynamic> data = jsonDecode(response.body)[0];
+      List<dynamic> data = jsonDecode(response.body);
       _mates = data.map((i) => Mate.fromJson(i)).toList();
       print(_mates);
 
